@@ -1,3 +1,5 @@
+import 'package:cannabis_track_and_trace_application/screens/home/bottom_nav_screen.dart';
+import 'package:cannabis_track_and_trace_application/screens/home/home_screen.dart';
 import 'package:cannabis_track_and_trace_application/screens/login/widgets/inputfield_login.dart';
 import 'package:cannabis_track_and_trace_application/screens/register/register.dart';
 import 'package:flutter/material.dart';
@@ -61,7 +63,11 @@ class _LoginScreenState extends State<LoginScreen> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
                                   padding: const EdgeInsets.all(20)),
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (context){
+                                  return BottomNavScreen();
+                                }));
+                              },
                               child: Text("Login"))),
                       const SizedBox(
                         height: 30,
