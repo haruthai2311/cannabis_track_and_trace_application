@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:cannabis_track_and_trace_application/screens/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:http/http.dart' as http;
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
@@ -12,6 +15,109 @@ class RegisterScreen extends StatefulWidget {
 class _RegisterScreenState extends State<RegisterScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isHidden = true;
+  bool _visible = false;
+
+  final _ctlFnameT = TextEditingController();
+  final _ctlLnameT = TextEditingController();
+  final _ctlFnameE = TextEditingController();
+  final _ctlLnameE = TextEditingController();
+  final _ctlemail = TextEditingController();
+  final _ctlUsername = TextEditingController();
+  final _ctlPassword = TextEditingController();
+  final _ctlConPass = TextEditingController();
+
+  void Clear() {
+    _ctlFnameT.clear();
+    _ctlLnameT.clear();
+    _ctlFnameE.clear();
+    _ctlLnameE.clear();
+    _ctlemail.clear();
+    _ctlUsername.clear();
+    _ctlPassword.clear();
+    _ctlConPass.clear();
+  }
+
+  Future register() async {
+    //var url = "http://172.20.10.7:3000/users/register";
+    var url = "http://10.96.3.8:3000/users/register";
+    // Showing LinearProgressIndicator.
+    setState(() {
+      _visible = true;
+    });
+
+    var response = await http.post(Uri.parse(url), body: {
+      "fnameT": _ctlFnameT.text,
+      "lnameT": _ctlLnameT.text,
+      "fnameE": _ctlFnameE.text,
+      "lnameE": _ctlLnameE.text,
+      "email": _ctlemail.text,
+      "username": _ctlUsername.text,
+      "password": _ctlPassword.text,
+      "confirmPassword": _ctlConPass.text
+    });
+    print('Response status : ${response.statusCode}');
+    print('Response body : ${response.body}');
+    if (response.statusCode == 200) {
+      print(response.body);
+      var msg = jsonDecode(response.body);
+
+      //Check Login Status
+      if (msg['success'] == true) {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+        });
+        showMessage(msg["message"]);
+        Clear();
+        // Navigator.of(context).push(MaterialPageRoute(
+        //  builder: (context) =>LoginScreen(),
+        //));
+        //showMessage(context, 'บันทึกเรียบร้อยแล้ว');
+      } else {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+
+          //Show Error Message Dialog
+          showMessage(msg["message"]);
+        });
+        //showMessage(context, 'เกิดข้อผิดพลาด');
+      }
+    } else {
+      setState(() {
+        //hide progress indicator
+        _visible = false;
+
+        //Show Error Message Dialog
+        showMessage("Error during connecting to Server.");
+      });
+    }
+  }
+
+  Future<dynamic> showMessage(String msg) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(msg),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    //register();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +157,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextFormField(
+                            controller: _ctlFnameT,
                             obscureText: false,
                             style: const TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0)),
@@ -99,6 +206,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextFormField(
+                            controller: _ctlLnameT,
                             obscureText: false,
                             style: const TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0)),
@@ -147,6 +255,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextFormField(
+                            controller: _ctlFnameE,
                             obscureText: false,
                             style: const TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0)),
@@ -195,6 +304,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextFormField(
+                            controller: _ctlLnameE,
                             obscureText: false,
                             style: const TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0)),
@@ -243,6 +353,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextFormField(
+                            controller: _ctlemail,
                             obscureText: false,
                             style: const TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0)),
@@ -293,6 +404,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextFormField(
+                            controller: _ctlUsername,
                             obscureText: false,
                             style: const TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0)),
@@ -341,6 +453,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextFormField(
+                            controller: _ctlPassword,
                             obscureText: _isHidden,
                             style: const TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0)),
@@ -398,6 +511,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextFormField(
+                            controller: _ctlConPass,
                             obscureText: _isHidden,
                             style: const TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0)),
@@ -465,8 +579,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     padding: const EdgeInsets.all(20)),
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
-                                    _formKey.currentState!
-                                        .reset(); //ลบค่าที่ป้อนในฟอร์ม
+                                    register();
                                   }
                                 },
                                 child: Text("Register"))),

@@ -1,8 +1,10 @@
+import 'dart:convert';
 import 'package:cannabis_track_and_trace_application/screens/home/bottom_nav_screen.dart';
-import 'package:cannabis_track_and_trace_application/screens/home/home_screen.dart';
 import 'package:cannabis_track_and_trace_application/screens/register/register.dart';
 import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:http/http.dart' as http;
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -14,6 +16,84 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isHidden = true;
+    //For LinearProgressIndicator.
+  bool _visible = false;
+
+  final  _ctlUsername = TextEditingController();
+  final  _ctlPassword = TextEditingController();
+
+   Future login() async {
+    //var url = "http://172.20.10.7:3000/users/login";
+    var url = "http://10.96.3.8:3000/users/login";
+    // Showing LinearProgressIndicator.
+    setState(() {
+      _visible = true;
+    });
+    //print(_ctlUsername.text);
+    //print(_ctlPassword.text);
+  
+    var response = await http.post(Uri.parse(url),
+        body: {"username": _ctlUsername.text, "password": _ctlPassword.text});
+    if (response.statusCode == 200) {
+      //Server response into variable
+      print(response.body);
+      var msg = jsonDecode(response.body);
+
+      //Check Login Status
+      if (msg['success'] == true) {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+        });
+
+        // Navigate to Home Screen
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context) => BottomNavScreen(),
+        ));
+      } else {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+
+          //Show Error Message Dialog
+          showMessage(msg["message"]);
+        });
+      }
+    } else {
+      setState(() {
+        //hide progress indicator
+        _visible = false;
+
+        //Show Error Message Dialog
+        showMessage("Error during connecting to Server.");
+      });
+    }
+  }
+
+  Future<dynamic> showMessage(String msg) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(msg),
+          actions: <Widget>[
+            TextButton(
+              child: Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    //login();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,6 +140,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextFormField(
+                            controller: _ctlUsername,
                             obscureText: false,
                             style: const TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0)),
@@ -108,6 +189,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
                           child: TextFormField(
+                            controller: _ctlPassword,
                             obscureText: _isHidden,
                             style: const TextStyle(
                                 color: Color.fromARGB(255, 0, 0, 0)),
@@ -177,10 +259,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       padding: const EdgeInsets.all(20)),
                                   onPressed: () {
                                     if (_formKey.currentState!.validate()) {
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) {
-                                        return BottomNavScreen();
-                                      }));
+                                       login();
+ 
                                     }
                                   },
                                   child: Text("Login"))),
