@@ -1,7 +1,7 @@
-import 'package:cannabis_track_and_trace_application/screens/home/tracking/track_check.dart';
-import 'package:cannabis_track_and_trace_application/screens/home/tracking/track_deliver.dart';
-import 'package:cannabis_track_and_trace_application/screens/home/tracking/track_harvest.dart';
-import 'package:cannabis_track_and_trace_application/screens/home/tracking/track_plant.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/cultivations.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/harvests.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/plant_tracking.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/transfers.dart';
 import 'package:flutter/material.dart';
 
 class TrackingScreen extends StatefulWidget {
@@ -29,7 +29,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return TrackCheck();
+                          return PlantTracking();
                         }));
                       },
                       child: Text('บันทึกผลตรวจประจำวัน'),
@@ -54,7 +54,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return TrackPlant();
+                          return Cultivations();
                         }));
                       },
                       child: Text('บันทึกการปลูก'),
@@ -85,7 +85,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return TrackHarvest();
+                          return Harvests();
                         }));
                       },
                       child: Text('บันทึกข้อมูลการเก็บเกี่ยว'),
@@ -110,7 +110,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                       onPressed: () {
                         Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return Track_deliver();
+                          return Transfers();
                         }));
                       },
                       child: Text('บันทึกข้อมูลการส่งมอบ'),

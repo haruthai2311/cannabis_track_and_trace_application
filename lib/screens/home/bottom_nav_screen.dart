@@ -1,8 +1,8 @@
 import 'package:cannabis_track_and_trace_application/screens/home/account_screen.dart';
 import 'package:cannabis_track_and_trace_application/screens/home/home_screen.dart';
-import 'package:cannabis_track_and_trace_application/screens/home/info_screen.dart';
 import 'package:cannabis_track_and_trace_application/screens/home/scan_screen.dart';
-import 'package:cannabis_track_and_trace_application/screens/home/tracking/tracking_screen.dart';
+import 'package:cannabis_track_and_trace_application/screens/infomation/info_screen.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/tracking_screen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
