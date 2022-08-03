@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
 
-
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -16,13 +15,13 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   bool _isHidden = true;
-    //For LinearProgressIndicator.
+  //For LinearProgressIndicator.
   bool _visible = false;
 
-  final  _ctlUsername = TextEditingController();
-  final  _ctlPassword = TextEditingController();
+  final _ctlUsername = TextEditingController();
+  final _ctlPassword = TextEditingController();
 
-   Future login() async {
+  Future login() async {
     //var url = "http://172.20.10.7:3000/users/login";
     var url = "http://10.96.3.8:3000/users/login";
     // Showing LinearProgressIndicator.
@@ -31,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     //print(_ctlUsername.text);
     //print(_ctlPassword.text);
-  
+
     var response = await http.post(Uri.parse(url),
         body: {"username": _ctlUsername.text, "password": _ctlPassword.text});
     if (response.statusCode == 200) {
@@ -258,9 +257,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                               BorderRadius.circular(15)),
                                       padding: const EdgeInsets.all(20)),
                                   onPressed: () {
+                                    // if (_formKey.currentState!.validate()) {
+                                    //    login();
+
+                                    // }
                                     if (_formKey.currentState!.validate()) {
-                                       login();
- 
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return BottomNavScreen();
+                                      }));
                                     }
                                   },
                                   child: Text("Login"))),
