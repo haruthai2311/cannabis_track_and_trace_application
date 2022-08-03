@@ -9,70 +9,76 @@ class ScanScreen extends StatefulWidget {
 }
 
 class _ScanScreenState extends State<ScanScreen> {
- String _scanBarcode = 'Unknown';
+ 
+  String? barResult;
+  String? qrResult;
 
-  @override
-  void initState() {
-    super.initState();
-  }
+  Future barCodeScanner() async{
 
-  Future<void> startBarcodeScanStream() async {
-    FlutterBarcodeScanner.getBarcodeStreamReceiver(
-            '#ff6666', 'Cancel', true, ScanMode.BARCODE)!
-        .listen((barcode) => print(barcode));
-  }
+    String result;
 
-  Future<void> scanQR() async {
-    String barcodeScanRes;
-    try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.QR);
-      print(barcodeScanRes);
-    } on PlatformException {
-      barcodeScanRes = 'Failed to get platform version.';
+    try{
+      result = await FlutterBarcodeScanner.scanBarcode("#FFBF00", "Cancel" , true, ScanMode.BARCODE);
+    } on PlatformException{
+      result = "Failed to get plateform version";
     }
-//barcode scanner flutter ant 
+    if(!mounted) return;
     setState(() {
-      _scanBarcode = barcodeScanRes;
+      barResult = result;
     });
   }
 
-  Future<void> scanBarcodeNormal() async {
-    String barcodeScanRes;
-    try {
-      barcodeScanRes = await FlutterBarcodeScanner.scanBarcode(
-          '#ff6666', 'Cancel', true, ScanMode.BARCODE);
-      print(barcodeScanRes);
-    } on PlatformException {
-      barcodeScanRes = 'Failed to get platform version.';
-    }
 
-    if (!mounted) return;
+  Future qrCodeScanner() async{
+    String qResult;
+    try{
+      qResult = await FlutterBarcodeScanner.scanBarcode("#FFBF00", "Cancel", true, ScanMode.QR);
+    } on PlatformException{
+      qResult = "Failed to get Plateform Version";
+    }
+    if(!mounted) return;
     setState(() {
-      _scanBarcode = barcodeScanRes;
+      qrResult = qResult;
     });
   }
-//barcode scanner flutter ant  
+
+
+
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-            appBar: AppBar(title: const Text('Barcode Scanner')),
-            body: Builder(builder: (BuildContext context) {
-              return Container(
-                  alignment: Alignment.center,
-                  child: Flex(
-                      direction: Axis.vertical,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        ElevatedButton(
-                            onPressed: () => scanBarcodeNormal(),
-                            child: const Text('Barcode scan')),
-                      
-                     
-                        
-                      ]));
-            })));
+    return Scaffold(
+      
+      body: SafeArea(
+        child: Center(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 100),
+                  child: MaterialButton(
+                    onPressed: barCodeScanner,
+                    color: Colors.amber,
+                    shape: StadiumBorder(),
+                    child: Row(
+                      children: [
+                        Icon(Icons.camera_alt_outlined,),
+                        SizedBox(width: 5.0,),
+                        Text("Scan Barcode", style: TextStyle(fontWeight: FontWeight.bold),)
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(height: 15.0),
+                Text(
+                  barResult == null ? "Scan a Code" : "Scan Result is : $barResult",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                ),
+                
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
   }
 }

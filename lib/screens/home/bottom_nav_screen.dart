@@ -22,6 +22,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
     InfoScreen(),
     AccountScreen(),
   ];
+  
 
   @override
   Widget build(BuildContext context) {
