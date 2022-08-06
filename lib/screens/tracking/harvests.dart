@@ -5,12 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:form_field_validator/form_field_validator.dart';
 
+import '../../api/allgreenhouses.dart';
+
 class Harvests extends StatefulWidget {
   @override
   State<Harvests> createState() => _HarvestsState();
 }
 
 class _HarvestsState extends State<Harvests> {
+  late AllGreenhouses _allGreenhouses;
   DateTime date = DateTime.now();
   final _formKey = GlobalKey<FormState>();
   bool _visible = false;
@@ -22,14 +25,14 @@ class _HarvestsState extends State<Harvests> {
   final _ctlHavestRemake = TextEditingController();
 
   Future addHarvests() async {
-    var url = "http://10.96.3.8:3000/trackings/harvests";
+    var url = "http://192.168.1.27:3000/trackings/harvests";
     // Showing LinearProgressIndicator.
     setState(() {
       _visible = true;
     });
 
     var response = await http.post(Uri.parse(url), body: {
-      "GreenHouseID": dropdownGH.toString(),
+      "GreenHouseName": dropdownGH.toString(),
       "HarvestDate": date.toString(),
       "HarvestNo": _ctlHarvestNo.text,
       "Type": selectDropdown.toString(),
@@ -94,30 +97,45 @@ class _HarvestsState extends State<Harvests> {
   void initState() {
     super.initState();
   }
+  Future<AllGreenhouses> getAllGreenhouses() async {
+    var url = 'http://192.168.1.27:3000/informations/getAllGreenhouses';
+    var response = await http.get(Uri.parse(url));
+    _allGreenhouses = allGreenhousesFromJson(response.body);
+    //print(_allGreenhouses.result[0].name.toString());
+    //print(_allGreenhouses.result[1].name.toString());
+    return _allGreenhouses;
+  }
 
   String dropdowntype = 'N/A';
   String selectDropdown = '00';
   var itemtype = ['N/A', 'ใบ', 'ดอก', 'ก้าน'];
 
   String dropdownGH = 'N/A';
-  var itemGH = [
-    'N/A',
-    '4',
-    '5',
-    '6',
-    '7',
-    '8',
-    '9',
-    '10'
-  ]; //เหลือดึงชื่อโรงเรือนจากฐานข้อมูลมาเป็นตัวเลือก
-
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kBackground,
       ),
-      body: SafeArea(
+      body: FutureBuilder(
+          future: getAllGreenhouses(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              var result = snapshot.data.result;
+              
+              var nameGH = ['N/A'];
+              for(var i=0;i<result.length; i++) {
+                //print(result[i].newCase);
+                nameGH.add(result[i].name);
+                //print(casenewsort);
+                
+                //
+                
+              }print(nameGH);
+
+
+              return SafeArea(
         child: Container(
           child: Padding(
             padding: const EdgeInsets.all(10),
@@ -135,7 +153,55 @@ class _HarvestsState extends State<Harvests> {
                           color: Color.fromARGB(255, 8, 143, 114)),
                     ),
                     const SizedBox(height: 50),
-                    buildGreenHouseID(),
+                    Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "โรงปลูก :",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        Container(
+          margin: EdgeInsets.only(left: 15, right: 15),
+          padding: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: DropdownButton(
+            dropdownColor: Colors.white,
+            iconSize: 30,
+            isExpanded: true,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+            ),
+            value: dropdownGH,
+            icon: const Icon(Icons.keyboard_arrow_down),
+            items: nameGH.map((String items) {
+              return DropdownMenuItem(
+                value: items,
+                child: Text(items),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              setState(
+                () {
+                  dropdownGH = newValue!;
+                },
+              );
+            },
+          ),
+        ),
+      ],
+    ),
                     const SizedBox(height: 20),
                     buildHarvestDate(),
                     const SizedBox(height: 20),
@@ -196,9 +262,12 @@ class _HarvestsState extends State<Harvests> {
             ),
           ),
         ),
-      ),
-    );
+      );} return LinearProgressIndicator();
+          },
+      ));
+    
   }
+
 
   Future<void> _showMyDialog() async {
     return showDialog<void>(
@@ -236,57 +305,6 @@ class _HarvestsState extends State<Harvests> {
     );
   }
 
-  Widget buildGreenHouseID() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "โรงปลูก :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 10),
-        Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          padding: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: DropdownButton(
-            dropdownColor: Colors.white,
-            iconSize: 30,
-            isExpanded: true,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-            ),
-            value: dropdownGH,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            items: itemGH.map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(
-                () {
-                  dropdownGH = newValue!;
-                },
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
 
   Widget buildHarvestDate() {
     return Column(
