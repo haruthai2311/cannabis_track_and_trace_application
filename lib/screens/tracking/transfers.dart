@@ -8,7 +8,7 @@ class Transfers extends StatefulWidget {
 }
 
 class _TransfersState extends State<Transfers> {
-  DateTime date = DateTime(2022, 7, 25);
+  DateTime date = DateTime.now();
 
   String dropdowntype = 'N/A';
   var itemtype = ['N/A', 'ใบ', 'ดอก', 'ก้าน'];

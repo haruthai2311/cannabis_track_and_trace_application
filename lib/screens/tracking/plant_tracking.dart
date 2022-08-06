@@ -8,7 +8,7 @@ class PlantTracking extends StatefulWidget {
 }
 
 class _PlantTrackingState extends State<PlantTracking> {
-  DateTime date = DateTime(2022, 7, 25);
+  DateTime date = DateTime.now();
 
   String dropdownStatus = 'N/A';
   var itemStatus = ['N/A', 'ปกติ', 'ไม่สมบูรณ์', 'ตัดทิ่้ง'];

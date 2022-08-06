@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/tracking_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:form_field_validator/form_field_validator.dart';
 
 class Harvests extends StatefulWidget {
   @override
@@ -8,13 +11,105 @@ class Harvests extends StatefulWidget {
 }
 
 class _HarvestsState extends State<Harvests> {
-  DateTime date = DateTime(2022, 7, 25);
+  DateTime date = DateTime.now();
+  final _formKey = GlobalKey<FormState>();
+  bool _visible = false;
+  //late List<AllGreenhouses> _AllGreenhouses;
+
+  final _ctlHarvestNo = TextEditingController();
+  final _ctlWeight = TextEditingController();
+  final _ctlLotNo = TextEditingController();
+  final _ctlHavestRemake = TextEditingController();
+
+  Future addHarvests() async {
+    var url = "http://10.96.3.8:3000/trackings/harvests";
+    // Showing LinearProgressIndicator.
+    setState(() {
+      _visible = true;
+    });
+
+    var response = await http.post(Uri.parse(url), body: {
+      "GreenHouseID": dropdownGH.toString(),
+      "HarvestDate": date.toString(),
+      "HarvestNo": _ctlHarvestNo.text,
+      "Type": selectDropdown.toString(),
+      "Weight": _ctlWeight.text,
+      "LotNo": _ctlLotNo.text,
+      "Remark": _ctlHavestRemake.text,
+    });
+    print('Response status : ${response.statusCode}');
+    print('Response body : ${response.body}');
+    if (response.statusCode == 200) {
+      print(response.body);
+      var msg = jsonDecode(response.body);
+
+      //Check Login Status
+      if (msg['success'] == true) {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+        });
+        showMessage(msg["message"]);
+      } else {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+
+          //Show Error Message Dialog
+          showMessage(msg["message"]);
+        });
+        //showMessage(context, 'เกิดข้อผิดพลาด');
+      }
+    } else {
+      setState(() {
+        //hide progress indicator
+        _visible = false;
+
+        //Show Error Message Dialog
+        showMessage("Error during connecting to Server.");
+      });
+    }
+  }
+
+  Future<dynamic> showMessage(String msg) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(msg),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   String dropdowntype = 'N/A';
+  String selectDropdown = '00';
   var itemtype = ['N/A', 'ใบ', 'ดอก', 'ก้าน'];
 
   String dropdownGH = 'N/A';
-  var itemGH = ['N/A', 'โรงเรือน 1', 'โรงเรือน 2'];
+  var itemGH = [
+    'N/A',
+    '4',
+    '5',
+    '6',
+    '7',
+    '8',
+    '9',
+    '10'
+  ]; //เหลือดึงชื่อโรงเรือนจากฐานข้อมูลมาเป็นตัวเลือก
 
   @override
   Widget build(BuildContext context) {
@@ -27,76 +122,117 @@ class _HarvestsState extends State<Harvests> {
           child: Padding(
             padding: const EdgeInsets.all(10),
             child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  Text(
-                    "บันทึกข้อมูลการเก็บเกี่ยว",
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 8, 143, 114)),
-                  ),
-                  const SizedBox(height: 50),
-                  buildGreenHouseID(),
-                  const SizedBox(height: 20),
-                  buildHarvestDate(),
-                  const SizedBox(height: 20),
-                  buildHarvestNo(),
-                  const SizedBox(height: 20),
-                  buildType(),
-                  const SizedBox(height: 20),
-                  buildweight(),
-                  const SizedBox(height: 20),
-                  buildLotNo(),
-                  const SizedBox(height: 20),
-                  buildHavestRemake(),
-                  const SizedBox(height: 50),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Column(
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                textStyle: TextStyle(fontSize: 18),
-                                primary: Color.fromARGB(255, 10, 94, 3),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                padding: const EdgeInsets.all(15)),
-                            onPressed: () {},
-                            child: Text("บันทึก"),
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 10),
-                      Column(
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                textStyle: TextStyle(fontSize: 18),
-                                primary: Color.fromARGB(255, 197, 16, 4),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                padding: const EdgeInsets.all(15)),
-                            onPressed: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return TrackingScreen();
-                              }));
-                            },
-                            child: Text("ยกเลิก"),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ],
+              child: Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    Text(
+                      "บันทึกข้อมูลการเก็บเกี่ยว",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(255, 8, 143, 114)),
+                    ),
+                    const SizedBox(height: 50),
+                    buildGreenHouseID(),
+                    const SizedBox(height: 20),
+                    buildHarvestDate(),
+                    const SizedBox(height: 20),
+                    buildHarvestNo(),
+                    const SizedBox(height: 20),
+                    buildType(),
+                    const SizedBox(height: 20),
+                    buildweight(),
+                    const SizedBox(height: 20),
+                    buildLotNo(),
+                    const SizedBox(height: 20),
+                    buildHavestRemake(),
+                    const SizedBox(height: 50),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Column(
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  textStyle: TextStyle(fontSize: 18),
+                                  primary: Color.fromARGB(255, 10, 94, 3),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30)),
+                                  padding: const EdgeInsets.all(15)),
+                              onPressed: () {
+                                if (_formKey.currentState!.validate()) {
+                                  addHarvests();
+                                }
+                              },
+                              child: Text("บันทึก"),
+                            ),
+                          ],
+                        ),
+                        SizedBox(width: 10),
+                        Column(
+                          children: [
+                            ElevatedButton(
+                              style: ElevatedButton.styleFrom(
+                                  textStyle: TextStyle(fontSize: 18),
+                                  primary: Color.fromARGB(255, 197, 16, 4),
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(30)),
+                                  padding: const EdgeInsets.all(15)),
+                              onPressed: () {
+                                _showMyDialog();
+                                //Navigator.of(context).pop(Harvests());
+                              },
+                              child: Text("ยกเลิก"),
+                            ),
+                          ],
+                        )
+                      ],
+                    ),
+                  ],
+                ),
               ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ยืนยันการยกเลิก'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Text('คุณต้องการยกเลิกใช่หรือไม่?'),
+                //Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('ยืนยัน'),
+              onPressed: () {
+                //print('Confirmed');
+                Navigator.of(context).pop();
+                Navigator.of(context).pop(Harvests());
+              },
+            ),
+            TextButton(
+              child: Text('ยกเลิก'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -156,7 +292,7 @@ class _HarvestsState extends State<Harvests> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "วันที่เก็บเกี่ยว :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
@@ -168,7 +304,7 @@ class _HarvestsState extends State<Harvests> {
           decoration: BoxDecoration(
             color: Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -216,18 +352,18 @@ class _HarvestsState extends State<Harvests> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "ครั้งที่ :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -235,13 +371,15 @@ class _HarvestsState extends State<Harvests> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlHarvestNo,
             keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
                 hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+            validator: RequiredValidator(errorText: 'กรุณาป้อนข้อมูล'),
           ),
         ),
       ],
@@ -252,19 +390,19 @@ class _HarvestsState extends State<Harvests> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "ประเภท :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          padding: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
+          padding: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -275,7 +413,7 @@ class _HarvestsState extends State<Harvests> {
             dropdownColor: Colors.white,
             iconSize: 30,
             isExpanded: true,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 18,
             ),
@@ -291,6 +429,15 @@ class _HarvestsState extends State<Harvests> {
               setState(
                 () {
                   dropdowntype = newValue!;
+                  if (dropdowntype == "N/A") {
+                    selectDropdown = "00";
+                  } else if (dropdowntype == "ใบ") {
+                    selectDropdown = "01";
+                  } else if (dropdowntype == "ดอก") {
+                    selectDropdown = "02";
+                  } else {
+                    selectDropdown = "03";
+                  }
                 },
               );
             },
@@ -304,18 +451,18 @@ class _HarvestsState extends State<Harvests> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "น้ำหนัก (kg) :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -323,13 +470,15 @@ class _HarvestsState extends State<Harvests> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlWeight,
             keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุน้ำหนัก',
                 hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+            validator: RequiredValidator(errorText: 'กรุณาป้อนข้อมูล'),
           ),
         ),
       ],
@@ -340,18 +489,18 @@ class _HarvestsState extends State<Harvests> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "หมายเลขล๊อต :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -359,13 +508,15 @@ class _HarvestsState extends State<Harvests> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlLotNo,
             keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
                 hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+            validator: RequiredValidator(errorText: 'กรุณาป้อนข้อมูล'),
           ),
         ),
       ],
@@ -376,18 +527,18 @@ class _HarvestsState extends State<Harvests> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "หมายเหตุ :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -395,8 +546,9 @@ class _HarvestsState extends State<Harvests> {
             ],
           ),
           child: TextFormField(
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            controller: _ctlHavestRemake,
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: '**หมายเหตุ**',

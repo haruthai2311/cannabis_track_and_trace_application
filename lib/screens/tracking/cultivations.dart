@@ -8,7 +8,7 @@ class Cultivations extends StatefulWidget {
 }
 
 class _CultivationsState extends State<Cultivations> {
-  DateTime date = DateTime(2022, 7, 25);
+  DateTime date = DateTime.now();
 
   String dropdownStrain = 'N/A';
   var itemStrain = ['N/A', 'สายพันธุ์หางกระรอก', 'สายพันธุ์หางเสือ'];

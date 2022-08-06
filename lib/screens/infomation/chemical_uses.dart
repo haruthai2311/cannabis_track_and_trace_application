@@ -8,7 +8,7 @@ class ChemicalUses extends StatefulWidget {
 }
 
 class _ChemicalUsesState extends State<ChemicalUses> {
-  DateTime date = DateTime(2022, 7, 25);
+  DateTime date = DateTime.now();
 
   String dropdowntype = 'N/A';
   var itemtype = ['N/A', 'ใบ', 'ดอก', 'ก้าน'];

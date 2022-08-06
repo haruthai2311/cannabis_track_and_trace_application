@@ -6,6 +6,8 @@ import 'package:cannabis_track_and_trace_application/screens/tracking/tracking_s
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
+import '../infomation/info_screen.dart';
+
 class BottomNavScreen extends StatefulWidget {
   @override
   State<BottomNavScreen> createState() => _BottomNavScreenState();
