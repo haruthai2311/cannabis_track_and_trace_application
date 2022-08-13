@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
 
+import '../../api/hostapi.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -21,9 +23,10 @@ class _LoginScreenState extends State<LoginScreen> {
   final _ctlUsername = TextEditingController();
   final _ctlPassword = TextEditingController();
 
+  
   Future login() async {
     //var url = "http://172.20.10.7:3000/users/login";
-    var url = "http://10.96.3.8:3000/users/login";
+    var url = hostAPI+"/users/login";
     // Showing LinearProgressIndicator.
     setState(() {
       _visible = true;

@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
 
+import '../../api/hostapi.dart';
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({Key? key}) : super(key: key);
 
@@ -37,9 +39,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _ctlConPass.clear();
   }
 
+  
+  
   Future register() async {
     //var url = "http://172.20.10.7:3000/users/register";
-    var url = "http://10.96.3.8:3000/users/register";
+    var url = hostAPI+"/users/register";
     // Showing LinearProgressIndicator.
     setState(() {
       _visible = true;

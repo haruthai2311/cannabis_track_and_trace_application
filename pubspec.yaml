@@ -38,6 +38,9 @@ dependencies:
   form_field_validator: ^1.1.0
   http: ^0.13.4
   flutter_barcode_scanner: ^2.0.0
+  date_time_picker: ^2.1.0
+  flutter_dotenv: ^5.0.2
+  
 
 dev_dependencies:
   flutter_test:
@@ -67,6 +70,7 @@ flutter:
   #   - images/a_dot_ham.jpeg
   assets:
     - images/
+    - .env
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
