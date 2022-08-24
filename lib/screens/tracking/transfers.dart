@@ -36,6 +36,7 @@ class _TransfersState extends State<Transfers> {
     _ctlLicensePlate.clear();
     _ctlTrackRemake.clear();
     dropdowntype = 'N/A';
+    dropdownHvtID = 'N/A';
   }
 
   Future addTransfers() async {
@@ -46,7 +47,7 @@ class _TransfersState extends State<Transfers> {
     });
 
     var response = await http.post(Uri.parse(url), body: {
-      "HarvestID": _ctlHavestID.text,
+      "HarvestID": dropdownHvtID.toString(),
       "TransferDate": date.toString(),
       "Type": selectDropdown.toString(),
       "Weight": _ctlWeight.text,

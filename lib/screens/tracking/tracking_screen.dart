@@ -133,7 +133,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Harvests();
+                  return PlantTracking();
                 }));
               },
               style: ElevatedButton.styleFrom(
@@ -225,7 +225,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Harvests();
+                  return Cultivations();
                 }));
               },
               style: ElevatedButton.styleFrom(
@@ -273,7 +273,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Harvests();
+                  return Transfers();
                 }));
               },
               style: ElevatedButton.styleFrom(
@@ -376,76 +376,74 @@ class _TrackingScreenState extends State<TrackingScreen> {
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
       ),
-      width: 100,
-      child: SingleChildScrollView(
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            SizedBox(
-              width: 60,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "ใส่อะไรดี",
-                    style: TextStyle(
-                      color: Colors.blueGrey[700],
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18,
+      //width: 100,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          SizedBox(
+            //width: 60,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "ใส่อะไรดี",
+                  style: TextStyle(
+                    color: Colors.blueGrey[700],
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 2,
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Icon(
+                      Icons.timelapse,
+                      color: Colors.purple[300],
                     ),
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Row(
-                    children: [
-                      Icon(
-                        Icons.timelapse,
-                        color: Colors.purple[300],
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        "10:00 AM - 12:30PM",
-                        style: TextStyle(
-                          color: Colors.grey[600],
-                          fontSize: 14,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                      vertical: 4,
-                      horizontal: 8,
+                    const SizedBox(
+                      width: 10,
                     ),
-                    decoration: BoxDecoration(
-                      color: Colors.purple[50],
-                      borderRadius: BorderRadius.circular(5),
-                    ),
-                    child: const Text(
-                      "Complete - 80%",
+                    Text(
+                      "10:00 AM - 12:30PM",
                       style: TextStyle(
-                        color: Colors.purple,
+                        color: Colors.grey[600],
+                        fontSize: 14,
                       ),
                     ),
-                  )
-                ],
-              ),
+                  ],
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                Container(
+                  padding: const EdgeInsets.symmetric(
+                    vertical: 4,
+                    horizontal: 8,
+                  ),
+                  decoration: BoxDecoration(
+                    color: Colors.purple[50],
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: const Text(
+                    "Complete - 80%",
+                    style: TextStyle(
+                      color: Colors.purple,
+                    ),
+                  ),
+                )
+              ],
             ),
-            const Icon(
-              Icons.rocket_rounded,
-              size: 60,
-              color: Colors.orange,
-            )
-          ],
-        ),
+          ),
+          const Icon(
+            Icons.rocket_rounded,
+            size: 60,
+            color: Colors.orange,
+          )
+        ],
       ),
     );
   }

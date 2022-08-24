@@ -113,11 +113,7 @@ class _PlantTrackingState extends State<PlantTracking> {
                                     borderRadius: BorderRadius.circular(30)),
                                 padding: const EdgeInsets.all(15)),
                             onPressed: () {
-<<<<<<< HEAD
                               _showDialogCancel();
-=======
-                              Navigator.of(context).pop();
->>>>>>> c1ae6d976b60dbd57a031e59cee230083810e3a2
                             },
                             child: Text("ยกเลิก"),
                           ),
