@@ -1,43 +1,40 @@
 // To parse this JSON data, do
 //
-//     final allStrains = allStrainsFromJson(jsonString);
+//     final allInventorys = allInventorysFromJson(jsonString);
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-List<AllStrains> allStrainsFromJson(String str) => List<AllStrains>.from(json.decode(str).map((x) => AllStrains.fromJson(x)));
+List<AllInventorys> allInventorysFromJson(String str) => List<AllInventorys>.from(json.decode(str).map((x) => AllInventorys.fromJson(x)));
 
-String allStrainsToJson(List<AllStrains> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String allInventorysToJson(List<AllInventorys> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class AllStrains {
-    AllStrains({
-        required this.strainId,
+class AllInventorys {
+    AllInventorys({
+        required this.inventoryId,
         required this.name,
-        required this.shortName,
+        required this.commercialName,
         required this.isActive,
-        required this.remark,
         required this.createTime,
         required this.createBy,
         required this.updateTime,
         required this.updateBy,
     });
 
-    int strainId;
+    int inventoryId;
     String name;
-    dynamic shortName;
+    dynamic commercialName;
     String isActive;
-    dynamic remark;
     DateTime createTime;
     dynamic createBy;
     DateTime updateTime;
     dynamic updateBy;
 
-    factory AllStrains.fromJson(Map<String, dynamic> json) => AllStrains(
-        strainId: json["StrainID"],
+    factory AllInventorys.fromJson(Map<String, dynamic> json) => AllInventorys(
+        inventoryId: json["InventoryID"],
         name: json["Name"],
-        shortName: json["ShortName"],
+        commercialName: json["CommercialName"],
         isActive: json["IsActive"],
-        remark: json["Remark"],
         createTime: DateTime.parse(json["CreateTime"]),
         createBy: json["CreateBy"],
         updateTime: DateTime.parse(json["UpdateTime"]),
@@ -45,11 +42,10 @@ class AllStrains {
     );
 
     Map<String, dynamic> toJson() => {
-        "StrainID": strainId,
+        "InventoryID": inventoryId,
         "Name": name,
-        "ShortName": shortName,
+        "CommercialName": commercialName,
         "IsActive": isActive,
-        "Remark": remark,
         "CreateTime": createTime.toIso8601String(),
         "CreateBy": createBy,
         "UpdateTime": updateTime.toIso8601String(),

@@ -23,10 +23,9 @@ class _LoginScreenState extends State<LoginScreen> {
   final _ctlUsername = TextEditingController();
   final _ctlPassword = TextEditingController();
 
-  
   Future login() async {
     //var url = "http://172.20.10.7:3000/users/login";
-    var url = hostAPI+"/users/login";
+    var url = hostAPI + "/users/login";
     // Showing LinearProgressIndicator.
     setState(() {
       _visible = true;
@@ -38,8 +37,9 @@ class _LoginScreenState extends State<LoginScreen> {
         body: {"username": _ctlUsername.text, "password": _ctlPassword.text});
     if (response.statusCode == 200) {
       //Server response into variable
-      print(response.body);
+      //print(response.body);
       var msg = jsonDecode(response.body);
+      var UserID = msg['user']["UserID"].toString();
 
       //Check Login Status
       if (msg['success'] == true) {
@@ -50,7 +50,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
         // Navigate to Home Screen
         Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => BottomNavScreen(),
+          builder: (context) => BottomNavScreen(UserID: UserID),
         ));
       } else {
         setState(() {
@@ -94,7 +94,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   void initState() {
     super.initState();
-    //login();
   }
 
   @override
@@ -122,7 +121,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           height: 30,
                         ),
                         const Text(
-                          "Cannabis Track and                 Trace Application",
+                          "Cannabis Track and \n Trace Application",
                           style: TextStyle(
                               fontSize: 26, fontWeight: FontWeight.w600),
                           textAlign: TextAlign.center,
@@ -260,15 +259,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                               BorderRadius.circular(15)),
                                       padding: const EdgeInsets.all(20)),
                                   onPressed: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      login();
-                                    }
                                     // if (_formKey.currentState!.validate()) {
-                                    //   Navigator.push(context,
-                                    //       MaterialPageRoute(builder: (context) {
-                                    //     return BottomNavScreen();
-                                    //   }));
+                                    //   login();
                                     // }
+                                    //if (_formKey.currentState!.validate()) {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return BottomNavScreen(UserID: "14");
+                                      }));
+                                    //}
                                   },
                                   child: Text("Login"))),
                         ),

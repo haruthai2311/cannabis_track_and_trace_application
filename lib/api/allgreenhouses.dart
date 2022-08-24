@@ -5,28 +5,12 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-AllGreenhouses allGreenhousesFromJson(String str) => AllGreenhouses.fromJson(json.decode(str));
+List<AllGreenhouses> allGreenhousesFromJson(String str) => List<AllGreenhouses>.from(json.decode(str).map((x) => AllGreenhouses.fromJson(x)));
 
-String allGreenhousesToJson(AllGreenhouses data) => json.encode(data.toJson());
+String allGreenhousesToJson(List<AllGreenhouses> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class AllGreenhouses {
     AllGreenhouses({
-        required this.result,
-    });
-
-    List<Result> result;
-
-    factory AllGreenhouses.fromJson(Map<String, dynamic> json) => AllGreenhouses(
-        result: List<Result>.from(json["result"].map((x) => Result.fromJson(x))),
-    );
-
-    Map<String, dynamic> toJson() => {
-        "result": List<dynamic>.from(result.map((x) => x.toJson())),
-    };
-}
-
-class Result {
-    Result({
         required this.greenHouseId,
         required this.locationId,
         required this.name,
@@ -48,7 +32,7 @@ class Result {
     DateTime updateTime;
     dynamic updateBy;
 
-    factory Result.fromJson(Map<String, dynamic> json) => Result(
+    factory AllGreenhouses.fromJson(Map<String, dynamic> json) => AllGreenhouses(
         greenHouseId: json["GreenHouseID"],
         locationId: json["LocationID"],
         name: json["Name"],

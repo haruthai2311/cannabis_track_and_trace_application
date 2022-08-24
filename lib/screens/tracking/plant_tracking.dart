@@ -47,7 +47,9 @@ class _PlantTrackingState extends State<PlantTracking> {
                         fontWeight: FontWeight.w600,
                         color: Color.fromARGB(255, 8, 143, 114)),
                   ),
-                  const SizedBox(height: 50),
+                  const SizedBox(height: 30),
+                  buildImages(),
+                  const SizedBox(height: 20),
                   buildPlantTrackID(),
                   const SizedBox(height: 20),
                   buildPlantNo(),
@@ -98,10 +100,7 @@ class _PlantTrackingState extends State<PlantTracking> {
                                     borderRadius: BorderRadius.circular(30)),
                                 padding: const EdgeInsets.all(15)),
                             onPressed: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return TrackingScreen();
-                              }));
+                              _showDialogCancel();
                             },
                             child: Text("ยกเลิก"),
                           ),
@@ -115,6 +114,71 @@ class _PlantTrackingState extends State<PlantTracking> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _showDialogCancel() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ยืนยันการยกเลิก'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Text('คุณต้องการยกเลิกใช่หรือไม่?'),
+                //Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('ยืนยัน'),
+              onPressed: () {
+                //print('Confirmed');
+                Navigator.of(context).pop();
+                Navigator.of(context).pop(PlantTracking());
+              },
+            ),
+            TextButton(
+              child: Text('ยกเลิก'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Widget buildImages() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          height: 200,
+          decoration: BoxDecoration(border: Border.all(color: Color(0xffC4C4C4) )),
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              IconButton(onPressed: () {}, icon: Icon(Icons.add_a_photo,)),
+              Container(
+                width: 270,
+                //height: 190,
+                  child: Image.asset(
+                    "images/Group639.png",
+                    fit: BoxFit.cover,
+                  ),
+                
+              ),
+              IconButton(
+                  onPressed: () {}, icon: Icon(Icons.add_photo_alternate)),
+            ],
+          ),
+        ),
+      ],
     );
   }
 

@@ -3,52 +3,49 @@ import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 
 class ScanScreen extends StatefulWidget {
+  final String UserID;
+  const ScanScreen({Key? key, required this.UserID}) : super(key: key);
 
   @override
   State<ScanScreen> createState() => _ScanScreenState();
 }
 
 class _ScanScreenState extends State<ScanScreen> {
- 
   String? barResult;
   String? qrResult;
 
-  Future barCodeScanner() async{
-
+  Future barCodeScanner() async {
     String result;
 
-    try{
-      result = await FlutterBarcodeScanner.scanBarcode("#FFBF00", "Cancel" , true, ScanMode.BARCODE);
-    } on PlatformException{
+    try {
+      result = await FlutterBarcodeScanner.scanBarcode(
+          "#FFBF00", "Cancel", true, ScanMode.BARCODE);
+    } on PlatformException {
       result = "Failed to get plateform version";
     }
-    if(!mounted) return;
+    if (!mounted) return;
     setState(() {
       barResult = result;
     });
   }
 
-
-  Future qrCodeScanner() async{
+  Future qrCodeScanner() async {
     String qResult;
-    try{
-      qResult = await FlutterBarcodeScanner.scanBarcode("#FFBF00", "Cancel", true, ScanMode.QR);
-    } on PlatformException{
+    try {
+      qResult = await FlutterBarcodeScanner.scanBarcode(
+          "#FFBF00", "Cancel", true, ScanMode.QR);
+    } on PlatformException {
       qResult = "Failed to get Plateform Version";
     }
-    if(!mounted) return;
+    if (!mounted) return;
     setState(() {
       qrResult = qResult;
     });
   }
 
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: SafeArea(
         child: Center(
           child: SingleChildScrollView(
@@ -62,18 +59,28 @@ class _ScanScreenState extends State<ScanScreen> {
                     shape: StadiumBorder(),
                     child: Row(
                       children: [
-                        Icon(Icons.camera_alt_outlined,),
-                        SizedBox(width: 5.0,),
-                        Text("Scan Barcode", style: TextStyle(fontWeight: FontWeight.bold),)
+                        Icon(
+                          Icons.camera_alt_outlined,
+                        ),
+                        SizedBox(
+                          width: 5.0,
+                        ),
+                        Text(
+                          "Scan Barcode",
+                          style: TextStyle(fontWeight: FontWeight.bold),
+                        )
                       ],
                     ),
                   ),
                 ),
                 SizedBox(height: 15.0),
                 Text(
-                  barResult == null ? "Scan a Code" : "Scan Result is : $barResult",  style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
+                  barResult == null
+                      ? "Scan a Code"
+                      : "Scan Result is : $barResult",
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
                 ),
-                
               ],
             ),
           ),

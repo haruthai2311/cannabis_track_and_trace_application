@@ -12,7 +12,7 @@ class Harvests extends StatefulWidget {
 }
 
 class _HarvestsState extends State<Harvests> {
-  late AllGreenhouses _allGreenhouses;
+  late List<AllGreenhouses> _allGreenhouses;
   DateTime date = DateTime.now();
   final _formKey = GlobalKey<FormState>();
   bool _visible = false;
@@ -33,7 +33,7 @@ class _HarvestsState extends State<Harvests> {
   }
 
   Future addHarvests() async {
-    var url = hostAPI+"/trackings/harvests";
+    var url = hostAPI + "/trackings/harvests";
     // Showing LinearProgressIndicator.
     setState(() {
       _visible = true;
@@ -107,8 +107,8 @@ class _HarvestsState extends State<Harvests> {
     super.initState();
   }
 
-  Future<AllGreenhouses> getAllGreenhouses() async {
-    var url = hostAPI+'/informations/getAllGreenhouses';
+  Future<List<AllGreenhouses>> getAllGreenhouses() async {
+    var url = hostAPI + '/informations/getAllGreenhouses';
     var response = await http.get(Uri.parse(url));
     _allGreenhouses = allGreenhousesFromJson(response.body);
     //print(_allGreenhouses.result[0].name.toString());
@@ -132,7 +132,7 @@ class _HarvestsState extends State<Harvests> {
           future: getAllGreenhouses(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              var result = snapshot.data.result;
+              var result = snapshot.data;
 
               var nameGH = ['N/A'];
               for (var i = 0; i < result.length; i++) {
@@ -263,7 +263,7 @@ class _HarvestsState extends State<Harvests> {
                                                   BorderRadius.circular(30)),
                                           padding: const EdgeInsets.all(15)),
                                       onPressed: () {
-                                        _showMyDialog();
+                                        _showDialogCancel();
                                         //Navigator.of(context).pop(Harvests());
                                       },
                                       child: Text("ยกเลิก"),
@@ -285,7 +285,7 @@ class _HarvestsState extends State<Harvests> {
         ));
   }
 
-  Future<void> _showMyDialog() async {
+  Future<void> _showDialogCancel() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
