@@ -9,22 +9,24 @@ import 'package:flutter/material.dart';
 import '../infomation/info_screen.dart';
 
 class BottomNavScreen extends StatefulWidget {
+  final String UserID;
+  const BottomNavScreen({Key? key, required this.UserID}) : super(key: key);
+
   @override
   State<BottomNavScreen> createState() => _BottomNavScreenState();
 }
 
 class _BottomNavScreenState extends State<BottomNavScreen> {
+  // String UserID;
+  //_BottomNavScreenState({required this.UserID});
+
   int _currentIndex = 0;
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
-
-  final List _screens = [
-    HomeScreen(),
-    TrackingScreen(),
-    ScanScreen(),
-    InfoScreen(),
-    AccountScreen(),
-  ];
-  
+  @override
+  void initState() {
+    super.initState();
+    //print(widget.UserID);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,13 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
         top: false,
         child: Scaffold(
           extendBody: true,
-          body: _screens[_currentIndex],
+          body: [
+            HomeScreen(UserID: widget.UserID),
+            TrackingScreen(UserID: widget.UserID),
+            ScanScreen(UserID: widget.UserID),
+            InfoScreen(UserID: widget.UserID),
+            AccountScreen(UserID: widget.UserID),
+          ][_currentIndex],
           bottomNavigationBar: Theme(
             data: Theme.of(context)
                 .copyWith(iconTheme: IconThemeData(color: Colors.white)),
@@ -42,7 +50,9 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
               color: Color.fromARGB(115, 2, 116, 68),
               backgroundColor: Colors.transparent,
               buttonBackgroundColor: Color.fromARGB(255, 2, 92, 70),
-              height: 50,               /// 60.0
+              height: 50,
+
+              /// 60.0
               animationCurve: Curves.easeInOut,
               animationDuration: Duration(milliseconds: 400),
               index: _currentIndex,
@@ -60,5 +70,4 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
       ),
     );
   }
-  
 }

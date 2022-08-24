@@ -15,8 +15,8 @@ class Cultivations extends StatefulWidget {
 class _CultivationsState extends State<Cultivations> {
   DateTime SeedDate = DateTime.now();
   DateTime MoveDate = DateTime.now();
-  late AllGreenhouses _allGreenhouses;
-  late AllStrains _allStrains;
+  late List<AllGreenhouses> _allGreenhouses;
+  late List<AllStrains> _allStrains;
   final _formKey = GlobalKey<FormState>();
   bool _visible = false;
 
@@ -166,8 +166,8 @@ class _CultivationsState extends State<Cultivations> {
           future: getData(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              var result1 = snapshot.data[0].result;
-              var result2 = snapshot.data[1].result;
+              var result1 = snapshot.data[0];
+              var result2 = snapshot.data[1];
               var nameGH = ['N/A'];
               for (var i = 0; i < result1.length; i++) {
                 nameGH.add(result1[i].name);
@@ -356,7 +356,7 @@ class _CultivationsState extends State<Cultivations> {
                                                 BorderRadius.circular(30)),
                                         padding: const EdgeInsets.all(15)),
                                     onPressed: () {
-                                      _showMyDialog();
+                                      _showDialogCancel();
                                     },
                                     child: Text("ยกเลิก"),
                                   ),
@@ -376,7 +376,7 @@ class _CultivationsState extends State<Cultivations> {
         ));
   }
 
-  Future<void> _showMyDialog() async {
+  Future<void> _showDialogCancel() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!

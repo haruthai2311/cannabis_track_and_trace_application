@@ -40,6 +40,15 @@ dependencies:
   flutter_barcode_scanner: ^2.0.0
   date_time_picker: ^2.1.0
   flutter_dotenv: ^5.0.2
+<<<<<<< HEAD
+=======
+  google_maps_flutter: ^2.1.12
+  geolocator: ^9.0.1
+  image_picker: ^0.8.5+3
+
+  
+>>>>>>> c4a3341cfaa06a3284cb381c93d00365157ccdd9
+>>>>>>> d523a1c7ee20fbe0ff6f1a454bfb74d31e20069a
 
 dev_dependencies:
   flutter_test:

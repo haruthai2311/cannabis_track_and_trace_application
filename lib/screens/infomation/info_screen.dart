@@ -8,6 +8,8 @@ import 'package:cannabis_track_and_trace_application/screens/test.dart';
 import 'package:flutter/material.dart';
 
 class InfoScreen extends StatefulWidget {
+  final String UserID;
+  const InfoScreen({Key? key, required this.UserID}) : super(key: key);
   @override
   State<InfoScreen> createState() => _InfoScreenState();
 }
@@ -22,7 +24,7 @@ class _InfoScreenState extends State<InfoScreen> {
           IconButton(
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return Test();
+                return Strains(UserID: widget.UserID);
               }));
             },
             icon: Icon(Icons.add),
@@ -41,7 +43,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return Strains();
+                        return Strains(UserID: widget.UserID);
                       }));
                     },
                     child: Text('เพิ่มข้อมูลสายพันธุ์'),

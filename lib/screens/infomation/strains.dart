@@ -1,14 +1,110 @@
+import 'dart:convert';
+
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
 import 'package:cannabis_track_and_trace_application/screens/infomation/info_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import '../../api/hostapi.dart';
 
 class Strains extends StatefulWidget {
+  final String UserID;
+  const Strains({Key? key, required this.UserID}) : super(key: key);
   @override
   State<Strains> createState() => _StrainsState();
 }
 
 class _StrainsState extends State<Strains> {
+  final _formKey = GlobalKey<FormState>();
+  bool _visible = false;
+
+  final _ctlName = TextEditingController();
+  final _ctlShortName = TextEditingController();
+  final _ctlRemark = TextEditingController();
+
+  void Clear() {
+    _ctlName.clear();
+    _ctlShortName.clear();
+    dropdownIsA = "N/A";
+    _ctlRemark.clear();
+  }
+
+  Future addStrains() async {
+    var url = hostAPI + "/informations/addStrains";
+    // Showing LinearProgressIndicator.
+    setState(() {
+      _visible = true;
+    });
+
+    var response = await http.post(Uri.parse(url), body: {
+      "Name": _ctlName.text,
+      "ShortName": _ctlShortName.text,
+      "IsActive": selectDropdownIsA.toString(),
+      "Remark": _ctlRemark.text,
+      "CreateBy": widget.UserID,
+      "UpdateBy": widget.UserID,
+    });
+    print('Response status : ${response.statusCode}');
+    print('Response body : ${response.body}');
+    if (response.statusCode == 200) {
+      print(response.body);
+      var msg = jsonDecode(response.body);
+
+      //Check Login Status
+      if (msg['success'] == true) {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+        });
+        showMessage(msg["message"]);
+        Clear();
+      } else {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+
+          //Show Error Message Dialog
+          showMessage(msg["message"]);
+        });
+        //showMessage(context, 'เกิดข้อผิดพลาด');
+      }
+    } else {
+      setState(() {
+        //hide progress indicator
+        _visible = false;
+
+        //Show Error Message Dialog
+        showMessage("Error during connecting to Server.");
+      });
+    }
+  }
+
+  Future<dynamic> showMessage(String msg) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(msg),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   String dropdownIsA = 'N/A';
+  String selectDropdownIsA = '';
   var itemIsA = ['N/A', 'ON', 'OFF'];
   @override
   Widget build(BuildContext context) {
@@ -52,7 +148,9 @@ class _StrainsState extends State<Strains> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30)),
                                 padding: const EdgeInsets.all(15)),
-                            onPressed: () {},
+                            onPressed: () {
+                              addStrains();
+                            },
                             child: Text("บันทึก"),
                           ),
                         ],
@@ -68,7 +166,7 @@ class _StrainsState extends State<Strains> {
                                     borderRadius: BorderRadius.circular(30)),
                                 padding: const EdgeInsets.all(15)),
                             onPressed: () {
-                              Navigator.of(context).pop();
+                              _showDialogCancel();
                             },
                             child: Text("ยกเลิก"),
                           ),
@@ -82,6 +180,42 @@ class _StrainsState extends State<Strains> {
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> _showDialogCancel() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ยืนยันการยกเลิก'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Text('คุณต้องการยกเลิกใช่หรือไม่?'),
+                //Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('ยืนยัน'),
+              onPressed: () {
+                //print('Confirmed');
+                Navigator.of(context).pop();
+                Navigator.of(context).pop(Strains(UserID: widget.UserID,));
+              },
+            ),
+            TextButton(
+              child: Text('ยกเลิก'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -108,6 +242,7 @@ class _StrainsState extends State<Strains> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlName,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
                 border: InputBorder.none,
@@ -143,6 +278,7 @@ class _StrainsState extends State<Strains> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlShortName,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
                 border: InputBorder.none,
@@ -198,6 +334,11 @@ class _StrainsState extends State<Strains> {
               setState(
                 () {
                   dropdownIsA = newValue!;
+                  if (dropdownIsA == 'ON') {
+                    selectDropdownIsA = "Y";
+                  } else {
+                    selectDropdownIsA = "N";
+                  }
                 },
               );
             },
@@ -230,6 +371,7 @@ class _StrainsState extends State<Strains> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlRemark,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
                 border: InputBorder.none,

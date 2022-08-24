@@ -3,6 +3,7 @@ import 'package:cannabis_track_and_trace_application/config/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
+import '../../api/allharvests.dart';
 import '../../api/hostapi.dart';
 
 class Transfers extends StatefulWidget {
@@ -14,6 +15,7 @@ class _TransfersState extends State<Transfers> {
   DateTime date = DateTime.now();
   final _formKey = GlobalKey<FormState>();
   bool _visible = false;
+  late List<AllHarvests> _allHarvests;
 
   final _ctlHavestID = TextEditingController();
   final _ctlWeight = TextEditingController();
@@ -37,7 +39,7 @@ class _TransfersState extends State<Transfers> {
   }
 
   Future addTransfers() async {
-    var url = hostAPI+"/trackings/transfers";
+    var url = hostAPI + "/trackings/transfers";
     // Showing LinearProgressIndicator.
     setState(() {
       _visible = true;
@@ -114,81 +116,180 @@ class _TransfersState extends State<Transfers> {
     super.initState();
   }
 
+  Future<List<AllHarvests>> getAllHarvests() async {
+    var url = hostAPI + "/trackings/getHarvests";
+    var response = await http.get(Uri.parse(url));
+    _allHarvests = allHarvestsFromJson(response.body);
+
+    return _allHarvests;
+  }
+
   String dropdowntype = 'N/A';
   String selectDropdown = '00';
   var itemtype = ['N/A', 'ใบ', 'ดอก', 'ก้าน'];
 
+  String dropdownHvtID = 'N/A';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(backgroundColor: kBackground),
-      body: SafeArea(
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  Text(
-                    "บันทึกข้อมูลการส่งมอบ",
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 8, 143, 114)),
-                  ),
-                  const SizedBox(height: 50),
-                  buildHavestID(),
-                  const SizedBox(height: 20),
-                  buildTransferDate(),
-                  const SizedBox(height: 20),
-                  buildType(),
-                  const SizedBox(height: 20),
-                  buildweight(),
-                  const SizedBox(height: 20),
-                  buildLotNo(),
-                  const SizedBox(height: 20),
-                  buildGetByName(),
-                  const SizedBox(height: 20),
-                  buildGetByPlate(),
-                  const SizedBox(height: 20),
-                  buildLicenseNo(),
-                  const SizedBox(height: 20),
-                  buildLicensePlate(),
-                  const SizedBox(height: 20),
-                  buildTrackRemake(),
-                  const SizedBox(height: 50),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Column(
+        appBar: AppBar(backgroundColor: kBackground),
+        body: FutureBuilder(
+          future: getAllHarvests(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              var result = snapshot.data;
+              var itemHvtID = ['N/A'];
+              for (var i = 0; i < result.length; i++) {
+                itemHvtID.add(result[i].harvestId.toString());
+              }
+              print(itemHvtID);
+
+              return SafeArea(
+                child: Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: SingleChildScrollView(
+                      child: Column(
                         children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                textStyle: TextStyle(fontSize: 18),
-                                primary: Color.fromARGB(255, 10, 94, 3),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                padding: const EdgeInsets.all(15)),
-                            onPressed: () {
-                              addTransfers();
-                            },
-                            child: Text("บันทึก"),
+                          const SizedBox(height: 10),
+                          Text(
+                            "บันทึกข้อมูลการส่งมอบ",
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromARGB(255, 8, 143, 114)),
+                          ),
+                          const SizedBox(height: 50),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "หมายเลขการเก็บเกี่ยว :",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 10),
+                              Container(
+                                margin: EdgeInsets.only(left: 15, right: 15),
+                                padding: EdgeInsets.only(left: 15, right: 15),
+                                decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 240, 239, 239),
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: DropdownButton(
+                                  dropdownColor: Colors.white,
+                                  iconSize: 30,
+                                  isExpanded: true,
+                                  style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
+                                  value: dropdownHvtID,
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  items: itemHvtID.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(
+                                      () {
+                                        dropdownHvtID = newValue!;
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          buildTransferDate(),
+                          const SizedBox(height: 20),
+                          buildType(),
+                          const SizedBox(height: 20),
+                          buildweight(),
+                          const SizedBox(height: 20),
+                          buildLotNo(),
+                          const SizedBox(height: 20),
+                          buildGetByName(),
+                          const SizedBox(height: 20),
+                          buildGetByPlate(),
+                          const SizedBox(height: 20),
+                          buildLicenseNo(),
+                          const SizedBox(height: 20),
+                          buildLicensePlate(),
+                          const SizedBox(height: 20),
+                          buildTrackRemake(),
+                          const SizedBox(height: 50),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Column(
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        textStyle: TextStyle(fontSize: 18),
+                                        primary: Color.fromARGB(255, 10, 94, 3),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30)),
+                                        padding: const EdgeInsets.all(15)),
+                                    onPressed: () {
+                                      addTransfers();
+                                    },
+                                    child: Text("บันทึก"),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(width: 10),
+                              Column(
+                                children: [
+                                  ElevatedButton(
+                                    style: ElevatedButton.styleFrom(
+                                        textStyle: TextStyle(fontSize: 18),
+                                        primary:
+                                            Color.fromARGB(255, 197, 16, 4),
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(30)),
+                                        padding: const EdgeInsets.all(15)),
+                                    onPressed: () {
+                                      _showDialogCancel();
+                                    },
+                                    child: Text("ยกเลิก"),
+                                  ),
+                                ],
+                              )
+                            ],
                           ),
                         ],
                       ),
+<<<<<<< HEAD
                       SizedBox(width: 10)
                     ],
+=======
+                    ),
+>>>>>>> d523a1c7ee20fbe0ff6f1a454bfb74d31e20069a
                   ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
+                ),
+              );
+            }
+            return LinearProgressIndicator();
+          },
+        ));
   }
-  Future<void> _showMyDialog() async {
+
+  Future<void> _showDialogCancel() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -221,43 +322,6 @@ class _TransfersState extends State<Transfers> {
           ],
         );
       },
-    );
-  }
-
-  Widget buildHavestID() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "หมายเลขการเก็บเกี่ยว :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 10),
-        Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlHavestID,
-            keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
     );
   }
 

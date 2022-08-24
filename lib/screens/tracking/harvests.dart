@@ -12,7 +12,7 @@ class Harvests extends StatefulWidget {
 }
 
 class _HarvestsState extends State<Harvests> {
-  late AllGreenhouses _allGreenhouses;
+  late List<AllGreenhouses> _allGreenhouses;
   DateTime date = DateTime.now();
   final _formKey = GlobalKey<FormState>();
   bool _visible = false;
@@ -33,6 +33,10 @@ class _HarvestsState extends State<Harvests> {
   }
 
   Future addHarvests() async {
+<<<<<<< HEAD
+=======
+    var url = hostAPI + "/trackings/harvests";
+>>>>>>> d523a1c7ee20fbe0ff6f1a454bfb74d31e20069a
     // Showing LinearProgressIndicator.
     setState(() {
       _visible = true;
@@ -106,7 +110,12 @@ class _HarvestsState extends State<Harvests> {
     super.initState();
   }
 
+<<<<<<< HEAD
   Future<AllGreenhouses> getAllGreenhouses() async {
+=======
+  Future<List<AllGreenhouses>> getAllGreenhouses() async {
+    var url = hostAPI + '/informations/getAllGreenhouses';
+>>>>>>> d523a1c7ee20fbe0ff6f1a454bfb74d31e20069a
     var response = await http.get(Uri.parse(url));
     _allGreenhouses = allGreenhousesFromJson(response.body);
     //print(_allGreenhouses.result[0].name.toString());
@@ -130,7 +139,7 @@ class _HarvestsState extends State<Harvests> {
           future: getAllGreenhouses(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              var result = snapshot.data.result;
+              var result = snapshot.data;
 
               var nameGH = ['N/A'];
               for (var i = 0; i < result.length; i++) {
@@ -261,7 +270,7 @@ class _HarvestsState extends State<Harvests> {
                                                   BorderRadius.circular(30)),
                                           padding: const EdgeInsets.all(15)),
                                       onPressed: () {
-                                        _showMyDialog();
+                                        _showDialogCancel();
                                         //Navigator.of(context).pop(Harvests());
                                       },
                                       child: Text("ยกเลิก"),
@@ -283,7 +292,7 @@ class _HarvestsState extends State<Harvests> {
         ));
   }
 
-  Future<void> _showMyDialog() async {
+  Future<void> _showDialogCancel() async {
     return showDialog<void>(
       context: context,
       barrierDismissible: false, // user must tap button!
@@ -345,47 +354,33 @@ class _HarvestsState extends State<Harvests> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              //  DateTimePicker(
-              //   dateMask: 'dd/MM/yyyy',
-              //   initialValue: this.detail.entryDate != null
-              //       ? this.detail.entryDate!.toIso8601String()
-              //       : '',
-              //   firstDate: DateTime.now(),
-              //   lastDate: DateTime(2100),
-              //   icon: Icon(Icons.event, color: Colors.lightBlue),
-              //   dateLabelText: 'ประมาณวันเริ่ม',
-              //   onSaved: (val) {
-              //     if (val != '') this.detail.entryDate = DateTime.parse(val!);
-              //   }),
-
-              // Text(
-              //   '${date.year}/${date.month}/${date.day}',
-              //   //'${date.day}/${date.month}/${date.year}',
-              //   style: TextStyle(fontSize: 18, color: Colors.black),
-              // ),
-              // OutlinedButton(
-              //   child: Icon(Icons.date_range_outlined),
-              //   onPressed: () async {
-                  
-              //     DateTime? newDate = await showDatePicker(
-              //       context: context,
-              //       initialDate: date,
-              //       firstDate: DateTime(1900),
-              //       lastDate: DateTime(2100),
-              //     );
-              //     //if "CANCEL" = null
-              //     if (newDate == null) return;
-              //     //if "OK" => DateTime
-              //     setState(() => date = newDate);
-              //   },
-              //   style: OutlinedButton.styleFrom(
-              //     shape: StadiumBorder(),
-              //     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),),
-              //     textStyle: TextStyle(fontSize: 16),
-              //     primary: Color.fromARGB(255, 10, 91, 97),
-              //     //onPrimary: Colors.white
-              //   ),
-              // ),
+              Text(
+                '${date.year}/${date.month}/${date.day}',
+                //'${date.day}/${date.month}/${date.year}',
+                style: TextStyle(fontSize: 18, color: Colors.black),
+              ),
+              OutlinedButton(
+                child: Icon(Icons.date_range_outlined),
+                onPressed: () async {
+                  DateTime? newDate = await showDatePicker(
+                    context: context,
+                    initialDate: date,
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime(2100),
+                  );
+                  //if "CANCEL" = null
+                  if (newDate == null) return;
+                  //if "OK" => DateTime
+                  setState(() => date = newDate);
+                },
+                style: OutlinedButton.styleFrom(
+                  shape: StadiumBorder(),
+                  //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),),
+                  textStyle: TextStyle(fontSize: 16),
+                  primary: Color.fromARGB(255, 10, 91, 97),
+                  //onPrimary: Colors.white
+                ),
+              ),
             ],
           ),
         ),

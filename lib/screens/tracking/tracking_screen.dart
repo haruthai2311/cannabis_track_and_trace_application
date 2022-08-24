@@ -8,11 +8,20 @@ import 'package:cannabis_track_and_trace_application/widget/Circle_Gradient_Icon
 import 'package:flutter/material.dart';
 
 class TrackingScreen extends StatefulWidget {
+  final String UserID;
+
+  const TrackingScreen({Key? key, required this.UserID}) : super(key: key);
   @override
   State<TrackingScreen> createState() => _TrackingScreenState();
 }
 
 class _TrackingScreenState extends State<TrackingScreen> {
+  @override
+  void initState() {
+    super.initState();
+    print(widget.UserID);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
