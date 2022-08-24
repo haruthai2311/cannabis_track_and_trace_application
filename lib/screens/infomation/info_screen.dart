@@ -4,6 +4,7 @@ import 'package:cannabis_track_and_trace_application/screens/infomation/inventor
 import 'package:cannabis_track_and_trace_application/screens/infomation/locations.dart';
 import 'package:cannabis_track_and_trace_application/screens/infomation/pots.dart';
 import 'package:cannabis_track_and_trace_application/screens/infomation/strains.dart';
+import 'package:cannabis_track_and_trace_application/screens/test.dart';
 import 'package:flutter/material.dart';
 
 class InfoScreen extends StatefulWidget {
