@@ -33,10 +33,7 @@ class _HarvestsState extends State<Harvests> {
   }
 
   Future addHarvests() async {
-<<<<<<< HEAD
-=======
     var url = hostAPI + "/trackings/harvests";
->>>>>>> d523a1c7ee20fbe0ff6f1a454bfb74d31e20069a
     // Showing LinearProgressIndicator.
     setState(() {
       _visible = true;
@@ -110,12 +107,8 @@ class _HarvestsState extends State<Harvests> {
     super.initState();
   }
 
-<<<<<<< HEAD
-  Future<AllGreenhouses> getAllGreenhouses() async {
-=======
   Future<List<AllGreenhouses>> getAllGreenhouses() async {
     var url = hostAPI + '/informations/getAllGreenhouses';
->>>>>>> d523a1c7ee20fbe0ff6f1a454bfb74d31e20069a
     var response = await http.get(Uri.parse(url));
     _allGreenhouses = allGreenhousesFromJson(response.body);
     //print(_allGreenhouses.result[0].name.toString());

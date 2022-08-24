@@ -274,12 +274,7 @@ class _TransfersState extends State<Transfers> {
                           ),
                         ],
                       ),
-<<<<<<< HEAD
-                      SizedBox(width: 10)
-                    ],
-=======
                     ),
->>>>>>> d523a1c7ee20fbe0ff6f1a454bfb74d31e20069a
                   ),
                 ),
               );
