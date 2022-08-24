@@ -114,7 +114,6 @@ class _PlantTrackingState extends State<PlantTracking> {
                                 padding: const EdgeInsets.all(15)),
                             onPressed: () {
                               _showDialogCancel();
-                              Navigator.of(context).pop();
                             },
                             child: Text("ยกเลิก"),
                           ),
@@ -173,19 +172,23 @@ class _PlantTrackingState extends State<PlantTracking> {
       children: [
         Container(
           height: 200,
-          decoration: BoxDecoration(border: Border.all(color: Color(0xffC4C4C4) )),
+          decoration:
+              BoxDecoration(border: Border.all(color: Color(0xffC4C4C4))),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.add_a_photo,)),
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.add_a_photo,
+                  )),
               Container(
                 width: 270,
                 //height: 190,
-                  child: Image.asset(
-                    "images/Group639.png",
-                    fit: BoxFit.cover,
-                  ),
-                
+                child: Image.asset(
+                  "images/Group639.png",
+                  fit: BoxFit.cover,
+                ),
               ),
               IconButton(
                   onPressed: () {}, icon: Icon(Icons.add_photo_alternate)),
