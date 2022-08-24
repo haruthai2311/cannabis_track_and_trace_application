@@ -1,11 +1,10 @@
 import 'dart:convert';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
-import 'package:cannabis_track_and_trace_application/screens/tracking/tracking_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:form_field_validator/form_field_validator.dart';
-
 import '../../api/allgreenhouses.dart';
+import '../../api/hostapi.dart';
 
 class Harvests extends StatefulWidget {
   @override
@@ -24,8 +23,21 @@ class _HarvestsState extends State<Harvests> {
   final _ctlLotNo = TextEditingController();
   final _ctlHavestRemake = TextEditingController();
 
+  void Clear() {
+    _ctlHarvestNo.clear();
+    _ctlWeight.clear();
+    _ctlLotNo.clear();
+    _ctlHavestRemake.clear();
+    dropdownGH = 'N/A';
+    dropdowntype = 'N/A';
+  }
+
   Future addHarvests() async {
+<<<<<<< HEAD
     var url = "http://172.22.192.1:3000/trackings/harvests";
+=======
+    var url = hostAPI+"/trackings/harvests";
+>>>>>>> c4a3341cfaa06a3284cb381c93d00365157ccdd9
     // Showing LinearProgressIndicator.
     setState(() {
       _visible = true;
@@ -53,6 +65,7 @@ class _HarvestsState extends State<Harvests> {
           _visible = false;
         });
         showMessage(msg["message"]);
+        Clear();
       } else {
         setState(() {
           //hide progress indicator
@@ -99,7 +112,11 @@ class _HarvestsState extends State<Harvests> {
   }
 
   Future<AllGreenhouses> getAllGreenhouses() async {
+<<<<<<< HEAD
     var url = 'http://172.22.192.1:3000/informations/getAllGreenhouses';
+=======
+    var url = hostAPI+'/informations/getAllGreenhouses';
+>>>>>>> c4a3341cfaa06a3284cb381c93d00365157ccdd9
     var response = await http.get(Uri.parse(url));
     _allGreenhouses = allGreenhousesFromJson(response.body);
     //print(_allGreenhouses.result[0].name.toString());

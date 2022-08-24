@@ -1,6 +1,9 @@
+import 'dart:convert';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
-import 'package:cannabis_track_and_trace_application/screens/tracking/tracking_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+import '../../api/hostapi.dart';
 
 class Transfers extends StatefulWidget {
   @override
@@ -9,8 +12,110 @@ class Transfers extends StatefulWidget {
 
 class _TransfersState extends State<Transfers> {
   DateTime date = DateTime.now();
+  final _formKey = GlobalKey<FormState>();
+  bool _visible = false;
+
+  final _ctlHavestID = TextEditingController();
+  final _ctlWeight = TextEditingController();
+  final _ctlLotNo = TextEditingController();
+  final _ctlGetByName = TextEditingController();
+  final _ctlGetByPlate = TextEditingController();
+  final _ctlLicenseNo = TextEditingController();
+  final _ctlLicensePlate = TextEditingController();
+  final _ctlTrackRemake = TextEditingController();
+
+  void Clear() {
+    _ctlHavestID.clear();
+    _ctlWeight.clear();
+    _ctlLotNo.clear();
+    _ctlGetByName.clear();
+    _ctlGetByPlate.clear();
+    _ctlLicenseNo.clear();
+    _ctlLicensePlate.clear();
+    _ctlTrackRemake.clear();
+    dropdowntype = 'N/A';
+  }
+
+  Future addTransfers() async {
+    var url = hostAPI+"/trackings/transfers";
+    // Showing LinearProgressIndicator.
+    setState(() {
+      _visible = true;
+    });
+
+    var response = await http.post(Uri.parse(url), body: {
+      "HarvestID": _ctlHavestID.text,
+      "TransferDate": date.toString(),
+      "Type": selectDropdown.toString(),
+      "Weight": _ctlWeight.text,
+      "LotNo": _ctlLotNo.text,
+      "GetByName": _ctlGetByName.text,
+      "GetByPlace": _ctlGetByPlate.text,
+      "LicenseNo": _ctlLicenseNo.text,
+      "LicensePlate": _ctlLicensePlate.text,
+      "Remark": _ctlTrackRemake.text,
+    });
+    print('Response status : ${response.statusCode}');
+    print('Response body : ${response.body}');
+    if (response.statusCode == 200) {
+      print(response.body);
+      var msg = jsonDecode(response.body);
+
+      //Check Login Status
+      if (msg['success'] == true) {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+        });
+        showMessage(msg["message"]);
+        Clear();
+      } else {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+
+          //Show Error Message Dialog
+          showMessage(msg["message"]);
+        });
+        //showMessage(context, 'เกิดข้อผิดพลาด');
+      }
+    } else {
+      setState(() {
+        //hide progress indicator
+        _visible = false;
+
+        //Show Error Message Dialog
+        showMessage("Error during connecting to Server.");
+      });
+    }
+  }
+
+  Future<dynamic> showMessage(String msg) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(msg),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    super.initState();
+  }
 
   String dropdowntype = 'N/A';
+  String selectDropdown = '00';
   var itemtype = ['N/A', 'ใบ', 'ดอก', 'ก้าน'];
 
   @override
@@ -65,7 +170,9 @@ class _TransfersState extends State<Transfers> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30)),
                                 padding: const EdgeInsets.all(15)),
-                            onPressed: () {},
+                            onPressed: () {
+                              addTransfers();
+                            },
                             child: Text("บันทึก"),
                           ),
                         ],
@@ -80,9 +187,13 @@ class _TransfersState extends State<Transfers> {
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(30)),
                                 padding: const EdgeInsets.all(15)),
+<<<<<<< HEAD
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
+=======
+                            onPressed: () {_showMyDialog();},
+>>>>>>> c4a3341cfaa06a3284cb381c93d00365157ccdd9
                             child: Text("ยกเลิก"),
                           ),
                         ],
@@ -95,6 +206,41 @@ class _TransfersState extends State<Transfers> {
           ),
         ),
       ),
+    );
+  }
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ยืนยันการยกเลิก'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: <Widget>[
+                Text('คุณต้องการยกเลิกใช่หรือไม่?'),
+                //Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('ยืนยัน'),
+              onPressed: () {
+                //print('Confirmed');
+                Navigator.of(context).pop();
+                Navigator.of(context).pop(Transfers());
+              },
+            ),
+            TextButton(
+              child: Text('ยกเลิก'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -121,6 +267,7 @@ class _TransfersState extends State<Transfers> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlHavestID,
             keyboardType: TextInputType.number,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
@@ -237,6 +384,15 @@ class _TransfersState extends State<Transfers> {
               setState(
                 () {
                   dropdowntype = newValue!;
+                  if (dropdowntype == "N/A") {
+                    selectDropdown = "00";
+                  } else if (dropdowntype == "ใบ") {
+                    selectDropdown = "01";
+                  } else if (dropdowntype == "ดอก") {
+                    selectDropdown = "02";
+                  } else {
+                    selectDropdown = "03";
+                  }
                 },
               );
             },
@@ -269,6 +425,7 @@ class _TransfersState extends State<Transfers> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlWeight,
             keyboardType: TextInputType.number,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
@@ -305,6 +462,7 @@ class _TransfersState extends State<Transfers> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlLotNo,
             keyboardType: TextInputType.number,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
@@ -341,6 +499,7 @@ class _TransfersState extends State<Transfers> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlGetByName,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
                 border: InputBorder.none,
@@ -376,6 +535,7 @@ class _TransfersState extends State<Transfers> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlGetByPlate,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
                 border: InputBorder.none,
@@ -411,6 +571,7 @@ class _TransfersState extends State<Transfers> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlLicenseNo,
             keyboardType: TextInputType.number,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
@@ -447,6 +608,7 @@ class _TransfersState extends State<Transfers> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlLicensePlate,
             keyboardType: TextInputType.number,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
@@ -483,6 +645,7 @@ class _TransfersState extends State<Transfers> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlTrackRemake,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
                 border: InputBorder.none,
