@@ -41,7 +41,7 @@ class _CultivationsState extends State<Cultivations> {
   }
 
   Future addCultivations() async {
-    var url = hostAPI+"/trackings/addCultivations";
+    var url = hostAPI + "/trackings/addCultivations";
     // Showing LinearProgressIndicator.
     setState(() {
       _visible = true;
@@ -121,13 +121,13 @@ class _CultivationsState extends State<Cultivations> {
   }
 
   Future getData() async {
-    var url = hostAPI+'/informations/getAllGreenhouses';
+    var url = hostAPI + '/informations/getAllGreenhouses';
     var response = await http.get(Uri.parse(url));
     _allGreenhouses = allGreenhousesFromJson(response.body);
 
-     var urlStrains = hostAPI+'/informations/getStrains';
-     var responseStrains = await http.get(Uri.parse(urlStrains));
-     _allStrains = allStrainsFromJson(responseStrains.body);
+    var urlStrains = hostAPI + '/informations/getStrains';
+    var responseStrains = await http.get(Uri.parse(urlStrains));
+    _allStrains = allStrainsFromJson(responseStrains.body);
 
     return [_allGreenhouses, _allStrains];
     //return _allGreenhouses;
@@ -177,14 +177,9 @@ class _CultivationsState extends State<Cultivations> {
               var nameStrains = [
                 'N/A',
               ];
-               for (var i = 0; i < result2.length; i++) {
-                
-                 nameStrains.add(result2[i].name);
-              
-
-             
-
-             }
+              for (var i = 0; i < result2.length; i++) {
+                nameStrains.add(result2[i].name);
+              }
               // print(nameStrains);
 
               return SafeArea(
@@ -371,28 +366,7 @@ class _CultivationsState extends State<Cultivations> {
                           ),
                         ],
                       ),
-<<<<<<< HEAD
-                      SizedBox(width: 10),
-                      Column(
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                textStyle: TextStyle(fontSize: 18),
-                                primary: Color.fromARGB(255, 197, 16, 4),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                padding: const EdgeInsets.all(15)),
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-                            child: Text("ยกเลิก"),
-                          ),
-                        ],
-                      )
-                    ],
-=======
                     ),
->>>>>>> c4a3341cfaa06a3284cb381c93d00365157ccdd9
                   ),
                 ),
               );

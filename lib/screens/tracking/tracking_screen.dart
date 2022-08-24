@@ -124,7 +124,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Harvests();
+                  return PlantTracking();
                 }));
               },
               style: ElevatedButton.styleFrom(
@@ -216,7 +216,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Harvests();
+                  return Cultivations();
                 }));
               },
               style: ElevatedButton.styleFrom(
@@ -264,7 +264,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Harvests();
+                  return Transfers();
                 }));
               },
               style: ElevatedButton.styleFrom(

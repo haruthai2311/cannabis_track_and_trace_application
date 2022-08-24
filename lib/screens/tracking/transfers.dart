@@ -177,27 +177,7 @@ class _TransfersState extends State<Transfers> {
                           ),
                         ],
                       ),
-                      SizedBox(width: 10),
-                      Column(
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                textStyle: TextStyle(fontSize: 18),
-                                primary: Color.fromARGB(255, 197, 16, 4),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                padding: const EdgeInsets.all(15)),
-<<<<<<< HEAD
-                            onPressed: () {
-                              Navigator.of(context).pop();
-                            },
-=======
-                            onPressed: () {_showMyDialog();},
->>>>>>> c4a3341cfaa06a3284cb381c93d00365157ccdd9
-                            child: Text("ยกเลิก"),
-                          ),
-                        ],
-                      )
+                      SizedBox(width: 10)
                     ],
                   ),
                 ],
