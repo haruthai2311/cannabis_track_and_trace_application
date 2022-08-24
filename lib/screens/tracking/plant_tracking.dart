@@ -1,6 +1,7 @@
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/tracking_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
 class PlantTracking extends StatefulWidget {
   @override
@@ -64,9 +65,21 @@ class _PlantTrackingState extends State<PlantTracking> {
                   const SizedBox(height: 20),
                   buildDisease(),
                   const SizedBox(height: 20),
+                  buildDiseaseNo(),
+                  const SizedBox(height: 20),
                   buildDiseaseFiX(),
                   const SizedBox(height: 20),
+                  buildInsect(),
+                  const SizedBox(height: 20),
+                  buildInsectFiX(),
+                  const SizedBox(height: 20),
+                  buildChemical(),
+                  const SizedBox(height: 20),
                   buildAmount(),
+                  const SizedBox(height: 20),
+                  buildTrash(),
+                  const SizedBox(height: 20),
+                  buildTrashWeight(),
                   const SizedBox(height: 20),
                   buildPlantRemake(),
                   const SizedBox(height: 50),
@@ -98,10 +111,7 @@ class _PlantTrackingState extends State<PlantTracking> {
                                     borderRadius: BorderRadius.circular(30)),
                                 padding: const EdgeInsets.all(15)),
                             onPressed: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return TrackingScreen();
-                              }));
+                              Navigator.of(context).pop();
                             },
                             child: Text("ยกเลิก"),
                           ),
@@ -470,6 +480,41 @@ class _PlantTrackingState extends State<PlantTracking> {
             decoration: InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
+                hintText: 'กรอกข้อมูลโรค',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildDiseaseNo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "จำนวน(ต้น) :",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        Container(
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
                 hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
@@ -541,7 +586,7 @@ class _PlantTrackingState extends State<PlantTracking> {
             decoration: InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
+                hintText: 'กรอกข้อมูลแมลง',
                 hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
@@ -554,7 +599,7 @@ class _PlantTrackingState extends State<PlantTracking> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "โรคที่พบ :",
+          "การแก้ไขที่ทำไปแล้ว :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -584,12 +629,13 @@ class _PlantTrackingState extends State<PlantTracking> {
     );
   }
 
-  Widget buildAmount() {
+//สารเคมี
+  Widget buildChemical() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "ปริมาณ :",
+          "สารเคมี :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -607,6 +653,115 @@ class _PlantTrackingState extends State<PlantTracking> {
             ],
           ),
           child: TextFormField(
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: 'กรอกข้อมูลสารเคมี',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildAmount() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "ปริมาณ(kg) :",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        Container(
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            keyboardType: TextInputType.number,
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: 'ระบุ',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  //เก็บซาก
+  Widget buildTrash() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "ทำลาย(ต้น) :",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        Container(
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            keyboardType: TextInputType.number,
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: 'ระบุ',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildTrashWeight() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "น้ำหนัก(kg) :",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        Container(
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            keyboardType: TextInputType.number,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
                 border: InputBorder.none,

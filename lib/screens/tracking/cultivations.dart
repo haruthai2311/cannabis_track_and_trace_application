@@ -88,10 +88,7 @@ class _CultivationsState extends State<Cultivations> {
                                     borderRadius: BorderRadius.circular(30)),
                                 padding: const EdgeInsets.all(15)),
                             onPressed: () {
-                              Navigator.push(context,
-                                  MaterialPageRoute(builder: (context) {
-                                return TrackingScreen();
-                              }));
+                              Navigator.of(context).pop();
                             },
                             child: Text("ยกเลิก"),
                           ),

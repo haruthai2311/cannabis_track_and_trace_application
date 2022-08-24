@@ -4,6 +4,7 @@ import 'package:cannabis_track_and_trace_application/screens/infomation/inventor
 import 'package:cannabis_track_and_trace_application/screens/infomation/locations.dart';
 import 'package:cannabis_track_and_trace_application/screens/infomation/pots.dart';
 import 'package:cannabis_track_and_trace_application/screens/infomation/strains.dart';
+import 'package:cannabis_track_and_trace_application/screens/test.dart';
 import 'package:flutter/material.dart';
 
 class InfoScreen extends StatefulWidget {
@@ -21,7 +22,7 @@ class _InfoScreenState extends State<InfoScreen> {
           IconButton(
             onPressed: () {
               Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return Strains();
+                return Test();
               }));
             },
             icon: Icon(Icons.add),

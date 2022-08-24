@@ -257,15 +257,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                               BorderRadius.circular(15)),
                                       padding: const EdgeInsets.all(20)),
                                   onPressed: () {
-                                    if (_formKey.currentState!.validate()) {
-                                      login();
-                                    }
                                     // if (_formKey.currentState!.validate()) {
-                                    //   Navigator.push(context,
-                                    //       MaterialPageRoute(builder: (context) {
-                                    //     return BottomNavScreen();
-                                    //   }));
+                                    //   login();
                                     // }
+                                    if (_formKey.currentState!.validate()) {
+                                      Navigator.push(context,
+                                          MaterialPageRoute(builder: (context) {
+                                        return BottomNavScreen();
+                                      }));
+                                    }
                                   },
                                   child: Text("Login"))),
                         ),

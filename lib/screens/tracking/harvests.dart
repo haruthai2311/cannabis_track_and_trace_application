@@ -25,7 +25,7 @@ class _HarvestsState extends State<Harvests> {
   final _ctlHavestRemake = TextEditingController();
 
   Future addHarvests() async {
-    var url = "http://192.168.1.27:3000/trackings/harvests";
+    var url = "http://172.22.192.1:3000/trackings/harvests";
     // Showing LinearProgressIndicator.
     setState(() {
       _visible = true;
@@ -97,8 +97,9 @@ class _HarvestsState extends State<Harvests> {
   void initState() {
     super.initState();
   }
+
   Future<AllGreenhouses> getAllGreenhouses() async {
-    var url = 'http://192.168.1.27:3000/informations/getAllGreenhouses';
+    var url = 'http://172.22.192.1:3000/informations/getAllGreenhouses';
     var response = await http.get(Uri.parse(url));
     _allGreenhouses = allGreenhousesFromJson(response.body);
     //print(_allGreenhouses.result[0].name.toString());
@@ -111,163 +112,169 @@ class _HarvestsState extends State<Harvests> {
   var itemtype = ['N/A', 'ใบ', 'ดอก', 'ก้าน'];
 
   String dropdownGH = 'N/A';
-  
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kBackground,
-      ),
-      body: FutureBuilder(
+        appBar: AppBar(
+          backgroundColor: kBackground,
+        ),
+        body: FutureBuilder(
           future: getAllGreenhouses(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               var result = snapshot.data.result;
-              
+
               var nameGH = ['N/A'];
-              for(var i=0;i<result.length; i++) {
+              for (var i = 0; i < result.length; i++) {
                 //print(result[i].newCase);
                 nameGH.add(result[i].name);
                 //print(casenewsort);
-                
-                //
-                
-              }print(nameGH);
 
+                //
+
+              }
+              print(nameGH);
 
               return SafeArea(
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: SingleChildScrollView(
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    Text(
-                      "บันทึกข้อมูลการเก็บเกี่ยว",
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 8, 143, 114)),
-                    ),
-                    const SizedBox(height: 50),
-                    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "โรงปลูก :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 10),
-        Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          padding: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: DropdownButton(
-            dropdownColor: Colors.white,
-            iconSize: 30,
-            isExpanded: true,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-            ),
-            value: dropdownGH,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            items: nameGH.map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(
-                () {
-                  dropdownGH = newValue!;
-                },
-              );
-            },
-          ),
-        ),
-      ],
-    ),
-                    const SizedBox(height: 20),
-                    buildHarvestDate(),
-                    const SizedBox(height: 20),
-                    buildHarvestNo(),
-                    const SizedBox(height: 20),
-                    buildType(),
-                    const SizedBox(height: 20),
-                    buildweight(),
-                    const SizedBox(height: 20),
-                    buildLotNo(),
-                    const SizedBox(height: 20),
-                    buildHavestRemake(),
-                    const SizedBox(height: 50),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Column(
+                child: Container(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: SingleChildScrollView(
+                      child: Form(
+                        key: _formKey,
+                        child: Column(
                           children: [
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  textStyle: TextStyle(fontSize: 18),
-                                  primary: Color.fromARGB(255, 10, 94, 3),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30)),
-                                  padding: const EdgeInsets.all(15)),
-                              onPressed: () {
-                                if (_formKey.currentState!.validate()) {
-                                  addHarvests();
-                                }
-                              },
-                              child: Text("บันทึก"),
+                            const SizedBox(height: 10),
+                            Text(
+                              "บันทึกข้อมูลการเก็บเกี่ยว",
+                              style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.w600,
+                                  color: Color.fromARGB(255, 8, 143, 114)),
+                            ),
+                            const SizedBox(height: 50),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "โรงปลูก :",
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                SizedBox(height: 10),
+                                Container(
+                                  margin: EdgeInsets.only(left: 15, right: 15),
+                                  padding: EdgeInsets.only(left: 15, right: 15),
+                                  decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 240, 239, 239),
+                                    borderRadius: BorderRadius.circular(20),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.black26,
+                                        offset: Offset(0, 2),
+                                      ),
+                                    ],
+                                  ),
+                                  child: DropdownButton(
+                                    dropdownColor: Colors.white,
+                                    iconSize: 30,
+                                    isExpanded: true,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                    ),
+                                    value: dropdownGH,
+                                    icon: const Icon(Icons.keyboard_arrow_down),
+                                    items: nameGH.map((String items) {
+                                      return DropdownMenuItem(
+                                        value: items,
+                                        child: Text(items),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? newValue) {
+                                      setState(
+                                        () {
+                                          dropdownGH = newValue!;
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 20),
+                            buildHarvestDate(),
+                            const SizedBox(height: 20),
+                            buildHarvestNo(),
+                            const SizedBox(height: 20),
+                            buildType(),
+                            const SizedBox(height: 20),
+                            buildweight(),
+                            const SizedBox(height: 20),
+                            buildLotNo(),
+                            const SizedBox(height: 20),
+                            buildHavestRemake(),
+                            const SizedBox(height: 50),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Column(
+                                  children: [
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          textStyle: TextStyle(fontSize: 18),
+                                          primary:
+                                              Color.fromARGB(255, 10, 94, 3),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30)),
+                                          padding: const EdgeInsets.all(15)),
+                                      onPressed: () {
+                                        if (_formKey.currentState!.validate()) {
+                                          addHarvests();
+                                        }
+                                      },
+                                      child: Text("บันทึก"),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(width: 10),
+                                Column(
+                                  children: [
+                                    ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                          textStyle: TextStyle(fontSize: 18),
+                                          primary:
+                                              Color.fromARGB(255, 197, 16, 4),
+                                          shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(30)),
+                                          padding: const EdgeInsets.all(15)),
+                                      onPressed: () {
+                                        _showMyDialog();
+                                        //Navigator.of(context).pop(Harvests());
+                                      },
+                                      child: Text("ยกเลิก"),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
                           ],
                         ),
-                        SizedBox(width: 10),
-                        Column(
-                          children: [
-                            ElevatedButton(
-                              style: ElevatedButton.styleFrom(
-                                  textStyle: TextStyle(fontSize: 18),
-                                  primary: Color.fromARGB(255, 197, 16, 4),
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(30)),
-                                  padding: const EdgeInsets.all(15)),
-                              onPressed: () {
-                                _showMyDialog();
-                                //Navigator.of(context).pop(Harvests());
-                              },
-                              child: Text("ยกเลิก"),
-                            ),
-                          ],
-                        )
-                      ],
+                      ),
                     ),
-                  ],
+                  ),
                 ),
-              ),
-            ),
-          ),
-        ),
-      );} return LinearProgressIndicator();
+              );
+            }
+            return LinearProgressIndicator();
           },
-      ));
-    
+        ));
   }
-
 
   Future<void> _showMyDialog() async {
     return showDialog<void>(
@@ -305,7 +312,6 @@ class _HarvestsState extends State<Harvests> {
     );
   }
 
-
   Widget buildHarvestDate() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -332,33 +338,47 @@ class _HarvestsState extends State<Harvests> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                '${date.year}/${date.month}/${date.day}',
-                //'${date.day}/${date.month}/${date.year}',
-                style: TextStyle(fontSize: 18, color: Colors.black),
-              ),
-              OutlinedButton(
-                child: Icon(Icons.date_range_outlined),
-                onPressed: () async {
-                  DateTime? newDate = await showDatePicker(
-                    context: context,
-                    initialDate: date,
-                    firstDate: DateTime(1900),
-                    lastDate: DateTime(2100),
-                  );
-                  //if "CANCEL" = null
-                  if (newDate == null) return;
-                  //if "OK" => DateTime
-                  setState(() => date = newDate);
-                },
-                style: OutlinedButton.styleFrom(
-                  shape: StadiumBorder(),
-                  //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),),
-                  textStyle: TextStyle(fontSize: 16),
-                  primary: Color.fromARGB(255, 10, 91, 97),
-                  //onPrimary: Colors.white
-                ),
-              ),
+              //  DateTimePicker(
+              //   dateMask: 'dd/MM/yyyy',
+              //   initialValue: this.detail.entryDate != null
+              //       ? this.detail.entryDate!.toIso8601String()
+              //       : '',
+              //   firstDate: DateTime.now(),
+              //   lastDate: DateTime(2100),
+              //   icon: Icon(Icons.event, color: Colors.lightBlue),
+              //   dateLabelText: 'ประมาณวันเริ่ม',
+              //   onSaved: (val) {
+              //     if (val != '') this.detail.entryDate = DateTime.parse(val!);
+              //   }),
+
+              // Text(
+              //   '${date.year}/${date.month}/${date.day}',
+              //   //'${date.day}/${date.month}/${date.year}',
+              //   style: TextStyle(fontSize: 18, color: Colors.black),
+              // ),
+              // OutlinedButton(
+              //   child: Icon(Icons.date_range_outlined),
+              //   onPressed: () async {
+                  
+              //     DateTime? newDate = await showDatePicker(
+              //       context: context,
+              //       initialDate: date,
+              //       firstDate: DateTime(1900),
+              //       lastDate: DateTime(2100),
+              //     );
+              //     //if "CANCEL" = null
+              //     if (newDate == null) return;
+              //     //if "OK" => DateTime
+              //     setState(() => date = newDate);
+              //   },
+              //   style: OutlinedButton.styleFrom(
+              //     shape: StadiumBorder(),
+              //     //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),),
+              //     textStyle: TextStyle(fontSize: 16),
+              //     primary: Color.fromARGB(255, 10, 91, 97),
+              //     //onPrimary: Colors.white
+              //   ),
+              // ),
             ],
           ),
         ),
