@@ -54,7 +54,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return Locations();
+                        return Locations(UserID: widget.UserID);
                       }));
                     },
                     child: Text('เพิ่มข้อมูลสถานที่ปลูก'),
@@ -65,7 +65,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return Pots();
+                        return Pots(UserID: widget.UserID);
                       }));
                     },
                     child: Text('เพิ่มข้อมูลกระถาง'),
@@ -76,7 +76,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return Inventorys();
+                        return Inventorys(UserID: widget.UserID);
                       }));
                     },
                     child: Text('เพิ่มข้อมูลวัสดุ'),
@@ -87,7 +87,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return ChemicalUses();
+                        return ChemicalUses(UserID: widget.UserID);
                       }));
                     },
                     child: Text('เพิ่มข้อมูลการใช้สารเคมี'),

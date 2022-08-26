@@ -5,13 +5,17 @@ import 'package:http/http.dart' as http;
 import 'package:form_field_validator/form_field_validator.dart';
 import '../../api/allgreenhouses.dart';
 import '../../api/hostapi.dart';
+import '../../widget/dialog.dart';
 
 class Harvests extends StatefulWidget {
+  final String UserID;
+  const Harvests({Key? key, required this.UserID}) : super(key: key);
   @override
   State<Harvests> createState() => _HarvestsState();
 }
 
 class _HarvestsState extends State<Harvests> {
+  final canceldialog = MyDialog();
   late List<AllGreenhouses> _allGreenhouses;
   DateTime date = DateTime.now();
   final _formKey = GlobalKey<FormState>();
@@ -47,6 +51,8 @@ class _HarvestsState extends State<Harvests> {
       "Weight": _ctlWeight.text,
       "LotNo": _ctlLotNo.text,
       "Remark": _ctlHavestRemake.text,
+      "CreateBy": widget.UserID,
+      "UpdateBy": widget.UserID,
     });
     print('Response status : ${response.statusCode}');
     print('Response body : ${response.body}');
@@ -263,8 +269,7 @@ class _HarvestsState extends State<Harvests> {
                                                   BorderRadius.circular(30)),
                                           padding: const EdgeInsets.all(15)),
                                       onPressed: () {
-                                        _showDialogCancel();
-                                        //Navigator.of(context).pop(Harvests());
+                                        canceldialog.showDialogCancel(context);
                                       },
                                       child: Text("ยกเลิก"),
                                     ),
@@ -283,42 +288,6 @@ class _HarvestsState extends State<Harvests> {
             return LinearProgressIndicator();
           },
         ));
-  }
-
-  Future<void> _showDialogCancel() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('ยืนยันการยกเลิก'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Text('คุณต้องการยกเลิกใช่หรือไม่?'),
-                //Text('Would you like to approve of this message?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('ยืนยัน'),
-              onPressed: () {
-                //print('Confirmed');
-                Navigator.of(context).pop();
-                Navigator.of(context).pop(Harvests());
-              },
-            ),
-            TextButton(
-              child: Text('ยกเลิก'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   Widget buildHarvestDate() {

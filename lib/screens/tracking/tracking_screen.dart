@@ -74,27 +74,15 @@ class _TrackingScreenState extends State<TrackingScreen> {
                 const SizedBox(height: 15),
                 buildGrid(),
                 const SizedBox(height: 15),
-                _onGoingHeader(),
+                //_onGoingHeader(),
                 const SizedBox(
                   height: 10,
                 ),
-                _onGoingTask()
+                // _onGoingTask()
               ],
             ),
           ),
         ),
-        // Positioned(
-        //   bottom: 30,
-        //   // left: 100.w / 2 - (70 / 2),
-        //   right: 30,
-        //   child: CircleGradientIcon(
-        //     color: Colors.pink,
-        //     onTap: () {},
-        //     size: 60,
-        //     iconSize: 30,
-        //     icon: Icons.add,
-        //   ),
-        // )
       ],
     );
   }
@@ -133,7 +121,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PlantTracking();
+                  return PlantTracking(UserID: widget.UserID);
                 }));
               },
               style: ElevatedButton.styleFrom(
@@ -176,7 +164,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Harvests();
+                  return Harvests(UserID: widget.UserID);
                 }));
               },
               style: ElevatedButton.styleFrom(
@@ -225,7 +213,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Cultivations();
+                  return Cultivations(UserID: widget.UserID);
                 }));
               },
               style: ElevatedButton.styleFrom(
@@ -264,7 +252,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
               ),
             ),
           ),
-
           const SizedBox(
             height: 15,
             width: 10,
@@ -273,7 +260,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Transfers();
+                  return Transfers(UserID: widget.UserID);
                 }));
               },
               style: ElevatedButton.styleFrom(
@@ -311,140 +298,193 @@ class _TrackingScreenState extends State<TrackingScreen> {
               ),
             ),
           ),
-          // SizedBox(
-          //   height: 220,
-          //   width: 175,
-          //   child: ElevatedButton.icon(
-          //     onPressed: () {
-          //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-          //         return Transfers();
-          //       }));
-          //     },
-          //     icon: const Icon(
-          //       Icons.single_bed_sharp,
-          //       size: 100,
-          //     ),
-          //     label: const Text('บันทึกข้อมูลการส่งมอบ'),
-          //     style: ElevatedButton.styleFrom(
-          //         textStyle: TextStyle(fontSize: 20),
-          //         primary: Color.fromARGB(255, 3, 196, 106),
-          //         shape: RoundedRectangleBorder(
-          //             borderRadius: BorderRadius.circular(20)),
-          //         padding: const EdgeInsets.all(20)),
-          //   ),
-          // ),
           const SizedBox(height: 15),
         ],
       ),
     ]);
   }
 
-  Row _onGoingHeader() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
-        Text(
-          "On Going",
-          style: TextStyle(
-            color: Colors.black87,
-            fontWeight: FontWeight.w700,
-            fontSize: 22,
-          ),
-        ),
-        const Spacer(),
-        InkWell(
-          onTap: () {},
-          child: Text(
-            "See all",
-            style: TextStyle(
-              color: Colors.pink,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        )
-      ],
-    );
-  }
+  // Row _onGoingHeader() {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //     crossAxisAlignment: CrossAxisAlignment.center,
+  //     children: [
+  //       Text(
+  //         "On Going",
+  //         style: TextStyle(
+  //           color: Colors.black87,
+  //           fontWeight: FontWeight.w700,
+  //           fontSize: 22,
+  //         ),
+  //       ),
+  //       const Spacer(),
+  //       InkWell(
+  //         onTap: () {},
+  //         child: Text(
+  //           "See all",
+  //           style: TextStyle(
+  //             color: Colors.pink,
+  //             fontWeight: FontWeight.w500,
+  //           ),
+  //         ),
+  //       )
+  //     ],
+  //   );
+  // }
 
-  Widget _onGoingTask() {
-    return Container(
-      padding: const EdgeInsets.all(
-        20,
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(15),
-      ),
-      //width: 100,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          SizedBox(
-            //width: 60,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  "ใส่อะไรดี",
-                  style: TextStyle(
-                    color: Colors.blueGrey[700],
-                    fontWeight: FontWeight.bold,
-                    fontSize: 18,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Row(
-                  children: [
-                    Icon(
-                      Icons.timelapse,
-                      color: Colors.purple[300],
-                    ),
-                    const SizedBox(
-                      width: 10,
-                    ),
-                    Text(
-                      "10:00 AM - 12:30PM",
-                      style: TextStyle(
-                        color: Colors.grey[600],
-                        fontSize: 14,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                Container(
-                  padding: const EdgeInsets.symmetric(
-                    vertical: 4,
-                    horizontal: 8,
-                  ),
-                  decoration: BoxDecoration(
-                    color: Colors.purple[50],
-                    borderRadius: BorderRadius.circular(5),
-                  ),
-                  child: const Text(
-                    "Complete - 80%",
-                    style: TextStyle(
-                      color: Colors.purple,
-                    ),
-                  ),
-                )
-              ],
-            ),
-          ),
-          const Icon(
-            Icons.rocket_rounded,
-            size: 60,
-            color: Colors.orange,
-          )
-        ],
-      ),
-    );
-  }
+  // Widget _onGoingTask() {
+  //   return Container(
+  //     padding: const EdgeInsets.all(
+  //       20,
+  //     ),
+  //     decoration: BoxDecoration(
+  //       color: Colors.white,
+  //       borderRadius: BorderRadius.circular(15),
+  //     ),
+  //     //width: 100,
+  //     child: Column(
+  //       children: [
+  //         Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           children: [
+  //             SizedBox(
+  //               //width: 60,
+  //               child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: [
+  //                   Text(
+  //                     "ใส่อะไรดี",
+  //                     style: TextStyle(
+  //                       color: Colors.blueGrey[700],
+  //                       fontWeight: FontWeight.bold,
+  //                       fontSize: 18,
+  //                     ),
+  //                     overflow: TextOverflow.ellipsis,
+  //                     maxLines: 2,
+  //                   ),
+  //                   const SizedBox(
+  //                     height: 10,
+  //                   ),
+  //                   Row(
+  //                     children: [
+  //                       Icon(
+  //                         Icons.timelapse,
+  //                         color: Colors.purple[300],
+  //                       ),
+  //                       const SizedBox(
+  //                         width: 10,
+  //                       ),
+  //                       Text(
+  //                         "10:00 AM - 12:30PM",
+  //                         style: TextStyle(
+  //                           color: Colors.grey[600],
+  //                           fontSize: 14,
+  //                         ),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                   const SizedBox(
+  //                     height: 10,
+  //                   ),
+  //                   Container(
+  //                     padding: const EdgeInsets.symmetric(
+  //                       vertical: 4,
+  //                       horizontal: 8,
+  //                     ),
+  //                     decoration: BoxDecoration(
+  //                       color: Colors.purple[50],
+  //                       borderRadius: BorderRadius.circular(5),
+  //                     ),
+  //                     child: const Text(
+  //                       "Complete - 80%",
+  //                       style: TextStyle(
+  //                         color: Colors.purple,
+  //                       ),
+  //                     ),
+  //                   )
+  //                 ],
+  //               ),
+  //             ),
+  //             const Icon(
+  //               Icons.rocket_rounded,
+  //               size: 60,
+  //               color: Colors.orange,
+  //             ),
+  //           ],
+  //         ),
+  //         const SizedBox(
+  //           height: 15,
+  //         ),
+  //         Row(
+  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //           children: [
+  //             SizedBox(
+  //               //width: 60,
+  //               child: Column(
+  //                 crossAxisAlignment: CrossAxisAlignment.start,
+  //                 children: [
+  //                   Text(
+  //                     "ใส่อะไรดี",
+  //                     style: TextStyle(
+  //                       color: Colors.blueGrey[700],
+  //                       fontWeight: FontWeight.bold,
+  //                       fontSize: 18,
+  //                     ),
+  //                     overflow: TextOverflow.ellipsis,
+  //                     maxLines: 2,
+  //                   ),
+  //                   const SizedBox(
+  //                     height: 10,
+  //                   ),
+  //                   Row(
+  //                     children: [
+  //                       Icon(
+  //                         Icons.timelapse,
+  //                         color: Colors.purple[300],
+  //                       ),
+  //                       const SizedBox(
+  //                         width: 10,
+  //                       ),
+  //                       Text(
+  //                         "10:00 AM - 12:30PM",
+  //                         style: TextStyle(
+  //                           color: Colors.grey[600],
+  //                           fontSize: 14,
+  //                         ),
+  //                       ),
+  //                     ],
+  //                   ),
+  //                   const SizedBox(
+  //                     height: 10,
+  //                   ),
+  //                   Container(
+  //                     padding: const EdgeInsets.symmetric(
+  //                       vertical: 4,
+  //                       horizontal: 8,
+  //                     ),
+  //                     decoration: BoxDecoration(
+  //                       color: Colors.purple[50],
+  //                       borderRadius: BorderRadius.circular(5),
+  //                     ),
+  //                     child: const Text(
+  //                       "Complete - 80%",
+  //                       style: TextStyle(
+  //                         color: Colors.purple,
+  //                       ),
+  //                     ),
+  //                   )
+  //                 ],
+  //               ),
+  //             ),
+  //             const Icon(
+  //               Icons.rocket_rounded,
+  //               size: 60,
+  //               color: Colors.orange,
+  //             ),
+  //           ],
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 }

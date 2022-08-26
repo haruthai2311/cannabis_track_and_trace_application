@@ -39,11 +39,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
     _ctlConPass.clear();
   }
 
-  
-  
   Future register() async {
     //var url = "http://172.20.10.7:3000/users/register";
-    var url = hostAPI+"/users/register";
+    var url = hostAPI + "/users/register";
     // Showing LinearProgressIndicator.
     setState(() {
       _visible = true;

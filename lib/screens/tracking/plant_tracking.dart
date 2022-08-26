@@ -3,12 +3,18 @@ import 'package:cannabis_track_and_trace_application/screens/tracking/tracking_s
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 
+import '../../widget/dialog.dart';
+
 class PlantTracking extends StatefulWidget {
+  final String UserID;
+  const PlantTracking({Key? key, required this.UserID}) : super(key: key);
+
   @override
   State<PlantTracking> createState() => _PlantTrackingState();
 }
 
 class _PlantTrackingState extends State<PlantTracking> {
+  final canceldialog = MyDialog();
   DateTime date = DateTime.now();
 
   String dropdownStatus = 'N/A';
@@ -113,7 +119,7 @@ class _PlantTrackingState extends State<PlantTracking> {
                                     borderRadius: BorderRadius.circular(30)),
                                 padding: const EdgeInsets.all(15)),
                             onPressed: () {
-                              _showDialogCancel();
+                              canceldialog.showDialogCancel(context);
                             },
                             child: Text("ยกเลิก"),
                           ),
@@ -130,61 +136,29 @@ class _PlantTrackingState extends State<PlantTracking> {
     );
   }
 
-  Future<void> _showDialogCancel() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('ยืนยันการยกเลิก'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Text('คุณต้องการยกเลิกใช่หรือไม่?'),
-                //Text('Would you like to approve of this message?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('ยืนยัน'),
-              onPressed: () {
-                //print('Confirmed');
-                Navigator.of(context).pop();
-                Navigator.of(context).pop(PlantTracking());
-              },
-            ),
-            TextButton(
-              child: Text('ยกเลิก'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   Widget buildImages() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
           height: 200,
-          decoration: BoxDecoration(border: Border.all(color: Color(0xffC4C4C4) )),
+          decoration:
+              BoxDecoration(border: Border.all(color: Color(0xffC4C4C4))),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              IconButton(onPressed: () {}, icon: Icon(Icons.add_a_photo,)),
+              IconButton(
+                  onPressed: () {},
+                  icon: Icon(
+                    Icons.add_a_photo,
+                  )),
               Container(
                 width: 270,
                 //height: 190,
-                  child: Image.asset(
-                    "images/Group639.png",
-                    fit: BoxFit.cover,
-                  ),
-                
+                child: Image.asset(
+                  "images/Group639.png",
+                  fit: BoxFit.cover,
+                ),
               ),
               IconButton(
                   onPressed: () {}, icon: Icon(Icons.add_photo_alternate)),

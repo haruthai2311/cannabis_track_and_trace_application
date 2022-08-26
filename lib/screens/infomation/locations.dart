@@ -7,13 +7,17 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
 import '../../api/hostapi.dart';
+import '../../widget/dialog.dart';
 
 class Locations extends StatefulWidget {
+  final String UserID;
+  const Locations({Key? key, required this.UserID}) : super(key: key);
   @override
   State<Locations> createState() => _LocationsState();
 }
 
 class _LocationsState extends State<Locations> {
+  final canceldialog = MyDialog();
   LatLng? _latlng;
   Future<Null> findLatLng() async {
     Position? position = await findPosition();
@@ -88,8 +92,8 @@ class _LocationsState extends State<Locations> {
       "Telephone": _ctlTelephone.text,
       "IsActive": selectDropdownIsA.toString(),
       "Remark": _ctlRemark.text,
-      //"CreateBy": ,
-      //"UpdateBy":  ,
+      "CreateBy": widget.UserID,
+      "UpdateBy": widget.UserID,
     });
     print(_latlng!.latitude.toString());
     print('Response status : ${response.statusCode}');
@@ -231,7 +235,7 @@ class _LocationsState extends State<Locations> {
                                     borderRadius: BorderRadius.circular(30)),
                                 padding: const EdgeInsets.all(15)),
                             onPressed: () {
-                              _showDialogCancel();
+                              canceldialog.showDialogCancel(context);
                             },
                             child: Text("ยกเลิก"),
                           ),
@@ -245,42 +249,6 @@ class _LocationsState extends State<Locations> {
           ),
         ),
       ),
-    );
-  }
-
-  Future<void> _showDialogCancel() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('ยืนยันการยกเลิก'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Text('คุณต้องการยกเลิกใช่หรือไม่?'),
-                //Text('Would you like to approve of this message?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('ยืนยัน'),
-              onPressed: () {
-                //print('Confirmed');
-                Navigator.of(context).pop();
-                Navigator.of(context).pop(Locations());
-              },
-            ),
-            TextButton(
-              child: Text('ยกเลิก'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 

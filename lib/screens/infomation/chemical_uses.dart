@@ -1,18 +1,21 @@
 import 'dart:convert';
-
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../api/allInventorys.dart';
 import '../../api/allgreenhouses.dart';
 import '../../api/hostapi.dart';
+import '../../widget/dialog.dart';
 
 class ChemicalUses extends StatefulWidget {
+  final String UserID;
+  const ChemicalUses({Key? key, required this.UserID}) : super(key: key);
   @override
   State<ChemicalUses> createState() => _ChemicalUsesState();
 }
 
 class _ChemicalUsesState extends State<ChemicalUses> {
+  final canceldialog = MyDialog();
   late List<AllGreenhouses> _allGreenhouses;
   late List<AllInventorys> _allInventory;
   DateTime date = DateTime.now();
@@ -50,6 +53,8 @@ class _ChemicalUsesState extends State<ChemicalUses> {
       "PHI": date.toString(),
       "GreenHouseName": dropdownGH.toString(),
       "Remark": _ctlRemake.text,
+      "CreateBy": widget.UserID,
+      "UpdateBy": widget.UserID,
     });
     print('Response status : ${response.statusCode}');
     print('Response body : ${response.body}');
@@ -144,12 +149,7 @@ class _ChemicalUsesState extends State<ChemicalUses> {
 
               var nameGH = ['N/A'];
               for (var i = 0; i < result1.length; i++) {
-                //print(result[i].newCase);
                 nameGH.add(result1[i].name);
-                //print(casenewsort);
-
-                //
-
               }
               print(nameGH);
 
@@ -327,7 +327,7 @@ class _ChemicalUsesState extends State<ChemicalUses> {
                                                 BorderRadius.circular(30)),
                                         padding: const EdgeInsets.all(15)),
                                     onPressed: () {
-                                      _showDialogCancel();
+                                      canceldialog.showDialogCancel(context);
                                     },
                                     child: Text("ยกเลิก"),
                                   ),
@@ -345,42 +345,6 @@ class _ChemicalUsesState extends State<ChemicalUses> {
             return LinearProgressIndicator();
           },
         ));
-  }
-
-  Future<void> _showDialogCancel() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('ยืนยันการยกเลิก'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Text('คุณต้องการยกเลิกใช่หรือไม่?'),
-                //Text('Would you like to approve of this message?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('ยืนยัน'),
-              onPressed: () {
-                //print('Confirmed');
-                Navigator.of(context).pop();
-                Navigator.of(context).pop(ChemicalUses());
-              },
-            ),
-            TextButton(
-              child: Text('ยกเลิก'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   Widget buildUseAmount() {
