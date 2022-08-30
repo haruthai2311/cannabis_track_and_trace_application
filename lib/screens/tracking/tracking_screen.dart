@@ -143,14 +143,14 @@ class _TrackingScreenState extends State<TrackingScreen> {
                   alignment: Alignment.center,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
+                    children: const [
+                      Icon(
                         Icons.menu_book_rounded,
                         size: 120,
                       ),
                       Text(
                         'บันทึกผลตรวจประจำวัน',
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -186,15 +186,15 @@ class _TrackingScreenState extends State<TrackingScreen> {
                   alignment: Alignment.center,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
+                    children: const [
+                      Icon(
                         Icons.article,
                         size: 60,
                       ),
-                      const SizedBox(height: 15),
+                      SizedBox(height: 15),
                       Text(
                         'บันทึกข้อมูลการเก็บเกี่ยว',
-                        style: const TextStyle(
+                        style:  TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -235,15 +235,15 @@ class _TrackingScreenState extends State<TrackingScreen> {
                   alignment: Alignment.center,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
+                    children: const [
+                      Icon(
                         Icons.mobile_friendly,
                         size: 60,
                       ),
-                      const SizedBox(height: 15),
+                      SizedBox(height: 15),
                       Text(
                         'บันทึกการปลูก',
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ],
@@ -282,14 +282,14 @@ class _TrackingScreenState extends State<TrackingScreen> {
                   alignment: Alignment.center,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(
+                    children: const [
+                      Icon(
                         Icons.single_bed_sharp,
                         size: 120,
                       ),
                       Text(
                         'บันทึกข้อมูลการส่งมอบ',
-                        style: const TextStyle(
+                        style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ],
