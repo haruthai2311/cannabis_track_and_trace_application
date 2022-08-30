@@ -1,5 +1,6 @@
 import 'package:cannabis_track_and_trace_application/config/color.dart';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
+import 'package:cannabis_track_and_trace_application/screens/test.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/cultivations.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/harvests.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/plant_tracking.dart';
@@ -57,6 +58,11 @@ class _TrackingScreenState extends State<TrackingScreen> {
       ),
       extendBody: true,
       body: _buildBody(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {},
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ),
     );
   }
 
@@ -75,17 +81,15 @@ class _TrackingScreenState extends State<TrackingScreen> {
                 buildGrid(),
                 const SizedBox(height: 15),
                 _onGoingHeader(),
-                const SizedBox(
-                  height: 10,
-                ),
-                _onGoingTask()
+                const SizedBox(height: 15),
+                _onGoingTask(),
+                const SizedBox(height: 50),
               ],
             ),
           ),
         ),
         // Positioned(
         //   bottom: 30,
-        //   // left: 100.w / 2 - (70 / 2),
         //   right: 30,
         //   child: CircleGradientIcon(
         //     color: Colors.pink,
@@ -116,7 +120,11 @@ class _TrackingScreenState extends State<TrackingScreen> {
           ),
         ),
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Test();
+              }));
+            },
             icon: Icon(
               Icons.add_circle_outline,
               color: Colors.blue[400],
@@ -264,7 +272,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
               ),
             ),
           ),
-
           const SizedBox(
             height: 15,
             width: 10,
@@ -311,28 +318,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
               ),
             ),
           ),
-          // SizedBox(
-          //   height: 220,
-          //   width: 175,
-          //   child: ElevatedButton.icon(
-          //     onPressed: () {
-          //       Navigator.push(context, MaterialPageRoute(builder: (context) {
-          //         return Transfers();
-          //       }));
-          //     },
-          //     icon: const Icon(
-          //       Icons.single_bed_sharp,
-          //       size: 100,
-          //     ),
-          //     label: const Text('บันทึกข้อมูลการส่งมอบ'),
-          //     style: ElevatedButton.styleFrom(
-          //         textStyle: TextStyle(fontSize: 20),
-          //         primary: Color.fromARGB(255, 3, 196, 106),
-          //         shape: RoundedRectangleBorder(
-          //             borderRadius: BorderRadius.circular(20)),
-          //         padding: const EdgeInsets.all(20)),
-          //   ),
-          // ),
           const SizedBox(height: 15),
         ],
       ),
