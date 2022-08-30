@@ -1,5 +1,6 @@
 import 'package:cannabis_track_and_trace_application/config/color.dart';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
+import 'package:cannabis_track_and_trace_application/screens/test.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/cultivations.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/harvests.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/plant_tracking.dart';
@@ -57,6 +58,11 @@ class _TrackingScreenState extends State<TrackingScreen> {
       ),
       extendBody: true,
       body: _buildBody(),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => {},
+        tooltip: 'Increment',
+        child: Icon(Icons.add),
+      ),
     );
   }
 
@@ -74,15 +80,27 @@ class _TrackingScreenState extends State<TrackingScreen> {
                 const SizedBox(height: 15),
                 buildGrid(),
                 const SizedBox(height: 15),
-                //_onGoingHeader(),
+                _onGoingHeader(),
                 const SizedBox(
                   height: 10,
                 ),
-                // _onGoingTask()
+                _onGoingTask()
               ],
             ),
           ),
         ),
+        // Positioned(
+        //   bottom: 30,
+        //   // left: 100.w / 2 - (70 / 2),
+        //   right: 30,
+        //   child: CircleGradientIcon(
+        //     color: Colors.pink,
+        //     onTap: () {},
+        //     size: 60,
+        //     iconSize: 30,
+        //     icon: Icons.add,
+        //   ),
+        // )
       ],
     );
   }
@@ -104,7 +122,11 @@ class _TrackingScreenState extends State<TrackingScreen> {
           ),
         ),
         IconButton(
-            onPressed: () {},
+            onPressed: () {
+              Navigator.push(context, MaterialPageRoute(builder: (context) {
+                return Test();
+              }));
+            },
             icon: Icon(
               Icons.add_circle_outline,
               color: Colors.blue[400],
@@ -304,187 +326,187 @@ class _TrackingScreenState extends State<TrackingScreen> {
     ]);
   }
 
-  // Row _onGoingHeader() {
-  //   return Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     crossAxisAlignment: CrossAxisAlignment.center,
-  //     children: [
-  //       Text(
-  //         "On Going",
-  //         style: TextStyle(
-  //           color: Colors.black87,
-  //           fontWeight: FontWeight.w700,
-  //           fontSize: 22,
-  //         ),
-  //       ),
-  //       const Spacer(),
-  //       InkWell(
-  //         onTap: () {},
-  //         child: Text(
-  //           "See all",
-  //           style: TextStyle(
-  //             color: Colors.pink,
-  //             fontWeight: FontWeight.w500,
-  //           ),
-  //         ),
-  //       )
-  //     ],
-  //   );
-  // }
+  Row _onGoingHeader() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          "On Going",
+          style: TextStyle(
+            color: Colors.black87,
+            fontWeight: FontWeight.w700,
+            fontSize: 22,
+          ),
+        ),
+        const Spacer(),
+        InkWell(
+          onTap: () {},
+          child: Text(
+            "See all",
+            style: TextStyle(
+              color: Colors.pink,
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        )
+      ],
+    );
+  }
 
-  // Widget _onGoingTask() {
-  //   return Container(
-  //     padding: const EdgeInsets.all(
-  //       20,
-  //     ),
-  //     decoration: BoxDecoration(
-  //       color: Colors.white,
-  //       borderRadius: BorderRadius.circular(15),
-  //     ),
-  //     //width: 100,
-  //     child: Column(
-  //       children: [
-  //         Row(
-  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //           children: [
-  //             SizedBox(
-  //               //width: 60,
-  //               child: Column(
-  //                 crossAxisAlignment: CrossAxisAlignment.start,
-  //                 children: [
-  //                   Text(
-  //                     "ใส่อะไรดี",
-  //                     style: TextStyle(
-  //                       color: Colors.blueGrey[700],
-  //                       fontWeight: FontWeight.bold,
-  //                       fontSize: 18,
-  //                     ),
-  //                     overflow: TextOverflow.ellipsis,
-  //                     maxLines: 2,
-  //                   ),
-  //                   const SizedBox(
-  //                     height: 10,
-  //                   ),
-  //                   Row(
-  //                     children: [
-  //                       Icon(
-  //                         Icons.timelapse,
-  //                         color: Colors.purple[300],
-  //                       ),
-  //                       const SizedBox(
-  //                         width: 10,
-  //                       ),
-  //                       Text(
-  //                         "10:00 AM - 12:30PM",
-  //                         style: TextStyle(
-  //                           color: Colors.grey[600],
-  //                           fontSize: 14,
-  //                         ),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                   const SizedBox(
-  //                     height: 10,
-  //                   ),
-  //                   Container(
-  //                     padding: const EdgeInsets.symmetric(
-  //                       vertical: 4,
-  //                       horizontal: 8,
-  //                     ),
-  //                     decoration: BoxDecoration(
-  //                       color: Colors.purple[50],
-  //                       borderRadius: BorderRadius.circular(5),
-  //                     ),
-  //                     child: const Text(
-  //                       "Complete - 80%",
-  //                       style: TextStyle(
-  //                         color: Colors.purple,
-  //                       ),
-  //                     ),
-  //                   )
-  //                 ],
-  //               ),
-  //             ),
-  //             const Icon(
-  //               Icons.rocket_rounded,
-  //               size: 60,
-  //               color: Colors.orange,
-  //             ),
-  //           ],
-  //         ),
-  //         const SizedBox(
-  //           height: 15,
-  //         ),
-  //         Row(
-  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //           children: [
-  //             SizedBox(
-  //               //width: 60,
-  //               child: Column(
-  //                 crossAxisAlignment: CrossAxisAlignment.start,
-  //                 children: [
-  //                   Text(
-  //                     "ใส่อะไรดี",
-  //                     style: TextStyle(
-  //                       color: Colors.blueGrey[700],
-  //                       fontWeight: FontWeight.bold,
-  //                       fontSize: 18,
-  //                     ),
-  //                     overflow: TextOverflow.ellipsis,
-  //                     maxLines: 2,
-  //                   ),
-  //                   const SizedBox(
-  //                     height: 10,
-  //                   ),
-  //                   Row(
-  //                     children: [
-  //                       Icon(
-  //                         Icons.timelapse,
-  //                         color: Colors.purple[300],
-  //                       ),
-  //                       const SizedBox(
-  //                         width: 10,
-  //                       ),
-  //                       Text(
-  //                         "10:00 AM - 12:30PM",
-  //                         style: TextStyle(
-  //                           color: Colors.grey[600],
-  //                           fontSize: 14,
-  //                         ),
-  //                       ),
-  //                     ],
-  //                   ),
-  //                   const SizedBox(
-  //                     height: 10,
-  //                   ),
-  //                   Container(
-  //                     padding: const EdgeInsets.symmetric(
-  //                       vertical: 4,
-  //                       horizontal: 8,
-  //                     ),
-  //                     decoration: BoxDecoration(
-  //                       color: Colors.purple[50],
-  //                       borderRadius: BorderRadius.circular(5),
-  //                     ),
-  //                     child: const Text(
-  //                       "Complete - 80%",
-  //                       style: TextStyle(
-  //                         color: Colors.purple,
-  //                       ),
-  //                     ),
-  //                   )
-  //                 ],
-  //               ),
-  //             ),
-  //             const Icon(
-  //               Icons.rocket_rounded,
-  //               size: 60,
-  //               color: Colors.orange,
-  //             ),
-  //           ],
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  Widget _onGoingTask() {
+    return Container(
+      padding: const EdgeInsets.all(
+        20,
+      ),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      //width: 100,
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                //width: 60,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "ใส่อะไรดี",
+                      style: TextStyle(
+                        color: Colors.blueGrey[700],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.timelapse,
+                          color: Colors.purple[300],
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "10:00 AM - 12:30PM",
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 4,
+                        horizontal: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.purple[50],
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: const Text(
+                        "Complete - 80%",
+                        style: TextStyle(
+                          color: Colors.purple,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              const Icon(
+                Icons.rocket_rounded,
+                size: 60,
+                color: Colors.orange,
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 15,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              SizedBox(
+                //width: 60,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "ใส่อะไรดี",
+                      style: TextStyle(
+                        color: Colors.blueGrey[700],
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.timelapse,
+                          color: Colors.purple[300],
+                        ),
+                        const SizedBox(
+                          width: 10,
+                        ),
+                        Text(
+                          "10:00 AM - 12:30PM",
+                          style: TextStyle(
+                            color: Colors.grey[600],
+                            fontSize: 14,
+                          ),
+                        ),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 4,
+                        horizontal: 8,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.purple[50],
+                        borderRadius: BorderRadius.circular(5),
+                      ),
+                      child: const Text(
+                        "Complete - 80%",
+                        style: TextStyle(
+                          color: Colors.purple,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              const Icon(
+                Icons.rocket_rounded,
+                size: 60,
+                color: Colors.orange,
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
 }

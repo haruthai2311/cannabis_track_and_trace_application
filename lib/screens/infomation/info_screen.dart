@@ -28,9 +28,9 @@ class _InfoScreenState extends State<InfoScreen> {
               }));
             },
             icon: Icon(Icons.add),
-          ),
+        ),
         ],
-      ),
+        ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -38,7 +38,7 @@ class _InfoScreenState extends State<InfoScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                SizedBox(
+            SizedBox(
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(context,
@@ -47,9 +47,9 @@ class _InfoScreenState extends State<InfoScreen> {
                       }));
                     },
                     child: Text('เพิ่มข้อมูลสายพันธุ์'),
-                  ),
-                ),
-                SizedBox(
+            ),
+              ),
+              SizedBox(
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(context,
@@ -59,8 +59,8 @@ class _InfoScreenState extends State<InfoScreen> {
                     },
                     child: Text('เพิ่มข้อมูลสถานที่ปลูก'),
                   ),
-                ),
-                SizedBox(
+              ),
+              SizedBox(
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(context,
@@ -69,9 +69,9 @@ class _InfoScreenState extends State<InfoScreen> {
                       }));
                     },
                     child: Text('เพิ่มข้อมูลกระถาง'),
-                  ),
                 ),
-                SizedBox(
+              ),
+              SizedBox(
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(context,
@@ -80,9 +80,9 @@ class _InfoScreenState extends State<InfoScreen> {
                       }));
                     },
                     child: Text('เพิ่มข้อมูลวัสดุ'),
-                  ),
-                ),
-                SizedBox(
+          ),
+          ),
+          SizedBox(
                   child: ElevatedButton(
                     onPressed: () {
                       Navigator.push(context,
@@ -91,12 +91,12 @@ class _InfoScreenState extends State<InfoScreen> {
                       }));
                     },
                     child: Text('เพิ่มข้อมูลการใช้สารเคมี'),
-                  ),
-                ),
-              ],
-            ),
           ),
-        ),
+                ),
+        ],
+      ),
+          ),
+                ),
       ),
     );
   }
