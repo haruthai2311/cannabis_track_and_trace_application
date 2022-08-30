@@ -6,13 +6,17 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 import '../../api/hostapi.dart';
+import '../../widget/dialog.dart';
 
 class Inventorys extends StatefulWidget {
+  final String UserID;
+  const Inventorys({Key? key, required this.UserID}) : super(key: key);
   @override
   State<Inventorys> createState() => _InventorysState();
 }
 
 class _InventorysState extends State<Inventorys> {
+  final canceldialog = MyDialog();
   final _formKey = GlobalKey<FormState>();
   bool _visible = false;
 
@@ -37,6 +41,8 @@ class _InventorysState extends State<Inventorys> {
       "Name": _ctlName.text,
       "CommercialName": _ctlCommercialName.text,
       "IsActive": selectDropdownIsA.toString(),
+      "CreateBy": widget.UserID,
+      "UpdateBy": widget.UserID,
     });
     print('Response status : ${response.statusCode}');
     print('Response body : ${response.body}');
@@ -158,7 +164,7 @@ class _InventorysState extends State<Inventorys> {
                                     borderRadius: BorderRadius.circular(30)),
                                 padding: const EdgeInsets.all(15)),
                             onPressed: () {
-                              _showDialogCancel();
+                              canceldialog.showDialogCancel(context);
                             },
                             child: Text("ยกเลิก"),
                           ),
@@ -172,42 +178,6 @@ class _InventorysState extends State<Inventorys> {
           ),
         ),
       ),
-    );
-  }
-
-  Future<void> _showDialogCancel() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('ยืนยันการยกเลิก'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Text('คุณต้องการยกเลิกใช่หรือไม่?'),
-                //Text('Would you like to approve of this message?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('ยืนยัน'),
-              onPressed: () {
-                //print('Confirmed');
-                Navigator.of(context).pop();
-                Navigator.of(context).pop(Inventorys());
-              },
-            ),
-            TextButton(
-              child: Text('ยกเลิก'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
     );
   }
 

@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
       //Server response into variable
       //print(response.body);
       var msg = jsonDecode(response.body);
-      var UserID = msg['user']["UserID"].toString();
+    
 
       //Check Login Status
       if (msg['success'] == true) {
@@ -47,7 +47,7 @@ class _LoginScreenState extends State<LoginScreen> {
           //hide progress indicator
           _visible = false;
         });
-
+        var UserID = msg['user']["UserID"].toString();
         // Navigate to Home Screen
         Navigator.of(context).push(MaterialPageRoute(
           builder: (context) => BottomNavScreen(UserID: UserID),
@@ -263,10 +263,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     //   login();
                                     // }
                                     //if (_formKey.currentState!.validate()) {
-                                      Navigator.push(context,
-                                          MaterialPageRoute(builder: (context) {
-                                        return BottomNavScreen(UserID: "14");
-                                      }));
+                                    Navigator.push(context,
+                                        MaterialPageRoute(builder: (context) {
+                                      return BottomNavScreen(UserID: "14");
+                                    }));
                                     //}
                                   },
                                   child: Text("Login"))),

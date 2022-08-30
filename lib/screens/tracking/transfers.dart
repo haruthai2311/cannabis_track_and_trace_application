@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
+import 'package:cannabis_track_and_trace_application/widget/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -7,11 +8,15 @@ import '../../api/allharvests.dart';
 import '../../api/hostapi.dart';
 
 class Transfers extends StatefulWidget {
+  final String UserID;
+  const Transfers({Key? key, required this.UserID}) : super(key: key);
+
   @override
   State<Transfers> createState() => _TransfersState();
 }
 
 class _TransfersState extends State<Transfers> {
+  final canceldialog = MyDialog();
   DateTime date = DateTime.now();
   final _formKey = GlobalKey<FormState>();
   bool _visible = false;
@@ -57,6 +62,8 @@ class _TransfersState extends State<Transfers> {
       "LicenseNo": _ctlLicenseNo.text,
       "LicensePlate": _ctlLicensePlate.text,
       "Remark": _ctlTrackRemake.text,
+      "CreateBy": widget.UserID,
+      "UpdateBy": widget.UserID,
     });
     print('Response status : ${response.statusCode}');
     print('Response body : ${response.body}');
@@ -265,7 +272,7 @@ class _TransfersState extends State<Transfers> {
                                                 BorderRadius.circular(30)),
                                         padding: const EdgeInsets.all(15)),
                                     onPressed: () {
-                                      _showDialogCancel();
+                                      canceldialog.showDialogCancel(context);
                                     },
                                     child: Text("ยกเลิก"),
                                   ),
@@ -283,42 +290,6 @@ class _TransfersState extends State<Transfers> {
             return LinearProgressIndicator();
           },
         ));
-  }
-
-  Future<void> _showDialogCancel() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('ยืนยันการยกเลิก'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Text('คุณต้องการยกเลิกใช่หรือไม่?'),
-                //Text('Would you like to approve of this message?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('ยืนยัน'),
-              onPressed: () {
-                //print('Confirmed');
-                Navigator.of(context).pop();
-                Navigator.of(context).pop(Transfers());
-              },
-            ),
-            TextButton(
-              child: Text('ยกเลิก'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   Widget buildTransferDate() {

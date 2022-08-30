@@ -5,13 +5,18 @@ import 'package:http/http.dart' as http;
 import '../../api/getcultivations.dart';
 import '../../api/allgreenhouses.dart';
 import '../../api/hostapi.dart';
+import '../../widget/dialog.dart';
 
 class Pots extends StatefulWidget {
+  final String UserID;
+  const Pots({Key? key, required this.UserID}) : super(key: key);
+
   @override
   State<Pots> createState() => _PotsState();
 }
 
 class _PotsState extends State<Pots> {
+  final canceldialog = MyDialog();
   late List<AllGreenhouses> _allGreenhouses;
   late List<GetCultivations> _getCultivations;
   final _formKey = GlobalKey<FormState>();
@@ -45,6 +50,8 @@ class _PotsState extends State<Pots> {
       "Barcode": _ctlBarcode.text,
       "IsTestPot": selectDropdownIsTest.toString(),
       "Remark": _ctlRemake.text,
+      "CreateBy": widget.UserID,
+      "UpdateBy": widget.UserID,
     });
     print('Response status : ${response.statusCode}');
     print('Response body : ${response.body}');
@@ -104,13 +111,12 @@ class _PotsState extends State<Pots> {
   void initState() {
     super.initState();
   }
-String NameGHParameters = '';
+
+  String NameGHParameters = '';
   Future getData() async {
     var url = hostAPI + '/informations/getAllGreenhouses';
     var response = await http.get(Uri.parse(url));
     _allGreenhouses = allGreenhousesFromJson(response.body);
-
-     
 
     var urlCultivations =
         hostAPI + '/trackings/getCultivations/' + NameGHParameters;
@@ -163,7 +169,7 @@ String NameGHParameters = '';
                       child: Column(
                         children: [
                           const SizedBox(height: 10),
-                          Text(
+                          const Text(
                             "บันทึกข้อมูลกระถาง",
                             style: TextStyle(
                                 fontSize: 24,
@@ -174,7 +180,7 @@ String NameGHParameters = '';
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 "โรงปลูก :",
                                 style: TextStyle(
                                     color: Colors.black,
@@ -188,7 +194,7 @@ String NameGHParameters = '';
                                 decoration: BoxDecoration(
                                   color: Color.fromARGB(255, 240, 239, 239),
                                   borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: Colors.black26,
                                       offset: Offset(0, 2),
@@ -199,7 +205,7 @@ String NameGHParameters = '';
                                   dropdownColor: Colors.white,
                                   iconSize: 30,
                                   isExpanded: true,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 18,
                                   ),
@@ -215,7 +221,8 @@ String NameGHParameters = '';
                                     setState(
                                       () {
                                         dropdownGH = newValue!;
-                                        NameGHParameters = "?NameGH="+dropdownGH;
+                                        NameGHParameters =
+                                            "?NameGH=" + dropdownGH;
                                       },
                                     );
                                   },
@@ -227,7 +234,7 @@ String NameGHParameters = '';
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 "หมายเลขการปลูก :",
                                 style: TextStyle(
                                     color: Colors.black,
@@ -241,7 +248,7 @@ String NameGHParameters = '';
                                 decoration: BoxDecoration(
                                   color: Color.fromARGB(255, 240, 239, 239),
                                   borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: Colors.black26,
                                       offset: Offset(0, 2),
@@ -252,7 +259,7 @@ String NameGHParameters = '';
                                   dropdownColor: Colors.white,
                                   iconSize: 30,
                                   isExpanded: true,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 18,
                                   ),
@@ -317,7 +324,7 @@ String NameGHParameters = '';
                                                 BorderRadius.circular(30)),
                                         padding: const EdgeInsets.all(15)),
                                     onPressed: () {
-                                      _showDialogCancel();
+                                      canceldialog.showDialogCancel(context);
                                     },
                                     child: Text("ยกเลิก"),
                                   ),
@@ -335,42 +342,6 @@ String NameGHParameters = '';
             return LinearProgressIndicator();
           },
         ));
-  }
-
-  Future<void> _showDialogCancel() async {
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('ยืนยันการยกเลิก'),
-          content: SingleChildScrollView(
-            child: Column(
-              children: <Widget>[
-                Text('คุณต้องการยกเลิกใช่หรือไม่?'),
-                //Text('Would you like to approve of this message?'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            TextButton(
-              child: Text('ยืนยัน'),
-              onPressed: () {
-                //print('Confirmed');
-                Navigator.of(context).pop();
-                Navigator.of(context).pop(Pots());
-              },
-            ),
-            TextButton(
-              child: Text('ยกเลิก'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
   }
 
   Widget buildPotName() {

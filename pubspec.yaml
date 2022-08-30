@@ -38,14 +38,20 @@ dependencies:
   form_field_validator: ^1.1.0
   http: ^0.13.4
   flutter_barcode_scanner: ^2.0.0
+<<<<<<< HEAD
 
   dropdown_button2: ^1.7.2
 
+=======
+  flutter_svg: ^1.0.3
+  sizer: ^2.0.15
+>>>>>>> a8a39e25e8844f98987c0bfa3551a90c56f7b2cb
   date_time_picker: ^2.1.0
   flutter_dotenv: ^5.0.2
   google_maps_flutter: ^2.1.12
   geolocator: ^9.0.1
   image_picker: ^0.8.5+3
+
 
 dev_dependencies:
   flutter_test:
