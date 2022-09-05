@@ -58,11 +58,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
       ),
       extendBody: true,
       body: _buildBody(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
     );
   }
 
@@ -216,7 +211,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                       SizedBox(height: 15),
                       Text(
                         'บันทึกข้อมูลการเก็บเกี่ยว',
-                        style:  TextStyle(
+                        style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ],
