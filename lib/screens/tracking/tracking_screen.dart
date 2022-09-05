@@ -58,11 +58,6 @@ class _TrackingScreenState extends State<TrackingScreen> {
       ),
       extendBody: true,
       body: _buildBody(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
     );
   }
 

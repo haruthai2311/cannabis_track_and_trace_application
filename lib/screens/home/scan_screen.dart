@@ -12,7 +12,7 @@ class ScanScreen extends StatefulWidget {
 
 class _ScanScreenState extends State<ScanScreen> {
   String? barResult;
-  String? qrResult;
+  //String? qrResult;
 
   Future barCodeScanner() async {
     String result;
@@ -20,28 +20,28 @@ class _ScanScreenState extends State<ScanScreen> {
     try {
       result = await FlutterBarcodeScanner.scanBarcode(
           "#FFBF00", "Cancel", true, ScanMode.BARCODE);
+      if (!mounted) return;
+      setState(() {
+        barResult = result;
+      });
     } on PlatformException {
       result = "Failed to get plateform version";
     }
-    if (!mounted) return;
-    setState(() {
-      barResult = result;
-    });
   }
 
-  Future qrCodeScanner() async {
-    String qResult;
-    try {
-      qResult = await FlutterBarcodeScanner.scanBarcode(
-          "#FFBF00", "Cancel", true, ScanMode.QR);
-    } on PlatformException {
-      qResult = "Failed to get Plateform Version";
-    }
-    if (!mounted) return;
-    setState(() {
-      qrResult = qResult;
-    });
-  }
+  // Future qrCodeScanner() async {
+  //   String qResult;
+  //   try {
+  //     qResult = await FlutterBarcodeScanner.scanBarcode(
+  //         "#FFBF00", "Cancel", true, ScanMode.QR);
+  //   } on PlatformException {
+  //     qResult = "Failed to get Plateform Version";
+  //   }
+  //   if (!mounted) return;
+  //   setState(() {
+  //     qrResult = qResult;
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -56,9 +56,9 @@ class _ScanScreenState extends State<ScanScreen> {
                   child: MaterialButton(
                     onPressed: barCodeScanner,
                     color: Colors.amber,
-                    shape: StadiumBorder(),
+                    shape: const StadiumBorder(),
                     child: Row(
-                      children: [
+                      children: const [
                         Icon(
                           Icons.camera_alt_outlined,
                         ),
@@ -78,7 +78,7 @@ class _ScanScreenState extends State<ScanScreen> {
                   barResult == null
                       ? "Scan a Code"
                       : "Scan Result is : $barResult",
-                  style: TextStyle(
+                  style: const TextStyle(
                       color: Colors.black, fontWeight: FontWeight.bold),
                 ),
               ],
