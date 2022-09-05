@@ -47,8 +47,10 @@ dependencies:
   dropdown_button2: ^1.7.2
   intl: ^0.17.0
   flutter_speed_dial: ^6.0.0
+  font_awesome_flutter: ^10.1.0
+  fluttertoast: ^8.0.9
   
-
+  
 
 dev_dependencies:
   flutter_test:

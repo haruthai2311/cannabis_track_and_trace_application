@@ -211,7 +211,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                       SizedBox(height: 15),
                       Text(
                         'บันทึกข้อมูลการเก็บเกี่ยว',
-                        style:  TextStyle(
+                        style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
                     ],
