@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import '../../api/allgreenhouses.dart';
+import '../../api/getPots.dart';
 import '../../widget/dialog.dart';
 
 class PlantTracking extends StatefulWidget {
@@ -23,10 +24,10 @@ class _PlantTrackingState extends State<PlantTracking> {
   DateTime date = DateTime.now();
   DateTime TrashLogTime = DateTime.now();
   late List<AllGreenhouses> _allGreenhouses;
+  late List<GetPots> _getPots;
   File? file; //เก็บภาพจากการถ่ายและจากแกลเลอรี่
   bool _visible = false;
 
-  final _ctlPotID = TextEditingController();
   final _ctlPlantStatus = TextEditingController();
   final _ctlSoilMoisture = TextEditingController();
   final _ctlRemark = TextEditingController();
@@ -42,7 +43,7 @@ class _PlantTrackingState extends State<PlantTracking> {
   final _ctlRemarkTrash_log = TextEditingController();
 
   void Clear() {
-    _ctlPotID.clear();
+    dropdownPotID = 'N/A';
     _ctlPlantStatus.clear();
     _ctlSoilMoisture.clear();
     _ctlRemark.clear();
@@ -85,7 +86,7 @@ class _PlantTrackingState extends State<PlantTracking> {
       var response = await http.post(Uri.parse(url), body: {
         "nameGreenHouse": dropdownGH.toString(),
         "CheckDate": date.toString(),
-        "PotID": _ctlPotID.text,
+        "PotID": dropdownPotID.toString(),
         "PlantStatus": selectdropdownStatus.toString(),
         "SoilMoisture": selectdropdownSoi.toString(),
         "SoilRemark": _ctlSoilRemark.text,
@@ -162,22 +163,28 @@ class _PlantTrackingState extends State<PlantTracking> {
     super.initState();
   }
 
-  Future<List<AllGreenhouses>> getAllGreenhouses() async {
+  String NameGHParameters = '';
+  Future getData() async {
     var url = hostAPI + '/informations/getAllGreenhouses';
     var response = await http.get(Uri.parse(url));
     _allGreenhouses = allGreenhousesFromJson(response.body);
-    //print(_allGreenhouses.result[0].name.toString());
-    //print(_allGreenhouses.result[1].name.toString());
-    return _allGreenhouses;
+
+    var urlPots = hostAPI + '/informations/getPots' + NameGHParameters;
+    print(urlPots);
+    var responsePots = await http.get(Uri.parse(urlPots));
+    _getPots = getPotsFromJson(responsePots.body);
+
+    return [_allGreenhouses, _getPots];
   }
 
   String selectdropdownStatus = 'N/A';
   String dropdownStatus = 'N/A';
-  var itemStatus = ['N/A', 'ปกติ', 'ไม่สมบูรณ์', 'ตัดทิ่้ง'];
+  var itemStatus = ['N/A', 'ปกติ', 'ไม่สมบูรณ์', 'ตัดทิ้ง'];
 
   String dropdownGH = 'N/A';
   //var itemGH = ['N/A', 'โรงเรือน 1', 'โรงเรือน 2'];
-
+  String dropdownPotID = 'N/A';
+  //var itemPotID = ['N/A', '1', '2', '3'];
   String selectdropdownSoi = 'N/A';
   String dropdownSoi = 'N/A';
   var itemSoi = [
@@ -196,21 +203,34 @@ class _PlantTrackingState extends State<PlantTracking> {
           backgroundColor: kBackground,
         ),
         body: FutureBuilder(
-          future: getAllGreenhouses(),
+          future: getData(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              var result = snapshot.data;
-
+              if (snapshot.data == null) {
+                Container();
+              }
+              var result1 = snapshot.data[0];
+              var result2 = snapshot.data[1];
               var itemGH = ['N/A'];
-              for (var i = 0; i < result.length; i++) {
+              for (var i = 0; i < result1.length; i++) {
                 //print(result[i].newCase);
-                itemGH.add(result[i].name);
+                itemGH.add(result1[i].name);
                 //print(casenewsort);
 
                 //
 
               }
               print(itemGH);
+              var itemPotID = ['N/A'];
+              for (var i = 0; i < result2.length; i++) {
+                //print(result[i].newCase);
+                itemPotID.add(result2[i].potId.toString());
+                //print(casenewsort);
+
+                //
+
+              }
+              print(itemPotID);
 
               return SafeArea(
                 child: Container(
@@ -220,7 +240,7 @@ class _PlantTrackingState extends State<PlantTracking> {
                       child: Column(
                         children: [
                           const SizedBox(height: 10),
-                          Text(
+                          const Text(
                             "บันทึกผลตรวจประจำวัน",
                             style: TextStyle(
                                 fontSize: 24,
@@ -233,7 +253,7 @@ class _PlantTrackingState extends State<PlantTracking> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 "โรงปลูก :",
                                 style: TextStyle(
                                     color: Colors.black,
@@ -247,7 +267,7 @@ class _PlantTrackingState extends State<PlantTracking> {
                                 decoration: BoxDecoration(
                                   color: Color.fromARGB(255, 240, 239, 239),
                                   borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
+                                  boxShadow: const [
                                     BoxShadow(
                                       color: Colors.black26,
                                       offset: Offset(0, 2),
@@ -258,7 +278,7 @@ class _PlantTrackingState extends State<PlantTracking> {
                                   dropdownColor: Colors.white,
                                   iconSize: 30,
                                   isExpanded: true,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 18,
                                   ),
@@ -274,6 +294,9 @@ class _PlantTrackingState extends State<PlantTracking> {
                                     setState(
                                       () {
                                         dropdownGH = newValue!;
+                                        NameGHParameters =
+                                            "?NameGH=" + dropdownGH;
+                                        dropdownPotID = 'N/A';
                                       },
                                     );
                                   },
@@ -286,7 +309,57 @@ class _PlantTrackingState extends State<PlantTracking> {
                           // const SizedBox(height: 20),
                           buildCheckDate(),
                           const SizedBox(height: 20),
-                          buildPotID(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "หมายเลขกระถาง :",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              SizedBox(height: 10),
+                              Container(
+                                margin: EdgeInsets.only(left: 15, right: 15),
+                                padding: EdgeInsets.only(left: 15, right: 15),
+                                decoration: BoxDecoration(
+                                  color: Color.fromARGB(255, 240, 239, 239),
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: DropdownButton(
+                                  dropdownColor: Colors.white,
+                                  iconSize: 30,
+                                  isExpanded: true,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
+                                  value: dropdownPotID,
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  items: itemPotID.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(
+                                      () {
+                                        dropdownPotID = newValue!;
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                           const SizedBox(height: 20),
                           buildPlantStatus(),
                           const SizedBox(height: 20),
@@ -513,43 +586,6 @@ class _PlantTrackingState extends State<PlantTracking> {
                 ),
               ),
             ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildPotID() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "หมายเลขกระถาง :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 10),
-        Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlPotID,
-            keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ID',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
       ],
