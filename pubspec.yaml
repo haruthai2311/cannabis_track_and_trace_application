@@ -49,6 +49,7 @@ dependencies:
   flutter_speed_dial: ^6.0.0
   font_awesome_flutter: ^10.1.0
   fluttertoast: ^8.0.9
+  percent_indicator: ^4.0.1
   
   
 

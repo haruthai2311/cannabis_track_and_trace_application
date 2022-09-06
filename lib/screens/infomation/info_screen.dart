@@ -264,29 +264,29 @@ Widget buildNews() {
 
 Widget buildSearch() {
   return Container(
-    padding: EdgeInsets.only(left: 15.0),
+    padding: EdgeInsets.all(8),
     height: 50,
     decoration: BoxDecoration(
-        color: Color.fromARGB(95, 179, 173, 173),
-        borderRadius: BorderRadius.circular(15.0)),
-    // width: 10,
-    child: Row(
-      children: [
-        Icon(
+      color: Color.fromARGB(95, 179, 173, 173),
+      borderRadius: BorderRadius.circular(15.0),
+    ),
+    child: TextFormField(
+      style: TextStyle(color: Colors.black),
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.only(left: 15),
+        hintText: 'How can we help you?',
+        hintStyle: TextStyle(color: Colors.black54, fontSize: 18),
+        prefixIcon: Icon(
           Icons.search,
           size: 30,
           color: Colors.black54,
         ),
-        SizedBox(
-          width: 10,
-        ),
-        Text(
-          "How can we help you?",
-          style: TextStyle(color: Colors.black54),
-        )
-      ],
+      ),
     ),
   );
+
+  //
 }
 
 Widget buildGH1() {

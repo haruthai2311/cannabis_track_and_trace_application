@@ -1,7 +1,11 @@
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
 import 'package:cannabis_track_and_trace_application/screens/home/account_screen.dart';
 import 'package:cannabis_track_and_trace_application/screens/home/scan_screen.dart';
+import 'package:cannabis_track_and_trace_application/widget/Circle_Gradient_Icon.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class HomeScreen extends StatefulWidget {
   final String UserID;
@@ -48,15 +52,15 @@ class _HomeScreenState extends State<HomeScreen> {
             children: [
               const SizedBox(height: 10),
               buildSearch(),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               buildTaskHead(),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               buildAmount(),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               buildGraph(),
-              const SizedBox(height: 15),
+              const SizedBox(height: 10),
               buildResult(),
-              const SizedBox(height: 150),
+              const SizedBox(height: 70),
             ],
           ),
         ),
@@ -68,38 +72,30 @@ class _HomeScreenState extends State<HomeScreen> {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.only(left: 15.0),
+          padding: EdgeInsets.all(8),
           height: 50,
           decoration: BoxDecoration(
-              color: Color.fromARGB(95, 179, 173, 173),
-              borderRadius: BorderRadius.circular(15.0)),
-          // width: 10,
-          child: Row(
-            children: [
-              Icon(
+            color: Color.fromARGB(95, 179, 173, 173),
+            borderRadius: BorderRadius.circular(15.0),
+          ),
+          child: TextFormField(
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+              border: InputBorder.none,
+              contentPadding: EdgeInsets.only(left: 15),
+              hintText: 'Search',
+              hintStyle: TextStyle(color: Colors.black54, fontSize: 18),
+              prefixIcon: Icon(
                 Icons.search,
                 size: 30,
                 color: Colors.black54,
               ),
-              SizedBox(
-                width: 10,
+              suffixIcon: Icon(
+                Icons.settings,
+                size: 30,
+                color: Colors.black54,
               ),
-              Text(
-                "Search",
-                style: TextStyle(color: Colors.black54),
-              ),
-              Expanded(
-                  child: Row(
-                children: [
-                  SizedBox(width: 220),
-                  Icon(
-                    Icons.settings,
-                    size: 30,
-                    color: Colors.black54,
-                  ),
-                ],
-              ))
-            ],
+            ),
           ),
         ),
         SizedBox(height: 15),
@@ -114,7 +110,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget buildTaskHead() {
     return Container(
       margin: EdgeInsets.only(left: 15, right: 15),
-      width: 300,
       height: 150,
       decoration: BoxDecoration(
         boxShadow: [
@@ -134,130 +129,464 @@ class _HomeScreenState extends State<HomeScreen> {
           begin: AlignmentDirectional(0, -1),
           end: AlignmentDirectional(0, 1),
         ),
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(30),
       ),
-      // child: Padding(
-      //   padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
-      //   child: Column(mainAxisSize: MainAxisSize.max, children: [
-      //     Padding(
-      //       padding: EdgeInsetsDirectional.fromSTEB(8, 0, 0, 0),
-      //       child: Row(
-      //         mainAxisSize: MainAxisSize.max,
-      //         children: [
-      //           Expanded(
-      //               child: Padding(
-      //             padding: EdgeInsetsDirectional.fromSTEB(8, 4, 0, 4),
-      //             child: Column(
-      //                 mainAxisSize: MainAxisSize.max,
-      //                 mainAxisAlignment: MainAxisAlignment.center,
-      //                 crossAxisAlignment: CrossAxisAlignment.start,
-      //                 children: [
-      //                   Padding(
-      //                     padding: EdgeInsetsDirectional.fromSTEB(0, 4, 0, 0),
-      //                     child: Text(
-      //                       'จำนวนต้นทั้งหมด',
-      //                     ),
-      //                   ),
-      //                 ]),
-      //           ))
-      //         ],
-      //       ),
-      //     )
-      //   ]),
-      // ),
+      child: Padding(
+        padding: EdgeInsets.all(15),
+        child: Row(
+          children: [
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'จำนวนต้นทั้งหมด',
+                  style: TextStyle(
+                    fontSize: 18,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(width: 10),
+                Text(
+                  '400 ต้น',
+                  style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+            SizedBox(width: 50),
+            Column(
+              mainAxisSize: MainAxisSize.max,
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'โรงเรือน',
+                  style: TextStyle(fontSize: 18, color: Colors.white),
+                ),
+                SizedBox(width: 50),
+                Text(
+                  'G1 (EVAp)',
+                  style: TextStyle(
+                      fontSize: 25,
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   Widget buildAmount() {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
-      // child: Row(
-      //   mainAxisSize: MainAxisSize.max,
-      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //   children: [
-      //     Padding(
-      //       padding: EdgeInsetsDirectional.fromSTEB(0, 0, 8, 0),
-      //       child: Container(
-      //         width: MediaQuery.of(context).size.width * 0.44,
-      //         height: 50,
-      //         decoration: BoxDecoration(
-      //           color: Colors.white,
-      //           borderRadius: BorderRadius.circular(8),
-      //           border: Border.all(
-      //             color: Color(0xFFCFD4DB),
-      //             width: 1,
-      //           ),
-      //         ),
-      //         child: Padding(
-      //           padding: EdgeInsetsDirectional.fromSTEB(12, 5, 12, 5),
-      //           child: Row(
-      //             mainAxisSize: MainAxisSize.max,
-      //             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //             children: [
-      //               Icon(
-      //                 Icons.favorite,
-      //                 color: Color(0xFF03A9F4),
-      //                 size: 24,
-      //               ),
-      //               Column(
-      //                 mainAxisSize: MainAxisSize.max,
-      //                 children: [
-      //                   Text(
-      //                     '371',
-      //                   ),
-      //                   Text(
-      //                     'ต้นปกติ',
-      //                   ),
-      //                 ],
-      //               ),
-      //             ],
-      //           ),
-      //         ),
-      //       ),
-      //     ),
-      //     Container(
-      //       width: MediaQuery.of(context).size.width * 0.44,
-      //       height: 50,
-      //       decoration: BoxDecoration(
-      //         color: Colors.white,
-      //         borderRadius: BorderRadius.circular(8),
-      //         border: Border.all(
-      //           color: Color(0xFFCFD4DB),
-      //           width: 1,
-      //         ),
-      //       ),
-      //       child: Padding(
-      //         padding: EdgeInsetsDirectional.fromSTEB(12, 5, 12, 5),
-      //         child: Row(
-      //           mainAxisSize: MainAxisSize.max,
-      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //           children: [
-      //             Icon(
-      //               Icons.favorite,
-      //               color: Colors.red,
-      //               size: 24,
-      //             ),
-      //             Column(
-      //               mainAxisSize: MainAxisSize.max,
-      //               children: [
-      //                 Text('29'),
-      //                 Text('ต้นตาย'),
-      //               ],
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //     ),
-      //   ],
-      // ),
+      padding: EdgeInsets.all(10),
+      //padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Container(
+            width: 160,
+            height: 80,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 4,
+                  color: Color(0x33000000),
+                  offset: Offset(2, 4),
+                  spreadRadius: 2,
+                )
+              ],
+              borderRadius: BorderRadius.circular(15),
+              color: Colors.white,
+              border: Border.all(
+                color: Color(0xFFCFD4DB),
+                width: 1,
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 166, 245, 168),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.favorite,
+                      color: Colors.green,
+                      size: 20,
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        '371 ต้น',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        'ต้นปกติ',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 14, 117, 17),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+          Container(
+            width: 160,
+            height: 80,
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 4,
+                  color: Color(0x33000000),
+                  offset: Offset(2, 4),
+                  spreadRadius: 2,
+                )
+              ],
+              borderRadius: BorderRadius.circular(15),
+              color: Colors.white,
+              border: Border.all(
+                color: Color(0xFFCFD4DB),
+                width: 1,
+              ),
+            ),
+            child: Padding(
+              padding: EdgeInsets.all(10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    height: 30,
+                    width: 30,
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 209, 207, 207),
+                      shape: BoxShape.circle,
+                    ),
+                    child: Icon(
+                      Icons.favorite,
+                      color: Color.fromARGB(255, 230, 28, 13),
+                      size: 20,
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        '29 ต้น',
+                        style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        'ต้นตาย',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 230, 28, 13),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ],
+      ),
+      //
     );
   }
 
   Widget buildGraph() {
-    return Column();
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 4,
+            color: Color.fromARGB(255, 176, 4, 211),
+            offset: Offset(0, 0),
+            spreadRadius: 2,
+          )
+        ],
+        borderRadius: BorderRadius.circular(20),
+        border: Border.all(
+          color: Color.fromARGB(255, 134, 3, 160),
+          width: 3,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            Text(
+              'การเจริญเติบโตทั่วไป',
+              style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: CircularPercentIndicator(
+                    percent: 0.80,
+                    radius: 100,
+                    lineWidth: 25,
+                    animation: true,
+                    progressColor: colorGraph1,
+                    backgroundColor: colorGraph2,
+                    center: Text(
+                      '80%',
+                      style: TextStyle(
+                          fontSize: 45,
+                          color: Colors.black,
+                          fontWeight: FontWeight.bold),
+                    ),
+                    circularStrokeCap: CircularStrokeCap.round,
+                  ),
+                ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.label,
+                          color: colorGraph1,
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'ต้นดี',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Row(
+                      children: [
+                        Icon(
+                          Icons.label,
+                          color: colorGraph2,
+                        ),
+                        SizedBox(width: 5),
+                        Text(
+                          'ต้นไม่ดี',
+                          style: TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
   }
 
   Widget buildResult() {
-    return Column();
+    return Column(
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 4,
+                color: Color(0x33000000),
+                offset: Offset(2, 4),
+                spreadRadius: 2,
+              )
+            ],
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            border: Border.all(
+              color: Color(0xFFCFD4DB),
+              width: 1,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      height: 90,
+                      child: VerticalDivider(
+                        color: colorResult1,
+                        thickness: 5,
+                        indent: 3,
+                        endIndent: 3,
+                        width: 5,
+                      ),
+                    ),
+                    Icon(
+                      Icons.search,
+                      size: 50,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'การสำรวจโรค',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: colorResult1,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'พบโรค',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          'หมายเหตุ',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Text(
+                    '14 ต้น',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        SizedBox(height: 10),
+        Container(
+          decoration: BoxDecoration(
+            boxShadow: [
+              BoxShadow(
+                blurRadius: 4,
+                color: Color(0x33000000),
+                offset: Offset(2, 4),
+                spreadRadius: 2,
+              )
+            ],
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            border: Border.all(
+              color: Color(0xFFCFD4DB),
+              width: 1,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    Container(
+                      height: 90,
+                      child: VerticalDivider(
+                        color: colorResult2,
+                        thickness: 5,
+                        indent: 3,
+                        endIndent: 3,
+                        width: 5,
+                      ),
+                    ),
+                    Icon(
+                      Icons.search,
+                      size: 50,
+                      color: Colors.black,
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'การสำรวจแมลง',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: colorResult2,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'พบแมลง',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                          ),
+                        ),
+                        Text(
+                          'หมายเหตุ',
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.black54,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Text(
+                    '50 ต้น',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }
