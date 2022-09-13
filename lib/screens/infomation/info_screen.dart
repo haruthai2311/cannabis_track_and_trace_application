@@ -11,6 +11,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:http/http.dart';
 
 class InfoScreen extends StatefulWidget {
   final String UserID;
@@ -63,9 +64,9 @@ class _InfoScreenState extends State<InfoScreen> {
             overlayOpacity: 0.4,
             spacing: 15,
             spaceBetweenChildren: 5,
-            closeManually: true,
+            //closeManually: true,
             onOpen: () => showToast('Open..'),
-            onClose: () => showToast('Close'),
+            //onClose: () => showToast('Close'),
             openCloseDial: isDialOpen,
             curve: Curves.bounceIn,
             children: [
@@ -82,32 +83,48 @@ class _InfoScreenState extends State<InfoScreen> {
                   //onTap: () => showToast('เลือกเพิ่มข้อมูลสายพันธุ์...'),
                   ),
               SpeedDialChild(
-                child: Icon(Icons.edit_location_alt),
-                backgroundColor: Colors.yellow,
-                label: "สถานที่ปลูก",
-                labelStyle: TextStyle(fontSize: 18),
-                onTap: () => showToast('เลือกเพิ่มข้อมูลสถานที่ปลูก...'),
-              ),
+                  child: Icon(Icons.edit_location_alt),
+                  backgroundColor: Colors.yellow,
+                  label: "สถานที่ปลูก",
+                  labelStyle: TextStyle(fontSize: 18),
+                  onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return Locations(UserID: widget.UserID);
+                      }))
+                  //onTap: () => showToast('เลือกเพิ่มข้อมูลสถานที่ปลูก...'),
+                  ),
               SpeedDialChild(
-                child: Icon(Icons.format_color_fill_rounded),
-                backgroundColor: Colors.yellow,
-                label: "กระถาง",
-                labelStyle: TextStyle(fontSize: 18),
-                onTap: () => showToast('เลือกเพิ่มข้อมูลกระถาง...'),
-              ),
+                  child: Icon(Icons.format_color_fill_rounded),
+                  backgroundColor: Colors.yellow,
+                  label: "กระถาง",
+                  labelStyle: TextStyle(fontSize: 18),
+                  onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return Pots(UserID: widget.UserID);
+                      }))
+                  //onTap: () => showToast('เลือกเพิ่มข้อมูลกระถาง...'),
+                  ),
               SpeedDialChild(
-                child: Icon(Icons.fire_hydrant_alt_sharp),
-                backgroundColor: Colors.yellow,
-                label: "วัสดุ",
-                labelStyle: TextStyle(fontSize: 18),
-                onTap: () => showToast('เลือกเพิ่มข้อมูลวัสดุ...'),
-              ),
+                  child: Icon(Icons.fire_hydrant_alt_sharp),
+                  backgroundColor: Colors.yellow,
+                  label: "วัสดุ",
+                  labelStyle: TextStyle(fontSize: 18),
+                  onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return Inventorys(UserID: widget.UserID);
+                      }))
+                  //onTap: () => showToast('เลือกเพิ่มข้อมูลวัสดุ...'),
+                  ),
               SpeedDialChild(
-                child: Icon(FontAwesomeIcons.accusoft),
-                backgroundColor: Colors.yellow,
-                label: "การใช้สารเคมี",
-                onTap: () => showToast('เลือกเพิ่มข้อมูลการใช้สารเคมี...'),
-              ),
+                  child: Icon(FontAwesomeIcons.accusoft),
+                  backgroundColor: Colors.yellow,
+                  label: "การใช้สารเคมี",
+                  onTap: () => Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return ChemicalUses(UserID: widget.UserID);
+                      }))
+                  //onTap: () => showToast('เลือกเพิ่มข้อมูลการใช้สารเคมี...'),
+                  ),
             ],
           ),
         ),
@@ -247,29 +264,29 @@ Widget buildNews() {
 
 Widget buildSearch() {
   return Container(
-    padding: EdgeInsets.only(left: 15.0),
+    padding: EdgeInsets.all(8),
     height: 50,
     decoration: BoxDecoration(
-        color: Color.fromARGB(95, 179, 173, 173),
-        borderRadius: BorderRadius.circular(15.0)),
-    // width: 10,
-    child: Row(
-      children: [
-        Icon(
+      color: Color.fromARGB(95, 179, 173, 173),
+      borderRadius: BorderRadius.circular(15.0),
+    ),
+    child: TextFormField(
+      style: TextStyle(color: Colors.black),
+      decoration: InputDecoration(
+        border: InputBorder.none,
+        contentPadding: EdgeInsets.only(left: 15),
+        hintText: 'How can we help you?',
+        hintStyle: TextStyle(color: Colors.black54, fontSize: 18),
+        prefixIcon: Icon(
           Icons.search,
           size: 30,
           color: Colors.black54,
         ),
-        SizedBox(
-          width: 10,
-        ),
-        Text(
-          "How can we help you?",
-          style: TextStyle(color: Colors.black54),
-        )
-      ],
+      ),
     ),
   );
+
+  //
 }
 
 Widget buildGH1() {
