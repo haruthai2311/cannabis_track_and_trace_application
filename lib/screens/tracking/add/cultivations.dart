@@ -1,67 +1,68 @@
 import 'dart:convert';
+
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
-import 'package:cannabis_track_and_trace_application/widget/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import '../../../api/allgreenhouses.dart';
+import '../../../api/allstrains.dart';
+import '../../../api/hostapi.dart';
+import '../../../widget/dialog.dart';
 
-import '../../api/allharvests.dart';
-import '../../api/hostapi.dart';
-
-class Transfers extends StatefulWidget {
+class Cultivations extends StatefulWidget {
   final String UserID;
-  const Transfers({Key? key, required this.UserID}) : super(key: key);
-
+  const Cultivations({Key? key, required this.UserID}) : super(key: key);
   @override
-  State<Transfers> createState() => _TransfersState();
+  State<Cultivations> createState() => _CultivationsState();
 }
 
-class _TransfersState extends State<Transfers> {
+class _CultivationsState extends State<Cultivations> {
   final canceldialog = MyDialog();
-  DateTime date = DateTime.now();
+  DateTime SeedDate = DateTime.now();
+  DateTime MoveDate = DateTime.now();
+  late List<AllGreenhouses> _allGreenhouses;
+  late List<AllStrains> _allStrains;
   final _formKey = GlobalKey<FormState>();
   bool _visible = false;
-  late List<AllHarvests> _allHarvests;
 
-  final _ctlHavestID = TextEditingController();
-  final _ctlWeight = TextEditingController();
-  final _ctlLotNo = TextEditingController();
-  final _ctlGetByName = TextEditingController();
-  final _ctlGetByPlate = TextEditingController();
-  final _ctlLicenseNo = TextEditingController();
-  final _ctlLicensePlate = TextEditingController();
-  final _ctlTrackRemake = TextEditingController();
+  final _ctlNo = TextEditingController();
+  final _ctlSeedtotal = TextEditingController();
+  final _ctlSeedNet = TextEditingController();
+  final _ctlPlantTotal = TextEditingController();
+  final _ctlPlantLive = TextEditingController();
+  final _ctlPlantDead = TextEditingController();
+  final _ctlPlantRemake = TextEditingController();
 
   void Clear() {
-    _ctlHavestID.clear();
-    _ctlWeight.clear();
-    _ctlLotNo.clear();
-    _ctlGetByName.clear();
-    _ctlGetByPlate.clear();
-    _ctlLicenseNo.clear();
-    _ctlLicensePlate.clear();
-    _ctlTrackRemake.clear();
-    dropdowntype = 'N/A';
-    dropdownHvtID = 'N/A';
+    _ctlNo.clear();
+    _ctlSeedtotal.clear();
+    _ctlSeedNet.clear();
+    _ctlPlantTotal.clear();
+    _ctlPlantLive.clear();
+    _ctlPlantDead.clear();
+    _ctlPlantRemake.clear();
+    dropdownGH = 'N/A';
+    dropdownStrain = 'N/A';
   }
 
-  Future addTransfers() async {
-    var url = hostAPI + "/trackings/transfers";
+  Future addCultivations() async {
+    var url = hostAPI + "/trackings/addCultivations";
     // Showing LinearProgressIndicator.
     setState(() {
       _visible = true;
     });
 
     var response = await http.post(Uri.parse(url), body: {
-      "HarvestID": dropdownHvtID.toString(),
-      "TransferDate": date.toString(),
-      "Type": selectDropdown.toString(),
-      "Weight": _ctlWeight.text,
-      "LotNo": _ctlLotNo.text,
-      "GetByName": _ctlGetByName.text,
-      "GetByPlace": _ctlGetByPlate.text,
-      "LicenseNo": _ctlLicenseNo.text,
-      "LicensePlate": _ctlLicensePlate.text,
-      "Remark": _ctlTrackRemake.text,
+      "GreenHouseName": dropdownGH.toString(),
+      "StrainName": dropdownStrain.toString(),
+      "No": _ctlNo.text,
+      "SeedDate": SeedDate.toString(),
+      "MoveDate": MoveDate.toString(),
+      "SeedTotal": _ctlSeedtotal.text,
+      "SeedNet": _ctlSeedNet.text,
+      "PlantTotal": _ctlPlantTotal.text,
+      "PlantLive": _ctlPlantLive.text,
+      "PlantDead": _ctlPlantDead.text,
+      "Remark": _ctlPlantRemake.text,
       "CreateBy": widget.UserID,
       "UpdateBy": widget.UserID,
     });
@@ -122,36 +123,70 @@ class _TransfersState extends State<Transfers> {
   @override
   void initState() {
     super.initState();
+    //getAllData();
   }
 
-  Future<List<AllHarvests>> getAllHarvests() async {
-    var url = hostAPI + "/trackings/getHarvests";
+  Future getData() async {
+    var url = hostAPI + '/informations/getAllGreenhouses';
     var response = await http.get(Uri.parse(url));
-    _allHarvests = allHarvestsFromJson(response.body);
+    _allGreenhouses = allGreenhousesFromJson(response.body);
 
-    return _allHarvests;
+    var urlStrains = hostAPI + '/informations/getStrains';
+    var responseStrains = await http.get(Uri.parse(urlStrains));
+    _allStrains = allStrainsFromJson(responseStrains.body);
+
+    return [_allGreenhouses, _allStrains];
+    //return _allGreenhouses;
   }
 
-  String dropdowntype = 'N/A';
-  String selectDropdown = '00';
-  var itemtype = ['N/A', 'ใบ', 'ดอก', 'ก้าน'];
+  // Future<AllGreenhouses> getAllGreenhouses() async {
+  //   var url = 'http://172.20.10.7:3000/informations/getAllGreenhouses';
+  //   var response = await http.get(Uri.parse(url));
+  //   _allGreenhouses = allGreenhousesFromJson(response.body);
 
-  String dropdownHvtID = 'N/A';
+  //   return _allGreenhouses;
+  // }
+
+  // Future<AllStrains> getAllStrains() async {
+  //   var urlStrains = 'http://172.20.10.7:3000/informations/getStrains';
+  //   var responseStrains = await http.get(Uri.parse(urlStrains));
+  //   _allStrains = allStrainsFromJson(responseStrains.body);
+
+  //   return _allStrains;
+  // }
+
+  String dropdownStrain = 'N/A';
+  //var itemStrain = ['N/A', 'สายพันธุ์หางกระรอก', 'สายพันธุ์หางเสือ'];
+
+  String dropdownGH = 'N/A';
+  //var itemGH = ['N/A', 'โรงเรือน 1', 'โรงเรือน 2'];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(backgroundColor: kBackground),
+        appBar: AppBar(
+          title: const Text("Cultivations"),
+          backgroundColor: kBackground,
+        ),
         body: FutureBuilder(
-          future: getAllHarvests(),
+          future: getData(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              var result = snapshot.data;
-              var itemHvtID = ['N/A'];
-              for (var i = 0; i < result.length; i++) {
-                itemHvtID.add(result[i].harvestId.toString());
+              var result1 = snapshot.data[0];
+              var result2 = snapshot.data[1];
+              var nameGH = ['N/A'];
+              for (var i = 0; i < result1.length; i++) {
+                nameGH.add(result1[i].name);
               }
-              print(itemHvtID);
+              print(nameGH);
+
+              var nameStrains = [
+                'N/A',
+              ];
+              for (var i = 0; i < result2.length; i++) {
+                nameStrains.add(result2[i].name);
+              }
+              // print(nameStrains);
 
               return SafeArea(
                 child: Container(
@@ -161,8 +196,8 @@ class _TransfersState extends State<Transfers> {
                       child: Column(
                         children: [
                           const SizedBox(height: 10),
-                          Text(
-                            "บันทึกข้อมูลการส่งมอบ",
+                          const Text(
+                            "บันทึกข้อมูลการปลูก",
                             style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w600,
@@ -172,8 +207,63 @@ class _TransfersState extends State<Transfers> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              const Text(
+                                "โรงปลูก :",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 10),
+                              Container(
+                                margin:
+                                    const EdgeInsets.only(left: 15, right: 15),
+                                padding:
+                                    const EdgeInsets.only(left: 15, right: 15),
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 240, 239, 239),
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: DropdownButton(
+                                  dropdownColor: Colors.white,
+                                  iconSize: 30,
+                                  isExpanded: true,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
+                                  value: dropdownGH,
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  items: nameGH.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(
+                                      () {
+                                        dropdownGH = newValue!;
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
                               Text(
-                                "หมายเลขการเก็บเกี่ยว :",
+                                "สายพันธุ์ :",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 20,
@@ -201,9 +291,9 @@ class _TransfersState extends State<Transfers> {
                                     color: Colors.black,
                                     fontSize: 18,
                                   ),
-                                  value: dropdownHvtID,
+                                  value: dropdownStrain,
                                   icon: const Icon(Icons.keyboard_arrow_down),
-                                  items: itemHvtID.map((String items) {
+                                  items: nameStrains.map((String items) {
                                     return DropdownMenuItem(
                                       value: items,
                                       child: Text(items),
@@ -212,7 +302,7 @@ class _TransfersState extends State<Transfers> {
                                   onChanged: (String? newValue) {
                                     setState(
                                       () {
-                                        dropdownHvtID = newValue!;
+                                        dropdownStrain = newValue!;
                                       },
                                     );
                                   },
@@ -221,23 +311,23 @@ class _TransfersState extends State<Transfers> {
                             ],
                           ),
                           const SizedBox(height: 20),
-                          buildTransferDate(),
+                          buildNo(),
                           const SizedBox(height: 20),
-                          buildType(),
+                          buildSeedData(),
                           const SizedBox(height: 20),
-                          buildweight(),
+                          buildMoveData(),
                           const SizedBox(height: 20),
-                          buildLotNo(),
+                          buildSeedtotal(),
                           const SizedBox(height: 20),
-                          buildGetByName(),
+                          buildSeedNet(),
                           const SizedBox(height: 20),
-                          buildGetByPlate(),
+                          buildPlantTotal(),
                           const SizedBox(height: 20),
-                          buildLicenseNo(),
+                          buildPlantLive(),
                           const SizedBox(height: 20),
-                          buildLicensePlate(),
+                          buildPlantDead(),
                           const SizedBox(height: 20),
-                          buildTrackRemake(),
+                          buildPlantRemake(),
                           const SizedBox(height: 50),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -253,7 +343,7 @@ class _TransfersState extends State<Transfers> {
                                                 BorderRadius.circular(30)),
                                         padding: const EdgeInsets.all(15)),
                                     onPressed: () {
-                                      addTransfers();
+                                      addCultivations();
                                     },
                                     child: Text("บันทึก"),
                                   ),
@@ -292,12 +382,49 @@ class _TransfersState extends State<Transfers> {
         ));
   }
 
-  Widget buildTransferDate() {
+  Widget buildNo() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
-          "วันที่ :",
+        Text(
+          "รอบการผลิต :",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        Container(
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            controller: _ctlNo,
+            keyboardType: TextInputType.number,
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: 'ระบุ',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildSeedData() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "วันที่เพาะเมล็ด :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -308,7 +435,7 @@ class _TransfersState extends State<Transfers> {
           decoration: BoxDecoration(
             color: Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
+            boxShadow: [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -319,7 +446,7 @@ class _TransfersState extends State<Transfers> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${date.year}/${date.month}/${date.day}',
+                '${SeedDate.year}/${SeedDate.month}/${SeedDate.day}',
                 //'${date.day}/${date.month}/${date.year}',
                 style: TextStyle(fontSize: 18, color: Colors.black),
               ),
@@ -328,14 +455,14 @@ class _TransfersState extends State<Transfers> {
                 onPressed: () async {
                   DateTime? newDate = await showDatePicker(
                     context: context,
-                    initialDate: date,
+                    initialDate: SeedDate,
                     firstDate: DateTime(1900),
                     lastDate: DateTime(2100),
                   );
                   //if "CANCEL" = null
                   if (newDate == null) return;
                   //if "OK" => DateTime
-                  setState(() => date = newDate);
+                  setState(() => SeedDate = newDate);
                 },
                 style: OutlinedButton.styleFrom(
                   shape: StadiumBorder(),
@@ -352,12 +479,12 @@ class _TransfersState extends State<Transfers> {
     );
   }
 
-  Widget buildType() {
+  Widget buildMoveData() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "ประเภท :",
+          "วันที่ย้ายปลูก :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -375,50 +502,49 @@ class _TransfersState extends State<Transfers> {
               ),
             ],
           ),
-          child: DropdownButton(
-            dropdownColor: Colors.white,
-            iconSize: 30,
-            isExpanded: true,
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-            ),
-            value: dropdowntype,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            items: itemtype.map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(
-                () {
-                  dropdowntype = newValue!;
-                  if (dropdowntype == "N/A") {
-                    selectDropdown = "00";
-                  } else if (dropdowntype == "ใบ") {
-                    selectDropdown = "01";
-                  } else if (dropdowntype == "ดอก") {
-                    selectDropdown = "02";
-                  } else {
-                    selectDropdown = "03";
-                  }
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                '${MoveDate.year}/${MoveDate.month}/${MoveDate.day}',
+                //'${date.day}/${date.month}/${date.year}',
+                style: TextStyle(fontSize: 18, color: Colors.black),
+              ),
+              OutlinedButton(
+                child: Icon(Icons.date_range_outlined),
+                onPressed: () async {
+                  DateTime? newDate = await showDatePicker(
+                    context: context,
+                    initialDate: MoveDate,
+                    firstDate: DateTime(1900),
+                    lastDate: DateTime(2100),
+                  );
+                  //if "CANCEL" = null
+                  if (newDate == null) return;
+                  //if "OK" => DateTime
+                  setState(() => MoveDate = newDate);
                 },
-              );
-            },
+                style: OutlinedButton.styleFrom(
+                  shape: StadiumBorder(),
+                  //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),),
+                  textStyle: TextStyle(fontSize: 16),
+                  primary: Color.fromARGB(255, 10, 91, 97),
+                  //onPrimary: Colors.white
+                ),
+              ),
+            ],
           ),
         ),
       ],
     );
   }
 
-  Widget buildweight() {
+  Widget buildSeedtotal() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "น้ำหนัก (kg) :",
+          "จำนวนเมล็ด :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -436,44 +562,7 @@ class _TransfersState extends State<Transfers> {
             ],
           ),
           child: TextFormField(
-            controller: _ctlWeight,
-            keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุน้ำหนัก',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildLotNo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "หมายเลขล๊อต :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 10),
-        Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlLotNo,
+            controller: _ctlSeedtotal,
             keyboardType: TextInputType.number,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
@@ -487,12 +576,12 @@ class _TransfersState extends State<Transfers> {
     );
   }
 
-  Widget buildGetByName() {
+  Widget buildSeedNet() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "ชื่อผู้รับ :",
+          "น้ำหนักเมล็ด :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -510,79 +599,7 @@ class _TransfersState extends State<Transfers> {
             ],
           ),
           child: TextFormField(
-            controller: _ctlGetByName,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'กรอกชื่อผู้รับ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildGetByPlate() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "ชื่อสถานที่ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 10),
-        Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlGetByPlate,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'กรอกชื่อสถานที่',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildLicenseNo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "เลขที่ใบอนุญาต :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 10),
-        Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlLicenseNo,
+            controller: _ctlSeedNet,
             keyboardType: TextInputType.number,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
@@ -596,12 +613,12 @@ class _TransfersState extends State<Transfers> {
     );
   }
 
-  Widget buildLicensePlate() {
+  Widget buildPlantTotal() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "ป้ายทะเบียนรถ :",
+          "จำนวนต้นทั้งหมด :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -619,7 +636,7 @@ class _TransfersState extends State<Transfers> {
             ],
           ),
           child: TextFormField(
-            controller: _ctlLicensePlate,
+            controller: _ctlPlantTotal,
             keyboardType: TextInputType.number,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
@@ -633,7 +650,81 @@ class _TransfersState extends State<Transfers> {
     );
   }
 
-  Widget buildTrackRemake() {
+  Widget buildPlantLive() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "จำนวนต้นเป็นทั้งหมด :",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        Container(
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            controller: _ctlPlantLive,
+            keyboardType: TextInputType.number,
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: 'ระบุ',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildPlantDead() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "จำนวนต้นตายทั้งหมด :",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        Container(
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            controller: _ctlPlantDead,
+            keyboardType: TextInputType.number,
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: 'ระบุ',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildPlantRemake() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -656,7 +747,7 @@ class _TransfersState extends State<Transfers> {
             ],
           ),
           child: TextFormField(
-            controller: _ctlTrackRemake,
+            controller: _ctlPlantRemake,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
                 border: InputBorder.none,

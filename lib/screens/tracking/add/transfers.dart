@@ -1,58 +1,67 @@
 import 'dart:convert';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
+import 'package:cannabis_track_and_trace_application/widget/dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../../api/allInventorys.dart';
-import '../../api/allgreenhouses.dart';
-import '../../api/hostapi.dart';
-import '../../widget/dialog.dart';
 
-class ChemicalUses extends StatefulWidget {
+import '../../../api/allharvests.dart';
+import '../../../api/hostapi.dart';
+
+class Transfers extends StatefulWidget {
   final String UserID;
-  const ChemicalUses({Key? key, required this.UserID}) : super(key: key);
+  const Transfers({Key? key, required this.UserID}) : super(key: key);
+
   @override
-  State<ChemicalUses> createState() => _ChemicalUsesState();
+  State<Transfers> createState() => _TransfersState();
 }
 
-class _ChemicalUsesState extends State<ChemicalUses> {
+class _TransfersState extends State<Transfers> {
   final canceldialog = MyDialog();
-  late List<AllGreenhouses> _allGreenhouses;
-  late List<AllInventorys> _allInventory;
   DateTime date = DateTime.now();
   final _formKey = GlobalKey<FormState>();
   bool _visible = false;
-  //late List<AllGreenhouses> _AllGreenhouses;
+  late List<AllHarvests> _allHarvests;
 
-  final _ctlUseAmount = TextEditingController();
-  final _ctlUnit = TextEditingController();
-  final _ctlUseRemark = TextEditingController();
-  final _ctlRemake = TextEditingController();
+  final _ctlHavestID = TextEditingController();
+  final _ctlWeight = TextEditingController();
+  final _ctlLotNo = TextEditingController();
+  final _ctlGetByName = TextEditingController();
+  final _ctlGetByPlate = TextEditingController();
+  final _ctlLicenseNo = TextEditingController();
+  final _ctlLicensePlate = TextEditingController();
+  final _ctlTrackRemake = TextEditingController();
 
   void Clear() {
-    _ctlUseAmount.clear();
-    _ctlUnit.clear();
-    _ctlUseRemark.clear();
-    _ctlRemake.clear();
-    dropdownGH = 'N/A';
-    dropdownIV = 'N/A';
-    date = DateTime.now();
+    _ctlHavestID.clear();
+    _ctlWeight.clear();
+    _ctlLotNo.clear();
+    _ctlGetByName.clear();
+    _ctlGetByPlate.clear();
+    _ctlLicenseNo.clear();
+    _ctlLicensePlate.clear();
+    _ctlTrackRemake.clear();
+    dropdowntype = 'N/A';
+    dropdownHvtID = 'N/A';
   }
 
-  Future addChemicalUses() async {
-    var url = hostAPI + "/informations/addChemicalUses";
+  Future addTransfers() async {
+    var url = hostAPI + "/trackings/transfers";
     // Showing LinearProgressIndicator.
     setState(() {
       _visible = true;
     });
 
     var response = await http.post(Uri.parse(url), body: {
-      "InventoryName": dropdownIV.toString(),
-      "UseAmount": _ctlUseAmount.text,
-      "Unit": _ctlUnit.text,
-      "UseRemark": _ctlUseRemark.text,
-      "PHI": date.toString(),
-      "GreenHouseName": dropdownGH.toString(),
-      "Remark": _ctlRemake.text,
+      "HarvestID": dropdownHvtID.toString(),
+      "TransferDate": date.toString(),
+      "Type": selectDropdown.toString(),
+      "Weight": _ctlWeight.text,
+      "LotNo": _ctlLotNo.text,
+      "GetByName": _ctlGetByName.text,
+      "GetByPlace": _ctlGetByPlate.text,
+      "LicenseNo": _ctlLicenseNo.text,
+      "LicensePlate": _ctlLicensePlate.text,
+      "Remark": _ctlTrackRemake.text,
       "CreateBy": widget.UserID,
       "UpdateBy": widget.UserID,
     });
@@ -115,54 +124,34 @@ class _ChemicalUsesState extends State<ChemicalUses> {
     super.initState();
   }
 
-  Future getData() async {
-    var url = hostAPI + '/informations/getAllGreenhouses';
+  Future<List<AllHarvests>> getAllHarvests() async {
+    var url = hostAPI + "/trackings/getHarvests";
     var response = await http.get(Uri.parse(url));
-    _allGreenhouses = allGreenhousesFromJson(response.body);
+    _allHarvests = allHarvestsFromJson(response.body);
 
-    var urlInventory = hostAPI + '/informations/getInventorys';
-    var responseInventory = await http.get(Uri.parse(urlInventory));
-    _allInventory = allInventorysFromJson(responseInventory.body);
-
-    return [_allGreenhouses, _allInventory];
+    return _allHarvests;
   }
 
   String dropdowntype = 'N/A';
   String selectDropdown = '00';
   var itemtype = ['N/A', 'ใบ', 'ดอก', 'ก้าน'];
 
-  String dropdownGH = 'N/A';
-  String dropdownIV = 'N/A';
+  String dropdownHvtID = 'N/A';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: kBackground,
-        ),
+        appBar: AppBar(backgroundColor: kBackground),
         body: FutureBuilder(
-          future: getData(),
+          future: getAllHarvests(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              var result1 = snapshot.data[0];
-              var result2 = snapshot.data[1];
-
-              var nameGH = ['N/A'];
-              for (var i = 0; i < result1.length; i++) {
-                nameGH.add(result1[i].name);
+              var result = snapshot.data;
+              var itemHvtID = ['N/A'];
+              for (var i = 0; i < result.length; i++) {
+                itemHvtID.add(result[i].harvestId.toString());
               }
-              print(nameGH);
-
-              var nameIV = ['N/A'];
-              for (var i = 0; i < result2.length; i++) {
-                //print(result[i].newCase);
-                nameIV.add(result2[i].name);
-                //print(casenewsort);
-
-                //
-
-              }
-              print(nameIV);
+              print(itemHvtID);
 
               return SafeArea(
                 child: Container(
@@ -173,7 +162,7 @@ class _ChemicalUsesState extends State<ChemicalUses> {
                         children: [
                           const SizedBox(height: 10),
                           Text(
-                            "บันทึกข้อมูลการใช้สารเคมี",
+                            "บันทึกข้อมูลการส่งมอบ",
                             style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w600,
@@ -184,7 +173,7 @@ class _ChemicalUsesState extends State<ChemicalUses> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                "โรงปลูก :",
+                                "หมายเลขการเก็บเกี่ยว :",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 20,
@@ -212,9 +201,9 @@ class _ChemicalUsesState extends State<ChemicalUses> {
                                     color: Colors.black,
                                     fontSize: 18,
                                   ),
-                                  value: dropdownGH,
+                                  value: dropdownHvtID,
                                   icon: const Icon(Icons.keyboard_arrow_down),
-                                  items: nameGH.map((String items) {
+                                  items: itemHvtID.map((String items) {
                                     return DropdownMenuItem(
                                       value: items,
                                       child: Text(items),
@@ -223,7 +212,7 @@ class _ChemicalUsesState extends State<ChemicalUses> {
                                   onChanged: (String? newValue) {
                                     setState(
                                       () {
-                                        dropdownGH = newValue!;
+                                        dropdownHvtID = newValue!;
                                       },
                                     );
                                   },
@@ -232,67 +221,23 @@ class _ChemicalUsesState extends State<ChemicalUses> {
                             ],
                           ),
                           const SizedBox(height: 20),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "วัสดุ :",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              SizedBox(height: 10),
-                              Container(
-                                margin: EdgeInsets.only(left: 15, right: 15),
-                                padding: EdgeInsets.only(left: 15, right: 15),
-                                decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 240, 239, 239),
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
-                                      color: Colors.black26,
-                                      offset: Offset(0, 2),
-                                    ),
-                                  ],
-                                ),
-                                child: DropdownButton(
-                                  dropdownColor: Colors.white,
-                                  iconSize: 30,
-                                  isExpanded: true,
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18,
-                                  ),
-                                  value: dropdownIV,
-                                  icon: const Icon(Icons.keyboard_arrow_down),
-                                  items: nameIV.map((String items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: Text(items),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? newValue) {
-                                    setState(
-                                      () {
-                                        dropdownIV = newValue!;
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            ],
-                          ),
+                          buildTransferDate(),
                           const SizedBox(height: 20),
-                          buildUseAmount(),
+                          buildType(),
                           const SizedBox(height: 20),
-                          buildUnit(),
+                          buildweight(),
                           const SizedBox(height: 20),
-                          buildUseRemake(),
+                          buildLotNo(),
                           const SizedBox(height: 20),
-                          buildPHI(),
+                          buildGetByName(),
                           const SizedBox(height: 20),
-                          buildChemicalRemake(),
+                          buildGetByPlate(),
+                          const SizedBox(height: 20),
+                          buildLicenseNo(),
+                          const SizedBox(height: 20),
+                          buildLicensePlate(),
+                          const SizedBox(height: 20),
+                          buildTrackRemake(),
                           const SizedBox(height: 50),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.end,
@@ -308,7 +253,7 @@ class _ChemicalUsesState extends State<ChemicalUses> {
                                                 BorderRadius.circular(30)),
                                         padding: const EdgeInsets.all(15)),
                                     onPressed: () {
-                                      addChemicalUses();
+                                      addTransfers();
                                     },
                                     child: Text("บันทึก"),
                                   ),
@@ -347,121 +292,12 @@ class _ChemicalUsesState extends State<ChemicalUses> {
         ));
   }
 
-  Widget buildUseAmount() {
+  Widget buildTransferDate() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          "ปริมาณ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 10),
-        Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlUseAmount,
-            keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildUnit() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "หน่วย :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 10),
-        Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlUnit,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildUseRemake() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "เหตุผลที่ใช้ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 10),
-        Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlUseRemark,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildPHI() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "วันที่ปลอดภัยหลังใช้ :",
+        const Text(
+          "วันที่ :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -472,7 +308,7 @@ class _ChemicalUsesState extends State<ChemicalUses> {
           decoration: BoxDecoration(
             color: Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -516,7 +352,288 @@ class _ChemicalUsesState extends State<ChemicalUses> {
     );
   }
 
-  Widget buildChemicalRemake() {
+  Widget buildType() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "ประเภท :",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        Container(
+          margin: EdgeInsets.only(left: 15, right: 15),
+          padding: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: DropdownButton(
+            dropdownColor: Colors.white,
+            iconSize: 30,
+            isExpanded: true,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 18,
+            ),
+            value: dropdowntype,
+            icon: const Icon(Icons.keyboard_arrow_down),
+            items: itemtype.map((String items) {
+              return DropdownMenuItem(
+                value: items,
+                child: Text(items),
+              );
+            }).toList(),
+            onChanged: (String? newValue) {
+              setState(
+                () {
+                  dropdowntype = newValue!;
+                  if (dropdowntype == "N/A") {
+                    selectDropdown = "00";
+                  } else if (dropdowntype == "ใบ") {
+                    selectDropdown = "01";
+                  } else if (dropdowntype == "ดอก") {
+                    selectDropdown = "02";
+                  } else {
+                    selectDropdown = "03";
+                  }
+                },
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildweight() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "น้ำหนัก (kg) :",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        Container(
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            controller: _ctlWeight,
+            keyboardType: TextInputType.number,
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: 'ระบุน้ำหนัก',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildLotNo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "หมายเลขล๊อต :",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        Container(
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            controller: _ctlLotNo,
+            keyboardType: TextInputType.number,
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: 'ระบุ',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildGetByName() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "ชื่อผู้รับ :",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        Container(
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            controller: _ctlGetByName,
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: 'กรอกชื่อผู้รับ',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildGetByPlate() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "ชื่อสถานที่ :",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        Container(
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            controller: _ctlGetByPlate,
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: 'กรอกชื่อสถานที่',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildLicenseNo() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "เลขที่ใบอนุญาต :",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        Container(
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            controller: _ctlLicenseNo,
+            keyboardType: TextInputType.number,
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: 'ระบุ',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildLicensePlate() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          "ป้ายทะเบียนรถ :",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        SizedBox(height: 10),
+        Container(
+          margin: EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            controller: _ctlLicensePlate,
+            keyboardType: TextInputType.number,
+            style: TextStyle(color: Colors.black),
+            decoration: InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: 'ระบุ',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget buildTrackRemake() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -539,7 +656,7 @@ class _ChemicalUsesState extends State<ChemicalUses> {
             ],
           ),
           child: TextFormField(
-            controller: _ctlRemake,
+            controller: _ctlTrackRemake,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
                 border: InputBorder.none,

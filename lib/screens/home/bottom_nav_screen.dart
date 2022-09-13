@@ -1,4 +1,4 @@
-import 'package:cannabis_track_and_trace_application/screens/home/account_screen.dart';
+import 'package:cannabis_track_and_trace_application/screens/account/account_screen.dart';
 import 'package:cannabis_track_and_trace_application/screens/home/home_screen.dart';
 import 'package:cannabis_track_and_trace_application/screens/infomation/info_screen.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/tracking_screen.dart';
@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
 import '../infomation/info_screen.dart';
-import '../tracking/planttracking_list.dart';
+import '../tracking/show/planttracking_list.dart';
 
 class BottomNavScreen extends StatefulWidget {
   final String UserID;
@@ -96,12 +96,13 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
         // } else {
         //   Navigator.maybePop(context);
         // }
-         Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ListPlantTrackingPage(
-                        code: '222222',UserID: widget.UserID,
-                      )));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ListPlantTrackingPage(
+                      code: '222222',
+                      UserID: widget.UserID,
+                    )));
       });
 
       if (!mounted) {

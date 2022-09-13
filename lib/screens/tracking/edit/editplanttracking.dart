@@ -6,10 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
-import '../../api/hostapi.dart';
-import '../../api/planttracking.dart';
-import '../../config/styles.dart';
-import '../../widget/dialog.dart';
+import '../../../api/hostapi.dart';
+import '../../../api/planttracking.dart';
+import '../../../config/styles.dart';
+import '../../../widget/dialog.dart';
 
 class EditPlantTracking extends StatefulWidget {
   final String PlantrackingID;

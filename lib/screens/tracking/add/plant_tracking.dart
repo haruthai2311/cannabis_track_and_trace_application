@@ -7,9 +7,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
-import '../../api/allgreenhouses.dart';
-import '../../api/getPots.dart';
-import '../../widget/dialog.dart';
+import '../../../api/allgreenhouses.dart';
+import '../../../api/getPots.dart';
+import '../../../widget/dialog.dart';
 
 class PlantTracking extends StatefulWidget {
   final String UserID;

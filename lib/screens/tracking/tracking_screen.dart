@@ -1,10 +1,10 @@
 import 'package:cannabis_track_and_trace_application/config/color.dart';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
 import 'package:cannabis_track_and_trace_application/screens/test.dart';
-import 'package:cannabis_track_and_trace_application/screens/tracking/cultivations.dart';
-import 'package:cannabis_track_and_trace_application/screens/tracking/harvests.dart';
-import 'package:cannabis_track_and_trace_application/screens/tracking/plant_tracking.dart';
-import 'package:cannabis_track_and_trace_application/screens/tracking/transfers.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/add/cultivations.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/add/harvests.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/add/plant_tracking.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/add/transfers.dart';
 import 'package:cannabis_track_and_trace_application/widget/Circle_Gradient_Icon.dart';
 import 'package:flutter/material.dart';
 

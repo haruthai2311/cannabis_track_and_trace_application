@@ -5,34 +5,33 @@ import 'package:cannabis_track_and_trace_application/screens/infomation/info_scr
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../../api/hostapi.dart';
-import '../../widget/dialog.dart';
+import '../../../api/hostapi.dart';
+import '../../../widget/dialog.dart';
 
-class Strains extends StatefulWidget {
+class Inventorys extends StatefulWidget {
   final String UserID;
-  const Strains({Key? key, required this.UserID}) : super(key: key);
+  const Inventorys({Key? key, required this.UserID}) : super(key: key);
   @override
-  State<Strains> createState() => _StrainsState();
+  State<Inventorys> createState() => _InventorysState();
 }
 
-class _StrainsState extends State<Strains> {
+class _InventorysState extends State<Inventorys> {
   final canceldialog = MyDialog();
   final _formKey = GlobalKey<FormState>();
   bool _visible = false;
 
   final _ctlName = TextEditingController();
-  final _ctlShortName = TextEditingController();
+  final _ctlCommercialName = TextEditingController();
   final _ctlRemark = TextEditingController();
 
   void Clear() {
     _ctlName.clear();
-    _ctlShortName.clear();
+    _ctlCommercialName.clear();
     dropdownIsA = "N/A";
-    _ctlRemark.clear();
   }
 
-  Future addStrains() async {
-    var url = hostAPI + "/informations/addStrains";
+  Future addInventorys() async {
+    var url = hostAPI + "/informations/addInventorys";
     // Showing LinearProgressIndicator.
     setState(() {
       _visible = true;
@@ -40,9 +39,8 @@ class _StrainsState extends State<Strains> {
 
     var response = await http.post(Uri.parse(url), body: {
       "Name": _ctlName.text,
-      "ShortName": _ctlShortName.text,
+      "CommercialName": _ctlCommercialName.text,
       "IsActive": selectDropdownIsA.toString(),
-      "Remark": _ctlRemark.text,
       "CreateBy": widget.UserID,
       "UpdateBy": widget.UserID,
     });
@@ -123,7 +121,7 @@ class _StrainsState extends State<Strains> {
                 children: [
                   const SizedBox(height: 10),
                   Text(
-                    "บันทึกข้อมูลสายพันธุ์",
+                    "บันทึกข้อมูลวัสดุ",
                     style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w600,
@@ -132,12 +130,10 @@ class _StrainsState extends State<Strains> {
                   const SizedBox(height: 50),
                   buildName(),
                   const SizedBox(height: 20),
-                  buildShortName(),
+                  buildCommercialName(),
                   const SizedBox(height: 20),
                   buildIsActive(),
                   const SizedBox(height: 20),
-                  buildStrainRemake(),
-                  const SizedBox(height: 50),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -151,7 +147,7 @@ class _StrainsState extends State<Strains> {
                                     borderRadius: BorderRadius.circular(30)),
                                 padding: const EdgeInsets.all(15)),
                             onPressed: () {
-                              addStrains();
+                              addInventorys();
                             },
                             child: Text("บันทึก"),
                           ),
@@ -209,6 +205,7 @@ class _StrainsState extends State<Strains> {
           ),
           child: TextFormField(
             controller: _ctlName,
+            keyboardType: TextInputType.text,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
                 border: InputBorder.none,
@@ -221,12 +218,12 @@ class _StrainsState extends State<Strains> {
     );
   }
 
-  Widget buildShortName() {
+  Widget buildCommercialName() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          "ชื่อย่อ :",
+          "ชื่อทางการค้า :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -244,7 +241,8 @@ class _StrainsState extends State<Strains> {
             ],
           ),
           child: TextFormField(
-            controller: _ctlShortName,
+            controller: _ctlCommercialName,
+            keyboardType: TextInputType.number,
             style: TextStyle(color: Colors.black),
             decoration: InputDecoration(
                 border: InputBorder.none,
@@ -308,42 +306,6 @@ class _StrainsState extends State<Strains> {
                 },
               );
             },
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildStrainRemake() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          "หมายเหตุ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        SizedBox(height: 10),
-        Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlRemark,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: '**หมายเหตุ**',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
       ],

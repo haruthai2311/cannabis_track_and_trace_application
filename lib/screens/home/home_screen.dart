@@ -1,5 +1,5 @@
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
-import 'package:cannabis_track_and_trace_application/screens/home/account_screen.dart';
+import 'package:cannabis_track_and_trace_application/screens/account/account_screen.dart';
 import 'package:cannabis_track_and_trace_application/screens/home/scan_screen.dart';
 import 'package:cannabis_track_and_trace_application/widget/Circle_Gradient_Icon.dart';
 import 'package:flutter/foundation.dart';

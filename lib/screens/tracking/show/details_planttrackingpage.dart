@@ -1,9 +1,9 @@
-import 'package:cannabis_track_and_trace_application/screens/tracking/editplanttracking.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/edit/editplanttracking.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import '../../api/hostapi.dart';
-import '../../api/planttracking.dart';
-import '../../config/styles.dart';
+import '../../../api/hostapi.dart';
+import '../../../api/planttracking.dart';
+import '../../../config/styles.dart';
 import 'package:http/http.dart' as http;
 
 class DetailsPlantTrackingPage extends StatefulWidget {

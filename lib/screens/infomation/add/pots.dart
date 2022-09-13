@@ -2,10 +2,10 @@ import 'dart:convert';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import '../../api/getcultivations.dart';
-import '../../api/allgreenhouses.dart';
-import '../../api/hostapi.dart';
-import '../../widget/dialog.dart';
+import '../../../api/getcultivations.dart';
+import '../../../api/allgreenhouses.dart';
+import '../../../api/hostapi.dart';
+import '../../../widget/dialog.dart';
 
 class Pots extends StatefulWidget {
   final String UserID;

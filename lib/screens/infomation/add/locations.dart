@@ -6,8 +6,8 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
-import '../../api/hostapi.dart';
-import '../../widget/dialog.dart';
+import '../../../api/hostapi.dart';
+import '../../../widget/dialog.dart';
 
 class Locations extends StatefulWidget {
   final String UserID;
