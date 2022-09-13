@@ -99,7 +99,9 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
         return code;
       });
 
-      if (!mounted) {return;}
+      if (!mounted) {
+        return;
+      }
       // if (mounted) {
       //   Navigator.pop(context);
       // }

@@ -185,14 +185,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget buildAmount() {
     return Padding(
-      padding: EdgeInsets.all(10),
+      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10, top: 10),
       //padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
       child: Row(
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Container(
-            width: 160,
+            width: 170,
             height: 80,
             decoration: BoxDecoration(
               boxShadow: [
@@ -230,12 +230,16 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   Column(
                     children: [
-                      Text(
-                        '371 ต้น',
-                        style: TextStyle(
-                            fontSize: 20,
-                            color: Colors.black,
-                            fontWeight: FontWeight.bold),
+                      Row(
+                        children: [
+                          Text(
+                            '371 กระถาง',
+                            style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
                       ),
                       Text(
                         'ต้นปกติ',
@@ -251,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Container(
-            width: 160,
+            width: 170,
             height: 80,
             decoration: BoxDecoration(
               boxShadow: [
@@ -290,7 +294,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Column(
                     children: [
                       Text(
-                        '29 ต้น',
+                        '29 กระถาง',
                         style: TextStyle(
                             fontSize: 20,
                             color: Colors.black,
@@ -352,8 +356,8 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: const EdgeInsets.all(10),
                   child: CircularPercentIndicator(
                     percent: 0.80,
-                    radius: 100,
-                    lineWidth: 25,
+                    radius: 80,
+                    lineWidth: 20,
                     animation: true,
                     progressColor: colorGraph1,
                     backgroundColor: colorGraph2,
@@ -488,7 +492,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.only(right: 15),
                   child: Text(
-                    '14 ต้น',
+                    '14 กระถาง',
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.black,
@@ -574,7 +578,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.only(right: 15),
                   child: Text(
-                    '50 ต้น',
+                    '50 กระถาง',
                     style: TextStyle(
                       fontSize: 18,
                       color: Colors.black,
