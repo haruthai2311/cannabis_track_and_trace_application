@@ -1,7 +1,5 @@
 import 'package:cannabis_track_and_trace_application/screens/tracking/editplanttracking.dart';
-import 'package:cannabis_track_and_trace_application/screens/tracking/plant_tracking.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:intl/intl.dart';
 import '../../api/hostapi.dart';
 import '../../api/planttracking.dart';
@@ -10,7 +8,9 @@ import 'package:http/http.dart' as http;
 
 class DetailsPlantTrackingPage extends StatefulWidget {
   final String PlantrackingID;
-  const DetailsPlantTrackingPage({Key? key, required this.PlantrackingID})
+  final String UserID;
+  const DetailsPlantTrackingPage(
+      {Key? key, required this.PlantrackingID, required this.UserID})
       : super(key: key);
 
   @override
@@ -34,6 +34,7 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
   void initState() {
     super.initState();
     getPlanttracking();
+    //print(widget.UserID);
   }
 
   final f = DateFormat('dd/MM/yyyy hh:mm:ss');
@@ -60,10 +61,36 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                 text: f.format(result[0].checkDate).toString());
             final _ctlPotId =
                 TextEditingController(text: result[0].potId.toString());
-            final _ctlPlantStatus =
-                TextEditingController(text: result[0].plantStatus.toString());
-            final _ctlSoilMoisture =
-                TextEditingController(text: result[0].soilMoisture.toString());
+            String Status;
+            String status = result[0].plantStatus.toString();
+            if (status == "1") {
+              Status = "ปกติ";
+            } else if (status == "2") {
+              Status = "ไม่สมบูรณ์";
+            } else if (status == "3") {
+              Status = "ตัดทิ้ง";
+            } else {
+              Status = "N/A";
+            }
+
+            final _ctlPlantStatus = TextEditingController(text: Status);
+
+            String SoilMoisture;
+            String Soil = result[0].soilMoisture.toString();
+            if (Soil == "1") {
+              SoilMoisture = "ดินชิ้นเหมาะสม";
+            } else if (Soil == "2") {
+              SoilMoisture = "ดินชื้นมาก ไม่มีผลต่อการเจริญเติบโต";
+            } else if (Soil == "3") {
+              SoilMoisture = "ดินชื้นมาก มีผลต่อการเจริญเติบโต";
+            } else if (Soil == "4") {
+              SoilMoisture = "ดินแห้ง พบต้นเหี่ยวช่วงบ่าย";
+            } else if (Soil == "5") {
+              SoilMoisture = "ดินแห้ง ไม่พบต้นเหี่ยวช่วงบ่าย";
+            } else {
+              SoilMoisture = "N/A";
+            }
+            final _ctlSoilMoisture = TextEditingController(text: SoilMoisture);
             final _ctlSoilRemark =
                 TextEditingController(text: result[0].soilRemark);
             final _ctlDisease = TextEditingController(text: result[0].disease);
@@ -77,6 +104,8 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
             final _ctlTrashRemark =
                 TextEditingController(text: result[0].trashRemark);
             final _ctlRemark = TextEditingController(text: result[0].remark);
+            final _ctlLogtime = TextEditingController(
+                text: f.format(result[0].logTime).toString());
             return SafeArea(
                 child: ListView(
               padding: EdgeInsets.zero,
@@ -166,6 +195,10 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                             const SizedBox(
                               height: 15,
                             ),
+                            buildBox("วันที่เก็บซาก :", _ctlLogtime),
+                            const SizedBox(
+                              height: 15,
+                            ),
                             buildBox("เหตุผลที่เก็บซาก :", _ctlTrashRemark),
                             const SizedBox(
                               height: 15,
@@ -186,39 +219,42 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
           return const LinearProgressIndicator();
         },
       ),
-      // floatingActionButton: FloatingActionButton(
-      //   onPressed: () =>   Navigator.push(context,
-      //                                   MaterialPageRoute(builder: (context) {
-      //                                 return PlantTracking(UserID: '14');
-      //                               })),
-      //   tooltip: 'Open New Page',
-      //   child: Icon(Icons.edit),
-      // ),
-      floatingActionButton: SpeedDial(
-        animatedIcon: AnimatedIcons.menu_close,
-        backgroundColor: Color.fromARGB(170, 3, 101, 104),
-        children: [
-          SpeedDialChild(
-            child: Icon(Icons.edit,color: Colors.white),
-            backgroundColor: Color(0xFF036568),
-            label: 'แก้ไข',
-            onTap: () => Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return EditPlantTracking(PlantrackingID: widget.PlantrackingID);
-                                    }))
-          ),
-          SpeedDialChild(
-            child: Icon(Icons.edit_calendar_outlined,color: Colors.white,),
-            backgroundColor: Color(0xFF036568),
-            label: 'ข้อมูลการติดตาม',
-             onTap: () => Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return PlantTracking(UserID: '14');
-                                    }))
-          ),
-
-        ],
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return EditPlantTracking(
+                PlantrackingID: widget.PlantrackingID, UserID: widget.UserID);
+          }));
+        },
+        backgroundColor: const Color(0xFF036568),
+        child: const Icon(Icons.edit, color: Colors.white),
       ),
+      // floatingActionButton: SpeedDial(
+      //   animatedIcon: AnimatedIcons.menu_close,
+      //   backgroundColor: Color.fromARGB(170, 3, 101, 104),
+      //   children: [
+      //     SpeedDialChild(
+      //         child: Icon(Icons.edit, color: Colors.white),
+      //         backgroundColor: Color(0xFF036568),
+      //         label: 'แก้ไข',
+      //         onTap: () =>
+      //             Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //               return EditPlantTracking(
+      //                   PlantrackingID: widget.PlantrackingID);
+      //             }))),
+      //     SpeedDialChild(
+      //         child: Icon(
+      //           Icons.edit_calendar_outlined,
+      //           color: Colors.white,
+      //         ),
+      //         backgroundColor: Color(0xFF036568),
+      //         label: 'ข้อมูลการติดตาม',
+      //         onTap: () =>
+      //             Navigator.push(context, MaterialPageRoute(builder: (context) {
+      //               return TrackingPage();
+      //             }))),
+      //   ],
+      // ),
     );
   }
 

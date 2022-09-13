@@ -23,7 +23,6 @@ class _LoginScreenState extends State<LoginScreen> {
   final _ctlPassword = TextEditingController();
 
   Future login() async {
-   
     var url = hostAPI + "/users/login";
     // Showing LinearProgressIndicator.
     setState(() {
@@ -38,7 +37,6 @@ class _LoginScreenState extends State<LoginScreen> {
       //Server response into variable
       //print(response.body);
       var msg = jsonDecode(response.body);
-    
 
       //Check Login Status
       if (msg['success'] == true) {
@@ -262,10 +260,17 @@ class _LoginScreenState extends State<LoginScreen> {
                                     //   login();
                                     // }
                                     //if (_formKey.currentState!.validate()) {
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder: (context) {
-                                      return BottomNavScreen(UserID: "14");
-                                    }));
+                                    Navigator.pushAndRemoveUntil(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              BottomNavScreen(UserID: "14")),
+                                      (Route<dynamic> route) => false,
+                                    );
+                                    // Navigator.push(context,
+                                    //     MaterialPageRoute(builder: (context) {
+                                    //   return BottomNavScreen(UserID: "14");
+                                    // }));
                                     //}
                                   },
                                   child: Text("Login"))),

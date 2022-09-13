@@ -8,7 +8,10 @@ import 'package:http/http.dart' as http;
 
 class ListPlantTrackingPage extends StatefulWidget {
   final String code;
-  const ListPlantTrackingPage({Key? key, required this.code}) : super(key: key);
+  final String UserID;
+  const ListPlantTrackingPage(
+      {Key? key,required this.code, required this.UserID})
+      : super(key: key);
 
   @override
   State<ListPlantTrackingPage> createState() => _ListPlantTrackingPageState();
@@ -30,6 +33,7 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
   void initState() {
     super.initState();
     getPlanttracking();
+    //print(widget.UserID);
   }
 
   final f = DateFormat('dd/MM/yyyy');
@@ -46,13 +50,37 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
               if (snapshot.data == null) {
                 Container();
               }
+
+              if (snapshot.data.length == 0) {
+                return const Center(
+                  child: Text(
+                    'ไม่พบข้อมูลบาร์โค้ด',
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromARGB(255, 143, 8, 8)),
+                  ),
+                );
+              }
+
               var result = snapshot.data;
+              print(result);
               return Column(
                 children: <Widget>[
                   const SizedBox(height: 20),
                   /* หมายเลขกระถาง คือ potsID หรือ Name */
+                  const Text(
+                    // "บันทึกผลตรวจประจำวัน \n กระถางหมายเลข : ${result[0].potsName}",
+
+                    "บันทึกผลตรวจประจำวัน",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromARGB(255, 8, 143, 114)),
+                  ),
                   Text(
-                    "บันทึกผลตรวจประจำวัน \n กระถางหมายเลข : ${result[0].potsName}",
+                    // "บันทึกผลตรวจประจำวัน \n กระถางหมายเลข : ${result[0].potsName}",
+                    "กระถางหมายเลข : ${result[0].potsName}",
                     style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w600,
@@ -80,7 +108,7 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
                                           DetailsPlantTrackingPage(
                                               PlantrackingID: Plantracking
                                                   .plantTrackingId
-                                                  .toString())));
+                                                  .toString(), UserID: widget.UserID)));
                                 },
                               ),
                             );

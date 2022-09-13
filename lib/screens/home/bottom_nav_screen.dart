@@ -1,15 +1,12 @@
 import 'package:cannabis_track_and_trace_application/screens/home/account_screen.dart';
 import 'package:cannabis_track_and_trace_application/screens/home/home_screen.dart';
-import 'package:cannabis_track_and_trace_application/screens/home/scan_screen.dart';
 import 'package:cannabis_track_and_trace_application/screens/infomation/info_screen.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/tracking_screen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-
 import '../infomation/info_screen.dart';
-import '../tracking/details_planttrackingpage.dart';
 import '../tracking/planttracking_list.dart';
 
 class BottomNavScreen extends StatefulWidget {
@@ -84,31 +81,41 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   //String? qrResult;
 
   Future barCodeScanner() async {
-    String result;
+    //String result;
 
     try {
-      result = await FlutterBarcodeScanner.scanBarcode(
+      await FlutterBarcodeScanner.scanBarcode(
               "#FFBF00", "Cancel", true, ScanMode.BARCODE)
           .then((String code) {
-        Navigator.push(
-            context,
-            MaterialPageRoute(
-                builder: (context) => const ListPlantTrackingPage(
-                      code: '222222', //code = barcode ^^
-                    )));
-        return code;
+        // if (code != "-1") {
+        //   Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //           builder: (context) => ListPlantTrackingPage(
+        //               code: code, UserID: widget.UserID)));
+        // } else {
+        //   Navigator.maybePop(context);
+        // }
+         Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => ListPlantTrackingPage(
+                        code: '222222',UserID: widget.UserID,
+                      )));
       });
 
-      if (!mounted) {return;}
+      if (!mounted) {
+        return;
+      }
       // if (mounted) {
       //   Navigator.pop(context);
       // }
 
-      setState(() {
-        barResult = result;
-      });
+      // setState(() {
+      //   barResult = result;
+      // });
     } on PlatformException {
-      result = "Failed to get plateform version";
+      return "Failed to get plateform version";
     }
   }
 }
