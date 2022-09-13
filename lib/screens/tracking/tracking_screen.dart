@@ -131,7 +131,8 @@ class _TrackingScreenState extends State<TrackingScreen> {
   }
 
   Widget buildGrid() {
-    return Row(children: [
+    return Row(      
+      children: [
       Column(
         children: [
           Center(
