@@ -140,212 +140,216 @@ class _PotsState extends State<Pots> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: kBackground,
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.save_as_outlined,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                addPots();
+              },
+            )
+          ],
         ),
         body: FutureBuilder(
           future: getData(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.data == null) {
-                 Container();
-              } 
-                var result1 = snapshot.data[0];
-                var result2 = snapshot.data[1];
-                var nameGH = ['N/A'];
-                for (var i = 0; i < result1.length; i++) {
-                  nameGH.add(result1[i].name);
-                }
-                print(nameGH);
+                Container();
+              }
+              var result1 = snapshot.data[0];
+              var result2 = snapshot.data[1];
+              var nameGH = ['N/A'];
+              for (var i = 0; i < result1.length; i++) {
+                nameGH.add(result1[i].name);
+              }
+              print(nameGH);
 
-                var itemCul = [
-                  'N/A',
-                ];
-                for (var i = 0; i < result2.length; i++) {
-                  itemCul.add(result2[i].cultivationId.toString());
-                }
-                // print(nameStrains);
+              var itemCul = [
+                'N/A',
+              ];
+              for (var i = 0; i < result2.length; i++) {
+                itemCul.add(result2[i].cultivationId.toString());
+              }
+              // print(nameStrains);
 
-                return SafeArea(
-                  child: Container(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            const SizedBox(height: 10),
-                            const Text(
-                              "บันทึกข้อมูลกระถาง",
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromARGB(255, 8, 143, 114)),
-                            ),
-                            const SizedBox(height: 50),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "โรงปลูก :",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(height: 10),
-                                Container(
-                                  margin: EdgeInsets.only(left: 15, right: 15),
-                                  padding: EdgeInsets.only(left: 15, right: 15),
-                                  decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 240, 239, 239),
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Colors.black26,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  child: DropdownButton(
-                                    dropdownColor: Colors.white,
-                                    iconSize: 30,
-                                    isExpanded: true,
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                    ),
-                                    value: dropdownGH,
-                                    icon: const Icon(Icons.keyboard_arrow_down),
-                                    items: nameGH.map((String items) {
-                                      return DropdownMenuItem(
-                                        value: items,
-                                        child: Text(items),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String? newValue) {
-                                      setState(
-                                        () {
-                                          dropdownGH = newValue!;
-                                          NameGHParameters =
-                                              "?NameGH=" + dropdownGH;
-                                          dropdownCul = 'N/A';
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "หมายเลขการปลูก :",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                SizedBox(height: 10),
-                                Container(
-                                  margin: EdgeInsets.only(left: 15, right: 15),
-                                  padding: EdgeInsets.only(left: 15, right: 15),
-                                  decoration: BoxDecoration(
-                                    color: Color.fromARGB(255, 240, 239, 239),
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Colors.black26,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  child: DropdownButton(
-                                    dropdownColor: Colors.white,
-                                    iconSize: 30,
-                                    isExpanded: true,
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                    ),
-                                    value: dropdownCul,
-                                    icon: const Icon(Icons.keyboard_arrow_down),
-                                    items: itemCul.map((String items) {
-                                      return DropdownMenuItem(
-                                        value: items,
-                                        child: Text(items),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String? newValue) {
-                                      setState(
-                                        () {
-                                          dropdownCul = newValue!;
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(height: 20),
-                            buildPotName(),
-                            const SizedBox(height: 20),
-                            buildBarcode(),
-                            const SizedBox(height: 20),
-                            buildIsTestPot(),
-                            const SizedBox(height: 20),
-                            buildPotRemake(),
-                            const SizedBox(height: 50),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Column(
-                                  children: [
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          textStyle: TextStyle(fontSize: 18),
-                                          primary:
-                                              Color.fromARGB(255, 10, 94, 3),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30)),
-                                          padding: const EdgeInsets.all(15)),
-                                      onPressed: () {
-                                        addPots();
-                                      },
-                                      child: Text("บันทึก"),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(width: 10),
-                                Column(
-                                  children: [
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          textStyle: TextStyle(fontSize: 18),
-                                          primary:
-                                              Color.fromARGB(255, 197, 16, 4),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30)),
-                                          padding: const EdgeInsets.all(15)),
-                                      onPressed: () {
-                                        canceldialog.showDialogCancel(context);
-                                      },
-                                      child: Text("ยกเลิก"),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
+              return Padding(
+                padding: const EdgeInsets.all(10),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      const Text(
+                        "บันทึกข้อมูลกระถาง",
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(255, 8, 143, 114)),
                       ),
-                    ),
+                      const SizedBox(height: 50),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "โรงปลูก :",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 10),
+                          Container(
+                            margin: const EdgeInsets.only(left: 15, right: 15),
+                            padding: const EdgeInsets.only(left: 15, right: 15),
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 240, 239, 239),
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: DropdownButton(
+                              dropdownColor: Colors.white,
+                              iconSize: 30,
+                              isExpanded: true,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                              ),
+                              value: dropdownGH,
+                              icon: const Icon(Icons.keyboard_arrow_down),
+                              items: nameGH.map((String items) {
+                                return DropdownMenuItem(
+                                  value: items,
+                                  child: Text(items),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                setState(
+                                  () {
+                                    dropdownGH = newValue!;
+                                    NameGHParameters = "?NameGH=" + dropdownGH;
+                                    dropdownCul = 'N/A';
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "หมายเลขการปลูก :",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          const SizedBox(height: 10),
+                          Container(
+                            margin: const EdgeInsets.only(left: 15, right: 15),
+                            padding: const EdgeInsets.only(left: 15, right: 15),
+                            decoration: BoxDecoration(
+                              color: const Color.fromARGB(255, 240, 239, 239),
+                              borderRadius: BorderRadius.circular(20),
+                              boxShadow: const [
+                                BoxShadow(
+                                  color: Colors.black26,
+                                  offset: Offset(0, 2),
+                                ),
+                              ],
+                            ),
+                            child: DropdownButton(
+                              dropdownColor: Colors.white,
+                              iconSize: 30,
+                              isExpanded: true,
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 18,
+                              ),
+                              value: dropdownCul,
+                              icon: const Icon(Icons.keyboard_arrow_down),
+                              items: itemCul.map((String items) {
+                                return DropdownMenuItem(
+                                  value: items,
+                                  child: Text(items),
+                                );
+                              }).toList(),
+                              onChanged: (String? newValue) {
+                                setState(
+                                  () {
+                                    dropdownCul = newValue!;
+                                  },
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(height: 20),
+                      buildPotName(),
+                      const SizedBox(height: 20),
+                      buildBarcode(),
+                      const SizedBox(height: 20),
+                      buildIsTestPot(),
+                      const SizedBox(height: 20),
+                      buildPotRemake(),
+                      const SizedBox(height: 50),
+                      // Row(
+                      //   mainAxisAlignment: MainAxisAlignment.end,
+                      //   children: [
+                      //     Column(
+                      //       children: [
+                      //         ElevatedButton(
+                      //           style: ElevatedButton.styleFrom(
+                      //               textStyle: const TextStyle(fontSize: 18),
+                      //               primary: const Color.fromARGB(255, 10, 94, 3),
+                      //               shape: RoundedRectangleBorder(
+                      //                   borderRadius:
+                      //                       BorderRadius.circular(30)),
+                      //               padding: const EdgeInsets.all(15)),
+                      //           onPressed: () {
+                      //             addPots();
+                      //           },
+                      //           child: Text("บันทึก"),
+                      //         ),
+                      //       ],
+                      //     ),
+                      //     SizedBox(width: 10),
+                      //     Column(
+                      //       children: [
+                      //         ElevatedButton(
+                      //           style: ElevatedButton.styleFrom(
+                      //               textStyle: TextStyle(fontSize: 18),
+                      //               primary:
+                      //                   Color.fromARGB(255, 197, 16, 4),
+                      //               shape: RoundedRectangleBorder(
+                      //                   borderRadius:
+                      //                       BorderRadius.circular(30)),
+                      //               padding: const EdgeInsets.all(15)),
+                      //           onPressed: () {
+                      //             canceldialog.showDialogCancel(context);
+                      //           },
+                      //           child: Text("ยกเลิก"),
+                      //         ),
+                      //       ],
+                      //     )
+                      //   ],
+                      // ),
+                    ],
                   ),
-                );
-              
+                ),
+              );
             }
-            return LinearProgressIndicator();
+            return const LinearProgressIndicator();
           },
         ));
   }
@@ -354,18 +358,18 @@ class _PotsState extends State<Pots> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "หมายเลขกระถาง :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -375,8 +379,8 @@ class _PotsState extends State<Pots> {
           child: TextFormField(
             controller: _ctlName,
             keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
@@ -391,18 +395,18 @@ class _PotsState extends State<Pots> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "บาร์โค้ด :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -411,8 +415,8 @@ class _PotsState extends State<Pots> {
           ),
           child: TextFormField(
             controller: _ctlBarcode,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
@@ -427,19 +431,19 @@ class _PotsState extends State<Pots> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "กระถางทดลอง :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          padding: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
+          padding: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -450,7 +454,7 @@ class _PotsState extends State<Pots> {
             dropdownColor: Colors.white,
             iconSize: 30,
             isExpanded: true,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 18,
             ),
@@ -484,18 +488,18 @@ class _PotsState extends State<Pots> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "หมายเหตุ :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -504,8 +508,8 @@ class _PotsState extends State<Pots> {
           ),
           child: TextFormField(
             controller: _ctlRemake,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: '**หมายเหตุ**',

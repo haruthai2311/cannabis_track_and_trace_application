@@ -164,88 +164,95 @@ class _LocationsState extends State<Locations> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kBackground,
-      ),
-      body: SafeArea(
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  Text(
-                    "บันทึกข้อมูลสถานที่ปลูก",
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 8, 143, 114)),
-                  ),
-                  const SizedBox(height: 50),
-                  buildName(),
-                  const SizedBox(height: 20),
-                  buildAddNo(),
-                  const SizedBox(height: 20),
-                  buildMoo(),
-                  const SizedBox(height: 20),
-                  buildRoad(),
-                  const SizedBox(height: 20),
-                  buildSubDistrictID(),
-                  const SizedBox(height: 20),
-                  buildDistrictID(),
-                  const SizedBox(height: 20),
-                  buildProvinceID(),
-                  const SizedBox(height: 20),
-                  buildPostCode(),
-                  const SizedBox(height: 20),
-                  buildTelephone(),
-                  const SizedBox(height: 20),
-                  buildLatLng(),
-                  const SizedBox(height: 20),
-                  buildIsActive(),
-                  const SizedBox(height: 20),
-                  buildLocationRemake(),
-                  const SizedBox(height: 50),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Column(
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                textStyle: TextStyle(fontSize: 18),
-                                primary: Color.fromARGB(255, 10, 94, 3),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                padding: const EdgeInsets.all(15)),
-                            onPressed: () {
-                              addLocations();
-                            },
-                            child: Text("บันทึก"),
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 10),
-                      Column(
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                textStyle: TextStyle(fontSize: 18),
-                                primary: Color.fromARGB(255, 197, 16, 4),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                padding: const EdgeInsets.all(15)),
-                            onPressed: () {
-                              canceldialog.showDialogCancel(context);
-                            },
-                            child: Text("ยกเลิก"),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ],
-              ),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.save_as_outlined,
+              color: Colors.white,
             ),
+            onPressed: () {
+              addLocations();
+            },
+          )
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              const Text(
+                "บันทึกข้อมูลสถานที่ปลูก",
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    color: Color.fromARGB(255, 8, 143, 114)),
+              ),
+              const SizedBox(height: 50),
+              buildName(),
+              const SizedBox(height: 20),
+              buildAddNo(),
+              const SizedBox(height: 20),
+              buildMoo(),
+              const SizedBox(height: 20),
+              buildRoad(),
+              const SizedBox(height: 20),
+              buildSubDistrictID(),
+              const SizedBox(height: 20),
+              buildDistrictID(),
+              const SizedBox(height: 20),
+              buildProvinceID(),
+              const SizedBox(height: 20),
+              buildPostCode(),
+              const SizedBox(height: 20),
+              buildTelephone(),
+              const SizedBox(height: 20),
+              buildLatLng(),
+              const SizedBox(height: 20),
+              buildIsActive(),
+              const SizedBox(height: 20),
+              buildLocationRemake(),
+              const SizedBox(height: 50),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     Column(
+              //       children: [
+              //         ElevatedButton(
+              //           style: ElevatedButton.styleFrom(
+              //               textStyle: TextStyle(fontSize: 18),
+              //               primary: Color.fromARGB(255, 10, 94, 3),
+              //               shape: RoundedRectangleBorder(
+              //                   borderRadius: BorderRadius.circular(30)),
+              //               padding: const EdgeInsets.all(15)),
+              //           onPressed: () {
+              //             addLocations();
+              //           },
+              //           child: Text("บันทึก"),
+              //         ),
+              //       ],
+              //     ),
+              //     SizedBox(width: 10),
+              //     Column(
+              //       children: [
+              //         ElevatedButton(
+              //           style: ElevatedButton.styleFrom(
+              //               textStyle: TextStyle(fontSize: 18),
+              //               primary: Color.fromARGB(255, 197, 16, 4),
+              //               shape: RoundedRectangleBorder(
+              //                   borderRadius: BorderRadius.circular(30)),
+              //               padding: const EdgeInsets.all(15)),
+              //           onPressed: () {
+              //             canceldialog.showDialogCancel(context);
+              //           },
+              //           child: Text("ยกเลิก"),
+              //         ),
+              //       ],
+              //     )
+              //   ],
+              // ),
+            ],
           ),
         ),
       ),
@@ -256,18 +263,18 @@ class _LocationsState extends State<Locations> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "ชื่อ :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -277,8 +284,8 @@ class _LocationsState extends State<Locations> {
           child: TextFormField(
             controller: _ctlName,
             keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
@@ -293,18 +300,18 @@ class _LocationsState extends State<Locations> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "เลขที่ :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -314,8 +321,8 @@ class _LocationsState extends State<Locations> {
           child: TextFormField(
             controller: _ctlAddrNo,
             keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
@@ -330,18 +337,18 @@ class _LocationsState extends State<Locations> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "หมู่ :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -351,8 +358,8 @@ class _LocationsState extends State<Locations> {
           child: TextFormField(
             controller: _ctlMoo,
             keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
@@ -367,18 +374,18 @@ class _LocationsState extends State<Locations> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "ถนน :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -387,8 +394,8 @@ class _LocationsState extends State<Locations> {
           ),
           child: TextFormField(
             controller: _ctlRoad,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
@@ -403,18 +410,18 @@ class _LocationsState extends State<Locations> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "ตำบล :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -423,8 +430,8 @@ class _LocationsState extends State<Locations> {
           ),
           child: TextFormField(
             controller: _ctlSubDistrictID,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
@@ -439,18 +446,18 @@ class _LocationsState extends State<Locations> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "อำเภอ :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -459,8 +466,8 @@ class _LocationsState extends State<Locations> {
           ),
           child: TextFormField(
             controller: _ctlDistrictID,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
@@ -475,18 +482,18 @@ class _LocationsState extends State<Locations> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "จังหวัด :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -495,8 +502,8 @@ class _LocationsState extends State<Locations> {
           ),
           child: TextFormField(
             controller: _ctlProvinceID,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
@@ -511,18 +518,18 @@ class _LocationsState extends State<Locations> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "รหัสไปรษณีย์ :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -532,8 +539,8 @@ class _LocationsState extends State<Locations> {
           child: TextFormField(
             controller: _ctlPostCode,
             keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
@@ -548,14 +555,14 @@ class _LocationsState extends State<Locations> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "ตำแหน่ง :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
           height: 250,
           width: 500,
@@ -569,7 +576,7 @@ class _LocationsState extends State<Locations> {
                   onMapCreated: (controller) {},
                   markers: <Marker>{
                     Marker(
-                      markerId: MarkerId('id'),
+                      markerId: const MarkerId('id'),
                       position: _latlng!,
                       infoWindow: InfoWindow(
                           title: 'You Location',
@@ -587,18 +594,18 @@ class _LocationsState extends State<Locations> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "โทรศัพท์ :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -608,8 +615,8 @@ class _LocationsState extends State<Locations> {
           child: TextFormField(
             controller: _ctlTelephone,
             keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
@@ -624,19 +631,19 @@ class _LocationsState extends State<Locations> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "สถานะการใช้งาน :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          padding: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
+          padding: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -647,7 +654,7 @@ class _LocationsState extends State<Locations> {
             dropdownColor: Colors.white,
             iconSize: 30,
             isExpanded: true,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 18,
             ),
@@ -681,18 +688,18 @@ class _LocationsState extends State<Locations> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "หมายเหตุ :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -701,8 +708,8 @@ class _LocationsState extends State<Locations> {
           ),
           child: TextFormField(
             controller: _ctlRemark,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: '**หมายเหตุ**',

@@ -108,13 +108,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
       if (!mounted) {
         return;
       }
-      // if (mounted) {
-      //   Navigator.pop(context);
-      // }
 
-      // setState(() {
-      //   barResult = result;
-      // });
     } on PlatformException {
       return "Failed to get plateform version";
     }

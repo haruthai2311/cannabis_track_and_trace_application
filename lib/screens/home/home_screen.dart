@@ -398,7 +398,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         SizedBox(width: 5),
                         Text(
-                          'ต้นไม่ดี',
+                          'ต้นไม่ดี ',
                           style: TextStyle(
                             fontSize: 20,
                             color: Colors.black,

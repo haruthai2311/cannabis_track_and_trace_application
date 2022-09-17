@@ -73,7 +73,7 @@ class _InfoScreenState extends State<InfoScreen> {
               SpeedDialChild(
                   backgroundColor: Colors.yellow,
                   child: Icon(Icons.compost),
-                  label: "สายพันธุ์",
+                  label: "สายพันธุ์ ",
                   labelStyle: TextStyle(fontSize: 18),
                   onTap: () => Navigator.push(context,
                           MaterialPageRoute(builder: (context) {

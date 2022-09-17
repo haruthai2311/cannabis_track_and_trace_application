@@ -141,7 +141,20 @@ class _TransfersState extends State<Transfers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(backgroundColor: kBackground),
+        appBar: AppBar(
+          backgroundColor: kBackground,
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.save_as_outlined,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                addTransfers();
+              },
+            )
+          ],
+        ),
         body: FutureBuilder(
           future: getAllHarvests(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -161,7 +174,7 @@ class _TransfersState extends State<Transfers> {
                       child: Column(
                         children: [
                           const SizedBox(height: 10),
-                          Text(
+                          const Text(
                             "บันทึกข้อมูลการส่งมอบ",
                             style: TextStyle(
                                 fontSize: 24,
@@ -172,22 +185,22 @@ class _TransfersState extends State<Transfers> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
+                              const Text(
                                 "หมายเลขการเก็บเกี่ยว :",
                                 style: TextStyle(
                                     color: Colors.black,
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold),
                               ),
-                              SizedBox(height: 10),
+                              const SizedBox(height: 10),
                               Container(
-                                margin: EdgeInsets.only(left: 15, right: 15),
-                                padding: EdgeInsets.only(left: 15, right: 15),
+                                margin: const EdgeInsets.only(left: 15, right: 15),
+                                padding: const EdgeInsets.only(left: 15, right: 15),
                                 decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 240, 239, 239),
+                                  color: const Color.fromARGB(255, 240, 239, 239),
                                   borderRadius: BorderRadius.circular(20),
-                                  boxShadow: [
-                                    BoxShadow(
+                                  boxShadow: const[
+                                     BoxShadow(
                                       color: Colors.black26,
                                       offset: Offset(0, 2),
                                     ),
@@ -197,7 +210,7 @@ class _TransfersState extends State<Transfers> {
                                   dropdownColor: Colors.white,
                                   iconSize: 30,
                                   isExpanded: true,
-                                  style: TextStyle(
+                                  style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 18,
                                   ),
@@ -239,47 +252,47 @@ class _TransfersState extends State<Transfers> {
                           const SizedBox(height: 20),
                           buildTrackRemake(),
                           const SizedBox(height: 50),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: [
-                              Column(
-                                children: [
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        textStyle: TextStyle(fontSize: 18),
-                                        primary: Color.fromARGB(255, 10, 94, 3),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30)),
-                                        padding: const EdgeInsets.all(15)),
-                                    onPressed: () {
-                                      addTransfers();
-                                    },
-                                    child: Text("บันทึก"),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(width: 10),
-                              Column(
-                                children: [
-                                  ElevatedButton(
-                                    style: ElevatedButton.styleFrom(
-                                        textStyle: TextStyle(fontSize: 18),
-                                        primary:
-                                            Color.fromARGB(255, 197, 16, 4),
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                                BorderRadius.circular(30)),
-                                        padding: const EdgeInsets.all(15)),
-                                    onPressed: () {
-                                      canceldialog.showDialogCancel(context);
-                                    },
-                                    child: Text("ยกเลิก"),
-                                  ),
-                                ],
-                              )
-                            ],
-                          ),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.end,
+                          //   children: [
+                          //     Column(
+                          //       children: [
+                          //         ElevatedButton(
+                          //           style: ElevatedButton.styleFrom(
+                          //               textStyle: TextStyle(fontSize: 18),
+                          //               primary: Color.fromARGB(255, 10, 94, 3),
+                          //               shape: RoundedRectangleBorder(
+                          //                   borderRadius:
+                          //                       BorderRadius.circular(30)),
+                          //               padding: const EdgeInsets.all(15)),
+                          //           onPressed: () {
+                          //             addTransfers();
+                          //           },
+                          //           child: Text("บันทึก"),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //     SizedBox(width: 10),
+                          //     Column(
+                          //       children: [
+                          //         ElevatedButton(
+                          //           style: ElevatedButton.styleFrom(
+                          //               textStyle: TextStyle(fontSize: 18),
+                          //               primary:
+                          //                   Color.fromARGB(255, 197, 16, 4),
+                          //               shape: RoundedRectangleBorder(
+                          //                   borderRadius:
+                          //                       BorderRadius.circular(30)),
+                          //               padding: const EdgeInsets.all(15)),
+                          //           onPressed: () {
+                          //             canceldialog.showDialogCancel(context);
+                          //           },
+                          //           child: Text("ยกเลิก"),
+                          //         ),
+                          //       ],
+                          //     )
+                          //  ],
+                          //),
                         ],
                       ),
                     ),
@@ -287,7 +300,7 @@ class _TransfersState extends State<Transfers> {
                 ),
               );
             }
-            return LinearProgressIndicator();
+            return const LinearProgressIndicator();
           },
         ));
   }
@@ -301,12 +314,12 @@ class _TransfersState extends State<Transfers> {
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          padding: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
+          padding: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
             boxShadow: const [
               BoxShadow(
@@ -321,10 +334,10 @@ class _TransfersState extends State<Transfers> {
               Text(
                 '${date.year}/${date.month}/${date.day}',
                 //'${date.day}/${date.month}/${date.year}',
-                style: TextStyle(fontSize: 18, color: Colors.black),
+                style: const TextStyle(fontSize: 18, color: Colors.black),
               ),
               OutlinedButton(
-                child: Icon(Icons.date_range_outlined),
+                child: const Icon(Icons.date_range_outlined),
                 onPressed: () async {
                   DateTime? newDate = await showDatePicker(
                     context: context,
@@ -338,10 +351,10 @@ class _TransfersState extends State<Transfers> {
                   setState(() => date = newDate);
                 },
                 style: OutlinedButton.styleFrom(
-                  shape: StadiumBorder(),
+                  shape: const StadiumBorder(),
                   //shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12),),
-                  textStyle: TextStyle(fontSize: 16),
-                  primary: Color.fromARGB(255, 10, 91, 97),
+                  textStyle: const TextStyle(fontSize: 16),
+                  primary: const Color.fromARGB(255, 10, 91, 97),
                   //onPrimary: Colors.white
                 ),
               ),
@@ -356,19 +369,19 @@ class _TransfersState extends State<Transfers> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "ประเภท :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          padding: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
+          padding: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -379,7 +392,7 @@ class _TransfersState extends State<Transfers> {
             dropdownColor: Colors.white,
             iconSize: 30,
             isExpanded: true,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 18,
             ),
@@ -417,18 +430,18 @@ class _TransfersState extends State<Transfers> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "น้ำหนัก (kg) :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow:  const[
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -438,8 +451,8 @@ class _TransfersState extends State<Transfers> {
           child: TextFormField(
             controller: _ctlWeight,
             keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุน้ำหนัก',
@@ -454,18 +467,18 @@ class _TransfersState extends State<Transfers> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "หมายเลขล๊อต :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -475,8 +488,8 @@ class _TransfersState extends State<Transfers> {
           child: TextFormField(
             controller: _ctlLotNo,
             keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
@@ -491,19 +504,19 @@ class _TransfersState extends State<Transfers> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "ชื่อผู้รับ :",
-          style: TextStyle(
+          style:  TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
+            boxShadow: const[
+               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
               ),
@@ -511,12 +524,12 @@ class _TransfersState extends State<Transfers> {
           ),
           child: TextFormField(
             controller: _ctlGetByName,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'กรอกชื่อผู้รับ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+                hintStyle:  TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
       ],
@@ -527,19 +540,19 @@ class _TransfersState extends State<Transfers> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "ชื่อสถานที่ :",
-          style: TextStyle(
+          style:  TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
+            boxShadow: const[
+               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
               ),
@@ -547,12 +560,12 @@ class _TransfersState extends State<Transfers> {
           ),
           child: TextFormField(
             controller: _ctlGetByPlate,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'กรอกชื่อสถานที่',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+                hintStyle:  TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
       ],
@@ -563,19 +576,19 @@ class _TransfersState extends State<Transfers> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "เลขที่ใบอนุญาต :",
-          style: TextStyle(
+          style:  TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
+            boxShadow: const [
+               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
               ),
@@ -584,8 +597,8 @@ class _TransfersState extends State<Transfers> {
           child: TextFormField(
             controller: _ctlLicenseNo,
             keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
@@ -600,19 +613,19 @@ class _TransfersState extends State<Transfers> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "ป้ายทะเบียนรถ :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
+            boxShadow: const[
+               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
               ),
@@ -621,10 +634,10 @@ class _TransfersState extends State<Transfers> {
           child: TextFormField(
             controller: _ctlLicensePlate,
             keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
+                contentPadding:  EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
                 hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
@@ -637,19 +650,19 @@ class _TransfersState extends State<Transfers> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "หมายเหตุ :",
-          style: TextStyle(
+          style:  TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
-              BoxShadow(
+            boxShadow: const[
+               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
               ),
@@ -657,10 +670,10 @@ class _TransfersState extends State<Transfers> {
           ),
           child: TextFormField(
             controller: _ctlTrackRemake,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
+                contentPadding:  EdgeInsets.only(left: 15),
                 hintText: '**หมายเหตุ**',
                 hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),

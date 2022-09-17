@@ -27,6 +27,24 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
   final dialog = MyDialog();
   File? file; //เก็บภาพจากการถ่ายและจากแกลเลอรี่
 
+  final _ctlGHName = TextEditingController();
+  final _ctlCulNo = TextEditingController();
+  final _ctlCheckDate = TextEditingController();
+  final _ctlPotId = TextEditingController();
+  final _ctlPlantStatus = TextEditingController();
+  final _ctlSoilMoisture = TextEditingController();
+  final _ctlRemark = TextEditingController();
+  final _ctlSoilRemark = TextEditingController();
+  final _ctlDisease = TextEditingController();
+  final _ctlFixDisease = TextEditingController();
+  final _ctlInsect = TextEditingController();
+  final _ctlFixInsect = TextEditingController();
+  final _ctlImageFileName = TextEditingController();
+  final _ctlCheckDateTime = TextEditingController();
+  final _ctlWeight = TextEditingController();
+  final _ctlTrashRemark = TextEditingController();
+  final _ctlRemarkTrash_log = TextEditingController();
+
   Future<List<Plantracking>> getPlanttracking() async {
     var url = hostAPI + '/trackings/Plantracking?id=' + widget.PlantrackingID;
     print(url);
@@ -49,7 +67,7 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
 
   String? selectdropdownStatus;
   String? dropdownStatus;
-  var itemStatus = ['N/A', 'ปกติ', 'ไม่สมบูรณ์', 'ตัดทิ้ง'];
+  var itemStatus = ['N/A', 'ปกติ', 'ไม่สมบูรณ์ ', 'ตัดทิ้ง'];
 
   String? selectdropdownSoi;
   String? dropdownSoi;
@@ -67,6 +85,17 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kBackground,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.save_as_outlined,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              // do something
+            },
+          )
+        ],
       ),
       body: FutureBuilder(
         future: getPlanttracking(),
@@ -77,13 +106,13 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
             }
             var result = snapshot.data;
 
-            final _ctlGHName = TextEditingController(text: result[0].ghName);
-            final _ctlCulNo =
-                TextEditingController(text: result[0].no.toString());
-            final _ctlCheckDate = TextEditingController(
-                text: f.format(result[0].checkDate).toString());
-            final _ctlPotId =
-                TextEditingController(text: result[0].potId.toString());
+            // final _ctlGHName = TextEditingController(text: result[0].ghName);
+            // final _ctlCulNo =
+            //     TextEditingController(text: result[0].no.toString());
+            // final _ctlCheckDate = TextEditingController(
+            //     text: f.format(result[0].checkDate).toString());
+            // final _ctlPotId =
+            //     TextEditingController(text: result[0].potId.toString());
 
             String plantStatus;
 
@@ -135,8 +164,7 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
             final _ctlRemark = TextEditingController(text: result[0].remark);
             final _ctlLogtime = TextEditingController(
                 text: f.format(result[0].logTime).toString());
-            return SafeArea(
-                child: ListView(padding: EdgeInsets.zero, children: [
+            return ListView(padding: EdgeInsets.zero, children: [
               Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
@@ -442,8 +470,9 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
                                         //ส่งค่าจากปุ่มบันทึก
                                         selectdropdownStatus ??= '0' + status;
                                         selectdropdownSoi ??= '0' + Soil;
-                                        String urlPathImage = result[0].fileName;
-                                       
+                                        String urlPathImage =
+                                            result[0].fileName;
+
                                         // dialog.normalDialog(
                                         //     context,
                                         //     selectdropdownStatus.toString() +
@@ -523,7 +552,7 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
                   )
                 ],
               )
-            ]));
+            ]);
           }
           return const LinearProgressIndicator();
         },

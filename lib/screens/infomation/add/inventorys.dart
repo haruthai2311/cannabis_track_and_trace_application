@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
-import 'package:cannabis_track_and_trace_application/screens/infomation/info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -111,70 +109,77 @@ class _InventorysState extends State<Inventorys> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kBackground,
-      ),
-      body: SafeArea(
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(10),
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  Text(
-                    "บันทึกข้อมูลวัสดุ",
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 8, 143, 114)),
-                  ),
-                  const SizedBox(height: 50),
-                  buildName(),
-                  const SizedBox(height: 20),
-                  buildCommercialName(),
-                  const SizedBox(height: 20),
-                  buildIsActive(),
-                  const SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Column(
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                textStyle: TextStyle(fontSize: 18),
-                                primary: Color.fromARGB(255, 10, 94, 3),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                padding: const EdgeInsets.all(15)),
-                            onPressed: () {
-                              addInventorys();
-                            },
-                            child: Text("บันทึก"),
-                          ),
-                        ],
-                      ),
-                      SizedBox(width: 10),
-                      Column(
-                        children: [
-                          ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                                textStyle: TextStyle(fontSize: 18),
-                                primary: Color.fromARGB(255, 197, 16, 4),
-                                shape: RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(30)),
-                                padding: const EdgeInsets.all(15)),
-                            onPressed: () {
-                              canceldialog.showDialogCancel(context);
-                            },
-                            child: Text("ยกเลิก"),
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ],
-              ),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.save_as_outlined,
+              color: Colors.white,
             ),
+            onPressed: () {
+              addInventorys();
+            },
+          )
+        ],
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(10),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              const SizedBox(height: 10),
+              const Text(
+                "บันทึกข้อมูลวัสดุ",
+                style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w600,
+                    color: Color.fromARGB(255, 8, 143, 114)),
+              ),
+              const SizedBox(height: 50),
+              buildName(),
+              const SizedBox(height: 20),
+              buildCommercialName(),
+              const SizedBox(height: 20),
+              buildIsActive(),
+              const SizedBox(height: 20),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.end,
+              //   children: [
+              //     Column(
+              //       children: [
+              //         ElevatedButton(
+              //           style: ElevatedButton.styleFrom(
+              //               textStyle: TextStyle(fontSize: 18),
+              //               primary: Color.fromARGB(255, 10, 94, 3),
+              //               shape: RoundedRectangleBorder(
+              //                   borderRadius: BorderRadius.circular(30)),
+              //               padding: const EdgeInsets.all(15)),
+              //           onPressed: () {
+              //             addInventorys();
+              //           },
+              //           child: Text("บันทึก"),
+              //         ),
+              //       ],
+              //     ),
+              //     SizedBox(width: 10),
+              //     Column(
+              //       children: [
+              //         ElevatedButton(
+              //           style: ElevatedButton.styleFrom(
+              //               textStyle: TextStyle(fontSize: 18),
+              //               primary: Color.fromARGB(255, 197, 16, 4),
+              //               shape: RoundedRectangleBorder(
+              //                   borderRadius: BorderRadius.circular(30)),
+              //               padding: const EdgeInsets.all(15)),
+              //           onPressed: () {
+              //             canceldialog.showDialogCancel(context);
+              //           },
+              //           child: Text("ยกเลิก"),
+              //         ),
+              //       ],
+              //     )
+              //   ],
+              // ),
+            ],
           ),
         ),
       ),
@@ -185,18 +190,18 @@ class _InventorysState extends State<Inventorys> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "ชื่อ :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -206,8 +211,8 @@ class _InventorysState extends State<Inventorys> {
           child: TextFormField(
             controller: _ctlName,
             keyboardType: TextInputType.text,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
@@ -222,18 +227,18 @@ class _InventorysState extends State<Inventorys> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "ชื่อทางการค้า :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -243,8 +248,8 @@ class _InventorysState extends State<Inventorys> {
           child: TextFormField(
             controller: _ctlCommercialName,
             keyboardType: TextInputType.number,
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
@@ -259,19 +264,19 @@ class _InventorysState extends State<Inventorys> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
+        const Text(
           "สถานะการใช้งาน :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 15, right: 15),
-          padding: EdgeInsets.only(left: 15, right: 15),
+          margin: const EdgeInsets.only(left: 15, right: 15),
+          padding: const EdgeInsets.only(left: 15, right: 15),
           decoration: BoxDecoration(
-            color: Color.fromARGB(255, 240, 239, 239),
+            color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
@@ -282,7 +287,7 @@ class _InventorysState extends State<Inventorys> {
             dropdownColor: Colors.white,
             iconSize: 30,
             isExpanded: true,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.black,
               fontSize: 18,
             ),
