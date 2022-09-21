@@ -27,23 +27,14 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
   final dialog = MyDialog();
   File? file; //เก็บภาพจากการถ่ายและจากแกลเลอรี่
 
-  final _ctlGHName = TextEditingController();
-  final _ctlCulNo = TextEditingController();
-  final _ctlCheckDate = TextEditingController();
-  final _ctlPotId = TextEditingController();
-  final _ctlPlantStatus = TextEditingController();
-  final _ctlSoilMoisture = TextEditingController();
   final _ctlRemark = TextEditingController();
   final _ctlSoilRemark = TextEditingController();
   final _ctlDisease = TextEditingController();
   final _ctlFixDisease = TextEditingController();
   final _ctlInsect = TextEditingController();
   final _ctlFixInsect = TextEditingController();
-  final _ctlImageFileName = TextEditingController();
-  final _ctlCheckDateTime = TextEditingController();
   final _ctlWeight = TextEditingController();
   final _ctlTrashRemark = TextEditingController();
-  final _ctlRemarkTrash_log = TextEditingController();
 
   Future<List<Plantracking>> getPlanttracking() async {
     var url = hostAPI + '/trackings/Plantracking?id=' + widget.PlantrackingID;
@@ -60,10 +51,9 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
     getPlanttracking();
     //print(dropdownSelectStatus);
     //print(widget.UserID);
-    print(file);
   }
 
-  final f = DateFormat('dd/MM/yyyy hh:mm:ss');
+  final f = DateFormat('dd/MM/yyyy  hh:mm:ss');
 
   String? selectdropdownStatus;
   String? dropdownStatus;
@@ -79,6 +69,7 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
     'ดินแห้ง พบต้นเหี่ยวช่วงบ่าย',
     'ดินแห้ง ไม่พบต้นเหี่ยวช่วงบ่าย'
   ];
+  String? urlPathImage;
 
   @override
   Widget build(BuildContext context) {
@@ -92,7 +83,7 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
               color: Colors.white,
             ),
             onPressed: () {
-              // do something
+              confirmDialog();
             },
           )
         ],
@@ -106,457 +97,616 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
             }
             var result = snapshot.data;
 
-            // final _ctlGHName = TextEditingController(text: result[0].ghName);
-            // final _ctlCulNo =
-            //     TextEditingController(text: result[0].no.toString());
-            // final _ctlCheckDate = TextEditingController(
-            //     text: f.format(result[0].checkDate).toString());
-            // final _ctlPotId =
-            //     TextEditingController(text: result[0].potId.toString());
-
             String plantStatus;
 
             String status = result[0].plantStatus.toString();
             if (status == "1") {
               plantStatus = "ปกติ";
             } else if (status == "2") {
-              plantStatus = "ไม่สมบูรณ์";
+              plantStatus = "ไม่สมบูรณ์ ";
             } else if (status == "3") {
               plantStatus = "ตัดทิ้ง";
             } else {
               plantStatus = "N/A";
             }
-            // String selectdropdownStatus = plantStatus;
-            // print(selectdropdownStatus);
 
-            // final _ctlPlantStatus = TextEditingController(text: Status);
-
-            String soilMoisture;
+            String SoilMoisture;
             String Soil = result[0].soilMoisture.toString();
             if (Soil == "1") {
-              soilMoisture = "ดินชิ้นเหมาะสม";
+              SoilMoisture = "ดินชิ้นเหมาะสม";
             } else if (Soil == "2") {
-              soilMoisture = "ดินชื้นมาก ไม่มีผลต่อการเจริญเติบโต";
+              SoilMoisture = "ดินชื้นมาก ไม่มีผลต่อการเจริญเติบโต";
             } else if (Soil == "3") {
-              soilMoisture = "ดินชื้นมาก มีผลต่อการเจริญเติบโต";
+              SoilMoisture = "ดินชื้นมาก มีผลต่อการเจริญเติบโต";
             } else if (Soil == "4") {
-              soilMoisture = "ดินแห้ง พบต้นเหี่ยวช่วงบ่าย";
+              SoilMoisture = "ดินแห้ง พบต้นเหี่ยวช่วงบ่าย";
             } else if (Soil == "5") {
-              soilMoisture = "ดินแห้ง ไม่พบต้นเหี่ยวช่วงบ่าย";
+              SoilMoisture = "ดินแห้ง ไม่พบต้นเหี่ยวช่วงบ่าย";
             } else {
-              soilMoisture = "N/A";
+              SoilMoisture = "N/A";
             }
             // final _ctlSoilMoisture =
-            //     TextEditingController(text: SoilMoisture);
+            //    TextEditingController(text: SoilMoisture);
+            // if (dropdownStatus == null) {
+            //   selectdropdownStatus = status;
+            // }
+            selectdropdownStatus ??= '0' + status;
+            selectdropdownSoi ??= '0' + Soil;
+            if (file == null) {
+              urlPathImage = result[0].fileName;
+            }
 
-            final _ctlSoilRemark =
-                TextEditingController(text: result[0].soilRemark);
-            final _ctlDisease = TextEditingController(text: result[0].disease);
-            final _ctlFixDisease =
-                TextEditingController(text: result[0].fixDisease);
-            final _ctlInsect = TextEditingController(text: result[0].insect);
-            final _ctlFixInsect =
-                TextEditingController(text: result[0].fixInsect);
-            final _ctlWeight = TextEditingController(
-                text: result[0].weight.toString() + ' Kg');
-            final _ctlTrashRemark =
-                TextEditingController(text: result[0].trashRemark);
-            final _ctlRemark = TextEditingController(text: result[0].remark);
-            final _ctlLogtime = TextEditingController(
-                text: f.format(result[0].logTime).toString());
-            return ListView(padding: EdgeInsets.zero, children: [
-              Stack(
-                alignment: Alignment.bottomCenter,
-                children: [
-                  Form(
-                    child: Padding(
-                      padding: const EdgeInsets.all(10),
-                      child: Column(children: [
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        const Text(
-                          "Edit Plant Tracking",
-                          style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromARGB(255, 8, 143, 114)),
-                          textAlign: TextAlign.center,
-                        ),
-                        const SizedBox(
-                          height: 15,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  height: 200,
-                                  // decoration:
-                                  //     BoxDecoration(border: Border.all(color: Color(0xffC4C4C4))),
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      IconButton(
-                                          onPressed: ((() =>
-                                              chooseImage(ImageSource.camera))),
-                                          icon: const Icon(
-                                            Icons.add_a_photo,
-                                          )),
-                                      Container(
-                                          width: 270,
-                                          //height: 190,
-                                          child: file == null
-                                              ? Image.network(
-                                                  hostAPI + result[0].fileName,
-                                                  //fit: BoxFit.cover,
-                                                )
-                                              : Image.file(file!)),
-                                      IconButton(
-                                          onPressed: (() =>
-                                              chooseImage(ImageSource.gallery)),
-                                          icon: const Icon(
-                                              Icons.add_photo_alternate)),
-                                    ],
-                                  ),
-                                ),
-                              ],
-                            ),
+            _ctlSoilRemark.text = result[0].soilRemark;
+            _ctlDisease.text = result[0].disease;
+            _ctlFixDisease.text = result[0].fixDisease;
+            _ctlInsect.text = result[0].insect;
+            _ctlFixInsect.text = result[0].fixInsect;
+            _ctlWeight.text = result[0].weight.toString() + ' Kg';
+            _ctlTrashRemark.text = result[0].trashRemark;
+            _ctlRemark.text = result[0].remark;
 
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("โรงปลูก :", true, _ctlGHName),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("รอบที่ปลูก :", true, _ctlCulNo),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("วันที่บันทึก :", true, _ctlCheckDate),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("หมายเลขกระถาง :", true, _ctlPotId),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            //buildBox("สถานะปัจจุบัน :", false, _ctlPlantStatus),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "สถานะ :",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(height: 10),
-                                Container(
-                                  margin: const EdgeInsets.only(
-                                      left: 15, right: 15),
-                                  padding: const EdgeInsets.only(
-                                      left: 15, right: 15),
-                                  decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                        255, 240, 239, 239),
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Colors.black26,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  child: DropdownButton(
-                                    dropdownColor: Colors.white,
-                                    iconSize: 30,
-                                    isExpanded: true,
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                    ),
-                                    hint: Text(
-                                      plantStatus,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                    value: dropdownStatus,
-                                    icon: const Icon(Icons.keyboard_arrow_down),
-                                    items: itemStatus.map((String items) {
-                                      return DropdownMenuItem(
-                                        value: items,
-                                        child: Text(items),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String? newValue) {
-                                      //dropdownStatus = newValue!;
-                                      setState(
-                                        () {
-                                          dropdownStatus = newValue!;
-                                          // if (dropdownStatus == null) {
-                                          //   selectdropdownStatus = status;
-                                          // } else
-                                          if (dropdownStatus == "ปกติ") {
-                                            selectdropdownStatus = "01";
-                                          } else if (dropdownStatus ==
-                                              "ไม่สมบูรณ์") {
-                                            selectdropdownStatus = "02";
-                                          } else if (dropdownStatus ==
-                                              "ตัดทิ้ง") {
-                                            selectdropdownStatus = "03";
-                                          } else {
-                                            selectdropdownStatus = "00";
-                                          }
-                                          print(selectdropdownStatus);
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            // buildBox(
-                            //     "ความชื้นของดิน :", false, _ctlSoilMoisture),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                const Text(
-                                  "ความชื้นในดิน :",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                const SizedBox(height: 10),
-                                Container(
-                                  margin: const EdgeInsets.only(
-                                      left: 15, right: 15),
-                                  padding: const EdgeInsets.only(
-                                      left: 15, right: 15),
-                                  decoration: BoxDecoration(
-                                    color: const Color.fromARGB(
-                                        255, 240, 239, 239),
-                                    borderRadius: BorderRadius.circular(20),
-                                    boxShadow: const [
-                                      BoxShadow(
-                                        color: Colors.black26,
-                                        offset: Offset(0, 2),
-                                      ),
-                                    ],
-                                  ),
-                                  child: DropdownButton(
-                                    dropdownColor: Colors.white,
-                                    iconSize: 30,
-                                    isExpanded: true,
-                                    style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
-                                    ),
-                                    hint: Text(
-                                      soilMoisture,
-                                      style: const TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 18,
-                                      ),
-                                    ),
-                                    value: dropdownSoi,
-                                    icon: const Icon(Icons.keyboard_arrow_down),
-                                    items: itemSoi.map((String items) {
-                                      return DropdownMenuItem(
-                                        value: items,
-                                        child: Text(items),
-                                      );
-                                    }).toList(),
-                                    onChanged: (String? newValue) {
-                                      setState(
-                                        () {
-                                          dropdownSoi = newValue!;
-                                          if (dropdownSoi == "ดินชิ้นเหมาะสม") {
-                                            selectdropdownSoi = "01";
-                                          } else if (dropdownSoi ==
-                                              "ดินชื้นมาก ไม่มีผลต่อการเจริญเติบโต") {
-                                            selectdropdownSoi = "02";
-                                          } else if (dropdownSoi ==
-                                              "ดินชื้นมาก มีผลต่อการเจริญเติบโต") {
-                                            selectdropdownSoi = "03";
-                                          } else if (dropdownSoi ==
-                                              "ดินแห้ง พบต้นเหี่ยวช่วงบ่าย") {
-                                            selectdropdownSoi = "04";
-                                          } else if (dropdownSoi ==
-                                              "ดินแห้ง ไม่พบต้นเหี่ยวช่วงบ่าย") {
-                                            selectdropdownSoi = "05";
-                                          } else {
-                                            selectdropdownSoi = "00";
-                                          }
-                                          print(selectdropdownSoi);
-                                        },
-                                      );
-                                    },
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("หมายเหตุ(ความชื้นของดิน) :", false,
-                                _ctlSoilRemark),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("หมายเหตุ :", false, _ctlRemark),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("โรคที่พบ :", false, _ctlDisease),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("วิธีแก้ไข :", false, _ctlFixDisease),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("แมลงที่พบ :", false, _ctlInsect),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("วิธีแก้ไข :", false, _ctlFixInsect),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("เก็บซาก :", false, _ctlWeight),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("วันที่เก็บซาก :", false, _ctlLogtime),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox(
-                                "เหตุผลที่เก็บซาก :", false, _ctlTrashRemark),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            // buildBox("หมายเหตุ :", false, _ctlRemark),
-                            // const SizedBox(
-                            //   height: 15,
-                            // ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Column(
-                                  children: [
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          textStyle: TextStyle(fontSize: 18),
-                                          primary:
-                                              Color.fromARGB(255, 10, 94, 3),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30)),
-                                          padding: const EdgeInsets.all(15)),
-                                      onPressed: () {
-                                        //ส่งค่าจากปุ่มบันทึก
-                                        selectdropdownStatus ??= '0' + status;
-                                        selectdropdownSoi ??= '0' + Soil;
-                                        String urlPathImage =
-                                            result[0].fileName;
-
-                                        // dialog.normalDialog(
-                                        //     context,
-                                        //     selectdropdownStatus.toString() +
-                                        //         selectdropdownSoi.toString());
-                                        //confirmDialog();
-                                        showDialog(
-                                          context: context,
-                                          builder: (context) => SimpleDialog(
-                                            title: Text("ยืนยันการแก้ไขข้อมูล"),
-                                            children: <Widget>[
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
-                                                children: <Widget>[
-                                                  OutlinedButton(
-                                                      onPressed: () {
-                                                        Navigator.pop(context);
-                                                        EditData(
-                                                            selectdropdownStatus,
-                                                            selectdropdownSoi,
-                                                            _ctlSoilRemark,
-                                                            _ctlRemark,
-                                                            _ctlDisease,
-                                                            _ctlFixDisease,
-                                                            _ctlInsect,
-                                                            _ctlFixInsect,
-                                                            _ctlWeight,
-                                                            _ctlLogtime,
-                                                            _ctlTrashRemark,
-                                                            urlPathImage);
-                                                      },
-                                                      child:
-                                                          const Text('ยืนยัน')),
-                                                  const SizedBox(
-                                                    width: 5,
-                                                  ),
-                                                  OutlinedButton(
-                                                      onPressed: () =>
-                                                          Navigator.pop(
-                                                              context),
-                                                      child: Text('ยกเลิก'))
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        );
-                                      },
-                                      child: Text("บันทึก"),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(width: 10),
-                                Column(
-                                  children: [
-                                    ElevatedButton(
-                                      style: ElevatedButton.styleFrom(
-                                          textStyle: TextStyle(fontSize: 18),
-                                          primary:
-                                              Color.fromARGB(255, 197, 16, 4),
-                                          shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(30)),
-                                          padding: const EdgeInsets.all(15)),
-                                      onPressed: () {
-                                        dialog.showDialogCancel(context);
-                                      },
-                                      child: Text("ยกเลิก"),
-                                    ),
-                                  ],
-                                )
-                              ],
-                            ),
-                          ],
-                        ),
-                      ]),
+            return SingleChildScrollView(
+                child: Stack(
+              children: <Widget>[
+                Stack(
+                  children: [
+                    GestureDetector(
+                      child: file == null
+                          ? Image.network(
+                              hostAPI + result[0].fileName,
+                              fit: BoxFit.cover,
+                              width: MediaQuery.of(context).size.width,
+                              height: MediaQuery.of(context).size.height * 0.5,
+                            )
+                          : Image.file(file!),
+                      //*คลิกดูรูปใหญ่*//
+                      // onTap: () {
+                      //   Navigator.push(context, MaterialPageRoute(builder: (_) {
+                      //     return DetailScreen();
+                      //   }));
+                      // },
                     ),
-                  )
-                ],
-              )
-            ]);
+                    Positioned(
+                      top: 300,
+                      left: 10,
+                      right: 10,
+                      bottom: 10,
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Container(
+                                  //alignment: Alignment.bottomRight,
+                                  height: 40,
+                                  width: 40,
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.circle),
+                                  child: IconButton(
+                                    onPressed: ((() =>
+                                        chooseImage(ImageSource.camera))),
+                                    icon: const Icon(
+                                      Icons.add_a_photo,
+                                    ),
+                                    color:
+                                        const Color.fromARGB(255, 2, 184, 144),
+                                    iconSize: 25,
+                                  )),
+                              const SizedBox(
+                                width: 5,
+                              ),
+                              Container(
+                                  //alignment: Alignment.bottomRight,
+                                  height: 40,
+                                  width: 40,
+                                  decoration: const BoxDecoration(
+                                      color: Colors.white,
+                                      shape: BoxShape.circle),
+                                  child: IconButton(
+                                    onPressed: ((() =>
+                                        chooseImage(ImageSource.gallery))),
+                                    icon: const Icon(
+                                      Icons.add_photo_alternate,
+                                    ),
+                                    color:
+                                        const Color.fromARGB(255, 2, 184, 144),
+                                    iconSize: 25,
+                                  )),
+                            ],
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0.0, 350.0, 0.0, 0.0),
+                  child: Container(
+                    //height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(35.0),
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                            child: Column(
+                              children: [
+                                const SizedBox(
+                                  height: 15,
+                                ),
+
+                                Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          const Expanded(
+                                            child: Text(
+                                              "โรงปลูก : ",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              result[0].ghName.toString(),
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Row(
+                                        children: <Widget>[
+                                          const Expanded(
+                                            child: Text(
+                                              "รอบปลูก :",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              result[0].no.toString(),
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Expanded(
+                                      child: Text(
+                                        "หมายเลขกระถาง :",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        result[0].potsName.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                //buildBox("รอบที่ปลูก :", _ctlCulNo),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Text(
+                                      "วันที่บันทึก : ",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                    Text(
+                                      f.format(result[0].checkDate).toString(),
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+
+                                //buildBox("วันที่บันทึก :", _ctlCheckDate),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "สถานะ :",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          left: 15, right: 15),
+                                      padding: const EdgeInsets.only(
+                                          left: 15, right: 15),
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromARGB(
+                                            255, 240, 239, 239),
+                                        borderRadius: BorderRadius.circular(20),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Colors.black26,
+                                            offset: Offset(0, 2),
+                                          ),
+                                        ],
+                                      ),
+                                      child: DropdownButton(
+                                        dropdownColor: Colors.white,
+                                        iconSize: 30,
+                                        isExpanded: true,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18,
+                                        ),
+                                        hint: Text(
+                                          plantStatus,
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                        value: dropdownStatus,
+                                        icon: const Icon(
+                                            Icons.keyboard_arrow_down),
+                                        items: itemStatus.map((String items) {
+                                          return DropdownMenuItem(
+                                            value: items,
+                                            child: Text(items),
+                                          );
+                                        }).toList(),
+                                        onChanged: (String? newValue) {
+                                          //dropdownStatus = newValue!;
+                                          setState(
+                                            () {
+                                              dropdownStatus = newValue!;
+                                              // if (dropdownStatus == null) {
+                                              //   selectdropdownStatus = status;
+                                              // } else
+                                              if (dropdownStatus == "ปกติ") {
+                                                selectdropdownStatus = "01";
+                                              } else if (dropdownStatus ==
+                                                  "ไม่สมบูรณ์ ") {
+                                                selectdropdownStatus = "02";
+                                              } else if (dropdownStatus ==
+                                                  "ตัดทิ้ง") {
+                                                selectdropdownStatus = "03";
+                                              } else {
+                                                selectdropdownStatus = "00";
+                                              }
+                                              print(selectdropdownStatus);
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                // buildBox(
+                                //     "ความชื้นของดิน :", false, _ctlSoilMoisture),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    const Text(
+                                      "ความชื้นในดิน :",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Container(
+                                      margin: const EdgeInsets.only(
+                                          left: 15, right: 15),
+                                      padding: const EdgeInsets.only(
+                                          left: 15, right: 15),
+                                      decoration: BoxDecoration(
+                                        color: const Color.fromARGB(
+                                            255, 240, 239, 239),
+                                        borderRadius: BorderRadius.circular(20),
+                                        boxShadow: const [
+                                          BoxShadow(
+                                            color: Colors.black26,
+                                            offset: Offset(0, 2),
+                                          ),
+                                        ],
+                                      ),
+                                      child: DropdownButton(
+                                        dropdownColor: Colors.white,
+                                        iconSize: 30,
+                                        isExpanded: true,
+                                        style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 18,
+                                        ),
+                                        hint: Text(
+                                          SoilMoisture,
+                                          style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 18,
+                                          ),
+                                        ),
+                                        value: dropdownSoi,
+                                        icon: const Icon(
+                                            Icons.keyboard_arrow_down),
+                                        items: itemSoi.map((String items) {
+                                          return DropdownMenuItem(
+                                            value: items,
+                                            child: Text(items),
+                                          );
+                                        }).toList(),
+                                        onChanged: (String? newValue) {
+                                          setState(
+                                            () {
+                                              dropdownSoi = newValue!;
+                                              if (dropdownSoi ==
+                                                  "ดินชิ้นเหมาะสม") {
+                                                selectdropdownSoi = "01";
+                                              } else if (dropdownSoi ==
+                                                  "ดินชื้นมาก ไม่มีผลต่อการเจริญเติบโต") {
+                                                selectdropdownSoi = "02";
+                                              } else if (dropdownSoi ==
+                                                  "ดินชื้นมาก มีผลต่อการเจริญเติบโต") {
+                                                selectdropdownSoi = "03";
+                                              } else if (dropdownSoi ==
+                                                  "ดินแห้ง พบต้นเหี่ยวช่วงบ่าย") {
+                                                selectdropdownSoi = "04";
+                                              } else if (dropdownSoi ==
+                                                  "ดินแห้ง ไม่พบต้นเหี่ยวช่วงบ่าย") {
+                                                selectdropdownSoi = "05";
+                                              } else {
+                                                selectdropdownSoi = "00";
+                                              }
+                                              print(selectdropdownSoi);
+                                            },
+                                          );
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                buildBox("หมายเหตุ(ความชื้นของดิน) :", false,
+                                    _ctlSoilRemark),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                buildBox("หมายเหตุ :", false, _ctlRemark),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+
+                                buildBox("โรคที่พบ :", false, _ctlDisease),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                buildBox("วิธีแก้ไข :", false, _ctlFixDisease),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                buildBox("แมลงที่พบ :", false, _ctlInsect),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                buildBox("วิธีแก้ไข :", false, _ctlFixInsect),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: const [
+                                    Text(
+                                      "การเก็บซาก ",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 22,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Text(
+                                      "วันที่เก็บซาก : ",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                    Text(
+                                      f.format(result[0].logTime).toString(),
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                buildBox("เก็บซาก :", false, _ctlWeight),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+
+                                buildBox("เหตุผลที่เก็บซาก :", false,
+                                    _ctlTrashRemark),
+
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                )
+              ],
+            ));
           }
           return const LinearProgressIndicator();
+
+          //                   Row(
+          //                     mainAxisAlignment: MainAxisAlignment.end,
+          //                     children: [
+          //                       Column(
+          //                         children: [
+          //                           ElevatedButton(
+          //                             style: ElevatedButton.styleFrom(
+          //                                 textStyle: TextStyle(fontSize: 18),
+          //                                 primary:
+          //                                     Color.fromARGB(255, 10, 94, 3),
+          //                                 shape: RoundedRectangleBorder(
+          //                                     borderRadius:
+          //                                         BorderRadius.circular(30)),
+          //                                 padding: const EdgeInsets.all(15)),
+          //                             onPressed: () {
+          //                               //ส่งค่าจากปุ่มบันทึก
+          //                               selectdropdownStatus ??= '0' + status;
+          //                               selectdropdownSoi ??= '0' + Soil;
+          //                               String urlPathImage =
+          //                                   result[0].fileName;
+
+          //                               // dialog.normalDialog(
+          //                               //     context,
+          //                               //     selectdropdownStatus.toString() +
+          //                               //         selectdropdownSoi.toString());
+          //                               //confirmDialog();
+          //                               showDialog(
+          //                                 context: context,
+          //                                 builder: (context) => SimpleDialog(
+          //                                   title: Text("ยืนยันการแก้ไขข้อมูล"),
+          //                                   children: <Widget>[
+          //                                     Row(
+          //                                       mainAxisAlignment:
+          //                                           MainAxisAlignment.center,
+          //                                       children: <Widget>[
+          //                                         OutlinedButton(
+          //                                             onPressed: () {
+          //                                               Navigator.pop(context);
+          //                                               EditData(
+          //                                                   selectdropdownStatus,
+          //                                                   selectdropdownSoi,
+          //                                                   _ctlSoilRemark,
+          //                                                   _ctlRemark,
+          //                                                   _ctlDisease,
+          //                                                   _ctlFixDisease,
+          //                                                   _ctlInsect,
+          //                                                   _ctlFixInsect,
+          //                                                   _ctlWeight,
+          //                                                   _ctlLogtime,
+          //                                                   _ctlTrashRemark,
+          //                                                   urlPathImage);
+          //                                             },
+          //                                             child:
+          //                                                 const Text('ยืนยัน')),
+          //                                         const SizedBox(
+          //                                           width: 5,
+          //                                         ),
+          //                                         OutlinedButton(
+          //                                             onPressed: () =>
+          //                                                 Navigator.pop(
+          //                                                     context),
+          //                                             child: Text('ยกเลิก'))
+          //                                       ],
+          //                                     )
+          //                                   ],
+          //                                 ),
+          //                               );
+          //                             },
+          //                             child: Text("บันทึก"),
+          //                           ),
+          //                         ],
+          //                       ),
         },
       ),
+    );
+  }
+
+  Future<Null> confirmDialog() async {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('ยืนยันการแก้ไข'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: const <Widget>[
+                Text('กรุณากดยืนยันเพื่อดำเนินการแก้ไข'),
+                //Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('ยืนยัน'),
+              onPressed: () {
+                EditData();
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('ยกเลิก'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -597,7 +747,7 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
         Text(
           title,
           style: const TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.normal),
         ),
         const SizedBox(height: 10),
         Container(
@@ -628,73 +778,157 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
     );
   }
 
-  Future<Null> confirmDialog() async {}
-
   bool _visible = false;
-  Future<Null> EditData(
-      selectdropdownStatus,
-      selectdropdownSoi,
-      _ctlSoilRemark,
-      _ctlRemark,
-      _ctlDisease,
-      _ctlFixDisease,
-      _ctlInsect,
-      _ctlFixInsect,
-      _ctlWeight,
-      TrashLogTime,
-      _ctlTrashRemark,
-      urlPathImage) async {
-    String url = hostAPI + "/trackings/editPlanttracking";
-    var response = await http.put(Uri.parse(url), body: {
-      "PlantTrackingID": widget.PlantrackingID,
-      "PlantStatus": selectdropdownStatus.toString(),
-      "SoilMoisture": selectdropdownSoi.toString(),
-      "SoilRemark": _ctlSoilRemark.text,
-      "Remark": _ctlRemark.text,
-      "Disease": _ctlDisease.text,
-      "FixDisease": _ctlFixDisease.text,
-      "Insect": _ctlInsect.text,
-      "FixInsect": _ctlFixInsect.text,
-      "Weight": _ctlWeight.text,
-      "LogTime": TrashLogTime.toString(),
-      "TrashRemark": _ctlTrashRemark.text,
-      // "RemarkTrash_log": _ctlRemarkTrash_log.text,
-      "ImageFileName": urlPathImage.toString(),
-      "UpdateBy": widget.UserID,
-    });
-    print('Response status : ${response.statusCode}');
-    print('Response body : ${response.body}');
-    if (response.statusCode == 200) {
-      print(response.body);
-      var msg = jsonDecode(response.body);
+  Future<Null> EditData() async {
+    if (file == null) {
+      String url = hostAPI + "/trackings/editPlanttracking";
+      // Showing LinearProgressIndicator.
+      setState(() {
+        _visible = true;
+      });
 
-      //Check Login Status
-      if (msg['success'] == true) {
-        setState(() {
-          //hide progress indicator
-          _visible = false;
-        });
-        showMessage(msg["message"]);
+      var response = await http.put(Uri.parse(url), body: {
+        "PlantTrackingID": widget.PlantrackingID,
+        "PlantStatus": selectdropdownStatus.toString(),
+        "SoilMoisture": selectdropdownSoi.toString(),
+        "SoilRemark": _ctlSoilRemark.text,
+        "Remark": _ctlRemark.text,
+        "Disease": _ctlDisease.text,
+        "FixDisease": _ctlFixDisease.text,
+        "Insect": _ctlInsect.text,
+        "FixInsect": _ctlFixInsect.text,
+        "Weight": _ctlWeight.text,
+        "TrashRemark": _ctlTrashRemark.text,
+        "ImageFileName": urlPathImage.toString(),
+        "UpdateBy": widget.UserID,
+      });
+      print('Response status : ${response.statusCode}');
+      print('Response body : ${response.body}');
+      if (response.statusCode == 200) {
+        print(response.body);
+        var msg = jsonDecode(response.body);
 
-        ///Clear();
+        //Check Login Status
+        if (msg['success'] == true) {
+          setState(() {
+            //hide progress indicator
+            _visible = false;
+          });
+          //showMessage(msg["message"]);
+          Navigator.pop(context);
+
+          ///Clear();
+        } else {
+          setState(() {
+            //hide progress indicator
+            _visible = false;
+
+            //Show Error Message Dialog
+            showMessage(msg["message"]);
+          });
+          //showMessage(context, 'เกิดข้อผิดพลาด');
+        }
       } else {
         setState(() {
           //hide progress indicator
           _visible = false;
 
           //Show Error Message Dialog
-          showMessage(msg["message"]);
+          showMessage("Error during connecting to Server.");
         });
-        //showMessage(context, 'เกิดข้อผิดพลาด');
       }
     } else {
-      setState(() {
-        //hide progress indicator
-        _visible = false;
+      Random random = Random();
+      int i = random.nextInt(10000000);
+      String nameFile = 'EditImage$i.jpg';
 
-        //Show Error Message Dialog
-        showMessage("Error during connecting to Server.");
+      String urlupload = hostAPI + "/upload/uploadimage";
+      var formData = FormData.fromMap({
+        "image": await MultipartFile.fromFile(file!.path, filename: nameFile)
+      });
+      var response =
+          await Dio().post(urlupload, data: formData).then((value) async {
+        String urlPathImage = '/$nameFile';
+        print('urlPathImage = $hostAPI$urlPathImage');
+
+        String url = hostAPI + "/trackings/editPlanttracking";
+        // Showing LinearProgressIndicator.
+        setState(() {
+          _visible = true;
+        });
+
+        var response = await http.put(Uri.parse(url), body: {
+          "PlantTrackingID": widget.PlantrackingID,
+          "PlantStatus": selectdropdownStatus.toString(),
+          "SoilMoisture": selectdropdownSoi.toString(),
+          "SoilRemark": _ctlSoilRemark.text,
+          "Remark": _ctlRemark.text,
+          "Disease": _ctlDisease.text,
+          "FixDisease": _ctlFixDisease.text,
+          "Insect": _ctlInsect.text,
+          "FixInsect": _ctlFixInsect.text,
+          "Weight": _ctlWeight.text,
+          "TrashRemark": _ctlTrashRemark.text,
+          "ImageFileName": urlPathImage.toString(),
+          "UpdateBy": widget.UserID,
+        });
+        print('Response status : ${response.statusCode}');
+        print('Response body : ${response.body}');
+        if (response.statusCode == 200) {
+          print(response.body);
+          var msg = jsonDecode(response.body);
+
+          //Check Login Status
+          if (msg['success'] == true) {
+            setState(() {
+              //hide progress indicator
+              _visible = false;
+            });
+            //showMessage(msg["message"]);
+            Navigator.pop(context);
+
+            ///Clear();
+          } else {
+            setState(() {
+              //hide progress indicator
+              _visible = false;
+
+              //Show Error Message Dialog
+              showMessage(msg["message"]);
+            });
+            //showMessage(context, 'เกิดข้อผิดพลาด');
+          }
+        } else {
+          setState(() {
+            //hide progress indicator
+            _visible = false;
+
+            //Show Error Message Dialog
+            showMessage("Error during connecting to Server.");
+          });
+        }
       });
     }
+  }
+}
+
+class DetailScreen extends StatelessWidget {
+  // final String Image;
+  // const DetailScreen({Key? key, required this.Image}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GestureDetector(
+        child: Center(
+          child: Image.network(
+            hostAPI + "/Image757337.jpg",
+          ),
+        ),
+        onTap: () {
+          Navigator.pop(context);
+        },
+      ),
+    );
   }
 }

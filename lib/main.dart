@@ -1,4 +1,5 @@
 import 'package:cannabis_track_and_trace_application/screens/login/login.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/show/details_planttrackingpage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -20,6 +21,8 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
           //visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        home: const LoginScreen());
+        //home: const LoginScreen());
+        home:
+            const DetailsPlantTrackingPage(PlantrackingID: "50", UserID: "14"));
   }
 }

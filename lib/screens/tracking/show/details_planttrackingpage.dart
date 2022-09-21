@@ -34,16 +34,17 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
   void initState() {
     super.initState();
     getPlanttracking();
-    //print(widget.UserID);
+   // print(widget.UserID);
   }
 
-  final f = DateFormat('dd/MM/yyyy hh:mm:ss');
+  final f = DateFormat('dd/MM/yyyy  hh:mm:ss');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kBackground,
+        title: Text("Plant Tracking"),
       ),
       body: FutureBuilder(
         future: getPlanttracking(),
@@ -54,13 +55,6 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
             }
             var result = snapshot.data;
 
-            final _ctlGHName = TextEditingController(text: result[0].ghName);
-            final _ctlCulNo =
-                TextEditingController(text: result[0].no.toString());
-            final _ctlCheckDate = TextEditingController(
-                text: f.format(result[0].checkDate).toString());
-            final _ctlPotId =
-                TextEditingController(text: result[0].potId.toString());
             String Status;
             String status = result[0].plantStatus.toString();
             if (status == "1") {
@@ -72,8 +66,6 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
             } else {
               Status = "N/A";
             }
-
-            final _ctlPlantStatus = TextEditingController(text: Status);
 
             String SoilMoisture;
             String Soil = result[0].soilMoisture.toString();
@@ -90,130 +82,435 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
             } else {
               SoilMoisture = "N/A";
             }
-            final _ctlSoilMoisture = TextEditingController(text: SoilMoisture);
-            final _ctlSoilRemark =
-                TextEditingController(text: result[0].soilRemark);
-            final _ctlDisease = TextEditingController(text: result[0].disease);
-            final _ctlFixDisease =
-                TextEditingController(text: result[0].fixDisease);
-            final _ctlInsect = TextEditingController(text: result[0].insect);
-            final _ctlFixInsect =
-                TextEditingController(text: result[0].fixInsect);
-            final _ctlWeight = TextEditingController(
-                text: result[0].weight.toString() + ' Kg');
-            final _ctlTrashRemark =
-                TextEditingController(text: result[0].trashRemark);
-            final _ctlRemark = TextEditingController(text: result[0].remark);
-            final _ctlLogtime = TextEditingController(
-                text: f.format(result[0].logTime).toString());
-            return SafeArea(
-                child: ListView(
-              padding: EdgeInsets.zero,
-              children: [
-                Stack(
-                  alignment: Alignment.bottomCenter,
-                  children: [
-                    Form(
-                      child: Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Column(
-                          children: [
-                            const SizedBox(
-                              height: 20,
-                            ),
-                            const Text(
-                              "Plant Tracking",
-                              style: TextStyle(
-                                  fontSize: 24,
-                                  fontWeight: FontWeight.w600,
-                                  color: Color.fromARGB(255, 8, 143, 114)),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+            return SingleChildScrollView(
+                child: Stack(
+              children: <Widget>[
+                Image.network(
+                  hostAPI + result[0].fileName,
+                  fit: BoxFit.cover,
+                  width: MediaQuery.of(context).size.width,
+                  height: MediaQuery.of(context).size.height * 0.5,
+                ),
+                Padding(
+                  padding: EdgeInsets.fromLTRB(0.0, 350.0, 0.0, 0.0),
+                  child: Container(
+                    height: MediaQuery.of(context).size.height,
+                    width: MediaQuery.of(context).size.width,
+                    child: Material(
+                      borderRadius: BorderRadius.circular(35.0),
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                            child: Column(
                               children: [
-                                SizedBox(
-                                  //width: 270,
-                                  height: 230,
-                                  child: Image.network(
-                                      hostAPI + result[0].fileName),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+
+                                Row(
+                                  children: <Widget>[
+                                    Expanded(
+                                      child: Row(
+                                        children: [
+                                          const Expanded(
+                                            child: Text(
+                                              "โรงปลูก : ",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              result[0].ghName.toString(),
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Row(
+                                        children: <Widget>[
+                                          const Expanded(
+                                            child: Text(
+                                              "รอบปลูก :",
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20,
+                                                  fontWeight:
+                                                      FontWeight.normal),
+                                            ),
+                                          ),
+                                          Expanded(
+                                            child: Text(
+                                              result[0].no.toString(),
+                                              style: const TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20,
+                                                  fontWeight: FontWeight.bold),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                  ],
+                                ),
+
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Expanded(
+                                      child: Text(
+                                        "หมายเลขกระถาง :",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        result[0].potsName.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                //buildBox("รอบที่ปลูก :", _ctlCulNo),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Text(
+                                      "วันที่บันทึก :  ",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                    Text(
+                                      f.format(result[0].checkDate).toString(),
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+
+                                //buildBox("วันที่บันทึก :", _ctlCheckDate),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Expanded(
+                                      child: Text(
+                                        "สถานะปัจจุบัน : ",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        Status,
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                //buildBox("สถานะปัจจุบัน :", _ctlPlantStatus),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Expanded(
+                                      child: Text(
+                                        "ความชื้นของดิน : ",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        SoilMoisture,
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                //buildBox("ความชื้นของดิน :", _ctlSoilMoisture),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Expanded(
+                                      child: Text(
+                                        "หมายเหตุ :\n(ความชื้นของดิน) ",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        result[0].soilRemark.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                // buildBox(
+                                //     "หมายเหตุ(ความชื้นของดิน) :", _ctlSoilRemark),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Expanded(
+                                      child: Text(
+                                        "หมายเหตุ : ",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        result[0].remark.toString(),
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                //buildBox("โรคที่พบ :", _ctlDisease),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Expanded(
+                                      child: Text(
+                                        "โรคที่พบ : ",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        result[0].disease,
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Expanded(
+                                      child: Text(
+                                        "วิธีแก้ไข : ",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        result[0].fixDisease,
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                //buildBox("วิธีแก้ไข :", _ctlFixDisease),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Expanded(
+                                      child: Text(
+                                        "แมลงที่พบ : ",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        result[0].insect,
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                // buildBox("แมลงที่พบ :", _ctlInsect),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Expanded(
+                                      child: Text(
+                                        "วิธีแก้ไข : ",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        result[0].fixInsect,
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                // buildBox("วิธีแก้ไข :", _ctlFixInsect),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Expanded(
+                                      child: Text(
+                                        "เก็บซาก : ",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        result[0].weight.toString() + ' Kg',
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                // buildBox("เก็บซาก :", _ctlWeight),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Text(
+                                      "วันที่เก็บซาก :  ",
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal),
+                                    ),
+                                    Text(
+                                      f.format(result[0].logTime).toString(),
+                                      style: const TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold),
+                                    ),
+                                  ],
+                                ),
+                                // buildBox("วันที่เก็บซาก :", _ctlLogtime),
+                                const SizedBox(
+                                  height: 15,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Expanded(
+                                      child: Text(
+                                        "เหตุผลที่เก็บซาก : ",
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal),
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        result[0].trashRemark,
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                // buildBox("เหตุผลที่เก็บซาก :", _ctlTrashRemark),
+                                const SizedBox(
+                                  height: 15,
                                 ),
                               ],
                             ),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("โรงปลูก :", _ctlGHName),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("รอบที่ปลูก :", _ctlCulNo),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("วันที่บันทึก :", _ctlCheckDate),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("หมายเลขกระถาง :", _ctlPotId),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("สถานะปัจจุบัน :", _ctlPlantStatus),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("ความชื้นของดิน :", _ctlSoilMoisture),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox(
-                                "หมายเหตุ(ความชื้นของดิน) :", _ctlSoilRemark),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("โรคที่พบ :", _ctlDisease),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("วิธีแก้ไข :", _ctlFixDisease),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("แมลงที่พบ :", _ctlInsect),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("วิธีแก้ไข :", _ctlFixInsect),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("เก็บซาก :", _ctlWeight),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("วันที่เก็บซาก :", _ctlLogtime),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("เหตุผลที่เก็บซาก :", _ctlTrashRemark),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                            buildBox("หมายเหตุ :", _ctlRemark),
-                            const SizedBox(
-                              height: 15,
-                            ),
-                          ],
-                        ),
+                          )
+                        ],
                       ),
                     ),
-                  ],
+                  ),
                 )
               ],
+              
             ));
           }
           return const LinearProgressIndicator();
@@ -224,7 +521,7 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return EditPlantTracking(
                 PlantrackingID: widget.PlantrackingID, UserID: widget.UserID);
-          }));
+          })).then((value) => setState(() {}));
         },
         backgroundColor: const Color(0xFF036568),
         child: const Icon(Icons.edit, color: Colors.white),
@@ -257,42 +554,64 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
       // ),
     );
   }
+} 
 
-  Widget buildBox(String title, controller) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: const TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            readOnly: true,
-            controller: controller,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.only(left: 15),
-              hintText: "",
-              // hintStyle: TextStyle(color: Colors.black38, fontSize: 18)
-            ),
-          ),
-        )
-      ],
-    );
-  }
-}
+// return  SingleChildScrollView(child: Stack(
+//           children: <Widget>[
+//             Image.network(
+//              hostAPI + result[0].fileName,
+//               fit: BoxFit.cover,
+//               width: MediaQuery.of(context).size.width,
+//               height: MediaQuery.of(context).size.height * 0.5,
+//             ),
+//             Padding(
+//               padding: EdgeInsets.fromLTRB(0.0, 350.0, 0.0, 0.0),
+//               child: Container(
+//                 height: MediaQuery.of(context).size.height,
+//                 width: MediaQuery.of(context).size.width,
+//                 child: Material(
+//                   borderRadius: BorderRadius.circular(35.0),
+//                   child: Column(
+//                     children: <Widget>[
+//                       Padding(
+//                         padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+//                         child: Text(
+//                           "widget.title",
+//                           style: TextStyle(
+//                             fontSize: 30.0,
+//                             fontWeight: FontWeight.bold,
+//                           ),
+//                         ),
+//                       ),
+//                       Text(
+//                         "idget.publishedAt.substring(0, 10)",
+//                         style: TextStyle(
+//                           fontSize: 20.0,
+//                         ),
+//                       ),
+//                       Padding(
+//                         padding: EdgeInsets.all(20.0),
+//                         child: Text(
+//                           "widget.description",
+//                           style: TextStyle(
+//                             fontSize: 25.0,
+//                           ),
+//                         ),
+//                       ),
+//                       Text(
+//                        " widget.author",
+//                         style: TextStyle(
+//                           fontSize: 15.0,
+//                         ),
+//                       ),
+//                     ],
+//                   ),
+//                 ),
+//               ),
+//             )
+//           ],
+//         ));
+//   }return const LinearProgressIndicator();
+//   }));
+// }}
+
