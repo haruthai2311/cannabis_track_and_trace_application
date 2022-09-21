@@ -21,8 +21,8 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Colors.white,
           //visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        //home: const LoginScreen());
-        home:
-            const DetailsPlantTrackingPage(PlantrackingID: "50", UserID: "14"));
+        home: const LoginScreen());
+        // home:
+        //     const DetailsPlantTrackingPage(PlantrackingID: "50", UserID: "14"));
   }
 }
