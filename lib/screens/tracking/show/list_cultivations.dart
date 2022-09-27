@@ -1,38 +1,35 @@
-import 'package:cannabis_track_and_trace_application/screens/tracking/show/details_planttrackingpage.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/show/details_cultivation.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import '../../../api/hostapi.dart';
-import '../../../api/planttracking.dart';
-import '../../../config/styles.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import '../../../api/allcultivations.dart';
+import '../../../api/hostapi.dart';
+import '../../../config/styles.dart';
 
-class ListPlantTrackingPage extends StatefulWidget {
-  final String code;
+class ListCultivations extends StatefulWidget {
   final String UserID;
-  const ListPlantTrackingPage(
-      {Key? key,required this.code, required this.UserID})
-      : super(key: key);
+  const ListCultivations({Key? key, required this.UserID}) : super(key: key);
 
   @override
-  State<ListPlantTrackingPage> createState() => _ListPlantTrackingPageState();
+  State<ListCultivations> createState() => _ListCultivationsState();
 }
 
-class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
-  late List<Plantracking> _listplanttracking;
+class _ListCultivationsState extends State<ListCultivations> {
+  late List<Cultivations> _listCultivation;
 
-  Future<List<Plantracking>> getPlanttracking() async {
-    var url = hostAPI + '/trackings/getPlantracking?Barcode=' + widget.code;
+  Future<List<Cultivations>> getAllCultivations() async {
+    var url = hostAPI + '/trackings/AllCultivations';
     print(url);
     var response = await http.get(Uri.parse(url));
-    _listplanttracking = plantrackingFromJson(response.body);
+    _listCultivation = cultivationsFromJson(response.body);
 
-    return _listplanttracking;
+    return _listCultivation;
   }
 
   @override
   void initState() {
     super.initState();
-    getPlanttracking();
+    //getPlanttracking();
     //print(widget.UserID);
   }
 
@@ -44,7 +41,7 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
           backgroundColor: kBackground,
         ),
         body: FutureBuilder(
-          future: getPlanttracking(),
+          future: getAllCultivations(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               if (snapshot.data == null) {
@@ -54,7 +51,7 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
               if (snapshot.data.length == 0) {
                 return const Center(
                   child: Text(
-                    'ไม่พบข้อมูลบาร์โค้ด',
+                    'ไม่พบข้อมูล',
                     style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w600,
@@ -72,16 +69,8 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
                   const Text(
                     // "บันทึกผลตรวจประจำวัน \n กระถางหมายเลข : ${result[0].potsName}",
 
-                    "บันทึกผลตรวจประจำวัน",
+                    "บันทึกการปลูก",
                     style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        color: Color.fromARGB(255, 8, 143, 114)),
-                  ),
-                  Text(
-                    // "บันทึกผลตรวจประจำวัน \n กระถางหมายเลข : ${result[0].potsName}",
-                    "กระถางหมายเลข : ${result[0].potsName}",
-                    style: const TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w600,
                         color: Color.fromARGB(255, 8, 143, 114)),
@@ -92,22 +81,24 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
                       alignment: Alignment.topCenter,
                       child: ListView.builder(
                           itemCount: result.length,
+                          //reverse: true,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
-                            final Plantracking = result[index];
+                            final Cul = result[index];
                             return Card(
                               child: ListTile(
-                                title: Text("วันที่ : " +
-                                    f.format(Plantracking.checkDate)),
-                                subtitle: const Text('Tracking'),
+                                title:
+                                    Text("รอบการปลูก : " + Cul.no.toString()),
+                                subtitle: Text('โรงปลูก : ' +
+                                    Cul.nameGh +
+                                    " " +
+                                    Cul.remark.toString()),
                                 trailing: const Icon(Icons.arrow_forward),
                                 onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
+                                   Navigator.of(context).push(MaterialPageRoute(
                                       builder: (context) =>
-                                          DetailsPlantTrackingPage(
-                                              PlantrackingID: Plantracking
-                                                  .plantTrackingId
-                                                  .toString(), UserID: widget.UserID)));
+                                          DetailsCultivation(
+                                             UserID: widget.UserID, CultivationID: Cul.cultivationId.toString(),)));
                                 },
                               ),
                             );

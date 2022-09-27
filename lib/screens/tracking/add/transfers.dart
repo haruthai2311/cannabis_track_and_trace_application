@@ -20,7 +20,7 @@ class _TransfersState extends State<Transfers> {
   DateTime date = DateTime.now();
   final _formKey = GlobalKey<FormState>();
   bool _visible = false;
-  late List<AllHarvests> _allHarvests;
+  late List<Harvests> _Harvests;
 
   final _ctlHavestID = TextEditingController();
   final _ctlWeight = TextEditingController();
@@ -124,12 +124,12 @@ class _TransfersState extends State<Transfers> {
     super.initState();
   }
 
-  Future<List<AllHarvests>> getAllHarvests() async {
+  Future<List<Harvests>> getAllHarvests() async {
     var url = hostAPI + "/trackings/getHarvests";
     var response = await http.get(Uri.parse(url));
-    _allHarvests = allHarvestsFromJson(response.body);
+    _Harvests = harvestsFromJson(response.body);
 
-    return _allHarvests;
+    return _Harvests;
   }
 
   String dropdowntype = 'N/A';
