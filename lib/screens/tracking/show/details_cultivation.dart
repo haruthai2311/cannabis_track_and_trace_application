@@ -1,3 +1,4 @@
+import 'package:cannabis_track_and_trace_application/screens/tracking/edit/edit_cultivation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -325,10 +326,9 @@ class _DetailsCultivationState extends State<DetailsCultivation> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Navigator.push(context, MaterialPageRoute(builder: (context) {
-          //   return EditPlantTracking(
-          //       PlantrackingID: widget.PlantrackingID, UserID: widget.UserID);
-          // })).then((value) => setState(() {}));
+          Navigator.push(context, MaterialPageRoute(builder: (context) {
+            return EditCultivation( UserID: widget.UserID, CultivationID: widget.CultivationID,);
+          })).then((value) => setState(() {}));
         },
         backgroundColor: const Color(0xFF036568),
         child: const Icon(Icons.edit, color: Colors.white),

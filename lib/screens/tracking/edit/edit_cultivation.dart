@@ -1,23 +1,29 @@
 import 'dart:convert';
-import 'package:cannabis_track_and_trace_application/config/styles.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import '../../../api/allcultivations.dart';
 import '../../../api/allgreenhouses.dart';
 import '../../../api/allstrains.dart';
 import '../../../api/hostapi.dart';
-import '../../../widget/dialog.dart';
+import '../../../config/styles.dart';
 
-class AddCultivations extends StatefulWidget {
+class EditCultivation extends StatefulWidget {
   final String UserID;
-  const AddCultivations({Key? key, required this.UserID}) : super(key: key);
+  final String CultivationID;
+  const EditCultivation(
+      {Key? key, required this.UserID, required this.CultivationID})
+      : super(key: key);
+
   @override
-  State<AddCultivations> createState() => _AddCultivationsState();
+  State<EditCultivation> createState() => _EditCultivationState();
 }
 
-class _AddCultivationsState extends State<AddCultivations> {
-  final canceldialog = MyDialog();
+class _EditCultivationState extends State<EditCultivation> {
   DateTime SeedDate = DateTime.now();
   DateTime MoveDate = DateTime.now();
+  late List<Cultivations> _listCultivation;
   late List<AllGreenhouses> _allGreenhouses;
   late List<AllStrains> _allStrains;
   final _formKey = GlobalKey<FormState>();
@@ -31,94 +37,6 @@ class _AddCultivationsState extends State<AddCultivations> {
   final _ctlPlantDead = TextEditingController();
   final _ctlPlantRemake = TextEditingController();
 
-  void Clear() {
-    _ctlNo.clear();
-    _ctlSeedtotal.clear();
-    _ctlSeedNet.clear();
-    _ctlPlantTotal.clear();
-    _ctlPlantLive.clear();
-    _ctlPlantDead.clear();
-    _ctlPlantRemake.clear();
-    dropdownGH = 'N/A';
-    dropdownStrain = 'N/A';
-  }
-
-  Future addCultivations() async {
-    var url = hostAPI + "/trackings/addCultivations";
-    // Showing LinearProgressIndicator.
-    setState(() {
-      _visible = true;
-    });
-
-    var response = await http.post(Uri.parse(url), body: {
-      "GreenHouseName": dropdownGH.toString(),
-      "StrainName": dropdownStrain.toString(),
-      "No": _ctlNo.text,
-      "SeedDate": SeedDate.toString(),
-      "MoveDate": MoveDate.toString(),
-      "SeedTotal": _ctlSeedtotal.text,
-      "SeedNet": _ctlSeedNet.text,
-      "PlantTotal": _ctlPlantTotal.text,
-      "PlantLive": _ctlPlantLive.text,
-      "PlantDead": _ctlPlantDead.text,
-      "Remark": _ctlPlantRemake.text,
-      "CreateBy": widget.UserID,
-      "UpdateBy": widget.UserID,
-    });
-    print('Response status : ${response.statusCode}');
-    print('Response body : ${response.body}');
-    if (response.statusCode == 200) {
-      print(response.body);
-      var msg = jsonDecode(response.body);
-
-      //Check Login Status
-      if (msg['success'] == true) {
-        setState(() {
-          //hide progress indicator
-          _visible = false;
-        });
-        showMessage(msg["message"]);
-        Clear();
-      } else {
-        setState(() {
-          //hide progress indicator
-          _visible = false;
-
-          //Show Error Message Dialog
-          showMessage(msg["message"]);
-        });
-        //showMessage(context, 'เกิดข้อผิดพลาด');
-      }
-    } else {
-      setState(() {
-        //hide progress indicator
-        _visible = false;
-
-        //Show Error Message Dialog
-        showMessage("Error during connecting to Server.");
-      });
-    }
-  }
-
-  Future<dynamic> showMessage(String msg) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(msg),
-          actions: <Widget>[
-            TextButton(
-              child: const Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   void initState() {
     super.initState();
@@ -126,29 +44,34 @@ class _AddCultivationsState extends State<AddCultivations> {
   }
 
   Future getData() async {
-    var url = hostAPI + '/informations/getAllGreenhouses';
-    var response = await http.get(Uri.parse(url));
-    _allGreenhouses = allGreenhousesFromJson(response.body);
+    var urlGH = hostAPI + '/informations/getAllGreenhouses';
+    var responseGH = await http.get(Uri.parse(urlGH));
+    _allGreenhouses = allGreenhousesFromJson(responseGH.body);
 
     var urlStrains = hostAPI + '/informations/getStrains';
     var responseStrains = await http.get(Uri.parse(urlStrains));
     _allStrains = allStrainsFromJson(responseStrains.body);
 
-    return [_allGreenhouses, _allStrains];
-    //return _allGreenhouses;
+    var url = hostAPI + '/trackings/Cultivation?ID=' + widget.CultivationID;
+    print(url);
+    var response = await http.get(Uri.parse(url));
+    _listCultivation = cultivationsFromJson(response.body);
+
+    return [_allGreenhouses, _allStrains, _listCultivation];
   }
 
-  String dropdownStrain = 'N/A';
+  String? dropdownStrain;
   //var itemStrain = ['N/A', 'สายพันธุ์หางกระรอก', 'สายพันธุ์หางเสือ'];
 
-  String dropdownGH = 'N/A';
+  String? dropdownGH;
   //var itemGH = ['N/A', 'โรงเรือน 1', 'โรงเรือน 2'];
+  final f = DateFormat('dd/MM/yyyy  hh:mm:ss');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Cultivations"),
+          title: const Text("Edit Cultivations"),
           backgroundColor: kBackground,
           actions: <Widget>[
             IconButton(
@@ -156,7 +79,9 @@ class _AddCultivationsState extends State<AddCultivations> {
                 Icons.save_as_outlined,
                 color: Colors.white,
               ),
-              onPressed: () { addCultivations();},
+              onPressed: () {
+                confirmDialog();
+              },
             )
           ],
         ),
@@ -164,8 +89,12 @@ class _AddCultivationsState extends State<AddCultivations> {
           future: getData(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.data == null) {
+                Container();
+              }
               var result1 = snapshot.data[0];
               var result2 = snapshot.data[1];
+              var resultCul = snapshot.data[2];
               var nameGH = ['N/A'];
               for (var i = 0; i < result1.length; i++) {
                 nameGH.add(result1[i].name);
@@ -179,8 +108,22 @@ class _AddCultivationsState extends State<AddCultivations> {
                 nameStrains.add(result2[i].name);
               }
               // print(nameStrains);
+              var nameGreenHouse = resultCul[0].nameGh.toString();
+              var nameStrain = resultCul[0].nameStrains.toString();
+              _ctlNo.text = resultCul[0].no.toString();
+              _ctlSeedtotal.text = resultCul[0].seedTotal.toString();
+              _ctlSeedNet.text = resultCul[0].seedNet.toString();
+              _ctlPlantTotal.text = resultCul[0].plantTotal.toString();
+              _ctlPlantLive.text = resultCul[0].plantLive.toString();
+              _ctlPlantDead.text = resultCul[0].plantDead.toString();
+              _ctlPlantRemake.text = resultCul[0].remark.toString();
+              SeedDate = resultCul[0].seedDate;
+              MoveDate = resultCul[0].moveDate;
 
-              return  Padding(
+              dropdownStrain ??= nameStrain;
+            dropdownGH ??= nameGreenHouse;
+
+              return Padding(
                 padding: const EdgeInsets.all(10),
                 child: SingleChildScrollView(
                   child: Column(
@@ -206,13 +149,10 @@ class _AddCultivationsState extends State<AddCultivations> {
                           ),
                           const SizedBox(height: 10),
                           Container(
-                            margin:
-                                const EdgeInsets.only(left: 15, right: 15),
-                            padding:
-                                const EdgeInsets.only(left: 15, right: 15),
+                            margin: const EdgeInsets.only(left: 15, right: 15),
+                            padding: const EdgeInsets.only(left: 15, right: 15),
                             decoration: BoxDecoration(
-                              color:
-                                  const Color.fromARGB(255, 240, 239, 239),
+                              color: const Color.fromARGB(255, 240, 239, 239),
                               borderRadius: BorderRadius.circular(20),
                               boxShadow: const [
                                 BoxShadow(
@@ -228,6 +168,13 @@ class _AddCultivationsState extends State<AddCultivations> {
                               style: const TextStyle(
                                 color: Colors.black,
                                 fontSize: 18,
+                              ),
+                              hint: Text(
+                                nameGreenHouse,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
                               ),
                               value: dropdownGH,
                               icon: const Icon(Icons.keyboard_arrow_down),
@@ -281,6 +228,13 @@ class _AddCultivationsState extends State<AddCultivations> {
                                 color: Colors.black,
                                 fontSize: 18,
                               ),
+                              hint: Text(
+                                nameStrain,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                              ),
                               value: dropdownStrain,
                               icon: const Icon(Icons.keyboard_arrow_down),
                               items: nameStrains.map((String items) {
@@ -319,51 +273,9 @@ class _AddCultivationsState extends State<AddCultivations> {
                       const SizedBox(height: 20),
                       buildPlantRemake(),
                       const SizedBox(height: 50),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.end,
-                      //   children: [
-                      //     Column(
-                      //       children: [
-                      //         ElevatedButton(
-                      //           style: ElevatedButton.styleFrom(
-                      //               textStyle: TextStyle(fontSize: 18),
-                      //               primary: Color.fromARGB(255, 10, 94, 3),
-                      //               shape: RoundedRectangleBorder(
-                      //                   borderRadius:
-                      //                       BorderRadius.circular(30)),
-                      //               padding: const EdgeInsets.all(15)),
-                      //           onPressed: () {
-                      //             addCultivations();
-                      //           },
-                      //           child: Text("บันทึก"),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //     SizedBox(width: 10),
-                      //     Column(
-                      //       children: [
-                      //         ElevatedButton(
-                      //           style: ElevatedButton.styleFrom(
-                      //               textStyle: TextStyle(fontSize: 18),
-                      //               primary:
-                      //                   Color.fromARGB(255, 197, 16, 4),
-                      //               shape: RoundedRectangleBorder(
-                      //                   borderRadius:
-                      //                       BorderRadius.circular(30)),
-                      //               padding: const EdgeInsets.all(15)),
-                      //           onPressed: () {
-                      //             canceldialog.showDialogCancel(context);
-                      //           },
-                      //           child: Text("ยกเลิก"),
-                      //         ),
-                      //       ],
-                      //     )
-                      //   ],
-                      // ),
                     ],
                   ),
                 ),
-             
               );
             }
             return const LinearProgressIndicator();
@@ -386,8 +298,8 @@ class _AddCultivationsState extends State<AddCultivations> {
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: const[
-               BoxShadow(
+            boxShadow: const [
+              BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
               ),
@@ -401,7 +313,7 @@ class _AddCultivationsState extends State<AddCultivations> {
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
-                hintStyle:  TextStyle(color: Colors.black38, fontSize: 18)),
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
       ],
@@ -414,7 +326,7 @@ class _AddCultivationsState extends State<AddCultivations> {
       children: [
         const Text(
           "วันที่เพาะเมล็ด :",
-          style:  TextStyle(
+          style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
@@ -593,9 +505,9 @@ class _AddCultivationsState extends State<AddCultivations> {
             style: const TextStyle(color: Colors.black),
             decoration: const InputDecoration(
                 border: InputBorder.none,
-                contentPadding:  EdgeInsets.only(left: 15),
+                contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
-                hintStyle:  TextStyle(color: Colors.black38, fontSize: 18)),
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
       ],
@@ -632,7 +544,7 @@ class _AddCultivationsState extends State<AddCultivations> {
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
-                hintStyle:  TextStyle(color: Colors.black38, fontSize: 18)),
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
       ],
@@ -704,7 +616,7 @@ class _AddCultivationsState extends State<AddCultivations> {
             style: const TextStyle(color: Colors.black),
             decoration: const InputDecoration(
                 border: InputBorder.none,
-                contentPadding:  EdgeInsets.only(left: 15),
+                contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
                 hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
@@ -742,10 +654,123 @@ class _AddCultivationsState extends State<AddCultivations> {
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: '**หมายเหตุ**',
-                hintStyle:  TextStyle(color: Colors.black38, fontSize: 18)),
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
       ],
+    );
+  }
+
+  Future<Null> confirmDialog() async {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('ยืนยันการแก้ไข'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: const <Widget>[
+                Text('กรุณากดยืนยันเพื่อดำเนินการแก้ไข'),
+                //Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('ยืนยัน'),
+              onPressed: () {
+                EditData();
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('ยกเลิก'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future<Null> EditData() async {
+    String url = hostAPI + "/trackings/editCultivatiions";
+    // Showing LinearProgressIndicator.
+    setState(() {
+      _visible = true;
+    });
+
+    var response = await http.put(Uri.parse(url), body: {
+      "CultivationID":widget.CultivationID,
+      "GreenHouseName": dropdownGH.toString(),
+      "StrainName": dropdownStrain.toString(),
+      "No": _ctlNo.text,
+      "SeedDate": SeedDate.toString(),
+      "MoveDate": MoveDate.toString(),
+      "SeedTotal": _ctlSeedtotal.text,
+      "SeedNet": _ctlSeedNet.text,
+      "PlantTotal": _ctlPlantTotal.text,
+      "PlantLive": _ctlPlantLive.text,
+      "PlantDead": _ctlPlantDead.text,
+      "Remark": _ctlPlantRemake.text,
+      "UpdateBy": widget.UserID,
+    });
+    print('Response status : ${response.statusCode}');
+    print('Response body : ${response.body}');
+    if (response.statusCode == 200) {
+      print(response.body);
+      var msg = jsonDecode(response.body);
+
+      //Check Login Status
+      if (msg['success'] == true) {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+        });
+        //showMessage(msg["message"]);
+        Navigator.pop(context);
+
+        ///Clear();
+      } else {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+
+          //Show Error Message Dialog
+          showMessage(msg["message"]);
+        });
+        //showMessage(context, 'เกิดข้อผิดพลาด');
+      }
+    } else {
+      setState(() {
+        //hide progress indicator
+        _visible = false;
+
+        //Show Error Message Dialog
+        showMessage("Error during connecting to Server.");
+      });
+    }
+  }
+
+  Future<dynamic> showMessage(String msg) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(msg),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
