@@ -64,7 +64,7 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
               }
 
               var result = snapshot.data;
-              print(result);
+              //print(result);
               return Column(
                 children: <Widget>[
                   const SizedBox(height: 20),
@@ -92,7 +92,6 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
                       alignment: Alignment.topCenter,
                       child: ListView.builder(
                           itemCount: result.length,
-                          reverse: true,
                           shrinkWrap: true,
                           itemBuilder: (context, index) {
                             final Plantracking = result[index];

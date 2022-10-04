@@ -1,4 +1,6 @@
 import 'package:cannabis_track_and_trace_application/screens/login/login.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/show/list_cultivations.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/show/planttracking_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -21,5 +23,7 @@ class MyApp extends StatelessWidget {
           //visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
         home: const LoginScreen());
+        //home: const ListPlantTrackingPage(UserID: '14', code: '222222',));
+        //home: ListCultivations(UserID: '14',));
   }
 }

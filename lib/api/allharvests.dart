@@ -1,16 +1,16 @@
 // To parse this JSON data, do
 //
-//     final allHarvests = allHarvestsFromJson(jsonString);
+//     final harvests = harvestsFromJson(jsonString);
 
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-List<AllHarvests> allHarvestsFromJson(String str) => List<AllHarvests>.from(json.decode(str).map((x) => AllHarvests.fromJson(x)));
+List<Harvests> harvestsFromJson(String str) => List<Harvests>.from(json.decode(str).map((x) => Harvests.fromJson(x)));
 
-String allHarvestsToJson(List<AllHarvests> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String harvestsToJson(List<Harvests> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class AllHarvests {
-    AllHarvests({
+class Harvests {
+    Harvests({
         required this.harvestId,
         required this.harvestDate,
         required this.harvestNo,
@@ -23,6 +23,7 @@ class AllHarvests {
         required this.createBy,
         required this.updateTime,
         required this.updateBy,
+        required this.nameGh,
     });
 
     int harvestId;
@@ -37,8 +38,9 @@ class AllHarvests {
     dynamic createBy;
     DateTime updateTime;
     dynamic updateBy;
+    String nameGh;
 
-    factory AllHarvests.fromJson(Map<String, dynamic> json) => AllHarvests(
+    factory Harvests.fromJson(Map<String, dynamic> json) => Harvests(
         harvestId: json["HarvestID"],
         harvestDate: json["HarvestDate"],
         harvestNo: json["HarvestNo"],
@@ -48,9 +50,10 @@ class AllHarvests {
         lotNo: json["LotNo"],
         remark: json["Remark"],
         createTime: DateTime.parse(json["CreateTime"]),
-        createBy: json["CreateBy"],
+        createBy:  json["CreateBy"],
         updateTime: DateTime.parse(json["UpdateTime"]),
         updateBy: json["UpdateBy"],
+        nameGh: json["NameGH"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -61,10 +64,11 @@ class AllHarvests {
         "Type": type,
         "Weight": weight,
         "LotNo": lotNo,
-        "Remark": remark,
+        "Remark":  remark,
         "CreateTime": createTime.toIso8601String(),
         "CreateBy": createBy,
         "UpdateTime": updateTime.toIso8601String(),
-        "UpdateBy": updateBy,
+        "UpdateBy":  updateBy,
+        "NameGH": nameGh,
     };
 }
