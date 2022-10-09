@@ -121,7 +121,7 @@ class _EditCultivationState extends State<EditCultivation> {
               MoveDate = resultCul[0].moveDate;
 
               dropdownStrain ??= nameStrain;
-            dropdownGH ??= nameGreenHouse;
+              dropdownGH ??= nameGreenHouse;
 
               return Padding(
                 padding: const EdgeInsets.all(10),
@@ -130,7 +130,7 @@ class _EditCultivationState extends State<EditCultivation> {
                     children: [
                       const SizedBox(height: 10),
                       const Text(
-                        "บันทึกข้อมูลการปลูก",
+                        "แก้ไขข้อมูลการปลูก",
                         style: TextStyle(
                             fontSize: 24,
                             fontWeight: FontWeight.w600,
@@ -704,7 +704,7 @@ class _EditCultivationState extends State<EditCultivation> {
     });
 
     var response = await http.put(Uri.parse(url), body: {
-      "CultivationID":widget.CultivationID,
+      "CultivationID": widget.CultivationID,
       "GreenHouseName": dropdownGH.toString(),
       "StrainName": dropdownStrain.toString(),
       "No": _ctlNo.text,

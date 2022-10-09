@@ -1,21 +1,23 @@
 import 'dart:convert';
-import 'package:cannabis_track_and_trace_application/config/styles.dart';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../api/allharvests.dart';
+import '../../../api/gettransfers.dart';
 import '../../../api/hostapi.dart';
+import '../../../config/styles.dart';
 
-class AddTransfers extends StatefulWidget {
+class EditTransfer extends StatefulWidget {
   final String UserID;
-  const AddTransfers({Key? key, required this.UserID}) : super(key: key);
+  final String TransferID;
+  const EditTransfer({Key? key, required this.UserID, required this.TransferID})
+      : super(key: key);
 
   @override
-  State<AddTransfers> createState() => _AddTransfersState();
+  State<EditTransfer> createState() => _EditTransferState();
 }
 
-class _AddTransfersState extends State<AddTransfers> {
- 
+class _EditTransferState extends State<EditTransfer> {
   DateTime date = DateTime.now();
   final _formKey = GlobalKey<FormState>();
   bool _visible = false;
@@ -30,111 +32,32 @@ class _AddTransfersState extends State<AddTransfers> {
   final _ctlTrackRemake = TextEditingController();
   final _ctlHarvestNo = TextEditingController();
 
-  void Clear() {
-    _ctlWeight.clear();
-    _ctlLotNo.clear();
-    _ctlGetByName.clear();
-    _ctlGetByPlate.clear();
-    _ctlLicenseNo.clear();
-    _ctlLicensePlate.clear();
-    _ctlTrackRemake.clear();
-    dropdowntype = 'N/A';
-    dropdownHvtID = 'N/A';
-  }
-
-  Future addTransfers() async {
-    var url = hostAPI + "/trackings/transfers";
-    // Showing LinearProgressIndicator.
-    setState(() {
-      _visible = true;
-    });
-
-    var response = await http.post(Uri.parse(url), body: {
-      "HarvestID": dropdownHvtID.toString(),
-      "TransferDate": date.toString(),
-      "Type": selectDropdown.toString(),
-      "Weight": _ctlWeight.text,
-      "LotNo": _ctlLotNo.text,
-      "GetByName": _ctlGetByName.text,
-      "GetByPlace": _ctlGetByPlate.text,
-      "LicenseNo": _ctlLicenseNo.text,
-      "LicensePlate": _ctlLicensePlate.text,
-      "Remark": _ctlTrackRemake.text,
-      "CreateBy": widget.UserID,
-      "UpdateBy": widget.UserID,
-    });
-    print('Response status : ${response.statusCode}');
-    print('Response body : ${response.body}');
-    if (response.statusCode == 200) {
-      print(response.body);
-      var msg = jsonDecode(response.body);
-
-      //Check Login Status
-      if (msg['success'] == true) {
-        setState(() {
-          //hide progress indicator
-          _visible = false;
-        });
-        showMessage(msg["message"]);
-        Clear();
-      } else {
-        setState(() {
-          //hide progress indicator
-          _visible = false;
-
-          //Show Error Message Dialog
-          showMessage(msg["message"]);
-        });
-        //showMessage(context, 'เกิดข้อผิดพลาด');
-      }
-    } else {
-      setState(() {
-        //hide progress indicator
-        _visible = false;
-
-        //Show Error Message Dialog
-        showMessage("Error during connecting to Server.");
-      });
-    }
-  }
-
-  Future<dynamic> showMessage(String msg) async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(msg),
-          actions: <Widget>[
-            TextButton(
-              child: const Text("OK"),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
-
   @override
   void initState() {
     super.initState();
   }
+
+  late List<GetTransfers> _Transfer;
 
   Future getData() async {
     var url = hostAPI + "/trackings/getHarvests";
     var response = await http.get(Uri.parse(url));
     _Harvests = harvestsFromJson(response.body);
 
-    return _Harvests;
+    var urlTransfer =
+        hostAPI + '/trackings/getTransfer?id=' + widget.TransferID;
+
+    var responseTransfer = await http.get(Uri.parse(urlTransfer));
+    _Transfer = getTransfersFromJson(responseTransfer.body);
+
+    return [_Harvests, _Transfer];
   }
 
-  String dropdowntype = 'N/A';
-  String selectDropdown = '00';
+  String? dropdowntype;
+  String? selectDropdown;
   var itemtype = ['N/A', 'ใบ', 'ดอก', 'ก้าน'];
 
-  String dropdownHvtID = 'N/A';
+  String? dropdownHvtID;
 
   @override
   Widget build(BuildContext context) {
@@ -148,7 +71,7 @@ class _AddTransfersState extends State<AddTransfers> {
                 color: Colors.white,
               ),
               onPressed: () {
-                addTransfers();
+                confirmDialog();
               },
             )
           ],
@@ -157,12 +80,36 @@ class _AddTransfersState extends State<AddTransfers> {
           future: getData(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
-              var result = snapshot.data;
+              var dataHarvests = snapshot.data[0];
+              var dataTransfer = snapshot.data[1];
               var itemHvtID = ['N/A'];
-              for (var i = 0; i < result.length; i++) {
-                itemHvtID.add(result[i].harvestId.toString());
+              for (var i = 0; i < dataHarvests.length; i++) {
+                itemHvtID.add(dataHarvests[i].harvestId.toString());
               }
               print(itemHvtID);
+
+              String TypeTransfer;
+              String type = dataTransfer[0].type.toString();
+              if (type == "1") {
+                TypeTransfer = "ใบ";
+              } else if (type == "2") {
+                TypeTransfer = "ดอก";
+              } else if (type == "3") {
+                TypeTransfer = "ก้าน";
+              } else {
+                TypeTransfer = "N/A";
+              }
+              selectDropdown ??= type;
+              dropdownHvtID ??= dataTransfer[0].harvestId.toString();
+
+              _ctlWeight.text = dataTransfer[0].weight.toString();
+              _ctlLotNo.text = dataTransfer[0].lotNo.toString();
+              _ctlGetByName.text = dataTransfer[0].getByName.toString();
+              _ctlGetByPlate.text = dataTransfer[0].licenseNo.toString();
+              _ctlLicenseNo.text = dataTransfer[0].licenseNo.toString();
+              _ctlLicensePlate.text = dataTransfer[0].licensePlate.toString();
+              _ctlTrackRemake.text = dataTransfer[0].remark.toString();
+              date = dataTransfer[0].transferDate;
 
               return SafeArea(
                 child: Container(
@@ -173,7 +120,7 @@ class _AddTransfersState extends State<AddTransfers> {
                         children: [
                           const SizedBox(height: 10),
                           const Text(
-                            "บันทึกข้อมูลการส่งมอบ",
+                            "แก้ไขข้อมูลการส่งมอบ",
                             style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w600,
@@ -215,6 +162,13 @@ class _AddTransfersState extends State<AddTransfers> {
                                     color: Colors.black,
                                     fontSize: 18,
                                   ),
+                                  hint: Text(
+                                    dataTransfer[0].harvestId.toString(),
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                    ),
+                                  ),
                                   value: dropdownHvtID,
                                   icon: const Icon(Icons.keyboard_arrow_down),
                                   items: itemHvtID.map((String items) {
@@ -227,13 +181,14 @@ class _AddTransfersState extends State<AddTransfers> {
                                     setState(
                                       () {
                                         dropdownHvtID = newValue!;
-                                        if (itemHvtID.indexOf(dropdownHvtID) ==
+                                        if (itemHvtID.indexOf(dropdownHvtID!) ==
                                             0) {
                                           _ctlHarvestNo.text = "";
                                         } else {
-                                          _ctlHarvestNo.text = result[itemHvtID
-                                                      .indexOf(dropdownHvtID) -
-                                                  1]
+                                          _ctlHarvestNo.text = dataHarvests[
+                                                  itemHvtID.indexOf(
+                                                          dropdownHvtID!) -
+                                                      1]
                                               .harvestNo
                                               .toString();
                                         }
@@ -248,11 +203,120 @@ class _AddTransfersState extends State<AddTransfers> {
                             ],
                           ),
                           const SizedBox(height: 20),
-                          buildHarvestNo(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "ครั้งที่ :",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 10),
+                              Container(
+                                margin:
+                                    const EdgeInsets.only(left: 15, right: 15),
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 240, 239, 239),
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: TextFormField(
+                                  readOnly: true,
+                                  controller: _ctlHarvestNo,
+                                  keyboardType: TextInputType.number,
+                                  style: const TextStyle(color: Colors.black),
+                                  decoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      contentPadding: EdgeInsets.only(left: 15),
+                                      hintText:
+                                          dataTransfer[0].harvestNo.toString(),
+                                      hintStyle: TextStyle(
+                                          color: Colors.black, fontSize: 18)),
+                                ),
+                              ),
+                            ],
+                          ),
                           const SizedBox(height: 20),
                           buildTransferDate(),
                           const SizedBox(height: 20),
-                          buildType(),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "ประเภท :",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              const SizedBox(height: 10),
+                              Container(
+                                margin:
+                                    const EdgeInsets.only(left: 15, right: 15),
+                                padding:
+                                    const EdgeInsets.only(left: 15, right: 15),
+                                decoration: BoxDecoration(
+                                  color:
+                                      const Color.fromARGB(255, 240, 239, 239),
+                                  borderRadius: BorderRadius.circular(20),
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      color: Colors.black26,
+                                      offset: Offset(0, 2),
+                                    ),
+                                  ],
+                                ),
+                                child: DropdownButton(
+                                  dropdownColor: Colors.white,
+                                  iconSize: 30,
+                                  isExpanded: true,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
+                                  hint: Text(
+                                    TypeTransfer,
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 18,
+                                    ),
+                                  ),
+                                  value: dropdowntype,
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  items: itemtype.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(
+                                      () {
+                                        dropdowntype = newValue!;
+                                        if (dropdowntype == "N/A") {
+                                          selectDropdown = "00";
+                                        } else if (dropdowntype == "ใบ") {
+                                          selectDropdown = "01";
+                                        } else if (dropdowntype == "ดอก") {
+                                          selectDropdown = "02";
+                                        } else {
+                                          selectDropdown = "03";
+                                        }
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
                           const SizedBox(height: 20),
                           buildweight(),
                           const SizedBox(height: 20),
@@ -268,47 +332,6 @@ class _AddTransfersState extends State<AddTransfers> {
                           const SizedBox(height: 20),
                           buildTrackRemake(),
                           const SizedBox(height: 50),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.end,
-                          //   children: [
-                          //     Column(
-                          //       children: [
-                          //         ElevatedButton(
-                          //           style: ElevatedButton.styleFrom(
-                          //               textStyle: TextStyle(fontSize: 18),
-                          //               primary: Color.fromARGB(255, 10, 94, 3),
-                          //               shape: RoundedRectangleBorder(
-                          //                   borderRadius:
-                          //                       BorderRadius.circular(30)),
-                          //               padding: const EdgeInsets.all(15)),
-                          //           onPressed: () {
-                          //             addTransfers();
-                          //           },
-                          //           child: Text("บันทึก"),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //     SizedBox(width: 10),
-                          //     Column(
-                          //       children: [
-                          //         ElevatedButton(
-                          //           style: ElevatedButton.styleFrom(
-                          //               textStyle: TextStyle(fontSize: 18),
-                          //               primary:
-                          //                   Color.fromARGB(255, 197, 16, 4),
-                          //               shape: RoundedRectangleBorder(
-                          //                   borderRadius:
-                          //                       BorderRadius.circular(30)),
-                          //               padding: const EdgeInsets.all(15)),
-                          //           onPressed: () {
-                          //             canceldialog.showDialogCancel(context);
-                          //           },
-                          //           child: Text("ยกเลิก"),
-                          //         ),
-                          //       ],
-                          //     )
-                          //  ],
-                          //),
                         ],
                       ),
                     ),
@@ -375,105 +398,6 @@ class _AddTransfersState extends State<AddTransfers> {
                 ),
               ),
             ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildType() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "ประเภท :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          padding: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: DropdownButton(
-            dropdownColor: Colors.white,
-            iconSize: 30,
-            isExpanded: true,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 18,
-            ),
-            value: dropdowntype,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            items: itemtype.map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(
-                () {
-                  dropdowntype = newValue!;
-                  if (dropdowntype == "N/A") {
-                    selectDropdown = "00";
-                  } else if (dropdowntype == "ใบ") {
-                    selectDropdown = "01";
-                  } else if (dropdowntype == "ดอก") {
-                    selectDropdown = "02";
-                  } else {
-                    selectDropdown = "03";
-                  }
-                },
-              );
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildHarvestNo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "ครั้งที่ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            readOnly: true,
-            controller: _ctlHarvestNo,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: '',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
       ],
@@ -733,6 +657,116 @@ class _AddTransfersState extends State<AddTransfers> {
           ),
         ),
       ],
+    );
+  }
+
+  Future<Null> confirmDialog() async {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('ยืนยันการแก้ไข'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: const <Widget>[
+                Text('กรุณากดยืนยันเพื่อดำเนินการแก้ไข'),
+                //Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('ยืนยัน'),
+              onPressed: () {
+                Editdata();
+                Navigator.of(context).pop();
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('ยกเลิก'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  Future Editdata() async {
+    var url = hostAPI + "/trackings/editTransfers";
+    // Showing LinearProgressIndicator.
+    setState(() {
+      _visible = true;
+    });
+
+    var response = await http.put(Uri.parse(url), body: {
+      "TransferID": widget.TransferID,
+      "HarvestID": dropdownHvtID.toString(),
+      "TransferDate": date.toString(),
+      "Type": selectDropdown.toString(),
+      "Weight": _ctlWeight.text,
+      "LotNo": _ctlLotNo.text,
+      "GetByName": _ctlGetByName.text,
+      "GetByPlace": _ctlGetByPlate.text,
+      "LicenseNo": _ctlLicenseNo.text,
+      "LicensePlate": _ctlLicensePlate.text,
+      "Remark": _ctlTrackRemake.text,
+      "UpdateBy": widget.UserID,
+    });
+    print('Response status : ${response.statusCode}');
+    print('Response body : ${response.body}');
+    if (response.statusCode == 200) {
+      print(response.body);
+      var msg = jsonDecode(response.body);
+
+      //Check Login Status
+      if (msg['success'] == true) {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+        });
+        //showMessage(msg["message"]);
+      } else {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+
+          //Show Error Message Dialog
+          showMessage(msg["message"]);
+        });
+        //showMessage(context, 'เกิดข้อผิดพลาด');
+      }
+    } else {
+      setState(() {
+        //hide progress indicator
+        _visible = false;
+
+        //Show Error Message Dialog
+        showMessage("Error during connecting to Server.");
+      });
+    }
+  }
+
+  Future<dynamic> showMessage(String msg) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(msg),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }

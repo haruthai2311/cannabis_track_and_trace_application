@@ -182,7 +182,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Harvests(UserID: widget.UserID);
+                  return AddHarvests(UserID: widget.UserID);
                 }));
               },
               style: ElevatedButton.styleFrom(
@@ -278,7 +278,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Transfers(UserID: widget.UserID);
+                  return AddTransfers(UserID: widget.UserID);
                 }));
               },
               style: ElevatedButton.styleFrom(
