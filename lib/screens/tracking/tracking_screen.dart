@@ -5,6 +5,9 @@ import 'package:cannabis_track_and_trace_application/screens/tracking/add/cultiv
 import 'package:cannabis_track_and_trace_application/screens/tracking/add/harvests.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/add/plant_tracking.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/add/transfers.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/show/list_cultivations.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/show/list_harvests.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/show/list_transfers.dart';
 import 'package:cannabis_track_and_trace_application/widget/Circle_Gradient_Icon.dart';
 import 'package:flutter/material.dart';
 
@@ -131,8 +134,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
   }
 
   Widget buildGrid() {
-    return Row(      
-      children: [
+    return Row(children: [
       Column(
         children: [
           Center(
@@ -182,7 +184,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Harvests(UserID: widget.UserID);
+                  return ListHarveste(UserID: widget.UserID);
                 }));
               },
               style: ElevatedButton.styleFrom(
@@ -211,7 +213,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                       ),
                       SizedBox(height: 15),
                       Text(
-                        'บันทึกข้อมูลการเก็บเกี่ยว',
+                        'ข้อมูลการเก็บเกี่ยว',
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
@@ -231,7 +233,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return AddCultivations(UserID: widget.UserID);
+                  return ListCultivations(UserID: widget.UserID);
                 }));
               },
               style: ElevatedButton.styleFrom(
@@ -260,7 +262,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                       ),
                       SizedBox(height: 15),
                       Text(
-                        'บันทึกการปลูก',
+                        'ข้อมูลการปลูก',
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
@@ -278,7 +280,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
             child: ElevatedButton(
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return Transfers(UserID: widget.UserID);
+                  return ListTransfers(UserID: widget.UserID);
                 }));
               },
               style: ElevatedButton.styleFrom(
@@ -306,7 +308,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                         size: 120,
                       ),
                       Text(
-                        'บันทึกข้อมูลการส่งมอบ',
+                        'ข้อมูลการส่งมอบ',
                         style: TextStyle(
                             fontSize: 18, fontWeight: FontWeight.bold),
                       ),
@@ -327,7 +329,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
       mainAxisAlignment: MainAxisAlignment.center,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        Text(
+        const Text(
           "On Going",
           style: TextStyle(
             color: Colors.black87,
@@ -338,7 +340,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
         const Spacer(),
         InkWell(
           onTap: () {},
-          child: Text(
+          child: const Text(
             "See all",
             style: TextStyle(
               color: Colors.pink,

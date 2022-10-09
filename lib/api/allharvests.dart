@@ -27,7 +27,7 @@ class Harvests {
     });
 
     int harvestId;
-    String harvestDate;
+    DateTime harvestDate;
     int harvestNo;
     int greenHouseId;
     int type;
@@ -42,7 +42,7 @@ class Harvests {
 
     factory Harvests.fromJson(Map<String, dynamic> json) => Harvests(
         harvestId: json["HarvestID"],
-        harvestDate: json["HarvestDate"],
+        harvestDate: DateTime.parse(json["HarvestDate"]),
         harvestNo: json["HarvestNo"],
         greenHouseId: json["GreenHouseID"],
         type: json["Type"],
