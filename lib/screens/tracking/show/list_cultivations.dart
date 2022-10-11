@@ -89,18 +89,18 @@ class _ListCultivationsState extends State<ListCultivations> {
                           return Card(
                             child: ListTile(
                               title: Text("รอบการปลูก : " + Cul.no.toString()),
-                              subtitle: Text('โรงปลูก : ' +
-                                  Cul.nameGh +
-                                  " " +
-                                  Cul.remark.toString()),
+                              subtitle: Text('โรงปลูก : ' + Cul.nameGh),
                               trailing: const Icon(Icons.arrow_forward),
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => DetailsCultivation(
-                                          UserID: widget.UserID,
-                                          CultivationID:
-                                              Cul.cultivationId.toString(),
-                                        ))).then((value) => setState(() {}));
+                                Navigator.of(context)
+                                    .push(MaterialPageRoute(
+                                        builder: (context) =>
+                                            DetailsCultivation(
+                                              UserID: widget.UserID,
+                                              CultivationID:
+                                                  Cul.cultivationId.toString(),
+                                            )))
+                                    .then((value) => setState(() {}));
                               },
                             ),
                           );

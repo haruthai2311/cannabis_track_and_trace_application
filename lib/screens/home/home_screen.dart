@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kBackground,
-        title: Text(
+        title: const Text(
           "Home Screen",
           // style: Theme.of(context)
           //     .textTheme
@@ -75,12 +75,12 @@ class _HomeScreenState extends State<HomeScreen> {
           padding: EdgeInsets.all(8),
           height: 50,
           decoration: BoxDecoration(
-            color: Color.fromARGB(95, 179, 173, 173),
+            color: const Color.fromARGB(95, 179, 173, 173),
             borderRadius: BorderRadius.circular(15.0),
           ),
           child: TextFormField(
-            style: TextStyle(color: Colors.black),
-            decoration: InputDecoration(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
               border: InputBorder.none,
               contentPadding: EdgeInsets.only(left: 15),
               hintText: 'Search',
@@ -98,8 +98,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        SizedBox(height: 15),
-        Text(
+        const SizedBox(height: 15),
+        const Text(
           "รายงารอบการปลูกที่ 1/65",
           style: TextStyle(fontSize: 18),
         ),
@@ -109,10 +109,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget buildTaskHead() {
     return Container(
-      margin: EdgeInsets.only(left: 15, right: 15),
+      margin: const EdgeInsets.only(left: 15, right: 15),
       height: 150,
       decoration: BoxDecoration(
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             blurRadius: 4,
             color: Color(0x33000000),
@@ -120,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
             spreadRadius: 2,
           )
         ],
-        gradient: LinearGradient(
+        gradient: const LinearGradient(
           colors: [
             Color.fromARGB(255, 1, 100, 84),
             Color.fromARGB(255, 2, 158, 140)
@@ -132,14 +132,14 @@ class _HomeScreenState extends State<HomeScreen> {
         borderRadius: BorderRadius.circular(30),
       ),
       child: Padding(
-        padding: EdgeInsets.all(15),
+        padding: const EdgeInsets.all(15),
         child: Row(
           children: [
             Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: const [
                 Text(
                   'จำนวนต้นทั้งหมด',
                   style: TextStyle(
@@ -157,12 +157,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            SizedBox(width: 50),
+            const SizedBox(width: 50),
             Column(
               mainAxisSize: MainAxisSize.max,
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
+              children: const [
                 Text(
                   'โรงเรือน',
                   style: TextStyle(fontSize: 18, color: Colors.white),
@@ -185,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget buildAmount() {
     return Padding(
-      padding: EdgeInsets.only(left: 5, right: 5, bottom: 10, top: 10),
+      padding: const EdgeInsets.only(left: 5, right: 5, bottom: 10, top: 10),
       //padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
       child: Row(
         mainAxisSize: MainAxisSize.max,
@@ -195,7 +195,7 @@ class _HomeScreenState extends State<HomeScreen> {
             width: 170,
             height: 80,
             decoration: BoxDecoration(
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   blurRadius: 4,
                   color: Color(0x33000000),
@@ -206,23 +206,23 @@ class _HomeScreenState extends State<HomeScreen> {
               borderRadius: BorderRadius.circular(15),
               color: Colors.white,
               border: Border.all(
-                color: Color(0xFFCFD4DB),
+                color: const Color(0xFFCFD4DB),
                 width: 1,
               ),
             ),
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
                     height: 30,
                     width: 30,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 166, 245, 168),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.favorite,
                       color: Colors.green,
                       size: 20,
@@ -231,7 +231,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Column(
                     children: [
                       Row(
-                        children: [
+                        children: const [
                           Text(
                             '371 กระถาง',
                             style: TextStyle(
@@ -241,7 +241,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ],
                       ),
-                      Text(
+                      const Text(
                         'ต้นปกติ',
                         style: TextStyle(
                           fontSize: 18,
@@ -258,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
             width: 170,
             height: 80,
             decoration: BoxDecoration(
-              boxShadow: [
+              boxShadow: const [
                 BoxShadow(
                   blurRadius: 4,
                   color: Color(0x33000000),
@@ -269,30 +269,30 @@ class _HomeScreenState extends State<HomeScreen> {
               borderRadius: BorderRadius.circular(15),
               color: Colors.white,
               border: Border.all(
-                color: Color(0xFFCFD4DB),
+                color: const Color(0xFFCFD4DB),
                 width: 1,
               ),
             ),
             child: Padding(
-              padding: EdgeInsets.all(10),
+              padding: const EdgeInsets.all(10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
                     height: 30,
                     width: 30,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 209, 207, 207),
                       shape: BoxShape.circle,
                     ),
-                    child: Icon(
+                    child: const Icon(
                       Icons.favorite,
                       color: Color.fromARGB(255, 230, 28, 13),
                       size: 20,
                     ),
                   ),
                   Column(
-                    children: [
+                    children: const [
                       Text(
                         '29 กระถาง',
                         style: TextStyle(
@@ -324,7 +324,7 @@ class _HomeScreenState extends State<HomeScreen> {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
-        boxShadow: [
+        boxShadow: const [
           BoxShadow(
             blurRadius: 4,
             color: Color.fromARGB(255, 176, 4, 211),
@@ -334,7 +334,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: Color.fromARGB(255, 134, 3, 160),
+          color: const Color.fromARGB(255, 134, 3, 160),
           width: 3,
         ),
       ),
@@ -342,7 +342,7 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.all(10),
         child: Column(
           children: [
-            Text(
+            const Text(
               'การเจริญเติบโตทั่วไป',
               style: TextStyle(
                   fontSize: 20,
@@ -361,7 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     animation: true,
                     progressColor: colorGraph1,
                     backgroundColor: colorGraph2,
-                    center: Text(
+                    center: const Text(
                       '80%',
                       style: TextStyle(
                           fontSize: 45,
@@ -375,7 +375,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
-                      children: [
+                      children: const [
                         Icon(
                           Icons.label,
                           color: colorGraph1,
@@ -391,7 +391,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ],
                     ),
                     Row(
-                      children: [
+                      children: const [
                         Icon(
                           Icons.label,
                           color: colorGraph2,
@@ -421,7 +421,7 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         Container(
           decoration: BoxDecoration(
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 blurRadius: 4,
                 color: Color(0x33000000),
@@ -432,7 +432,7 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(10),
             color: Colors.white,
             border: Border.all(
-              color: Color(0xFFCFD4DB),
+              color: const Color(0xFFCFD4DB),
               width: 1,
             ),
           ),
@@ -445,7 +445,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Container(
                       height: 90,
-                      child: VerticalDivider(
+                      child: const VerticalDivider(
                         color: colorResult1,
                         thickness: 5,
                         indent: 3,
@@ -453,17 +453,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 5,
                       ),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.search,
                       size: 50,
                       color: Colors.black,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           'การสำรวจโรค',
                           style: TextStyle(
@@ -489,8 +489,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 15),
+                const Padding(
+                  padding: EdgeInsets.only(right: 15),
                   child: Text(
                     '14 กระถาง',
                     style: TextStyle(
@@ -504,10 +504,10 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
         ),
-        SizedBox(height: 10),
+        const SizedBox(height: 10),
         Container(
           decoration: BoxDecoration(
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 blurRadius: 4,
                 color: Color(0x33000000),
@@ -531,7 +531,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Container(
                       height: 90,
-                      child: VerticalDivider(
+                      child: const VerticalDivider(
                         color: colorResult2,
                         thickness: 5,
                         indent: 3,
@@ -539,17 +539,17 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: 5,
                       ),
                     ),
-                    Icon(
+                    const Icon(
                       Icons.search,
                       size: 50,
                       color: Colors.black,
                     ),
-                    SizedBox(
+                    const SizedBox(
                       width: 10,
                     ),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
+                      children: const [
                         Text(
                           'การสำรวจแมลง',
                           style: TextStyle(
@@ -575,8 +575,8 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                Padding(
-                  padding: const EdgeInsets.only(right: 15),
+                const Padding(
+                  padding: EdgeInsets.only(right: 15),
                   child: Text(
                     '50 กระถาง',
                     style: TextStyle(
