@@ -1,6 +1,5 @@
 import 'package:cannabis_track_and_trace_application/config/color.dart';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
-import 'package:cannabis_track_and_trace_application/screens/test.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/add/cultivations.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/add/harvests.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/add/plant_tracking.dart';
@@ -31,33 +30,27 @@ class _TrackingScreenState extends State<TrackingScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kBackground,
-        title: Text(
-          "Tracking",
-          style: Theme.of(context)
-              .textTheme
-              .bodySmall!
-              .copyWith(fontWeight: FontWeight.bold),
-        ),
-        leading: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Container(
-            width: 50,
-            height: 50,
-            decoration: const BoxDecoration(
-              color: Color.fromARGB(255, 2, 109, 109),
-              shape: BoxShape.circle,
-            ),
-            child: InkWell(
-              onTap: () {},
-              customBorder: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(100),
-              ),
-              child: const Icon(
-                Icons.menu_rounded,
-              ),
-            ),
-          ),
-        ),
+        // title: const Text("Tracking"),
+        // leading: Padding(
+        //   padding: const EdgeInsets.symmetric(horizontal: 10),
+        //   child: Container(
+        //     width: 50,
+        //     height: 50,
+        //     decoration: const BoxDecoration(
+        //       color: Color.fromARGB(255, 2, 109, 109),
+        //       shape: BoxShape.circle,
+        //     ),
+        //     child: InkWell(
+        //       onTap: () {},
+        //       customBorder: RoundedRectangleBorder(
+        //         borderRadius: BorderRadius.circular(100),
+        //       ),
+        //       child: const Icon(
+        //         Icons.menu_rounded,
+        //       ),
+        //     ),
+        //   ),
+        // ),
       ),
       extendBody: true,
       body: _buildBody(),
@@ -119,16 +112,13 @@ class _TrackingScreenState extends State<TrackingScreen> {
             selectAll: true,
           ),
         ),
-        IconButton(
-            onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) {
-                return Test();
-              }));
-            },
-            icon: Icon(
-              Icons.add_circle_outline,
-              color: Colors.blue[400],
-            ))
+        // IconButton(
+        //   onPressed: () {},
+        //   icon: Icon(
+        //     Icons.add_circle_outline,
+        //     color: Colors.blue[400],
+        //   ),
+        // ),
       ],
     );
   }
