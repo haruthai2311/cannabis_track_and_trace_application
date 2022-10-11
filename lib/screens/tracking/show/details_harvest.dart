@@ -66,173 +66,183 @@ class _DetailsHarvestState extends State<DetailsHarvest> {
             return SingleChildScrollView(
                 child: Stack(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                  child: Column(children: [
-                    const SizedBox(
-                      height: 15,
+                Container(
+                  padding: const EdgeInsets.all(20.0),
+                  decoration: BoxDecoration(
+                    color: kBackground,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(40.0),
+                      bottomRight: Radius.circular(40.0),
                     ),
-                    Row(
-                      children: <Widget>[
-                        const Expanded(
-                          child: Text(
-                            "โรงปลูก : ",
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                    child: Column(children: [
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Expanded(
+                            child: Text(
+                              "โรงปลูก : ",
+                              style: TextStyle(
+                                  color: colorDetails,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              result[0].nameGh.toString(),
+                              style: const TextStyle(
+                                  color: colorDetails,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Expanded(
+                            child: Text(
+                              "วันที่เก็บเกี่ยว :",
+                              style: TextStyle(
+                                  color: colorDetails,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              f.format(result[0].harvestDate).toString(),
+                              style: const TextStyle(
+                                  color: colorDetails,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Expanded(
+                            child: Text(
+                              "ครั้งที่ :",
+                              style: TextStyle(
+                                  color: colorDetails,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              result[0].harvestNo.toString(),
+                              style: const TextStyle(
+                                  color: colorDetails,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Text(
+                            "ประเภท :  ",
                             style: TextStyle(
-                                color: Colors.black,
+                                color: colorDetails,
                                 fontSize: 20,
                                 fontWeight: FontWeight.normal),
                           ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            result[0].nameGh.toString(),
+                          Text(
+                            Type,
                             style: const TextStyle(
-                                color: Colors.black,
+                                color: colorDetails,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        const Expanded(
-                          child: Text(
-                            "วันที่เก็บเกี่ยว :",
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Text(
+                            "น้ำหนัก :  ",
                             style: TextStyle(
-                                color: Colors.black,
+                                color: colorDetails,
                                 fontSize: 20,
                                 fontWeight: FontWeight.normal),
                           ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            f.format(result[0].harvestDate).toString(),
+                          Text(
+                            result[0].weight.toString() + " Kg",
                             style: const TextStyle(
-                                color: Colors.black,
+                                color: colorDetails,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        const Expanded(
-                          child: Text(
-                            "ครั้งที่ :",
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Expanded(
+                            child: Text(
+                              "หมายเลขล๊อต :",
+                              style: TextStyle(
+                                  color: colorDetails,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              result[0].lotNo.toString(),
+                              style: const TextStyle(
+                                  color: colorDetails,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Text(
+                            "หมายเหตุ : ",
                             style: TextStyle(
-                                color: Colors.black,
+                                color: colorDetails,
                                 fontSize: 20,
                                 fontWeight: FontWeight.normal),
                           ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            result[0].harvestNo.toString(),
+                          Text(
+                            result[0].remark.toString(),
                             style: const TextStyle(
-                                color: Colors.black,
+                                color: colorDetails,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        const Text(
-                          "ประเภท :  ",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        Text(
-                          Type,
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        const Text(
-                          "น้ำหนัก :  ",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        Text(
-                          result[0].weight.toString() + " Kg",
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        const Expanded(
-                          child: Text(
-                            "หมายเลขล๊อต :",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.normal),
-                          ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            result[0].lotNo.toString(),
-                            style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        const Text(
-                          "หมายเหตุ : ",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        Text(
-                          result[0].remark.toString(),
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ]),
+                        ],
+                      ),
+                    ]),
+                  ),
                 )
               ],
             ));
@@ -244,7 +254,8 @@ class _DetailsHarvestState extends State<DetailsHarvest> {
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
             return EditHarvest(
-              UserID: widget.UserID, harvestId: widget.harvestId,
+              UserID: widget.UserID,
+              harvestId: widget.harvestId,
             );
           })).then((value) => setState(() {}));
         },

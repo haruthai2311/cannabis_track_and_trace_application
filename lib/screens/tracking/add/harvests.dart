@@ -191,8 +191,10 @@ class _AddHarvestsState extends State<AddHarvests> {
                             ),
                             const SizedBox(height: 10),
                             Container(
-                              margin: const EdgeInsets.only(left: 15, right: 15),
-                              padding: const EdgeInsets.only(left: 15, right: 15),
+                              margin:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
                               decoration: BoxDecoration(
                                 color: const Color.fromARGB(255, 240, 239, 239),
                                 borderRadius: BorderRadius.circular(20),

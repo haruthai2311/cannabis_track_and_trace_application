@@ -57,266 +57,273 @@ class _DetailsCultivationState extends State<DetailsCultivation> {
             return SingleChildScrollView(
                 child: Stack(
               children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                  child: Column(children: [
-                    const SizedBox(
-                      height: 15,
+                Container(
+                  padding: const EdgeInsets.all(20.0),
+                  decoration: BoxDecoration(
+                    color: kBackground,
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(40.0),
+                      bottomRight: Radius.circular(40.0),
                     ),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Row(
-                            children: [
-                              const Expanded(
-                                child: Text(
-                                  "โรงปลูก : ",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.normal),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                    child: Column(children: [
+                      Row(
+                        children: <Widget>[
+                          Expanded(
+                            child: Row(
+                              children: [
+                                const Expanded(
+                                  child: Text(
+                                    "โรงปลูก : ",
+                                    style: TextStyle(
+                                        color: colorDetails,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal),
+                                  ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  result[0].nameGh.toString(),
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
+                                Expanded(
+                                  child: Text(
+                                    result[0].nameGh.toString(),
+                                    style: const TextStyle(
+                                        color: colorDetails,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        Expanded(
-                          child: Row(
-                            children: <Widget>[
-                              const Expanded(
-                                child: Text(
-                                  "รอบปลูก :",
-                                  style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.normal),
+                          Expanded(
+                            child: Row(
+                              children: <Widget>[
+                                const Expanded(
+                                  child: Text(
+                                    "รอบปลูก :",
+                                    style: TextStyle(
+                                        color: colorDetails,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal),
+                                  ),
                                 ),
-                              ),
-                              Expanded(
-                                child: Text(
-                                  result[0].no.toString(),
-                                  style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold),
+                                Expanded(
+                                  child: Text(
+                                    result[0].no.toString(),
+                                    style: const TextStyle(
+                                        color: colorDetails,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold),
+                                  ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Expanded(
+                            child: Text(
+                              "สายพันธุ์ :",
+                              style: TextStyle(
+                                  color: colorDetails,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal),
+                            ),
                           ),
-                        )
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        const Expanded(
-                          child: Text(
-                            "สายพันธุ์ :",
+                          Expanded(
+                            child: Text(
+                              result[0].nameStrains.toString(),
+                              style: const TextStyle(
+                                  color: colorDetails,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Text(
+                            "วันที่เพาะเมล็ด :  ",
                             style: TextStyle(
-                                color: Colors.black,
+                                color: colorDetails,
                                 fontSize: 20,
                                 fontWeight: FontWeight.normal),
                           ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            result[0].nameStrains.toString(),
+                          Text(
+                            f.format(result[0].seedDate).toString(),
                             style: const TextStyle(
-                                color: Colors.black,
+                                color: colorDetails,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        const Text(
-                          "วันที่เพาะเมล็ด :  ",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        Text(
-                          f.format(result[0].seedDate).toString(),
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        const Text(
-                          "วันที่ย้ายปลูก :  ",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        Text(
-                          f.format(result[0].moveDate).toString(),
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        const Expanded(
-                          child: Text(
-                            "จำนวนเมล็ด :",
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Text(
+                            "วันที่ย้ายปลูก :  ",
                             style: TextStyle(
-                                color: Colors.black,
+                                color: colorDetails,
                                 fontSize: 20,
                                 fontWeight: FontWeight.normal),
                           ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            result[0].seedTotal.toString(),
+                          Text(
+                            f.format(result[0].moveDate).toString(),
                             style: const TextStyle(
-                                color: Colors.black,
+                                color: colorDetails,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        const Expanded(
-                          child: Text(
-                            "น้ำหนักเมล็ด : ",
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Expanded(
+                            child: Text(
+                              "จำนวนเมล็ด :",
+                              style: TextStyle(
+                                  color: colorDetails,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              result[0].seedTotal.toString(),
+                              style: const TextStyle(
+                                  color: colorDetails,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Expanded(
+                            child: Text(
+                              "น้ำหนักเมล็ด : ",
+                              style: TextStyle(
+                                  color: colorDetails,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal),
+                            ),
+                          ),
+                          Expanded(
+                            child: Text(
+                              result[0].seedNet.toString() + " Kg.",
+                              style: const TextStyle(
+                                  color: colorDetails,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Text(
+                            "จำนวนต้นทั้งหมด : ",
                             style: TextStyle(
-                                color: Colors.black,
+                                color: colorDetails,
                                 fontSize: 20,
                                 fontWeight: FontWeight.normal),
                           ),
-                        ),
-                        Expanded(
-                          child: Text(
-                            result[0].seedNet.toString()+" Kg.",
+                          Text(
+                            result[0].plantTotal.toString(),
                             style: const TextStyle(
-                                color: Colors.black,
+                                color: colorDetails,
                                 fontSize: 20,
                                 fontWeight: FontWeight.bold),
                           ),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        const Text(
-                          "จำนวนต้นทั้งหมด : ",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        Text(
-                          result[0].plantTotal.toString(),
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        const Text(
-                          "จำนวนต้นเป็นทั้งหมด : ",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        Text(
-                          result[0].plantLive.toString(),
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        const Text(
-                          "จำนวนต้นตายทั้งหมด : ",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        Text(
-                          result[0].plantDead.toString(),
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(
-                      height: 15,
-                    ),
-                    Row(
-                      children: <Widget>[
-                        const Text(
-                          "หมายเหตุ : ",
-                          style: TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal),
-                        ),
-                        Text(
-                          result[0].remark.toString(),
-                          style: const TextStyle(
-                              color: Colors.black,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ]),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Text(
+                            "จำนวนต้นเป็นทั้งหมด : ",
+                            style: TextStyle(
+                                color: colorDetails,
+                                fontSize: 20,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          Text(
+                            result[0].plantLive.toString(),
+                            style: const TextStyle(
+                                color: colorDetails,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Text(
+                            "จำนวนต้นตายทั้งหมด : ",
+                            style: TextStyle(
+                                color: colorDetails,
+                                fontSize: 20,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          Text(
+                            result[0].plantDead.toString(),
+                            style: const TextStyle(
+                                color: colorDetails,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 15,
+                      ),
+                      Row(
+                        children: <Widget>[
+                          const Text(
+                            "หมายเหตุ : ",
+                            style: TextStyle(
+                                color: colorDetails,
+                                fontSize: 20,
+                                fontWeight: FontWeight.normal),
+                          ),
+                          Text(
+                            result[0].remark.toString(),
+                            style: const TextStyle(
+                                color: colorDetails,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        ],
+                      ),
+                    ]),
+                  ),
                 )
               ],
             ));
@@ -327,7 +334,10 @@ class _DetailsCultivationState extends State<DetailsCultivation> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return EditCultivation( UserID: widget.UserID, CultivationID: widget.CultivationID,);
+            return EditCultivation(
+              UserID: widget.UserID,
+              CultivationID: widget.CultivationID,
+            );
           })).then((value) => setState(() {}));
         },
         backgroundColor: const Color(0xFF036568),

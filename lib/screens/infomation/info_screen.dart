@@ -4,7 +4,6 @@ import 'package:cannabis_track_and_trace_application/screens/infomation/add/inve
 import 'package:cannabis_track_and_trace_application/screens/infomation/add/locations.dart';
 import 'package:cannabis_track_and_trace_application/screens/infomation/add/pots.dart';
 import 'package:cannabis_track_and_trace_application/screens/infomation/add/strains.dart';
-import 'package:cannabis_track_and_trace_application/screens/test.dart';
 import 'package:cannabis_track_and_trace_application/widget/Circle_Gradient_Icon.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
@@ -41,13 +40,15 @@ class _InfoScreenState extends State<InfoScreen> {
             Scaffold(
           appBar: AppBar(
             backgroundColor: kBackground,
-            title: Text(
-              "Infomation",
-              style: Theme.of(context)
-                  .textTheme
-                  .bodySmall!
-                  .copyWith(fontWeight: FontWeight.bold),
-            ),
+            title: const Text("Infomations"),
+
+            // title: Text(
+            //   "Infomation",
+            //   style: Theme.of(context)
+            //       .textTheme
+            //       .bodySmall!
+            //       .copyWith(fontWeight: FontWeight.bold),
+            // ),
             leading: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 10),
             ),
@@ -151,12 +152,12 @@ Stack _buildBody() {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 10),
-              buildHead(),
-              const SizedBox(height: 15),
-              buildNews(),
-              const SizedBox(height: 15),
-              buildSearch(),
-              const SizedBox(height: 15),
+              // buildHead(),
+              // const SizedBox(height: 15),
+              // buildNews(),
+              // const SizedBox(height: 15),
+              // buildSearch(),
+              // const SizedBox(height: 15),
               buildGH1(),
               const SizedBox(height: 15),
               buildGH2(),
@@ -170,124 +171,122 @@ Stack _buildBody() {
   );
 }
 
-Widget buildHead() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Text(
-            "Hello,",
-            style: TextStyle(color: Colors.black54, fontSize: 16),
-          ),
-          SizedBox(
-            height: 5,
-          ),
-          Text(
-            "ชื่อคน Login",
-            style: TextStyle(
-                color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
-          )
-        ],
-      ),
-      // CircleAvatar(
-      //   radius: 30.0,
-      //   backgroundImage: AssetImage("assets/images/doctor1.png"),
-      // )
-    ],
-  );
-}
+// Widget buildHead() {
+//   return Row(
+//     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//     children: [
+//       Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: [
+//           Text(
+//             "Hello,",
+//             style: TextStyle(color: Colors.black54, fontSize: 16),
+//           ),
+//           SizedBox(
+//             height: 5,
+//           ),
+//           Text(
+//             "ชื่อคน Login",
+//             style: TextStyle(
+//                 color: Colors.black, fontWeight: FontWeight.bold, fontSize: 20),
+//           )
+//         ],
+//       ),
+//       // CircleAvatar(
+//       //   radius: 30.0,
+//       //   backgroundImage: AssetImage("assets/images/doctor1.png"),
+//       // )
+//     ],
+//   );
+// }
 
-Widget buildNews() {
-  return Container(
-    padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-    decoration: BoxDecoration(
-        color: Color.fromARGB(255, 223, 200, 228),
-        borderRadius: BorderRadius.circular(15.0)),
-    child: Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        // Image.asset(
-        //   "assets/images/surgeon.png",
-        //   width: 90,
-        //   height: 100,
-        // ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "ข้อมูลทั้วไป?",
-              style: TextStyle(
-                  color: Colors.black87,
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold),
-            ),
-            SizedBox(
-              height: 5,
-            ),
-            SizedBox(
-              width: 120,
-              child: Text(
-                "ข้อมูลกัญชา",
-                style: TextStyle(color: Colors.black87, fontSize: 13),
-              ),
-            ),
-            SizedBox(
-              height: 10,
-            ),
-            InkWell(
-              child: Container(
-                width: 150,
-                height: 35,
-                padding: EdgeInsets.all(8.0),
-                decoration: BoxDecoration(
-                    color: Colors.blueAccent,
-                    borderRadius: BorderRadius.circular(12.0)),
-                child: Center(
-                  child: Text(
-                    "Get Started",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w400,
-                        fontSize: 13),
-                  ),
-                ),
-              ),
-            )
-          ],
-        ),
-      ],
-    ),
-  );
-}
+// Widget buildNews() {
+//   return Container(
+//     padding: EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
+//     decoration: BoxDecoration(
+//         color: Color.fromARGB(255, 223, 200, 228),
+//         borderRadius: BorderRadius.circular(15.0)),
+//     child: Row(
+//       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//       children: [
+//         // Image.asset(
+//         //   "assets/images/surgeon.png",
+//         //   width: 90,
+//         //   height: 100,
+//         // ),
+//         Column(
+//           crossAxisAlignment: CrossAxisAlignment.start,
+//           children: [
+//             Text(
+//               "ข้อมูลทั้วไป?",
+//               style: TextStyle(
+//                   color: Colors.black87,
+//                   fontSize: 18,
+//                   fontWeight: FontWeight.bold),
+//             ),
+//             SizedBox(
+//               height: 5,
+//             ),
+//             SizedBox(
+//               width: 120,
+//               child: Text(
+//                 "ข้อมูลกัญชา",
+//                 style: TextStyle(color: Colors.black87, fontSize: 13),
+//               ),
+//             ),
+//             SizedBox(
+//               height: 10,
+//             ),
+//             InkWell(
+//               child: Container(
+//                 width: 150,
+//                 height: 35,
+//                 padding: EdgeInsets.all(8.0),
+//                 decoration: BoxDecoration(
+//                     color: Colors.blueAccent,
+//                     borderRadius: BorderRadius.circular(12.0)),
+//                 child: Center(
+//                   child: Text(
+//                     "Get Started",
+//                     style: TextStyle(
+//                         color: Colors.white,
+//                         fontWeight: FontWeight.w400,
+//                         fontSize: 13),
+//                   ),
+//                 ),
+//               ),
+//             )
+//           ],
+//         ),
+//       ],
+//     ),
+//   );
+// }
 
-Widget buildSearch() {
-  return Container(
-    padding: EdgeInsets.all(8),
-    height: 50,
-    decoration: BoxDecoration(
-      color: Color.fromARGB(95, 179, 173, 173),
-      borderRadius: BorderRadius.circular(15.0),
-    ),
-    child: TextFormField(
-      style: TextStyle(color: Colors.black),
-      decoration: InputDecoration(
-        border: InputBorder.none,
-        contentPadding: EdgeInsets.only(left: 15),
-        hintText: 'How can we help you?',
-        hintStyle: TextStyle(color: Colors.black54, fontSize: 18),
-        prefixIcon: Icon(
-          Icons.search,
-          size: 30,
-          color: Colors.black54,
-        ),
-      ),
-    ),
-  );
-
-  //
-}
+// Widget buildSearch() {
+//   return Container(
+//     padding: EdgeInsets.all(8),
+//     height: 50,
+//     decoration: BoxDecoration(
+//       color: Color.fromARGB(95, 179, 173, 173),
+//       borderRadius: BorderRadius.circular(15.0),
+//     ),
+//     child: TextFormField(
+//       style: TextStyle(color: Colors.black),
+//       decoration: InputDecoration(
+//         border: InputBorder.none,
+//         contentPadding: EdgeInsets.only(left: 15),
+//         hintText: 'How can we help you?',
+//         hintStyle: TextStyle(color: Colors.black54, fontSize: 18),
+//         prefixIcon: Icon(
+//           Icons.search,
+//           size: 30,
+//           color: Colors.black54,
+//         ),
+//       ),
+//     ),
+//   );
+// }
 
 Widget buildGH1() {
   return Container(
