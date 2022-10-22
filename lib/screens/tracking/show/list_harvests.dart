@@ -39,13 +39,13 @@ class _ListHarvesteState extends State<ListHarveste> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue,
+        backgroundColor: kBackground,
       ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.blue,
+              kBackground,
               Colors.white60,
             ],
             begin: Alignment.topLeft,
@@ -158,7 +158,7 @@ class _ListHarvesteState extends State<ListHarveste> {
             return AddHarvests(UserID: widget.UserID);
           })).then((value) => setState(() {}));
         },
-        backgroundColor: Color.fromARGB(255, 2, 68, 182),
+        backgroundColor: kBackground,
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );

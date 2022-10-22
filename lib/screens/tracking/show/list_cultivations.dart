@@ -39,13 +39,13 @@ class _ListCultivationsState extends State<ListCultivations> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.orange,
+        backgroundColor: kBackground,
       ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.orange,
+              kBackground,
               Colors.white60,
             ],
             begin: Alignment.topLeft,
@@ -158,7 +158,7 @@ class _ListCultivationsState extends State<ListCultivations> {
             return AddCultivations(UserID: widget.UserID);
           })).then((value) => setState(() {}));
         },
-        backgroundColor: Colors.deepOrange,
+        backgroundColor: kBackground,
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );

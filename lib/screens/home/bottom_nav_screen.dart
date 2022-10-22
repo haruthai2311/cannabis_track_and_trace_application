@@ -108,7 +108,6 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
       if (!mounted) {
         return;
       }
-
     } on PlatformException {
       return "Failed to get plateform version";
     }
