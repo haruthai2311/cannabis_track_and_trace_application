@@ -113,7 +113,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
       width: screenWidth * 0.8,
       child: TextField(
         decoration: InputDecoration(
-          labelText: 'นามสกุลภาษาไทย',
+          labelText: 'ชื่อภาษาอังกฤษ',
           labelStyle: TextStyle(color: Color.fromARGB(255, 139, 139, 139)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
@@ -131,7 +131,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
       width: screenWidth * 0.8,
       child: TextField(
         decoration: InputDecoration(
-          labelText: 'นามสกุลภาษาไทย',
+          labelText: 'นามสกุลภาษาอังกฤษ',
           labelStyle: TextStyle(color: Color.fromARGB(255, 139, 139, 139)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
