@@ -46,6 +46,7 @@ class _DetailsCultivationState extends State<DetailsCultivation> {
         title: const Text("Cultivation"),
       ),
       body: FutureBuilder(
+      
         future: getCultivation(),
         builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
           if (snapshot.connectionState == ConnectionState.done) {
