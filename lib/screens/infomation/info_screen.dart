@@ -55,78 +55,80 @@ class _InfoScreenState extends State<InfoScreen> {
           ),
           extendBody: true,
           body: _buildBody(),
-          floatingActionButtonLocation:
-              FloatingActionButtonLocation.miniEndFloat,
-          floatingActionButton: SpeedDial(
-            //animatedIcon: AnimatedIcons.add_event,
-            icon: Icons.add,
-            backgroundColor: Colors.pinkAccent,
-            overlayColor: Colors.black,
-            overlayOpacity: 0.4,
-            spacing: 15,
-            spaceBetweenChildren: 5,
-            //closeManually: true,
-            onOpen: () => showToast('Open..'),
-            //onClose: () => showToast('Close'),
-            openCloseDial: isDialOpen,
-            curve: Curves.bounceIn,
-            children: [
-              SpeedDialChild(
-                  backgroundColor: Colors.yellow,
-                  child: Icon(Icons.compost),
-                  label: "สายพันธุ์ ",
-                  labelStyle: TextStyle(fontSize: 18),
-                  onTap: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Strains(UserID: widget.UserID);
-                      }))
+          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+          floatingActionButton: Padding(
+            padding: const EdgeInsets.only(bottom: 40),
+            child: SpeedDial(
+              //animatedIcon: AnimatedIcons.add_event,
+              icon: Icons.add,
+              backgroundColor: Colors.pinkAccent,
+              overlayColor: Colors.black,
+              overlayOpacity: 0.4,
+              spacing: 15,
+              spaceBetweenChildren: 5,
+              //closeManually: true,
+              onOpen: () => showToast('Open..'),
+              //onClose: () => showToast('Close'),
+              openCloseDial: isDialOpen,
+              curve: Curves.bounceIn,
+              children: [
+                SpeedDialChild(
+                    backgroundColor: Colors.yellow,
+                    child: Icon(Icons.compost),
+                    label: "สายพันธุ์ ",
+                    labelStyle: TextStyle(fontSize: 18),
+                    onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return Strains(UserID: widget.UserID);
+                        }))
 
-                  //onTap: () => showToast('เลือกเพิ่มข้อมูลสายพันธุ์...'),
-                  ),
-              SpeedDialChild(
-                  child: Icon(Icons.edit_location_alt),
-                  backgroundColor: Colors.yellow,
-                  label: "สถานที่ปลูก",
-                  labelStyle: TextStyle(fontSize: 18),
-                  onTap: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Locations(UserID: widget.UserID);
-                      }))
-                  //onTap: () => showToast('เลือกเพิ่มข้อมูลสถานที่ปลูก...'),
-                  ),
-              SpeedDialChild(
-                  child: Icon(Icons.format_color_fill_rounded),
-                  backgroundColor: Colors.yellow,
-                  label: "กระถาง",
-                  labelStyle: TextStyle(fontSize: 18),
-                  onTap: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Pots(UserID: widget.UserID);
-                      }))
-                  //onTap: () => showToast('เลือกเพิ่มข้อมูลกระถาง...'),
-                  ),
-              SpeedDialChild(
-                  child: Icon(Icons.fire_hydrant_alt_sharp),
-                  backgroundColor: Colors.yellow,
-                  label: "วัสดุ",
-                  labelStyle: TextStyle(fontSize: 18),
-                  onTap: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return Inventorys(UserID: widget.UserID);
-                      }))
-                  //onTap: () => showToast('เลือกเพิ่มข้อมูลวัสดุ...'),
-                  ),
-              SpeedDialChild(
-                  child: Icon(FontAwesomeIcons.accusoft),
-                  backgroundColor: Colors.yellow,
-                  label: "การใช้สารเคมี",
-                  onTap: () => Navigator.push(context,
-                          MaterialPageRoute(builder: (context) {
-                        return ChemicalUses(UserID: widget.UserID);
-                      }))
-                  //onTap: () => showToast('เลือกเพิ่มข้อมูลการใช้สารเคมี...'),
-                  ),
-            ],
+                    //onTap: () => showToast('เลือกเพิ่มข้อมูลสายพันธุ์...'),
+                    ),
+                SpeedDialChild(
+                    child: Icon(Icons.edit_location_alt),
+                    backgroundColor: Colors.yellow,
+                    label: "สถานที่ปลูก",
+                    labelStyle: TextStyle(fontSize: 18),
+                    onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return Locations(UserID: widget.UserID);
+                        }))
+                    //onTap: () => showToast('เลือกเพิ่มข้อมูลสถานที่ปลูก...'),
+                    ),
+                SpeedDialChild(
+                    child: Icon(Icons.format_color_fill_rounded),
+                    backgroundColor: Colors.yellow,
+                    label: "กระถาง",
+                    labelStyle: TextStyle(fontSize: 18),
+                    onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return Pots(UserID: widget.UserID);
+                        }))
+                    //onTap: () => showToast('เลือกเพิ่มข้อมูลกระถาง...'),
+                    ),
+                SpeedDialChild(
+                    child: Icon(Icons.fire_hydrant_alt_sharp),
+                    backgroundColor: Colors.yellow,
+                    label: "วัสดุ",
+                    labelStyle: TextStyle(fontSize: 18),
+                    onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return Inventorys(UserID: widget.UserID);
+                        }))
+                    //onTap: () => showToast('เลือกเพิ่มข้อมูลวัสดุ...'),
+                    ),
+                SpeedDialChild(
+                    child: Icon(FontAwesomeIcons.accusoft),
+                    backgroundColor: Colors.yellow,
+                    label: "การใช้สารเคมี",
+                    onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return ChemicalUses(UserID: widget.UserID);
+                        }))
+                    //onTap: () => showToast('เลือกเพิ่มข้อมูลการใช้สารเคมี...'),
+                    ),
+              ],
+            ),
           ),
         ),
         //extendBodyBehindAppBar: true,

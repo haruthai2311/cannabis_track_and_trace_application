@@ -30,7 +30,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kBackground,
-        // title: const Text("Tracking"),
+        title: const Text("Tracking"),
         // leading: Padding(
         //   padding: const EdgeInsets.symmetric(horizontal: 10),
         //   child: Container(
@@ -67,8 +67,8 @@ class _TrackingScreenState extends State<TrackingScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const SizedBox(height: 10),
-                _taskHeader(),
-                const SizedBox(height: 15),
+                // _taskHeader(),
+                // const SizedBox(height: 15),
                 buildGrid(),
                 const SizedBox(height: 15),
                 _onGoingHeader(),
@@ -96,32 +96,32 @@ class _TrackingScreenState extends State<TrackingScreen> {
     );
   }
 
-  Row _taskHeader() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        SelectableText(
-          "Tracking",
-          style: TextStyle(
-            color: Colors.blueGrey[900],
-            fontWeight: FontWeight.w700,
-            fontSize: 24,
-          ),
-          toolbarOptions: const ToolbarOptions(
-            copy: true,
-            selectAll: true,
-          ),
-        ),
-        // IconButton(
-        //   onPressed: () {},
-        //   icon: Icon(
-        //     Icons.add_circle_outline,
-        //     color: Colors.blue[400],
-        //   ),
-        // ),
-      ],
-    );
-  }
+  // Row _taskHeader() {
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  //     children: [
+  //       SelectableText(
+  //         "Tracking",
+  //         style: TextStyle(
+  //           color: Colors.blueGrey[900],
+  //           fontWeight: FontWeight.w700,
+  //           fontSize: 24,
+  //         ),
+  //         toolbarOptions: const ToolbarOptions(
+  //           copy: true,
+  //           selectAll: true,
+  //         ),
+  //       ),
+  //       // IconButton(
+  //       //   onPressed: () {},
+  //       //   icon: Icon(
+  //       //     Icons.add_circle_outline,
+  //       //     color: Colors.blue[400],
+  //       //   ),
+  //       // ),
+  //     ],
+  //   );
+  // }
 
   Widget buildGrid() {
     return Row(children: [
@@ -159,9 +159,9 @@ class _TrackingScreenState extends State<TrackingScreen> {
                         size: 120,
                       ),
                       Text(
-                        'บันทึกผลตรวจประจำวัน',
+                        'Plant Tracking',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -192,20 +192,22 @@ class _TrackingScreenState extends State<TrackingScreen> {
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   width: 175,
-                  height: 170,
+                  height: 220,
+                  // width: 175,
+                  // height: 170,
                   alignment: Alignment.center,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
                       Icon(
                         Icons.article,
-                        size: 60,
+                        size: 110,
                       ),
                       SizedBox(height: 15),
                       Text(
-                        'ข้อมูลการเก็บเกี่ยว',
+                        'Harvests',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -241,20 +243,22 @@ class _TrackingScreenState extends State<TrackingScreen> {
                 child: Container(
                   padding: const EdgeInsets.all(20),
                   width: 175,
-                  height: 170,
+                  height: 220,
+                  // width: 175,
+                  // height: 170,
                   alignment: Alignment.center,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: const [
                       Icon(
                         Icons.mobile_friendly,
-                        size: 60,
+                        size: 110,
                       ),
                       SizedBox(height: 15),
                       Text(
-                        'ข้อมูลการปลูก',
+                        'Cultivation',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -298,9 +302,9 @@ class _TrackingScreenState extends State<TrackingScreen> {
                         size: 120,
                       ),
                       Text(
-                        'ข้อมูลการส่งมอบ',
+                        'Transfer',
                         style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
+                            fontSize: 20, fontWeight: FontWeight.bold),
                       ),
                     ],
                   ),
@@ -362,16 +366,16 @@ class _TrackingScreenState extends State<TrackingScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "ใส่อะไรดี",
-                      style: TextStyle(
-                        color: Colors.blueGrey[700],
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
+                    // Text(
+                    //   "ใส่อะไรดี",
+                    //   style: TextStyle(
+                    //     color: Colors.blueGrey[700],
+                    //     fontWeight: FontWeight.bold,
+                    //     fontSize: 18,
+                    //   ),
+                    //   overflow: TextOverflow.ellipsis,
+                    //   maxLines: 2,
+                    // ),
                     const SizedBox(
                       height: 10,
                     ),
@@ -433,16 +437,16 @@ class _TrackingScreenState extends State<TrackingScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "ใส่อะไรดี",
-                      style: TextStyle(
-                        color: Colors.blueGrey[700],
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 2,
-                    ),
+                    // Text(
+                    //   "ใส่อะไรดี",
+                    //   style: TextStyle(
+                    //     color: Colors.blueGrey[700],
+                    //     fontWeight: FontWeight.bold,
+                    //     fontSize: 18,
+                    //   ),
+                    //   overflow: TextOverflow.ellipsis,
+                    //   maxLines: 2,
+                    // ),
                     const SizedBox(
                       height: 10,
                     ),

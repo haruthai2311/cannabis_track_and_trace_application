@@ -38,13 +38,13 @@ class _ListTransfersState extends State<ListTransfers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: kBackground,
       ),
       body: Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
             colors: [
-              Colors.green,
+              kBackground,
               Colors.white60,
             ],
             begin: Alignment.topLeft,
@@ -159,7 +159,7 @@ class _ListTransfersState extends State<ListTransfers> {
             return AddTransfers(UserID: widget.UserID);
           })).then((value) => setState(() {}));
         },
-        backgroundColor: Color.fromARGB(255, 2, 133, 6),
+        backgroundColor: kBackground,
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );

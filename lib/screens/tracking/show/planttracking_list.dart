@@ -41,13 +41,13 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          backgroundColor: Colors.pink,
+          backgroundColor: kBackground,
         ),
         body: Container(
           decoration: BoxDecoration(
             gradient: LinearGradient(
               colors: [
-                Colors.pink,
+                kBackground,
                 Colors.white60,
               ],
               begin: Alignment.topLeft,
