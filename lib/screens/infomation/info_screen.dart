@@ -4,8 +4,7 @@ import 'package:cannabis_track_and_trace_application/screens/infomation/add/inve
 import 'package:cannabis_track_and_trace_application/screens/infomation/add/locations.dart';
 import 'package:cannabis_track_and_trace_application/screens/infomation/add/pots.dart';
 import 'package:cannabis_track_and_trace_application/screens/infomation/add/strains.dart';
-import 'package:cannabis_track_and_trace_application/widget/Circle_Gradient_Icon.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:cannabis_track_and_trace_application/screens/infomation/details_gh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -54,7 +53,121 @@ class _InfoScreenState extends State<InfoScreen> {
             ),
           ),
           extendBody: true,
-          body: _buildBody(),
+          body: Stack(
+            children: [
+              SingleChildScrollView(
+                child: Container(
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(height: 10),
+                      // buildHead(),
+                      // const SizedBox(height: 15),
+                      // buildNews(),
+                      // const SizedBox(height: 15),
+                      // buildSearch(),
+                      // const SizedBox(height: 15),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(context,
+                              MaterialPageRoute(builder: (context) {
+                            return DetailsGreenHouses();
+                          })).then((value) => setState(() {}));
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                              color: Color.fromARGB(95, 179, 173, 173),
+                              borderRadius: BorderRadius.circular(15.0)),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 14.0, vertical: 14.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Row(
+                                children: [
+                                  Icon(
+                                    Icons.circle_rounded,
+                                    color: Colors.lightGreen,
+                                  ),
+                                  SizedBox(width: 5),
+                                  Text(
+                                    "โรงเรือน G1(EVAP)",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black54),
+                                  ),
+                                ],
+                              ),
+                              const Divider(
+                                height: 20,
+                                thickness: 5,
+                                indent: 20,
+                                endIndent: 0,
+                                color: Colors.lightGreen,
+                              ),
+                              SizedBox(height: 10),
+                              Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(15.0)),
+                                padding: EdgeInsets.all(15),
+                                child: Column(
+                                  children: [
+                                    Text("สายพันธุ์หางกระรอก",
+                                        style: TextStyle(
+                                            fontSize: 22,
+                                            fontWeight: FontWeight.bold)),
+                                    SizedBox(height: 10),
+                                    Image.asset(
+                                      "images/กระถาง.jpg",
+                                      fit: BoxFit.contain,
+                                    ),
+                                    SizedBox(height: 10),
+                                    Row(
+                                      children: [
+                                        Icon(
+                                          Icons.circle_rounded,
+                                          color: Colors.lightGreen,
+                                          size: 10,
+                                        ),
+                                        SizedBox(width: 5),
+                                        Text(
+                                          "200 กระถาง",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                        SizedBox(width: 10),
+                                        Icon(
+                                          Icons.circle_rounded,
+                                          color: Colors.lightGreen,
+                                          size: 10,
+                                        ),
+                                        SizedBox(width: 5),
+                                        Text(
+                                          "400 ต้น",
+                                          style: TextStyle(fontSize: 16),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 15),
+                      buildGH2(),
+                      const SizedBox(height: 50),
+                      //_onGoingTask()
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           floatingActionButton: Padding(
             padding: const EdgeInsets.only(bottom: 40),
@@ -141,35 +254,6 @@ Future showToast(String message) async {
   Fluttertoast.showToast(
     msg: message,
     fontSize: 18,
-  );
-}
-
-Stack _buildBody() {
-  return Stack(
-    children: [
-      SingleChildScrollView(
-        child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 10),
-              // buildHead(),
-              // const SizedBox(height: 15),
-              // buildNews(),
-              // const SizedBox(height: 15),
-              // buildSearch(),
-              // const SizedBox(height: 15),
-              buildGH1(),
-              const SizedBox(height: 15),
-              buildGH2(),
-              const SizedBox(height: 50),
-              //_onGoingTask()
-            ],
-          ),
-        ),
-      ),
-    ],
   );
 }
 
@@ -289,86 +373,6 @@ Stack _buildBody() {
 //     ),
 //   );
 // }
-
-Widget buildGH1() {
-  return Container(
-    decoration: BoxDecoration(
-        color: Color.fromARGB(95, 179, 173, 173),
-        borderRadius: BorderRadius.circular(15.0)),
-    padding: EdgeInsets.symmetric(horizontal: 14.0, vertical: 14.0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(
-              Icons.circle_rounded,
-              color: Colors.lightGreen,
-            ),
-            SizedBox(width: 5),
-            Text(
-              "โรงเรือน G1(EVAP)",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54),
-            ),
-          ],
-        ),
-        const Divider(
-          height: 20,
-          thickness: 5,
-          indent: 20,
-          endIndent: 0,
-          color: Colors.lightGreen,
-        ),
-        SizedBox(height: 10),
-        Container(
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(15.0)),
-          padding: EdgeInsets.all(15),
-          child: Column(
-            children: [
-              Text("สายพันธุ์หางกระรอก",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-              SizedBox(height: 10),
-              Image.asset(
-                "images/กระถาง.jpg",
-                fit: BoxFit.contain,
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(
-                    Icons.circle_rounded,
-                    color: Colors.lightGreen,
-                    size: 10,
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    "200 กระถาง",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(width: 10),
-                  Icon(
-                    Icons.circle_rounded,
-                    color: Colors.lightGreen,
-                    size: 10,
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    "400 ต้น",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        )
-      ],
-    ),
-  );
-}
 
 Widget buildGH2() {
   return Container(

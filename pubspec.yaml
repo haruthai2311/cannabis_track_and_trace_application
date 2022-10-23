@@ -52,7 +52,11 @@ dependencies:
   percent_indicator: ^4.0.1
   dropdown_search: ^5.0.3
   searchfield: ^0.7.1
+  flutter_launcher_icons: ^0.10.0
   
+flutter_icons:
+  android: true
+  image_path: "images/icon.png"
 
 dev_dependencies:
   flutter_test:
