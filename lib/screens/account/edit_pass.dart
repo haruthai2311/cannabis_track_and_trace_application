@@ -1,19 +1,18 @@
 // ignore_for_file: deprecated_member_use
 
 import 'package:cannabis_track_and_trace_application/screens/home/bottom_nav_screen.dart';
-import 'package:flat_3d_button/flat_3d_button.dart';
 import 'package:flutter/material.dart';
 
-class EditAccountScreen extends StatefulWidget {
+class Editpassscreen extends StatefulWidget {
   final String UserID;
 
-  const EditAccountScreen({Key? key, required this.UserID}) : super(key: key);
+  const Editpassscreen({Key? key, required this.UserID}) : super(key: key);
 
   @override
-  State<EditAccountScreen> createState() => _EditAccountScreenState();
+  State<Editpassscreen> createState() => _EditpassscreenState();
 }
 
-class _EditAccountScreenState extends State<EditAccountScreen> {
+class _EditpassscreenState extends State<Editpassscreen> {
   late double screenWidth, screenHight;
 
   @override
@@ -25,7 +24,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
         appBar: AppBar(
           backgroundColor: Color.fromARGB(255, 50, 78, 63),
           title: Text(
-            'Edit personal infomation',
+            'Edit Password',
             style: TextStyle(
               fontSize: 25,
               fontWeight: FontWeight.bold,
@@ -40,11 +39,9 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
               SizedBox(
                 height: 10,
               ),
-              editemail(),
+              editpasspresent(),
               editnameTH(),
               editsurnameTH(),
-              editnameENG(),
-              editsurnameENG(),
               entersucced(),
               nosucced(),
             ],
@@ -54,13 +51,13 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     );
   }
 
-  Container editemail() {
+  Container editpasspresent() {
     return Container(
       margin: EdgeInsets.only(top: 5),
       width: screenWidth * 0.8,
       child: TextField(
         decoration: InputDecoration(
-          labelText: 'Email',
+          labelText: 'รหัสผ่านปัจจุบัน',
           labelStyle: TextStyle(color: Color.fromARGB(255, 139, 139, 139)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
@@ -78,7 +75,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
       width: screenWidth * 0.8,
       child: TextField(
         decoration: InputDecoration(
-          labelText: 'ชื่อภาษาไทย',
+          labelText: 'กรอกรหัสผ่านใหม่',
           labelStyle: TextStyle(color: Color.fromARGB(255, 139, 139, 139)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
@@ -96,43 +93,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
       width: screenWidth * 0.8,
       child: TextField(
         decoration: InputDecoration(
-          labelText: 'นามสกุลภาษาไทย',
-          labelStyle: TextStyle(color: Color.fromARGB(255, 139, 139, 139)),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-              borderSide: BorderSide(color: Color.fromARGB(255, 2, 98, 2))),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color.fromARGB(255, 2, 98, 2))),
-        ),
-      ),
-    );
-  }
-
-  Container editnameENG() {
-    return Container(
-      margin: EdgeInsets.only(top: 10),
-      width: screenWidth * 0.8,
-      child: TextField(
-        decoration: InputDecoration(
-          labelText: 'ชื่อภาษาอังกฤษ',
-          labelStyle: TextStyle(color: Color.fromARGB(255, 139, 139, 139)),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-              borderSide: BorderSide(color: Color.fromARGB(255, 2, 98, 2))),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color.fromARGB(255, 2, 98, 2))),
-        ),
-      ),
-    );
-  }
-
-  Container editsurnameENG() {
-    return Container(
-      margin: EdgeInsets.only(top: 10),
-      width: screenWidth * 0.8,
-      child: TextField(
-        decoration: InputDecoration(
-          labelText: 'นามสกุลภาษาอังกฤษ',
+          labelText: 'กรอกรหัสผ่านใหม่อีกครั้ง',
           labelStyle: TextStyle(color: Color.fromARGB(255, 139, 139, 139)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
@@ -148,16 +109,17 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     return Container(
         margin: EdgeInsets.only(top: 5),
         width: screenWidth * 0.8,
-        child: Flat3dButton(
+        child: FlatButton(
           child: Text(
-            'ยืนยัน',
-            style: TextStyle(color: Colors.white, fontSize: 20.0),
+            'บันทึกข้อมูล',
+            style: TextStyle(fontSize: 20.0),
           ),
-          color: Colors.green,
+          color: Color.fromARGB(255, 14, 103, 9),
+          textColor: Colors.white,
           onPressed: () {},
-          // shape: RoundedRectangleBorder(
-          //   borderRadius: BorderRadius.circular(30),
-          // ),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
         ));
   }
 
@@ -165,16 +127,17 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     return Container(
       margin: EdgeInsets.only(top: 2.5),
       width: screenWidth * 0.8,
-      child: Flat3dButton(
+      child: FlatButton(
         child: Text(
           'กลับ',
-          style: TextStyle(color: Colors.white, fontSize: 20.0),
+          style: TextStyle(fontSize: 20.0),
         ),
-        color: Colors.green,
+        color: Color.fromARGB(255, 14, 103, 9),
+        textColor: Colors.white,
         onPressed: () {},
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.circular(30),
-        // ),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
       ),
     );
   }

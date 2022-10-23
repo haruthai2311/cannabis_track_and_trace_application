@@ -1,3 +1,5 @@
+import 'package:cannabis_track_and_trace_application/screens/account/edit_pass.dart';
+import 'package:cannabis_track_and_trace_application/screens/account/edit_personal.dart';
 import 'package:cannabis_track_and_trace_application/screens/home/bottom_nav_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -89,7 +91,17 @@ class _AccountScreenState extends State<AccountScreen> {
                           Row(
                             children: [
                               ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  //connect page
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => EditAccountScreen(
+                                          UserID: widget.UserID,
+                                        ),
+                                      ));
+                                  //connect page
+                                },
                                 child: Icon(Icons.person,
                                     color: Color.fromARGB(255, 2, 73, 34)),
                                 style: ElevatedButton.styleFrom(
@@ -110,6 +122,49 @@ class _AccountScreenState extends State<AccountScreen> {
                                   ),
                                   subtitle: Text(
                                     'Edit your personnal information',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color:
+                                            Color.fromARGB(255, 158, 158, 158)),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  //connect page
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => Editpassscreen(
+                                          UserID: widget.UserID,
+                                        ),
+                                      ));
+                                  //connect page
+                                },
+                                child: Icon(Icons.vpn_key,
+                                    color: Color.fromARGB(255, 2, 73, 34)),
+                                style: ElevatedButton.styleFrom(
+                                  shape: CircleBorder(),
+                                  padding: EdgeInsets.all(15),
+                                  primary: Color.fromARGB(255, 156, 255, 176),
+                                  onPrimary: Colors.black,
+                                ),
+                              ),
+                              Expanded(
+                                child: ListTile(
+                                  title: Text(
+                                    'User password',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 0, 0, 0)),
+                                  ),
+                                  subtitle: Text(
+                                    'Edit your password',
                                     style: TextStyle(
                                         fontSize: 15,
                                         color:
