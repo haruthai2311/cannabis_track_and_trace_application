@@ -52,6 +52,7 @@ dependencies:
   percent_indicator: ^4.0.1
   dropdown_search: ^5.0.3
   searchfield: ^0.7.1
+  flat_3d_button: ^1.0.3
   
 
 dev_dependencies:

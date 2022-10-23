@@ -148,7 +148,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         const Text(
                           "Register",
                           style: TextStyle(
-                              fontSize: 26,
+                              fontSize: 30,
                               fontWeight: FontWeight.w600,
                               color: Color(0xFF036568)),
                           textAlign: TextAlign.center,
@@ -574,10 +574,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
                                     textStyle: TextStyle(fontSize: 20),
-                                    primary: Color(0xFF036568),
+                                    //primary: Color(0xFF036568),
+                                    primary: Color.fromARGB(255, 4, 126, 8),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
-                                            BorderRadius.circular(15)),
+                                            BorderRadius.circular(30)),
                                     padding: const EdgeInsets.all(20)),
                                 onPressed: () {
                                   if (_formKey.currentState!.validate()) {
@@ -586,7 +587,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 },
                                 child: Text("Register"))),
                         const SizedBox(
-                          height: 30,
+                          height: 10,
                         ),
                         GestureDetector(
                           onTap: () {
@@ -603,19 +604,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               Text(
                                 "If you already have an account, just ",
                                 style: TextStyle(
-                                    fontSize: 16, color: Color(0xDDAA3333)),
+                                    fontSize: 16,
+                                    color: Color.fromARGB(221, 233, 5, 5)),
                               ),
                               SizedBox(width: 10),
                               Hero(
                                 tag: '1',
                                 child: Text(
-                                  'login',
+                                  'Login',
                                   style: TextStyle(
                                       fontSize: 20,
-                                      fontWeight: FontWeight.w500,
-                                      color: Color(0xFF036568)),
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 139, 11, 2)),
                                 ),
-                              )
+                              ),
                             ],
                           ),
                         ),

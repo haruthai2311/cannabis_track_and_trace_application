@@ -181,7 +181,7 @@ class _PlantTrackingState extends State<PlantTracking> {
   String dropdownStatus = 'N/A';
   var itemStatus = ['N/A', 'ปกติ', 'ไม่สมบูรณ์ ', 'ตัดทิ้ง'];
 
-  String dropdownGH = 'N/A';
+  String dropdownGH = 'N/A';  
   //var itemGH = ['N/A', 'โรงเรือน 1', 'โรงเรือน 2'];
   String dropdownPotID = 'N/A';
   //var itemPotID = ['N/A', '1', '2', '3'];

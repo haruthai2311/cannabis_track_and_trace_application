@@ -1,3 +1,4 @@
+import 'package:flat_3d_button/flat_3d_button.dart';
 import 'package:flutter/material.dart';
 
 class MyDialog {
@@ -46,7 +47,7 @@ class MyDialog {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              FlatButton(
+              Flat3dButton(
                   onPressed: () => Navigator.pop(context),
                   child: Text(
                     'OK',
@@ -73,7 +74,7 @@ class MyDialog {
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: <Widget>[
-              FlatButton(
+              Flat3dButton(
                   onPressed: () => Navigator.pop(context),
                   child: Text(
                     'OK',

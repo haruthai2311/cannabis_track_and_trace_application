@@ -49,9 +49,9 @@ class _InfoScreenState extends State<InfoScreen> {
             //       .bodySmall!
             //       .copyWith(fontWeight: FontWeight.bold),
             // ),
-            leading: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 10),
-            ),
+            // leading: Padding(
+            //   padding: const EdgeInsets.symmetric(horizontal: 10),
+            // ),
           ),
           extendBody: true,
           body: _buildBody(),
@@ -291,7 +291,109 @@ Stack _buildBody() {
 // }
 
 Widget buildGH1() {
-  return Container(
+  return Center(
+    child: ElevatedButton(
+      onPressed: () {
+      },
+      style: ElevatedButton.styleFrom(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        padding: EdgeInsets.zero,
+      ),
+      child: Ink(
+        padding: EdgeInsets.symmetric(horizontal: 14.0, vertical: 14.0),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [
+              Color.fromARGB(255, 201, 198, 199),
+              Color.fromARGB(255, 236, 234, 235),
+            ],
+          ),
+          borderRadius: BorderRadius.circular(15),
+          // border: Border.all(
+          //   color: Color.fromARGB(255, 149, 160, 149),
+          //   width: 3,
+          // ),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              children: [
+                Icon(
+                  Icons.circle_rounded,
+                  color: Colors.lightGreen,
+                ),
+                SizedBox(width: 5),
+                Text(
+                  "โรงเรือน G1(EVAP)",
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black54),
+                ),
+              ],
+            ),
+            const Divider(
+              height: 20,
+              thickness: 5,
+              indent: 20,
+              endIndent: 0,
+              color: Colors.lightGreen,
+            ),
+            SizedBox(height: 10),
+            Container(
+              decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(15.0)),
+              padding: EdgeInsets.all(15),
+              child: Column(
+                children: [
+                  Text("สายพันธุ์หางกระรอก",
+                      style: TextStyle(
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black)),
+                  SizedBox(height: 10),
+                  Image.asset(
+                    "images/กระถาง.jpg",
+                    fit: BoxFit.contain,
+                  ),
+                  SizedBox(height: 10),
+                  Row(
+                    children: [
+                      Icon(
+                        Icons.circle_rounded,
+                        color: Colors.lightGreen,
+                        size: 10,
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        "200 กระถาง",
+                        style: TextStyle(fontSize: 16, color: Colors.black87),
+                      ),
+                      SizedBox(width: 10),
+                      Icon(
+                        Icons.circle_rounded,
+                        color: Colors.lightGreen,
+                        size: 10,
+                      ),
+                      SizedBox(width: 5),
+                      Text(
+                        "400 ต้น",
+                        style: TextStyle(fontSize: 16, color: Colors.black87),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
+
+  Container(
     decoration: BoxDecoration(
         color: Color.fromARGB(95, 179, 173, 173),
         borderRadius: BorderRadius.circular(15.0)),

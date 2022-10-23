@@ -100,7 +100,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
-              image: AssetImage("images/bg_login.png"),
+              image: AssetImage("images/bg_login.jpg"),
               fit: BoxFit.cover,
             ),
           ),
@@ -253,7 +253,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       primary: Color(0xFF036568),
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
-                                              BorderRadius.circular(15)),
+                                              BorderRadius.circular(30)),
                                       padding: const EdgeInsets.all(20)),
                                   onPressed: () {
                                     // if (_formKey.currentState!.validate()) {
