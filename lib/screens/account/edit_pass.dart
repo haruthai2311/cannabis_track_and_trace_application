@@ -1,5 +1,5 @@
 // ignore_for_file: deprecated_member_use
-
+import 'package:flat_3d_button/flat_3d_button.dart';
 import 'package:cannabis_track_and_trace_application/screens/home/bottom_nav_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -109,17 +109,16 @@ class _EditpassscreenState extends State<Editpassscreen> {
     return Container(
         margin: EdgeInsets.only(top: 5),
         width: screenWidth * 0.8,
-        child: FlatButton(
+        child: Flat3dButton(
           child: Text(
             'บันทึกข้อมูล',
             style: TextStyle(fontSize: 20.0),
           ),
-          color: Color.fromARGB(255, 14, 103, 9),
-          textColor: Colors.white,
+          color: Colors.green,
           onPressed: () {},
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
+          // shape: RoundedRectangleBorder(
+          //   borderRadius: BorderRadius.circular(30),
+          // ),
         ));
   }
 
@@ -127,17 +126,16 @@ class _EditpassscreenState extends State<Editpassscreen> {
     return Container(
       margin: EdgeInsets.only(top: 2.5),
       width: screenWidth * 0.8,
-      child: FlatButton(
+      child: Flat3dButton(
         child: Text(
           'กลับ',
-          style: TextStyle(fontSize: 20.0),
+          style: TextStyle(fontSize: 20.0, color: Colors.white),
         ),
-        color: Color.fromARGB(255, 14, 103, 9),
-        textColor: Colors.white,
+        color: Colors.green,
         onPressed: () {},
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(30),
-        ),
+        // shape: RoundedRectangleBorder(
+        //   borderRadius: BorderRadius.circular(30),
+        // ),
       ),
     );
   }
