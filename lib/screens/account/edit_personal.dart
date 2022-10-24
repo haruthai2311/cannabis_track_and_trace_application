@@ -23,16 +23,18 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 50, 78, 63),
-          title: Text(
-            'Edit personal infomation',
-            style: TextStyle(
-              fontSize: 25,
-              fontWeight: FontWeight.bold,
-              color: Color.fromARGB(255, 255, 255, 255),
-            ),
-          ),
-        ),
+            backgroundColor: Color.fromARGB(255, 50, 78, 63),
+            title: Text('Edit your personal infprmation',
+                style: TextStyle(
+                  fontSize: 20,
+                  color: Color.fromARGB(255, 255, 255, 255),
+                )),
+            actions: [
+              IconButton(
+                  icon: const Icon(Icons.upload),
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  onPressed: () {}),
+            ]),
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -45,7 +47,6 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
               editsurnameTH(),
               editnameENG(),
               editsurnameENG(),
-              entersucced(),
               nosucced(),
             ],
           ),
@@ -144,26 +145,9 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     );
   }
 
-  Container entersucced() {
-    return Container(
-        margin: EdgeInsets.only(top: 5),
-        width: screenWidth * 0.8,
-        child: Flat3dButton(
-          child: Text(
-            'ยืนยัน',
-            style: TextStyle(color: Colors.white, fontSize: 20.0),
-          ),
-          color: Colors.green,
-          onPressed: () {},
-          // shape: RoundedRectangleBorder(
-          //   borderRadius: BorderRadius.circular(30),
-          // ),
-        ));
-  }
-
   Container nosucced() {
     return Container(
-      margin: EdgeInsets.only(top: 2.5),
+      margin: EdgeInsets.only(top: 10),
       width: screenWidth * 0.8,
       child: Flat3dButton(
         child: Text(
