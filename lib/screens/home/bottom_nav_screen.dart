@@ -1,12 +1,12 @@
 import 'package:cannabis_track_and_trace_application/screens/account/account_screen.dart';
 import 'package:cannabis_track_and_trace_application/screens/home/home_screen.dart';
-import 'package:cannabis_track_and_trace_application/screens/infomation/info_screen.dart';
+import 'package:cannabis_track_and_trace_application/screens/information/info_screen.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/tracking_screen.dart';
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import '../infomation/info_screen.dart';
+import '../information/info_screen.dart';
 import '../tracking/show/planttracking_list.dart';
 
 class BottomNavScreen extends StatefulWidget {

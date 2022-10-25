@@ -1,10 +1,10 @@
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
-import 'package:cannabis_track_and_trace_application/screens/infomation/add/chemical_uses.dart';
-import 'package:cannabis_track_and_trace_application/screens/infomation/add/inventorys.dart';
-import 'package:cannabis_track_and_trace_application/screens/infomation/add/locations.dart';
-import 'package:cannabis_track_and_trace_application/screens/infomation/add/pots.dart';
-import 'package:cannabis_track_and_trace_application/screens/infomation/add/strains.dart';
-import 'package:cannabis_track_and_trace_application/screens/infomation/details_gh.dart';
+import 'package:cannabis_track_and_trace_application/screens/information/add/chemical_uses.dart';
+import 'package:cannabis_track_and_trace_application/screens/information/add/inventorys.dart';
+import 'package:cannabis_track_and_trace_application/screens/information/add/locations.dart';
+import 'package:cannabis_track_and_trace_application/screens/information/add/pots.dart';
+import 'package:cannabis_track_and_trace_application/screens/information/add/strains.dart';
+import 'package:cannabis_track_and_trace_application/screens/information/details_gh.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:fluttertoast/fluttertoast.dart';

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
-import 'package:cannabis_track_and_trace_application/screens/infomation/info_screen.dart';
+import 'package:cannabis_track_and_trace_application/screens/information/info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../api/hostapi.dart';

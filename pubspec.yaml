@@ -54,6 +54,7 @@ dependencies:
   searchfield: ^0.7.1
   flat_3d_button: ^1.0.3
   flutter_launcher_icons: ^0.10.0
+  smooth_page_indicator: ^1.0.0+2
   
 flutter_icons:
   android: true
