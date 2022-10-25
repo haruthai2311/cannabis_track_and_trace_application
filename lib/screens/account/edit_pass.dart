@@ -1,4 +1,5 @@
 // ignore_for_file: deprecated_member_use
+import 'package:cannabis_track_and_trace_application/screens/account/account_screen.dart';
 import 'package:flat_3d_button/flat_3d_button.dart';
 import 'package:cannabis_track_and_trace_application/screens/home/bottom_nav_screen.dart';
 import 'package:flutter/material.dart';
@@ -22,7 +23,7 @@ class _EditpassscreenState extends State<Editpassscreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 50, 78, 63),
+            backgroundColor: Color.fromARGB(255, 8, 141, 143),
             title: Text('Edit your password',
                 style: TextStyle(
                   fontSize: 20,
@@ -31,7 +32,7 @@ class _EditpassscreenState extends State<Editpassscreen> {
             actions: [
               IconButton(
                   icon: const Icon(Icons.upload),
-                  color: Color.fromARGB(255, 255, 255, 255),
+                  color: Color.fromARGB(255, 119, 119, 119),
                   onPressed: () {}),
             ]),
         body: Center(
@@ -98,9 +99,9 @@ class _EditpassscreenState extends State<Editpassscreen> {
           labelStyle: TextStyle(color: Color.fromARGB(255, 139, 139, 139)),
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
-              borderSide: BorderSide(color: Color.fromARGB(255, 2, 98, 2))),
+              borderSide: BorderSide(color: Color.fromARGB(255, 10, 91, 97))),
           focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color.fromARGB(255, 2, 98, 2))),
+              borderSide: BorderSide(color: Color.fromARGB(255, 10, 91, 97))),
         ),
       ),
     );
@@ -116,7 +117,17 @@ class _EditpassscreenState extends State<Editpassscreen> {
           style: TextStyle(fontSize: 20.0, color: Colors.white),
         ),
         color: Colors.green,
-        onPressed: () {},
+        onPressed: () {
+          //connect page
+          Navigator.pop(
+              context,
+              MaterialPageRoute(
+                builder: (context) => AccountScreen(
+                  UserID: widget.UserID,
+                ),
+              ));
+          //connect page
+        },
         // shape: RoundedRectangleBorder(
         //   borderRadius: BorderRadius.circular(30),
         // ),

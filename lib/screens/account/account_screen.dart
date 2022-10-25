@@ -18,7 +18,7 @@ class _AccountScreenState extends State<AccountScreen> {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 50, 78, 63),
+          backgroundColor: Color.fromARGB(255, 8, 141, 143),
           title: Text('Profile',
               style: TextStyle(
                 fontSize: 20,
