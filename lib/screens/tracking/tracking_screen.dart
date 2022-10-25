@@ -1,13 +1,8 @@
-import 'package:cannabis_track_and_trace_application/config/color.dart';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
-import 'package:cannabis_track_and_trace_application/screens/tracking/add/cultivations.dart';
-import 'package:cannabis_track_and_trace_application/screens/tracking/add/harvests.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/add/plant_tracking.dart';
-import 'package:cannabis_track_and_trace_application/screens/tracking/add/transfers.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/show/list_cultivations.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/show/list_harvests.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/show/list_transfers.dart';
-import 'package:cannabis_track_and_trace_application/widget/Circle_Gradient_Icon.dart';
 import 'package:flutter/material.dart';
 
 class TrackingScreen extends StatefulWidget {
@@ -71,11 +66,11 @@ class _TrackingScreenState extends State<TrackingScreen> {
                 // const SizedBox(height: 15),
                 buildGrid(),
                 const SizedBox(height: 15),
-                _onGoingHeader(),
+                //_onGoingHeader(),
                 const SizedBox(
                   height: 10,
                 ),
-                _onGoingTask()
+                //_onGoingTask()
               ],
             ),
           ),

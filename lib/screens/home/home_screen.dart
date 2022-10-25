@@ -39,11 +39,13 @@ class _HomeScreenState extends State<HomeScreen> {
     return [_listCultivation, _countDisease, _countInsect];
   }
 
+  //DateTime date = new DateTime(now.year, now.month, now.day);
+
   @override
   void initState() {
     super.initState();
     getAllCultivations();
-    //print(widget.UserID);
+    print(DateTime.now().year);
   }
 
   @override
@@ -79,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
         appBar: AppBar(
           backgroundColor: kBackground,
           title: const Text(
-            "Home Screen",
+            "Home",
           ),
         ),
         // extendBody: true,
@@ -646,7 +648,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 padding:
                                                     EdgeInsets.only(right: 15),
                                                 child: Text(
-                                                  '20 กระถาง',
+                                                  countDisease[0].count.toString()+' กระถาง',
                                                   style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black,
@@ -733,7 +735,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 padding:
                                                     EdgeInsets.only(right: 15),
                                                 child: Text(
-                                                  '10 กระถาง',
+                                                  countInsect[0].count.toString()+' กระถาง',
                                                   style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black,
@@ -1193,7 +1195,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 padding:
                                                     EdgeInsets.only(right: 15),
                                                 child: Text(
-                                                  '20 กระถาง',
+                                                  //countDisease[culGH.indexOf(select)].count.toString()+' กระถาง',
+                                                  ' กระถาง',
                                                   style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black,
@@ -1280,7 +1283,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 padding:
                                                     EdgeInsets.only(right: 15),
                                                 child: Text(
-                                                  '50 กระถาง',
+                                                   //countInsect[culGH.indexOf(select)].count.toString()+' กระถาง',
+                                                   ' กระถาง',
                                                   style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black,
