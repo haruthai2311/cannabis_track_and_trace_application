@@ -21,8 +21,7 @@ class _AccountScreenState extends State<AccountScreen> {
           backgroundColor: Color.fromARGB(255, 50, 78, 63),
           title: Text('Profile',
               style: TextStyle(
-                fontSize: 25,
-                fontWeight: FontWeight.bold,
+                fontSize: 20,
                 color: Color.fromARGB(255, 255, 255, 255),
               )),
         ),

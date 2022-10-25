@@ -1,5 +1,3 @@
 {
-    "cSpell.words": [
-        "vsync"
-    ]
+    "cmake.sourceDirectory": "${workspaceFolder}/windows"
 }
