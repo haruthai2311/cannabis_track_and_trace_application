@@ -1,12 +1,17 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
-class GH1_HarvestInfo extends StatefulWidget {
+class GH2_PlantInfo extends StatefulWidget {
+  const GH2_PlantInfo({Key? key}) : super(key: key);
+
   @override
-  State<GH1_HarvestInfo> createState() => _GH1_HarvestInfoState();
+  State<GH2_PlantInfo> createState() => _GH2_PlantInfoState();
 }
 
-class _GH1_HarvestInfoState extends State<GH1_HarvestInfo> {
+class _GH2_PlantInfoState extends State<GH2_PlantInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,9 +32,10 @@ class _GH1_HarvestInfoState extends State<GH1_HarvestInfo> {
   }
 }
 
-const topic = "วันที่เก็บเกี่ยว : \nประเภท : \nน้ำหนัก : \nวันที่ส่งมอบ : ";
-const subheading = "22/03/2021 \nก้าน \n20 กิโลกรัม \n16/07/2021";
-const subheading2 = "18/02/2022 \nก้าน \n18 กิโลกรัม \n22/06/2022";
+const topic =
+    "สายพันธุ์ : \nจำนวนกระถาง : \nวันที่เพาะกล้า : \nวันที่ย้ายปลูก : \nจำนวนต้นทั้งหมด : ";
+const subheading = "หางกระรอก \n200 กระถาง \n14/02/2021 \n25/06/2021 \n300 ต้น";
+const subheading2 = "หางเสือ \n 180 กระถาง \n08/01/2022 \n10/05/2022 \n280 ต้น";
 
 class Card1 extends StatelessWidget {
   @override
@@ -47,7 +53,7 @@ class Card1 extends StatelessWidget {
             )
           ],
           borderRadius: BorderRadius.circular(10),
-          color: Colors.blue,
+          color: Colors.orange,
           border: Border.all(
             color: const Color(0xFFCFD4DB),
             width: 1,
@@ -79,10 +85,10 @@ class Card1 extends StatelessWidget {
                         header: Padding(
                           padding: EdgeInsets.all(10),
                           child: Text(
-                            'เก็บเกี่ยวครั้งที่ 1',
+                            'รอบปลูกที่ 1',
                             style: TextStyle(
                                 fontSize: 22,
-                                color: Colors.blue,
+                                color: Colors.orange,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -134,21 +140,6 @@ class Card1 extends StatelessWidget {
                                 color: Colors.black,
                               ),
                             ),
-                            // Column(
-                            //   crossAxisAlignment: CrossAxisAlignment.start,
-                            //   children: <Widget>[
-                            //     for (var _ in Iterable.generate(1))
-                            //       Text(
-                            //         subheading,
-                            //         softWrap: true,
-                            //         overflow: TextOverflow.fade,
-                            //         style: TextStyle(
-                            //           fontSize: 18,
-                            //           color: Colors.black,
-                            //         ),
-                            //       ),
-                            //   ],
-                            // ),
                           ],
                         ),
                         builder: (_, collapsed, expanded) {
@@ -219,7 +210,7 @@ class Card2 extends StatelessWidget {
             )
           ],
           borderRadius: BorderRadius.circular(10),
-          color: Colors.pink,
+          color: Colors.green,
           border: Border.all(
             color: const Color(0xFFCFD4DB),
             width: 1,
@@ -251,10 +242,10 @@ class Card2 extends StatelessWidget {
                         header: Padding(
                           padding: EdgeInsets.all(10),
                           child: Text(
-                            'เก็บเกี่ยวครั้งที่ 2',
+                            'รอบปลูกที่ 2',
                             style: TextStyle(
                                 fontSize: 22,
-                                color: Colors.pink,
+                                color: Colors.green,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
