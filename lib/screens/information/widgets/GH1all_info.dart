@@ -7,6 +7,21 @@ import 'package:flutter/src/widgets/framework.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
 class GH1_AllInfo extends StatefulWidget {
+  final String countCul;
+  final String countCulold;
+  final String countHar;
+  final String countHarold;
+  final String countTran;
+  final String countTranold;
+  const GH1_AllInfo(
+      {Key? key,
+      required this.countCul,
+      required this.countHar,
+      required this.countTran,
+      required this.countCulold,
+      required this.countHarold,
+      required this.countTranold})
+      : super(key: key);
   @override
   State<GH1_AllInfo> createState() => _GH1_AllInfoState();
 }
@@ -17,9 +32,13 @@ class _GH1_AllInfoState extends State<GH1_AllInfo> {
     return Scaffold(
       body: ListView(
         children: <Widget>[
-          Card1(),
+          Card1(
+            countCul: widget.countCul,
+            countHar: widget.countHar,
+            countTran: widget.countTran,
+          ),
           SizedBox(height: 15),
-          Card2(),
+          Card2(countCulold: widget.countCulold, countHarold: widget.countHarold, countTranold: widget.countTranold,),
         ],
       ),
     );
@@ -27,6 +46,14 @@ class _GH1_AllInfoState extends State<GH1_AllInfo> {
 }
 
 class Card1 extends StatelessWidget {
+  Card1(
+      {required this.countCul,
+      required this.countHar,
+      required this.countTran});
+
+  final String countCul;
+  final String countHar;
+  final String countTran;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -67,7 +94,7 @@ class Card1 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'ปี 2565',
+                    'ปี '+ (DateTime.now().year+543).toString(),
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -80,65 +107,89 @@ class Card1 extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        'ปลูกทั้งหมด ',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: colorAll,
+                  Padding(
+                     padding: const EdgeInsets.only(left: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            'ปลูกทั้งหมด ',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: colorAll,
+                            ),
+                          ),
                         ),
-                      ),
-                      Text(
-                        '2 รอบ',
-                        style: TextStyle(
-                          color: colorAll,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                        Expanded(
+                          child: Text(
+                            countCul == 'null' ? '0 รอบ' : countCul + ' รอบ',
+                            style: TextStyle(
+                              color: colorAll,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        'เก็บเกี่ยว ',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: colorAll,
+                  Padding(
+                     padding: const EdgeInsets.only(left: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            'เก็บเกี่ยวทั้งหมด ',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: colorAll,
+                            ),
+                          ),
                         ),
-                      ),
-                      Text(
-                        '2 รอบ',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: colorAll,
+                        Expanded(
+                          child: Text(
+                            countHar == 'null' ? '0 รอบ' : countHar + ' รอบ',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: colorAll,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        'ส่งมอบ ',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: colorAll,
+                  Padding(
+                     padding: const EdgeInsets.only(left: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            'ส่งมอบทั้งหมด ',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: colorAll,
+                            ),
+                          ),
                         ),
-                      ),
-                      Text(
-                        '2 รอบ',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: colorAll,
+                        Expanded(
+                          child: Text(
+                            countTran == 'null' ? '0 รอบ' : countTran + ' รอบ',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: colorAll,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),
@@ -150,7 +201,14 @@ class Card1 extends StatelessWidget {
   }
 }
 
-class Card2 extends StatelessWidget {
+class Card2 extends StatelessWidget {Card2(
+      {required this.countCulold,
+      required this.countHarold,
+      required this.countTranold});
+
+  final String countCulold;
+  final String countHarold;
+  final String countTranold;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -191,7 +249,7 @@ class Card2 extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    'ปี 2564',
+                    'ปี '+(DateTime.now().year+542).toString(),
                     style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
@@ -204,65 +262,89 @@ class Card2 extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        'ปลูกทั้งหมด ',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: colorAll,
+                  Padding(
+                     padding: const EdgeInsets.only(left: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            'ปลูกทั้งหมด ',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: colorAll,
+                            ),
+                          ),
                         ),
-                      ),
-                      Text(
-                        '3 รอบ',
-                        style: TextStyle(
-                          color: colorAll,
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
+                        Expanded(
+                          child: Text(
+                            countCulold == 'null'? '0 รอบ':countCulold+' รอบ',
+                            style: TextStyle(
+                              color: colorAll,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        'เก็บเกี่ยว ',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: colorAll,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            'เก็บเกี่ยวทั้งหมด ',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: colorAll,
+                            ),
+                          ),
                         ),
-                      ),
-                      Text(
-                        '3 รอบ',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: colorAll,
+                        Expanded(
+                          child: Text(
+                            countHarold == 'null'? '0 รอบ':countHarold+' รอบ',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: colorAll,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      Text(
-                        'ส่งมอบ ',
-                        style: TextStyle(
-                          fontSize: 20,
-                          color: colorAll,
+                  Padding(
+                    padding: const EdgeInsets.only(left: 20),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Expanded(
+                          flex: 2,
+                          child: Text(
+                            'ส่งมอบทั้งหมด ',
+                            style: TextStyle(
+                              fontSize: 20,
+                              color: colorAll,
+                            ),
+                          ),
                         ),
-                      ),
-                      Text(
-                        '3 รอบ',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                          color: colorAll,
+                        Expanded(
+                          child: Text(
+                            countTranold == 'null'? '0 รอบ':countTranold+' รอบ',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: colorAll,
+                            ),
+                          ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ],
               ),

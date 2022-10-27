@@ -1,37 +1,129 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import '../../../api/harvestsbygh.dart';
+import '../../../api/hostapi.dart';
 
 class GH1_HarvestInfo extends StatefulWidget {
+  final String GreenhouseID;
+  const GH1_HarvestInfo({Key? key, required this.GreenhouseID})
+      : super(key: key);
   @override
   State<GH1_HarvestInfo> createState() => _GH1_HarvestInfoState();
 }
 
 class _GH1_HarvestInfoState extends State<GH1_HarvestInfo> {
+  late List<HarvestbyGh> _listharvest;
+
+  Future<List<HarvestbyGh>> getCultivations() async {
+    var url = hostAPI + '/trackings/Harvests?gh=${widget.GreenhouseID}';
+    print(url);
+    var response = await http.get(Uri.parse(url));
+    _listharvest = harvestbyGhFromJson(response.body);
+
+    return _listharvest;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    print(widget.GreenhouseID);
+  }
+
+  final f = DateFormat('dd/MM/yyyy');
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: ExpandableTheme(
-        data: const ExpandableThemeData(
-          iconColor: Colors.blue,
-          useInkWell: true,
-        ),
-        child: ListView(
-          physics: const BouncingScrollPhysics(),
-          children: <Widget>[
-            Card1(),
-            Card2(),
-          ],
-        ),
-      ),
-    );
+        body: FutureBuilder(
+            future: getCultivations(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.data == null) {
+                  Container();
+                }
+
+                if (snapshot.data.length == 0) {
+                  return const Center(
+                    child: Text(
+                      'ไม่พบข้อมูลการเก็บเกี่ยว',
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(255, 143, 8, 8)),
+                    ),
+                  );
+                }
+
+                var result = snapshot.data;
+
+                return ListView.builder(
+                    itemCount: result.length,
+
+                    //reverse: true,
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      final Har = result[index];
+                      print(result.length);
+                      const Color oddcolorgh = Colors.pink;
+                      const Color evencolorgh = Colors.blue;
+                      String Type;
+                      String type = Har.type.toString();
+                      if (type == "1") {
+                        Type = "ใบ";
+                      } else if (type == "2") {
+                        Type = "ดอก";
+                      } else if (type == "3") {
+                        Type = "ก้าน";
+                      } else {
+                        Type = "N/A";
+                      }
+                      return SingleChildScrollView(
+                        child: ExpandableTheme(
+                          data: const ExpandableThemeData(
+                            iconColor: Colors.blue,
+                            useInkWell: true,
+                          ),
+                          child: Column(
+                            children: <Widget>[
+                              Card1(
+                                colorcard:
+                                    index.isOdd ? oddcolorgh : evencolorgh,
+                                subheading:
+                                    f.format(Har.harvestDate).toString() +
+                                        ' \n' +
+                                        Type +
+                                        '\n' +
+                                        Har.weight.toString() +
+                                        'กิโลกรัม \n' +
+                                        f.format(Har.transferDate).toString(),
+                                titleno: Har.harvestNo.toString(),
+                              ),
+                              //Card2(),
+                            ],
+                          ),
+                        ),
+                      );
+                    });
+              }
+              return const LinearProgressIndicator();
+            }));
   }
 }
 
 const topic = "วันที่เก็บเกี่ยว : \nประเภท : \nน้ำหนัก : \nวันที่ส่งมอบ : ";
-const subheading = "22/03/2021 \nก้าน \n20 กิโลกรัม \n16/07/2021";
+//const subheading = "22/03/2021 \nก้าน \n20 กิโลกรัม \n16/07/2021";
 const subheading2 = "18/02/2022 \nก้าน \n18 กิโลกรัม \n22/06/2022";
 
 class Card1 extends StatelessWidget {
+  Card1(
+      {required this.subheading,
+      required this.colorcard,
+      required this.titleno});
+  final String titleno;
+  final String subheading;
+  final Color colorcard;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -47,7 +139,7 @@ class Card1 extends StatelessWidget {
             )
           ],
           borderRadius: BorderRadius.circular(10),
-          color: Colors.blue,
+          color: colorcard,
           border: Border.all(
             color: const Color(0xFFCFD4DB),
             width: 1,
@@ -79,10 +171,10 @@ class Card1 extends StatelessWidget {
                         header: Padding(
                           padding: EdgeInsets.all(10),
                           child: Text(
-                            'เก็บเกี่ยวครั้งที่ 1',
+                            'เก็บเกี่ยวครั้งที่ '+titleno,
                             style: TextStyle(
                                 fontSize: 22,
-                                color: Colors.blue,
+                                color: colorcard,
                                 fontWeight: FontWeight.bold),
                           ),
                         ),
@@ -181,7 +273,7 @@ class Card1 extends StatelessWidget {
                                       : "ดูเพิ่มเติม",
                                   style: TextStyle(
                                     fontSize: 16,
-                                    color: Colors.blue,
+                                    color: colorcard,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
