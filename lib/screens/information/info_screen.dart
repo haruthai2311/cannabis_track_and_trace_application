@@ -9,7 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:http/http.dart';
+import 'package:http/http.dart' as http;
+import '../../api/allgreenhouses.dart';
+import '../../api/hostapi.dart';
 
 class InfoScreen extends StatefulWidget {
   final String UserID;
@@ -20,6 +22,23 @@ class InfoScreen extends StatefulWidget {
 
 class _InfoScreenState extends State<InfoScreen> {
   final isDialOpen = ValueNotifier(false);
+  late List<AllGreenhouses> _greenhouses;
+
+  Future getGreenhouses() async {
+    var url = hostAPI + '/informations/getAllGreenhouses';
+    print(url);
+    var response = await http.get(Uri.parse(url));
+    _greenhouses = allGreenhousesFromJson(response.body);
+
+    return _greenhouses;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getGreenhouses();
+    //print(widget.UserID);
+  }
 
   @override
   Widget build(BuildContext context)
@@ -39,7 +58,7 @@ class _InfoScreenState extends State<InfoScreen> {
             Scaffold(
           appBar: AppBar(
             backgroundColor: kBackground,
-            title: const Text("Infomations"),
+            title: const Text("Informations"),
 
             // title: Text(
             //   "Infomation",
@@ -53,121 +72,173 @@ class _InfoScreenState extends State<InfoScreen> {
             // ),
           ),
           extendBody: true,
-          body: Stack(
-            children: [
-              SingleChildScrollView(
-                child: Container(
-                  margin:
-                      const EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(height: 10),
-                      // buildHead(),
-                      // const SizedBox(height: 15),
-                      // buildNews(),
-                      // const SizedBox(height: 15),
-                      // buildSearch(),
-                      // const SizedBox(height: 15),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(context,
-                              MaterialPageRoute(builder: (context) {
-                            return DetailsGreenHouses();
-                          })).then((value) => setState(() {}));
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                              color: Color.fromARGB(95, 179, 173, 173),
-                              borderRadius: BorderRadius.circular(15.0)),
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 14.0, vertical: 14.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                children: [
-                                  Icon(
-                                    Icons.circle_rounded,
-                                    color: Colors.lightGreen,
-                                  ),
-                                  SizedBox(width: 5),
-                                  Text(
-                                    "โรงเรือน G1(EVAP)",
-                                    style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.black54),
-                                  ),
-                                ],
-                              ),
-                              const Divider(
-                                height: 20,
-                                thickness: 5,
-                                indent: 20,
-                                endIndent: 0,
-                                color: Colors.lightGreen,
-                              ),
-                              SizedBox(height: 10),
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(15.0)),
-                                padding: EdgeInsets.all(15),
+          body: FutureBuilder(
+              future: getGreenhouses(),
+              builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+                if (snapshot.connectionState == ConnectionState.done) {
+                  if (snapshot.data == null) {
+                    Container();
+                  }
+
+                  if (snapshot.data.length == 0) {
+                    return const Center(
+                      child: Text(
+                        'ไม่พบข้อมูล',
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(255, 143, 8, 8)),
+                      ),
+                    );
+                  }
+
+                  var result = snapshot.data;
+                  print(result);
+                  return ListView.builder(
+                      itemCount: result.length,
+
+                      //reverse: true,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        final GH = result[index];
+                        const Color oddcolorgh = Colors.orangeAccent;
+                        const Color evencolorgh = Colors.lightGreen;
+                        return Stack(
+                          children: [
+                            SingleChildScrollView(
+                              child: Container(
+                                margin: const EdgeInsets.symmetric(
+                                    vertical: 10, horizontal: 15),
                                 child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text("สายพันธุ์หางกระรอก",
-                                        style: TextStyle(
-                                            fontSize: 22,
-                                            fontWeight: FontWeight.bold)),
-                                    SizedBox(height: 10),
-                                    Image.asset(
-                                      "images/กระถาง.jpg",
-                                      fit: BoxFit.contain,
+                                    const SizedBox(height: 10),
+                                    // buildHead(),
+                                    // const SizedBox(height: 15),
+                                    // buildNews(),
+                                    // const SizedBox(height: 15),
+                                    // buildSearch(),
+                                    // const SizedBox(height: 15),
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return DetailsGreenHouses();
+                                        })).then((value) => setState(() {}));
+                                      },
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Color.fromARGB(
+                                                95, 179, 173, 173),
+                                            borderRadius:
+                                                BorderRadius.circular(15.0)),
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 14.0, vertical: 14.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.circle_rounded,
+                                                  color: index.isOdd? oddcolorgh:evencolorgh,
+                                                ),
+                                                SizedBox(width: 5),
+                                                Text(
+                                                  GH.name.toString(),
+                                                  style: TextStyle(
+                                                      fontSize: 18,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.black54),
+                                                ),
+                                              ],
+                                            ),
+                                             Divider(
+                                              height: 20,
+                                              thickness: 5,
+                                              indent: 20,
+                                              endIndent: 0,
+                                              color: index.isOdd? oddcolorgh:evencolorgh,
+                                            ),
+                                            SizedBox(height: 10),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                  color: Colors.white,
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          15.0)),
+                                              padding: EdgeInsets.all(15),
+                                              child: Column(
+                                                children: [
+                                                  Text("สายพันธุ์หางกระรอก",
+                                                      style: TextStyle(
+                                                          fontSize: 22,
+                                                          fontWeight:
+                                                              FontWeight.bold)),
+                                                  SizedBox(height: 10),
+                                                  Image.asset(
+                                                    "images/กระถาง.jpg",
+                                                    fit: BoxFit.contain,
+                                                  ),
+                                                  SizedBox(height: 10),
+                                                  Row(
+                                                    children: [
+                                                      Icon(
+                                                        Icons.circle_rounded,
+                                                        color: index.isOdd? oddcolorgh:evencolorgh,
+                                                        size: 10,
+                                                      ),
+                                                      SizedBox(width: 5),
+                                                      Text(
+                                                        "200 กระถาง",
+                                                        style: TextStyle(
+                                                            fontSize: 16),
+                                                      ),
+                                                      SizedBox(width: 10),
+                                                      Icon(
+                                                        Icons.circle_rounded,
+                                                        color: index.isOdd? oddcolorgh:evencolorgh,
+                                                        size: 10,
+                                                      ),
+                                                      SizedBox(width: 5),
+                                                      Text(
+                                                        "400 ต้น",
+                                                        style: TextStyle(
+                                                            fontSize: 16),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ],
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
                                     ),
-                                    SizedBox(height: 10),
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.circle_rounded,
-                                          color: Colors.lightGreen,
-                                          size: 10,
-                                        ),
-                                        SizedBox(width: 5),
-                                        Text(
-                                          "200 กระถาง",
-                                          style: TextStyle(fontSize: 16),
-                                        ),
-                                        SizedBox(width: 10),
-                                        Icon(
-                                          Icons.circle_rounded,
-                                          color: Colors.lightGreen,
-                                          size: 10,
-                                        ),
-                                        SizedBox(width: 5),
-                                        Text(
-                                          "400 ต้น",
-                                          style: TextStyle(fontSize: 16),
-                                        ),
-                                      ],
-                                    ),
+                                    const SizedBox(height: 10),
+
+                                    // buildGH2(),
+                                    // const SizedBox(height: 15),
+                                    // buildGH2(),
+                                    // const SizedBox(height: 15),
+                                    // buildGH2(),
+                                    // const SizedBox(height: 15),
+                                    // buildGH2(),
+                                    //const SizedBox(height: 50),
+                                    //_onGoingTask()
                                   ],
                                 ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ),
-                      const SizedBox(height: 15),
-                      buildGH2(),
-                      const SizedBox(height: 50),
-                      //_onGoingTask()
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
+                              ),
+                            ),
+                          ],
+                        );
+                      });
+                }
+                return const LinearProgressIndicator();
+              }),
           floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
           floatingActionButton: Padding(
             padding: const EdgeInsets.only(bottom: 40),
