@@ -16,3 +16,4 @@ const Color colorDetails = Colors.white;
 const Color colorDetails2 = Colors.black;
 const Color colorTabbar = Color(0xFF036568);
 const Color colorAll = Colors.black;
+const Color colordetailAll = Color.fromARGB(255, 128, 127, 127);

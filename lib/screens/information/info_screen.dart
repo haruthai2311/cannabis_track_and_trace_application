@@ -4,7 +4,8 @@ import 'package:cannabis_track_and_trace_application/screens/information/add/inv
 import 'package:cannabis_track_and_trace_application/screens/information/add/locations.dart';
 import 'package:cannabis_track_and_trace_application/screens/information/add/pots.dart';
 import 'package:cannabis_track_and_trace_application/screens/information/add/strains.dart';
-import 'package:cannabis_track_and_trace_application/screens/information/details_gh.dart';
+import 'package:cannabis_track_and_trace_application/screens/information/details_gh1.dart';
+import 'package:cannabis_track_and_trace_application/screens/information/details_gh2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -445,83 +446,4 @@ Future showToast(String message) async {
 //   );
 // }
 
-Widget buildGH2() {
-  return Container(
-    decoration: BoxDecoration(
-        color: Color.fromARGB(95, 179, 173, 173),
-        borderRadius: BorderRadius.circular(15.0)),
-    padding: EdgeInsets.symmetric(horizontal: 14.0, vertical: 14.0),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(
-              Icons.circle_rounded,
-              color: Colors.orangeAccent,
-            ),
-            SizedBox(width: 5),
-            Text(
-              "โรงเรือน G2(GreenHouse)",
-              style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black54),
-            ),
-          ],
-        ),
-        const Divider(
-          height: 20,
-          thickness: 5,
-          indent: 20,
-          endIndent: 0,
-          color: Colors.orangeAccent,
-        ),
-        SizedBox(height: 10),
-        Container(
-          decoration: BoxDecoration(
-              color: Colors.white, borderRadius: BorderRadius.circular(15.0)),
-          padding: EdgeInsets.all(15),
-          child: Column(
-            children: [
-              Text("สายพันธุ์หางเสือ",
-                  style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
-              SizedBox(height: 10),
-              Image.asset(
-                "images/กระถาง.jpg",
-                fit: BoxFit.contain,
-              ),
-              SizedBox(height: 10),
-              Row(
-                children: [
-                  Icon(
-                    Icons.circle_rounded,
-                    color: Colors.orangeAccent,
-                    size: 10,
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    "200 กระถาง",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                  SizedBox(width: 10),
-                  Icon(
-                    Icons.circle_rounded,
-                    color: Colors.orangeAccent,
-                    size: 10,
-                  ),
-                  SizedBox(width: 5),
-                  Text(
-                    "400 ต้น",
-                    style: TextStyle(fontSize: 16),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        )
-      ],
-    ),
-  );
-}
-//}
+

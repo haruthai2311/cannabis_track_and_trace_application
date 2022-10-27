@@ -1,17 +1,17 @@
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
-import 'package:percent_indicator/circular_percent_indicator.dart';
 
-class GH1_AllInfo extends StatefulWidget {
+class GH2_AllInfo extends StatefulWidget {
+  const GH2_AllInfo({Key? key}) : super(key: key);
+
   @override
-  State<GH1_AllInfo> createState() => _GH1_AllInfoState();
+  State<GH2_AllInfo> createState() => _GH2_AllInfoState();
 }
 
-class _GH1_AllInfoState extends State<GH1_AllInfo> {
+class _GH2_AllInfoState extends State<GH2_AllInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

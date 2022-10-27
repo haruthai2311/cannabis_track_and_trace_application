@@ -225,9 +225,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                   const SizedBox(height: 10),
                                   Container(
                                     margin: const EdgeInsets.only(
-                                        left: 10, right: 10),
-                                    height: 150,
+                                        left: 5, right: 5),
+                                    height: 170,
                                     decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage("images/Home1.jpg"),
+                                        fit: BoxFit.cover,
+                                      ),
                                       boxShadow: const [
                                         BoxShadow(
                                           blurRadius: 4,
@@ -236,16 +240,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           spreadRadius: 2,
                                         )
                                       ],
-                                      gradient: const LinearGradient(
-                                        colors: [
-                                          Color.fromARGB(255, 1, 100, 84),
-                                          Color.fromARGB(255, 2, 158, 140)
-                                        ],
-                                        stops: [0, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
-                                      ),
-                                      borderRadius: BorderRadius.circular(30),
+                                      borderRadius: BorderRadius.circular(40),
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(10),
@@ -256,16 +251,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                                CrossAxisAlignment.center,
                                             children: [
                                               const Text(
                                                 'จำนวนต้นทั้งหมด',
                                                 style: TextStyle(
-                                                  fontSize: 18,
+                                                  fontSize: 20,
                                                   color: Colors.white,
                                                 ),
                                               ),
-                                              SizedBox(width: 10),
+                                              SizedBox(height: 10),
                                               Text(
                                                 result[0]
                                                         .plantTotal
@@ -279,21 +274,22 @@ class _HomeScreenState extends State<HomeScreen> {
                                               ),
                                             ],
                                           ),
-                                          const SizedBox(width: 50),
+                                          const SizedBox(width: 70),
                                           Column(
                                             mainAxisSize: MainAxisSize.max,
                                             mainAxisAlignment:
                                                 MainAxisAlignment.center,
                                             crossAxisAlignment:
-                                                CrossAxisAlignment.start,
+                                                CrossAxisAlignment.center,
                                             children: [
+                                              SizedBox(height: 40),
                                               const Text(
                                                 'โรงเรือน',
                                                 style: TextStyle(
-                                                    fontSize: 18,
+                                                    fontSize: 22,
                                                     color: Colors.white),
                                               ),
-                                              SizedBox(width: 50),
+                                              SizedBox(height: 10),
                                               Text(
                                                 result[0].nameGh.toString(),
                                                 style: const TextStyle(
@@ -648,7 +644,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 padding:
                                                     EdgeInsets.only(right: 15),
                                                 child: Text(
-                                                  countDisease[0].count.toString()+' กระถาง',
+                                                  countDisease[0]
+                                                          .count
+                                                          .toString() +
+                                                      ' กระถาง',
                                                   style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black,
@@ -735,7 +734,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 padding:
                                                     EdgeInsets.only(right: 15),
                                                 child: Text(
-                                                  countInsect[0].count.toString()+' กระถาง',
+                                                  countInsect[0]
+                                                          .count
+                                                          .toString() +
+                                                      ' กระถาง',
                                                   style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black,
@@ -1283,8 +1285,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                                 padding:
                                                     EdgeInsets.only(right: 15),
                                                 child: Text(
-                                                   //countInsect[culGH.indexOf(select)].count.toString()+' กระถาง',
-                                                   ' กระถาง',
+                                                  //countInsect[culGH.indexOf(select)].count.toString()+' กระถาง',
+                                                  ' กระถาง',
                                                   style: TextStyle(
                                                     fontSize: 18,
                                                     color: Colors.black,

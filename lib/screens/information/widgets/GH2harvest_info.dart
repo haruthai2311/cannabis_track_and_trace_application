@@ -1,12 +1,17 @@
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/foundation/key.dart';
+import 'package:flutter/src/widgets/container.dart';
+import 'package:flutter/src/widgets/framework.dart';
 
-class GH1_HarvestInfo extends StatefulWidget {
+class GH2_HarvestInfo extends StatefulWidget {
+  const GH2_HarvestInfo({Key? key}) : super(key: key);
+
   @override
-  State<GH1_HarvestInfo> createState() => _GH1_HarvestInfoState();
+  State<GH2_HarvestInfo> createState() => _GH2_HarvestInfoState();
 }
 
-class _GH1_HarvestInfoState extends State<GH1_HarvestInfo> {
+class _GH2_HarvestInfoState extends State<GH2_HarvestInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
