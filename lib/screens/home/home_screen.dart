@@ -769,8 +769,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Container(
                                     margin: const EdgeInsets.only(
                                         left: 10, right: 10),
-                                    height: 150,
+                                     height: 170,
                                     decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                        image: AssetImage("images/Home1.jpg"),
+                                        fit: BoxFit.cover,
+                                      ),
                                       boxShadow: const [
                                         BoxShadow(
                                           blurRadius: 4,
@@ -779,16 +783,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           spreadRadius: 2,
                                         )
                                       ],
-                                      gradient: const LinearGradient(
-                                        colors: [
-                                          Color.fromARGB(255, 1, 100, 84),
-                                          Color.fromARGB(255, 2, 158, 140)
-                                        ],
-                                        stops: [0, 1],
-                                        begin: AlignmentDirectional(0, -1),
-                                        end: AlignmentDirectional(0, 1),
-                                      ),
-                                      borderRadius: BorderRadius.circular(30),
+                                      borderRadius: BorderRadius.circular(40),
                                     ),
                                     child: Padding(
                                       padding: const EdgeInsets.all(15),
