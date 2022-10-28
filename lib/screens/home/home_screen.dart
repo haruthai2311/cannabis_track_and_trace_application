@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: kBackground,
-          title: Text(
+          title: const Text(
             "Home",
           ),
         ),
@@ -126,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Column(
                             children: [
                               Container(
-                                padding: EdgeInsets.all(8),
+                                padding: const EdgeInsets.all(8),
                                 height: 65,
                                 decoration: BoxDecoration(
                                   color:
@@ -146,7 +146,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       color: Colors.black54,
                                     ),
                                     suffixIcon: IconButton(
-                                      icon: Icon(Icons.clear),
+                                      icon: const Icon(Icons.clear),
                                       onPressed: () {
                                         if (_searchController.text.isEmpty) {
                                           focus.unfocus();
@@ -211,42 +211,58 @@ class _HomeScreenState extends State<HomeScreen> {
                             ],
                           ),
                           const SizedBox(height: 15),
-                          Container(child:
-                              LayoutBuilder(builder: (context, constraints) {
+                          LayoutBuilder(builder: (context, constraints) {
                             if (_searchController.text.isEmpty) {
-                              return Column(
-                                children: [
-                          buildTaskHead(
-                              result[0].no.toString(),
-                              result[0].plantTotal.toString(),
-                              result[0].nameGh.toString()),
-                          const SizedBox(height: 10),
-                          buildAmount(result[0].plantLive.toString(),
-                              result[0].plantDead.toString()),
-                          const SizedBox(height: 10),
-                          buildGraph(result[0].percentageLive),
-                          const SizedBox(height: 10),
-                          buildResult(countDisease[0].count.toString(),countInsect[0].count.toString()),
-                          const SizedBox(height: 70), ],
-                              );
+                          return Column(
+                            children: [
+                              buildTaskHead(
+                                  result[0].no.toString(),
+                                  result[0].plantTotal.toString(),
+                                  result[0].nameGh.toString()),
+                              const SizedBox(height: 10),
+                              buildAmount(result[0].plantLive.toString(),
+                                  result[0].plantDead.toString()),
+                              const SizedBox(height: 10),
+                              buildGraph(result[0].percentageLive),
+                              const SizedBox(height: 10),
+                              buildResult(countDisease[0].count.toString(),
+                                  countInsect[0].count.toString()),
+                              const SizedBox(height: 70),
+                            ],
+                          );
                             } else {
-                              return Column(
-                                children: [
-                                  buildTaskHead(
-                              result[culGH.indexOf(select)].no.toString(),
-                              result[culGH.indexOf(select)].plantTotal.toString(),
-                              result[culGH.indexOf(select)].nameGh.toString()),
-                          const SizedBox(height: 10),
-                          buildAmount(result[culGH.indexOf(select)].plantLive.toString(),
-                              result[culGH.indexOf(select)].plantDead.toString()),
-                          const SizedBox(height: 10),
-                          buildGraph(result[culGH.indexOf(select)].percentageLive),
-                          const SizedBox(height: 10),
-                          buildResult(countDisease[0].count.toString(),countInsect[0].count.toString()),
-                          const SizedBox(height: 70), ],
-                              );
-                            } 
-              }))],
+                          return Column(
+                            children: [
+                              buildTaskHead(
+                                  result[culGH.indexOf(select)]
+                                      .no
+                                      .toString(),
+                                  result[culGH.indexOf(select)]
+                                      .plantTotal
+                                      .toString(),
+                                  result[culGH.indexOf(select)]
+                                      .nameGh
+                                      .toString()),
+                              const SizedBox(height: 10),
+                              buildAmount(
+                                  result[culGH.indexOf(select)]
+                                      .plantLive
+                                      .toString(),
+                                  result[culGH.indexOf(select)]
+                                      .plantDead
+                                      .toString()),
+                              const SizedBox(height: 10),
+                              buildGraph(result[culGH.indexOf(select)]
+                                  .percentageLive),
+                              const SizedBox(height: 10),
+                              buildResult(countDisease[0].count.toString(),
+                                  countInsect[0].count.toString()),
+                              const SizedBox(height: 70),
+                            ],
+                          );
+                            }
+                          })
+                        ],
                       ),
                     ),
                   )
@@ -261,14 +277,14 @@ class _HomeScreenState extends State<HomeScreen> {
       children: [
         Text(
           "รายงานรอบการปลูกที่  " + CulNo,
-          style: TextStyle(fontSize: 18),
+          style: const TextStyle(fontSize: 18),
         ),
         const SizedBox(height: 10),
         Container(
-          margin: EdgeInsets.only(left: 5, right: 5),
+          margin: const EdgeInsets.only(left: 5, right: 5),
           height: 170,
           decoration: BoxDecoration(
-            image: DecorationImage(
+            image: const DecorationImage(
               image: AssetImage("images/Home1.jpg"),
               fit: BoxFit.cover,
             ),
@@ -298,7 +314,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Colors.white,
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
                       plantTotal + '  ต้น',
                       style: const TextStyle(
@@ -314,12 +330,12 @@ class _HomeScreenState extends State<HomeScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    SizedBox(height: 40),
+                    const SizedBox(height: 40),
                     const Text(
                       'โรงเรือน',
                       style: TextStyle(fontSize: 22, color: Colors.white),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Text(
                       nameGh,
                       style: const TextStyle(
@@ -570,184 +586,167 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget buildResult(String CountDisease,String CountInsect) {
+  Widget buildResult(String CountDisease, String CountInsect) {
     return Column(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              blurRadius: 4,
-                                              color: Color(0x33000000),
-                                              offset: Offset(2, 4),
-                                              spreadRadius: 2,
-                                            )
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: Colors.white,
-                                          border: Border.all(
-                                            color: const Color(0xFFCFD4DB),
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    height: 90,
-                                                    child:
-                                                        const VerticalDivider(
-                                                      color: colorResult1,
-                                                      thickness: 5,
-                                                      indent: 3,
-                                                      endIndent: 3,
-                                                      width: 5,
-                                                    ),
-                                                  ),
-                                                  const Icon(
-                                                    Icons.search,
-                                                    size: 50,
-                                                    color: Colors.black,
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: const [
-                                                      Text(
-                                                        'การสำรวจโรค',
-                                                        style: TextStyle(
-                                                            fontSize: 20,
-                                                            color: colorResult1,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                      Text(
-                                                        'พบโรค',
-                                                        style: TextStyle(
-                                                          fontSize: 18,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    EdgeInsets.only(right: 15),
-                                                child: Text(CountDisease +
-                                                      ' กระถาง',
-                                                  style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              blurRadius: 4,
-                                              color: Color(0x33000000),
-                                              offset: Offset(2, 4),
-                                              spreadRadius: 2,
-                                            )
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: Colors.white,
-                                          border: Border.all(
-                                            color: Color(0xFFCFD4DB),
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    height: 90,
-                                                    child:
-                                                        const VerticalDivider(
-                                                      color: colorResult2,
-                                                      thickness: 5,
-                                                      indent: 3,
-                                                      endIndent: 3,
-                                                      width: 5,
-                                                    ),
-                                                  ),
-                                                  const Icon(
-                                                    Icons.search,
-                                                    size: 50,
-                                                    color: Colors.black,
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: const [
-                                                      Text(
-                                                        'การสำรวจแมลง',
-                                                        style: TextStyle(
-                                                            fontSize: 20,
-                                                            color: colorResult2,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                      Text(
-                                                        'พบแมลง',
-                                                        style: TextStyle(
-                                                          fontSize: 18,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    EdgeInsets.only(right: 15),
-                                                child: Text(
-                                                  CountInsect +
-                                                      ' กระถาง',
-                                                  style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  );
+      children: [
+        Container(
+          decoration: BoxDecoration(
+            boxShadow: const [
+              BoxShadow(
+                blurRadius: 4,
+                color: Color(0x33000000),
+                offset: Offset(2, 4),
+                spreadRadius: 2,
+              )
+            ],
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            border: Border.all(
+              color: const Color(0xFFCFD4DB),
+              width: 1,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    const SizedBox(
+                      height: 90,
+                      child: VerticalDivider(
+                        color: colorResult1,
+                        thickness: 5,
+                        indent: 3,
+                        endIndent: 3,
+                        width: 5,
+                      ),
+                    ),
+                    const Icon(
+                      Icons.search,
+                      size: 50,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          'การสำรวจโรค',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: colorResult1,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'พบโรค',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Text(
+                    CountDisease + ' กระถาง',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 10),
+        Container(
+          decoration: BoxDecoration(
+            boxShadow: const [
+              BoxShadow(
+                blurRadius: 4,
+                color: Color(0x33000000),
+                offset: Offset(2, 4),
+                spreadRadius: 2,
+              )
+            ],
+            borderRadius: BorderRadius.circular(10),
+            color: Colors.white,
+            border: Border.all(
+              color: const Color(0xFFCFD4DB),
+              width: 1,
+            ),
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Row(
+                  children: [
+                    const SizedBox(
+                      height: 90,
+                      child: VerticalDivider(
+                        color: colorResult2,
+                        thickness: 5,
+                        indent: 3,
+                        endIndent: 3,
+                        width: 5,
+                      ),
+                    ),
+                    const Icon(
+                      Icons.search,
+                      size: 50,
+                      color: Colors.black,
+                    ),
+                    const SizedBox(
+                      width: 10,
+                    ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: const [
+                        Text(
+                          'การสำรวจแมลง',
+                          style: TextStyle(
+                              fontSize: 20,
+                              color: colorResult2,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Text(
+                          'พบแมลง',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Text(
+                    CountInsect + ' กระถาง',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
   }
 }

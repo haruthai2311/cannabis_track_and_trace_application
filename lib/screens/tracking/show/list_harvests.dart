@@ -42,7 +42,7 @@ class _ListHarvesteState extends State<ListHarveste> {
         backgroundColor: kBackground,
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               kBackground,
@@ -77,7 +77,7 @@ class _ListHarvesteState extends State<ListHarveste> {
               return Column(
                 children: <Widget>[
                   const SizedBox(height: 20),
-                  Text(
+                  const Text(
                     "การเก็บเกี่ยว",
                     style: TextStyle(
                         fontSize: 24,
@@ -87,7 +87,7 @@ class _ListHarvesteState extends State<ListHarveste> {
                   const SizedBox(height: 20),
                   Expanded(
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.white70,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20),
@@ -114,13 +114,13 @@ class _ListHarvesteState extends State<ListHarveste> {
                                     title: Text(
                                         "รอบการเก็บเกี่ยว : " +
                                             harvests.harvestNo.toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                             color: kBackground,
                                             fontSize: 18,
                                             fontWeight: FontWeight.bold)),
                                     subtitle: Text(
                                       'โรงปลูก : ' + harvests.nameGh,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Color.fromARGB(
                                               255, 116, 116, 116),
                                           fontSize: 16),

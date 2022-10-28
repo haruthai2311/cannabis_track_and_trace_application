@@ -47,7 +47,7 @@ class _DetailsCultivationState extends State<DetailsCultivation> {
       ),
       body: Container(
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               kBackground,
@@ -73,7 +73,7 @@ class _DetailsCultivationState extends State<DetailsCultivation> {
                     padding: const EdgeInsets.all(15),
                     child: Container(
                       padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.white70,
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
@@ -139,7 +139,7 @@ class _DetailsCultivationState extends State<DetailsCultivation> {
                           ),
                           Row(
                             children: <Widget>[
-                              Text(
+                              const Text(
                                 "สายพันธุ์ :  ",
                                 style: TextStyle(
                                     color: colorDetails2,

@@ -213,7 +213,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
           const SizedBox(height: 15),
         ],
       ),
-      SizedBox(width: 10),
+      const SizedBox(width: 10),
       Column(
         children: [
           Center(

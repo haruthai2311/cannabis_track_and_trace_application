@@ -222,7 +222,7 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0.0, 350.0, 0.0, 0.0),
-                  child: Container(
+                  child: SizedBox(
                     //height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
                     child: Material(
@@ -230,8 +230,8 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
                       child: Column(
                         children: <Widget>[
                           Padding(
-                            padding:
-                                EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                            padding: const EdgeInsets.fromLTRB(
+                                20.0, 20.0, 20.0, 20.0),
                             child: Column(
                               children: [
                                 const SizedBox(
@@ -692,14 +692,14 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
           ),
           actions: <Widget>[
             TextButton(
-              child: Text('ยืนยัน'),
+              child: const Text('ยืนยัน'),
               onPressed: () {
                 EditData();
                 Navigator.of(context).pop();
               },
             ),
             TextButton(
-              child: Text('ยกเลิก'),
+              child: const Text('ยกเลิก'),
               onPressed: () {
                 Navigator.of(context).pop();
               },

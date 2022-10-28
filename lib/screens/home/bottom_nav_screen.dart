@@ -31,46 +31,44 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SafeArea(
-        top: false,
-        child: Scaffold(
-          extendBody: true,
-          body: [
-            HomeScreen(UserID: widget.UserID),
-            TrackingScreen(UserID: widget.UserID),
-            Container(),
-            InfoScreen(UserID: widget.UserID),
-            AccountScreen(UserID: widget.UserID),
-          ][_currentIndex],
-          bottomNavigationBar: Theme(
-            data: Theme.of(context)
-                .copyWith(iconTheme: IconThemeData(color: Colors.white)),
-            child: CurvedNavigationBar(
-              key: navigationKey,
-              color: Color.fromARGB(115, 2, 116, 68),
-              backgroundColor: Colors.transparent,
-              buttonBackgroundColor: Color.fromARGB(255, 2, 92, 70),
-              height: 50,
+    return SafeArea(
+      top: false,
+      child: Scaffold(
+        extendBody: true,
+        body: [
+          HomeScreen(UserID: widget.UserID),
+          TrackingScreen(UserID: widget.UserID),
+          Container(),
+          InfoScreen(UserID: widget.UserID),
+          AccountScreen(UserID: widget.UserID),
+        ][_currentIndex],
+        bottomNavigationBar: Theme(
+          data: Theme.of(context)
+              .copyWith(iconTheme: const IconThemeData(color: Colors.white)),
+          child: CurvedNavigationBar(
+            key: navigationKey,
+            color: const Color.fromARGB(115, 2, 116, 68),
+            backgroundColor: Colors.transparent,
+            buttonBackgroundColor: const Color.fromARGB(255, 2, 92, 70),
+            height: 50,
 
-              /// 60.0
-              animationCurve: Curves.easeInOut,
-              animationDuration: Duration(milliseconds: 400),
-              index: _currentIndex,
-              onTap: (index) => setState(() => _currentIndex = index),
-              items: <Widget>[
-                const Icon(Icons.home, size: 30),
-                const Icon(Icons.assignment_rounded, size: 30),
-                //Icon(Icons.camera_alt_outlined, size: 30),
-                IconButton(
-                    onPressed: () {
-                      barCodeScanner();
-                    },
-                    icon: const Icon(Icons.camera_alt_outlined)),
-                const Icon(Icons.info_outline_rounded, size: 30),
-                const Icon(Icons.people_alt_outlined, size: 30),
-              ],
-            ),
+            /// 60.0
+            animationCurve: Curves.easeInOut,
+            animationDuration: const Duration(milliseconds: 400),
+            index: _currentIndex,
+            onTap: (index) => setState(() => _currentIndex = index),
+            items: <Widget>[
+              const Icon(Icons.home, size: 30),
+              const Icon(Icons.assignment_rounded, size: 30),
+              //Icon(Icons.camera_alt_outlined, size: 30),
+              IconButton(
+                  onPressed: () {
+                    barCodeScanner();
+                  },
+                  icon: const Icon(Icons.camera_alt_outlined)),
+              const Icon(Icons.info_outline_rounded, size: 30),
+              const Icon(Icons.people_alt_outlined, size: 30),
+            ],
           ),
         ),
       ),
