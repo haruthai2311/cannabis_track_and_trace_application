@@ -151,7 +151,7 @@ class _ListCultivationsState extends State<ListCultivations> {
                   ),
                   Expanded(
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.white70,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(50),

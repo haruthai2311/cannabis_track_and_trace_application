@@ -41,7 +41,7 @@ class _ListTransfersState extends State<ListTransfers> {
         backgroundColor: kBackground,
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               kBackground,
@@ -76,7 +76,7 @@ class _ListTransfersState extends State<ListTransfers> {
               return Column(
                 children: <Widget>[
                   const SizedBox(height: 20),
-                  Text(
+                  const Text(
                     "การส่งมอบ",
                     style: TextStyle(
                         fontSize: 24,
@@ -86,7 +86,7 @@ class _ListTransfersState extends State<ListTransfers> {
                   const SizedBox(height: 20),
                   Expanded(
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.white70,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20),
@@ -113,7 +113,7 @@ class _ListTransfersState extends State<ListTransfers> {
                                     title: Text(
                                       "หมายเลขการส่งมอบ : " +
                                           transfers.transferId.toString(),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: kBackground,
                                           fontSize: 18,
                                           fontWeight: FontWeight.bold),
@@ -121,7 +121,7 @@ class _ListTransfersState extends State<ListTransfers> {
                                     subtitle: Text(
                                       'วันที่ : ' +
                                           f.format(transfers.transferDate),
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                           color: Color.fromARGB(
                                               255, 116, 116, 116),
                                           fontSize: 16),

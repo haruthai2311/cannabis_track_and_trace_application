@@ -52,7 +52,7 @@ class _ScanScreenState extends State<ScanScreen> {
             child: Column(
               children: [
                 Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 100),
+                  padding: const EdgeInsets.symmetric(horizontal: 100),
                   child: MaterialButton(
                     onPressed: barCodeScanner,
                     color: Colors.amber,
@@ -73,7 +73,7 @@ class _ScanScreenState extends State<ScanScreen> {
                     ),
                   ),
                 ),
-                SizedBox(height: 15.0),
+                const SizedBox(height: 15.0),
                 Text(
                   barResult == null
                       ? "Scan a Code"

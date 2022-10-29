@@ -120,13 +120,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.8"
-  dropdown_search:
+  dropdown_search2:
     dependency: "direct main"
     description:
-      name: dropdown_search
+      name: dropdown_search2
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.0.3"
+    version: "1.0.2"
   expandable:
     dependency: "direct main"
     description:
@@ -380,6 +380,27 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.1"
+  location:
+    dependency: "direct main"
+    description:
+      name: location
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.4.0"
+  location_platform_interface:
+    dependency: transitive
+    description:
+      name: location_platform_interface
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.3.0"
+  location_web:
+    dependency: transitive
+    description:
+      name: location_web
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.1"
   matcher:
     dependency: transitive
     description:

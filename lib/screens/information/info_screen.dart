@@ -12,6 +12,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart' as http;
 import '../../api/allgreenhouses.dart';
+import '../../api/cultivationsbygh.dart';
 import '../../api/hostapi.dart';
 
 class InfoScreen extends StatefulWidget {
@@ -23,13 +24,13 @@ class InfoScreen extends StatefulWidget {
 
 class _InfoScreenState extends State<InfoScreen> {
   final isDialOpen = ValueNotifier(false);
-  late List<AllGreenhouses> _greenhouses;
+  late List<CultivationsbyGh> _greenhouses;
 
   Future getGreenhouses() async {
-    var url = hostAPI + '/informations/getAllGreenhouses';
+    var url = hostAPI + '/trackings/InfoCul';
     print(url);
     var response = await http.get(Uri.parse(url));
-    _greenhouses = allGreenhousesFromJson(response.body);
+    _greenhouses = cultivationsbyGhFromJson(response.body);
 
     return _greenhouses;
   }
@@ -101,8 +102,13 @@ class _InfoScreenState extends State<InfoScreen> {
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
                         final GH = result[index];
-                        const Color oddcolorgh = Colors.orangeAccent;
-                        const Color evencolorgh = Colors.lightGreen;
+                        const Color oddcolorgh = Colors.orange;
+                        const Color evencolorgh = Colors.green;
+                         var amountpots = GH.amountpots.toString();
+                      var pot;
+                      amountpots == 'null'
+                          ? pot = '0 กระถาง'
+                          : pot = amountpots + ' กระถาง';
                         return Stack(
                           children: [
                             SingleChildScrollView(
@@ -112,7 +118,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const SizedBox(height: 10),
+                                    const SizedBox(height: 15),
                                     // buildHead(),
                                     // const SizedBox(height: 15),
                                     // buildNews(),
@@ -121,10 +127,11 @@ class _InfoScreenState extends State<InfoScreen> {
                                     // const SizedBox(height: 15),
                                     GestureDetector(
                                       onTap: () {
+                                        //print(GH.greenHouseId.toString());
                                         Navigator.push(context,
                                             MaterialPageRoute(
                                                 builder: (context) {
-                                          return DetailsGreenHouses();
+                                          return DetailsGreenHouses(GreenhouseID:GH.greenHouseId.toString());
                                         })).then((value) => setState(() {}));
                                       },
                                       child: Container(
@@ -143,11 +150,13 @@ class _InfoScreenState extends State<InfoScreen> {
                                               children: [
                                                 Icon(
                                                   Icons.circle_rounded,
-                                                  color: index.isOdd? oddcolorgh:evencolorgh,
+                                                  color: index.isOdd
+                                                      ? oddcolorgh
+                                                      : evencolorgh,
                                                 ),
                                                 SizedBox(width: 5),
                                                 Text(
-                                                  GH.name.toString(),
+                                                  GH.nameGh.toString(),
                                                   style: TextStyle(
                                                       fontSize: 18,
                                                       fontWeight:
@@ -156,12 +165,14 @@ class _InfoScreenState extends State<InfoScreen> {
                                                 ),
                                               ],
                                             ),
-                                             Divider(
+                                            Divider(
                                               height: 20,
                                               thickness: 5,
                                               indent: 20,
                                               endIndent: 0,
-                                              color: index.isOdd? oddcolorgh:evencolorgh,
+                                              color: index.isOdd
+                                                  ? oddcolorgh
+                                                  : evencolorgh,
                                             ),
                                             SizedBox(height: 10),
                                             Container(
@@ -173,7 +184,7 @@ class _InfoScreenState extends State<InfoScreen> {
                                               padding: EdgeInsets.all(15),
                                               child: Column(
                                                 children: [
-                                                  Text("สายพันธุ์หางกระรอก",
+                                                  Text(GH.nameStrains.toString(),
                                                       style: TextStyle(
                                                           fontSize: 22,
                                                           fontWeight:
@@ -188,24 +199,28 @@ class _InfoScreenState extends State<InfoScreen> {
                                                     children: [
                                                       Icon(
                                                         Icons.circle_rounded,
-                                                        color: index.isOdd? oddcolorgh:evencolorgh,
+                                                        color: index.isOdd
+                                                            ? oddcolorgh
+                                                            : evencolorgh,
                                                         size: 10,
                                                       ),
                                                       SizedBox(width: 5),
                                                       Text(
-                                                        "200 กระถาง",
+                                                        pot,
                                                         style: TextStyle(
                                                             fontSize: 16),
                                                       ),
                                                       SizedBox(width: 10),
                                                       Icon(
                                                         Icons.circle_rounded,
-                                                        color: index.isOdd? oddcolorgh:evencolorgh,
+                                                        color: index.isOdd
+                                                            ? oddcolorgh
+                                                            : evencolorgh,
                                                         size: 10,
                                                       ),
                                                       SizedBox(width: 5),
                                                       Text(
-                                                        "400 ต้น",
+                                                        GH.plantTotal.toString()+" ต้น",
                                                         style: TextStyle(
                                                             fontSize: 16),
                                                       ),

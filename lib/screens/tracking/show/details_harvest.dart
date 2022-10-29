@@ -46,7 +46,7 @@ class _DetailsHarvestState extends State<DetailsHarvest> {
       ),
       body: Container(
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               kBackground,
@@ -82,7 +82,7 @@ class _DetailsHarvestState extends State<DetailsHarvest> {
                     padding: const EdgeInsets.all(15),
                     child: Container(
                       padding: const EdgeInsets.all(10),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.white70,
                         borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),

@@ -1,6 +1,7 @@
 import 'package:cannabis_track_and_trace_application/screens/account/edit_pass.dart';
 import 'package:cannabis_track_and_trace_application/screens/account/edit_personal.dart';
 import 'package:cannabis_track_and_trace_application/screens/home/bottom_nav_screen.dart';
+import 'package:cannabis_track_and_trace_application/screens/login/login.dart';
 import 'package:flutter/material.dart';
 
 class AccountScreen extends StatefulWidget {
@@ -176,7 +177,12 @@ class _AccountScreenState extends State<AccountScreen> {
                           Row(
                             children: [
                               ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => LoginScreen()));
+                                },
                                 child: Icon(Icons.logout,
                                     color: Color.fromARGB(255, 2, 73, 34)),
                                 style: ElevatedButton.styleFrom(

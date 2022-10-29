@@ -44,7 +44,7 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
           backgroundColor: kBackground,
         ),
         body: Container(
-          decoration: BoxDecoration(
+          decoration: const BoxDecoration(
             gradient: LinearGradient(
               colors: [
                 kBackground,
@@ -88,7 +88,7 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
                     ),
                     Text(
                       "กระถางหมายเลข : ${result[0].potsName}",
-                      style: TextStyle(
+                      style: const TextStyle(
                           fontSize: 24,
                           fontWeight: FontWeight.w600,
                           color: Colors.white),
@@ -96,7 +96,7 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
                     const SizedBox(height: 20),
                     Expanded(
                       child: Container(
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Colors.white70,
                           borderRadius: BorderRadius.only(
                             topLeft: Radius.circular(20),

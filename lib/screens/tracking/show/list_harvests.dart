@@ -42,7 +42,7 @@ class _ListHarvesteState extends State<ListHarveste> {
         backgroundColor: kBackground,
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               kBackground,
@@ -77,7 +77,7 @@ class _ListHarvesteState extends State<ListHarveste> {
               return Column(
                 children: <Widget>[
                   const SizedBox(height: 20),
-                  Text(
+                  const Text(
                     "การเก็บเกี่ยว",
                     style: TextStyle(
                         fontSize: 24,
@@ -113,7 +113,7 @@ class _ListHarvesteState extends State<ListHarveste> {
                   ),
                   Expanded(
                     child: Container(
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         color: Colors.white70,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(20),

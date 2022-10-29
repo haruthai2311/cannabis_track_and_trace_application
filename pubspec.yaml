@@ -50,12 +50,13 @@ dependencies:
   font_awesome_flutter: ^10.1.0
   fluttertoast: ^8.0.9
   percent_indicator: ^4.0.1
-  dropdown_search: ^5.0.3
+  dropdown_search2: ^1.0.2
   searchfield: ^0.7.1
   flat_3d_button: ^1.0.3
   flutter_launcher_icons: ^0.10.0
   expandable: ^5.0.1
   curved_labeled_navigation_bar: ^2.0.2
+  location: ^4.4.0
   
 flutter_icons:
   android: true
