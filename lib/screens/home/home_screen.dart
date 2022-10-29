@@ -758,35 +758,35 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ],
                               );
                             } else {
-                          return Column(
-                            children: [
-                              buildTaskHead(
-                                  result[culGH.indexOf(select)]
-                                      .no
-                                      .toString(),
-                                  result[culGH.indexOf(select)]
-                                      .plantTotal
-                                      .toString(),
-                                  result[culGH.indexOf(select)]
-                                      .nameGh
-                                      .toString()),
-                              const SizedBox(height: 10),
-                              buildAmount(
-                                  result[culGH.indexOf(select)]
-                                      .plantLive
-                                      .toString(),
-                                  result[culGH.indexOf(select)]
-                                      .plantDead
-                                      .toString()),
-                              const SizedBox(height: 10),
-                              buildGraph(result[culGH.indexOf(select)]
-                                  .percentageLive),
-                              const SizedBox(height: 10),
-                              buildResult(countDisease[0].count.toString(),
-                                  countInsect[0].count.toString()),
-                              const SizedBox(height: 70),
-                            ],
-                          );
+                              return Column(
+                                children: [
+                                  buildTaskHead(
+                                      result[culGH.indexOf(select)]
+                                          .no
+                                          .toString(),
+                                      result[culGH.indexOf(select)]
+                                          .plantTotal
+                                          .toString(),
+                                      result[culGH.indexOf(select)]
+                                          .nameGh
+                                          .toString()),
+                                  const SizedBox(height: 10),
+                                  buildAmount(
+                                      result[culGH.indexOf(select)]
+                                          .plantLive
+                                          .toString(),
+                                      result[culGH.indexOf(select)]
+                                          .plantDead
+                                          .toString()),
+                                  const SizedBox(height: 10),
+                                  buildGraph(result[culGH.indexOf(select)]
+                                      .percentageLive),
+                                  const SizedBox(height: 10),
+                                  buildResult(countDisease[0].count.toString(),
+                                      countInsect[0].count.toString()),
+                                  const SizedBox(height: 70),
+                                ],
+                              );
                             }
                           })
                         ],

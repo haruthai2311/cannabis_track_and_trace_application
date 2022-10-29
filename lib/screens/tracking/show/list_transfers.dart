@@ -44,7 +44,7 @@ class _ListTransfersState extends State<ListTransfers> {
         decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage("images/CardListTracking1.jpg"),
-            fit: BoxFit.cover,
+            fit: BoxFit.fill,
           ),
         ),
         child: FutureBuilder(
