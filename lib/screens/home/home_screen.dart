@@ -1,5 +1,6 @@
 import 'package:cannabis_track_and_trace_application/api/countdiseaseandinsect.dart';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
+import 'package:cannabis_track_and_trace_application/test.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:http/http.dart' as http;
@@ -122,22 +123,21 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          const SizedBox(height: 10),
                           Column(
                             children: [
                               Container(
-                                padding: EdgeInsets.all(8),
-                                height: 65,
+                                //padding: EdgeInsets.only(top: 5),
+                                height: 50,
                                 decoration: BoxDecoration(
                                   color:
                                       const Color.fromARGB(95, 179, 173, 173),
-                                  borderRadius: BorderRadius.circular(15.0),
+                                  borderRadius: BorderRadius.circular(30),
                                 ),
                                 child: SearchField(
                                   searchInputDecoration: InputDecoration(
                                     border: InputBorder.none,
                                     //contentPadding: EdgeInsets.only(left: 15),
-                                    hintText: 'Search',
+                                    hintText: 'เลือกรอบการปลูก',
                                     hintStyle: const TextStyle(
                                         color: Colors.black54, fontSize: 18),
                                     prefixIcon: const Icon(
@@ -146,7 +146,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                       color: Colors.black54,
                                     ),
                                     suffixIcon: IconButton(
-                                      icon: Icon(Icons.clear),
+                                      icon: Icon(
+                                        Icons.clear,
+                                        size: 20,
+                                      ),
                                       onPressed: () {
                                         if (_searchController.text.isEmpty) {
                                           focus.unfocus();
@@ -305,18 +308,16 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                   ),
                                   const SizedBox(height: 10),
+                                  //จำนวนต้นปกติมต้นตาย
                                   Padding(
-                                    padding: const EdgeInsets.only(
-                                        left: 5, right: 5, bottom: 10, top: 10),
-                                    //padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
+                                    padding: const EdgeInsets.all(8.0),
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                                          MainAxisAlignment.spaceAround,
                                       children: [
+                                        //card1
                                         Container(
-                                          width: 170,
-                                          height: 80,
                                           decoration: BoxDecoration(
                                             boxShadow: const [
                                               BoxShadow(
@@ -335,14 +336,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                           child: Padding(
-                                            padding: const EdgeInsets.all(10),
+                                            padding: const EdgeInsets.fromLTRB(
+                                                20, 15, 20, 15),
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,
                                               children: [
                                                 Container(
-                                                  height: 30,
-                                                  width: 30,
+                                                  height: 40,
+                                                  width: 40,
                                                   decoration:
                                                       const BoxDecoration(
                                                     color: Color.fromARGB(
@@ -352,26 +354,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                                   child: const Icon(
                                                     Icons.favorite,
                                                     color: Colors.green,
-                                                    size: 20,
+                                                    size: 25,
                                                   ),
                                                 ),
+                                                SizedBox(width: 20),
                                                 Column(
+                                                  //
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
                                                   children: [
-                                                    Row(
-                                                      children: [
-                                                        Text(
-                                                          result[0]
-                                                              .plantLive
-                                                              .toString(),
-                                                          style: const TextStyle(
-                                                              fontSize: 20,
-                                                              color:
-                                                                  Colors.black,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold),
-                                                        ),
-                                                      ],
+                                                    Text(
+                                                      result[0]
+                                                          .plantLive
+                                                          .toString(),
+                                                      style: const TextStyle(
+                                                          fontSize: 20,
+                                                          color: Colors.black,
+                                                          fontWeight:
+                                                              FontWeight.bold),
                                                     ),
                                                     const Text(
                                                       'ต้นปกติ',
@@ -387,9 +387,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                         ),
+
+                                        //Card2
                                         Container(
-                                          width: 170,
-                                          height: 80,
                                           decoration: BoxDecoration(
                                             boxShadow: const [
                                               BoxShadow(
@@ -408,14 +408,15 @@ class _HomeScreenState extends State<HomeScreen> {
                                             ),
                                           ),
                                           child: Padding(
-                                            padding: const EdgeInsets.all(10),
+                                            padding: const EdgeInsets.fromLTRB(
+                                                20, 15, 20, 15),
                                             child: Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment.spaceAround,
                                               children: [
                                                 Container(
-                                                  height: 30,
-                                                  width: 30,
+                                                  height: 40,
+                                                  width: 40,
                                                   decoration:
                                                       const BoxDecoration(
                                                     color: Color.fromARGB(
@@ -426,10 +427,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                                     Icons.favorite,
                                                     color: Color.fromARGB(
                                                         255, 230, 28, 13),
-                                                    size: 20,
+                                                    size: 25,
                                                   ),
                                                 ),
+                                                SizedBox(width: 20),
                                                 Column(
+                                                  //
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.center,
                                                   children: [
                                                     Text(
                                                       result[0]
@@ -457,7 +462,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                         ),
                                       ],
                                     ),
-                                    //
                                   ),
                                   const SizedBox(height: 10),
                                   //*กราฟ*//

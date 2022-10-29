@@ -85,6 +85,32 @@ class _ListHarvesteState extends State<ListHarveste> {
                         color: Colors.white),
                   ),
                   const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(10, 20, 30, 1),
+                    child: Row(
+                      children: [
+                        const Text(
+                          "List Cultivations",
+                          style: TextStyle(
+                            color: Colors.black45,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const Spacer(),
+                        InkWell(
+                          onTap: () {},
+                          child: const Text(
+                            "all",
+                            style: TextStyle(
+                              color: Colors.blue,
+                              fontWeight: FontWeight.w500,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                   Expanded(
                     child: Container(
                       decoration: BoxDecoration(
@@ -103,41 +129,63 @@ class _ListHarvesteState extends State<ListHarveste> {
                             itemBuilder: (context, index) {
                               final harvests = result[index];
                               return Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 5, right: 5),
-                                child: Card(
-                                  color: Colors.white,
-                                  shape: RoundedRectangleBorder(
+                                padding: const EdgeInsets.only(
+                                    left: 10, right: 10, top: 10),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        blurRadius: 2,
+                                        color: Color(0x33000000),
+                                        offset: Offset(1, 3),
+                                        spreadRadius: 1,
+                                      )
+                                    ],
                                     borderRadius: BorderRadius.circular(20),
-                                  ),
-                                  child: ListTile(
-                                    title: Text(
-                                        "รอบการเก็บเกี่ยว : " +
-                                            harvests.harvestNo.toString(),
-                                        style: TextStyle(
-                                            color: kBackground,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.bold)),
-                                    subtitle: Text(
-                                      'โรงปลูก : ' + harvests.nameGh,
-                                      style: TextStyle(
-                                          color: Color.fromARGB(
-                                              255, 116, 116, 116),
-                                          fontSize: 16),
+                                    color: Colors.blue,
+                                    border: Border.all(
+                                      color: const Color(0xFFCFD4DB),
+                                      width: 1,
                                     ),
-                                    trailing: const Icon(Icons.arrow_forward),
-                                    onTap: () {
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailsHarvest(
-                                                    UserID: widget.UserID,
-                                                    harvestId: harvests
-                                                        .harvestId
-                                                        .toString(),
-                                                  )))
-                                          .then((value) => setState(() {}));
-                                    },
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 8),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colors.white,
+                                      ),
+                                      child: ListTile(
+                                        title: Text(
+                                            "รอบการเก็บเกี่ยว : " +
+                                                harvests.harvestNo.toString(),
+                                            style: TextStyle(
+                                                color: Colors.blue,
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.bold)),
+                                        subtitle: Text(
+                                          'โรงปลูก : ' + harvests.nameGh,
+                                          style: TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 116, 116, 116),
+                                              fontSize: 16),
+                                        ),
+                                        trailing:
+                                            const Icon(Icons.arrow_forward),
+                                        onTap: () {
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      DetailsHarvest(
+                                                        UserID: widget.UserID,
+                                                        harvestId: harvests
+                                                            .harvestId
+                                                            .toString(),
+                                                      )))
+                                              .then((value) => setState(() {}));
+                                        },
+                                      ),
+                                    ),
                                   ),
                                 ),
                               );

@@ -55,6 +55,7 @@ dependencies:
   flat_3d_button: ^1.0.3
   flutter_launcher_icons: ^0.10.0
   expandable: ^5.0.1
+  curved_labeled_navigation_bar: ^2.0.2
   
 flutter_icons:
   android: true

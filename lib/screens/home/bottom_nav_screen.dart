@@ -1,13 +1,13 @@
 import 'package:cannabis_track_and_trace_application/screens/account/account_screen.dart';
 import 'package:cannabis_track_and_trace_application/screens/home/home_screen.dart';
 import 'package:cannabis_track_and_trace_application/screens/information/info_screen.dart';
+import 'package:cannabis_track_and_trace_application/screens/tracking/show/planttracking_list.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/tracking_screen.dart';
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar.dart';
+import 'package:curved_labeled_navigation_bar/curved_navigation_bar_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
-import '../information/info_screen.dart';
-import '../tracking/show/planttracking_list.dart';
 
 class BottomNavScreen extends StatefulWidget {
   final String UserID;
@@ -22,7 +22,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
   //_BottomNavScreenState({required this.UserID});
 
   int _currentIndex = 0;
-  final navigationKey = GlobalKey<CurvedNavigationBarState>();
+  GlobalKey<CurvedNavigationBarState> _bottomNavigationKey = GlobalKey();
   @override
   void initState() {
     super.initState();
@@ -47,28 +47,63 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
             data: Theme.of(context)
                 .copyWith(iconTheme: IconThemeData(color: Colors.white)),
             child: CurvedNavigationBar(
-              key: navigationKey,
-              color: Color.fromARGB(115, 2, 116, 68),
+              key: _bottomNavigationKey,
+              color: Color.fromARGB(185, 2, 92, 70),
               backgroundColor: Colors.transparent,
-              buttonBackgroundColor: Color.fromARGB(255, 2, 92, 70),
-              height: 50,
-
-              /// 60.0
+              buttonBackgroundColor: Color(0xFF036568),
+              height: 55,
               animationCurve: Curves.easeInOut,
               animationDuration: Duration(milliseconds: 400),
               index: _currentIndex,
               onTap: (index) => setState(() => _currentIndex = index),
-              items: <Widget>[
-                const Icon(Icons.home, size: 30),
-                const Icon(Icons.assignment_rounded, size: 30),
-                //Icon(Icons.camera_alt_outlined, size: 30),
-                IconButton(
+              items: [
+                CurvedNavigationBarItem(
+                  child: Icon(Icons.home, size: 30),
+                  label: 'Home',
+                  labelStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+                CurvedNavigationBarItem(
+                  child: Icon(Icons.assignment_rounded, size: 30),
+                  label: 'Tracking',
+                  labelStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+                CurvedNavigationBarItem(
+                  child: IconButton(
                     onPressed: () {
                       barCodeScanner();
                     },
-                    icon: const Icon(Icons.camera_alt_outlined)),
-                const Icon(Icons.info_outline_rounded, size: 30),
-                const Icon(Icons.people_alt_outlined, size: 30),
+                    icon: const Icon(Icons.camera_alt_outlined, size: 25),
+                  ),
+                  label: 'Scan',
+                  labelStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+                CurvedNavigationBarItem(
+                  child: Icon(
+                    Icons.info_outline_rounded,
+                  ),
+                  label: 'Informations',
+                  labelStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
+                CurvedNavigationBarItem(
+                  child: Icon(Icons.people_alt_outlined, size: 30),
+                  label: 'Account',
+                  labelStyle: TextStyle(
+                    color: Colors.white,
+                    fontSize: 16,
+                  ),
+                ),
               ],
             ),
           ),

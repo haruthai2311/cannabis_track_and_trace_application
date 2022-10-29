@@ -60,7 +60,6 @@ class _InfoScreenState extends State<InfoScreen> {
           appBar: AppBar(
             backgroundColor: kBackground,
             title: const Text("Informations"),
-
             // title: Text(
             //   "Infomation",
             //   style: Theme.of(context)
@@ -220,16 +219,6 @@ class _InfoScreenState extends State<InfoScreen> {
                                       ),
                                     ),
                                     const SizedBox(height: 10),
-
-                                    // buildGH2(),
-                                    // const SizedBox(height: 15),
-                                    // buildGH2(),
-                                    // const SizedBox(height: 15),
-                                    // buildGH2(),
-                                    // const SizedBox(height: 15),
-                                    // buildGH2(),
-                                    //const SizedBox(height: 50),
-                                    //_onGoingTask()
                                   ],
                                 ),
                               ),
