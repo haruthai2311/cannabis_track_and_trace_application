@@ -42,13 +42,9 @@ class _ListTransfersState extends State<ListTransfers> {
       ),
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              kBackground,
-              Colors.white60,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+          image: DecorationImage(
+            image: AssetImage("images/CardListTracking1.jpg"),
+            fit: BoxFit.cover,
           ),
         ),
         child: FutureBuilder(
@@ -75,22 +71,50 @@ class _ListTransfersState extends State<ListTransfers> {
               //print(result);
               return Column(
                 children: <Widget>[
-                  const SizedBox(height: 20),
-                  const Text(
-                    "การส่งมอบ",
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white),
+                  Padding(
+                    padding: const EdgeInsets.all(50),
+                    child: Text(
+                      "การส่งมอบ",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                    ),
                   ),
-                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 1),
+                    child: Row(
+                      children: [
+                        const Text(
+                          "List Tranfer",
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const Spacer(),
+                        InkWell(
+                          onTap: () {},
+                          child: const Text(
+                            "all",
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                   Expanded(
                     child: Container(
                       decoration: const BoxDecoration(
-                        color: Colors.white70,
+                        color: Color.fromARGB(240, 255, 255, 255),
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40),
                         ),
                       ),
                       child: Align(
@@ -102,43 +126,65 @@ class _ListTransfersState extends State<ListTransfers> {
                             itemBuilder: (context, index) {
                               final transfers = result[index];
                               return Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 5, right: 5),
-                                child: Card(
-                                  color: Colors.white,
-                                  shape: RoundedRectangleBorder(
+                                padding: const EdgeInsets.only(
+                                    left: 10, right: 10, top: 10),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    boxShadow: const [
+                                      BoxShadow(
+                                        blurRadius: 2,
+                                        color: Color(0x33000000),
+                                        offset: Offset(1, 3),
+                                        spreadRadius: 1,
+                                      )
+                                    ],
                                     borderRadius: BorderRadius.circular(20),
+                                    color: Colors.green,
+                                    border: Border.all(
+                                      color: const Color(0xFFCFD4DB),
+                                      width: 1,
+                                    ),
                                   ),
-                                  child: ListTile(
-                                    title: Text(
-                                      "หมายเลขการส่งมอบ : " +
-                                          transfers.transferId.toString(),
-                                      style: const TextStyle(
-                                          color: kBackground,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold),
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(right: 8),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(20),
+                                        color: Colors.white,
+                                      ),
+                                      child: ListTile(
+                                        title: Text(
+                                          "หมายเลขการส่งมอบ : " +
+                                              transfers.transferId.toString(),
+                                          style: const TextStyle(
+                                              color: Colors.green,
+                                              fontSize: 18,
+                                              fontWeight: FontWeight.bold),
+                                        ),
+                                        subtitle: Text(
+                                          'วันที่ : ' +
+                                              f.format(transfers.transferDate),
+                                          style: const TextStyle(
+                                              color: Color.fromARGB(
+                                                  255, 116, 116, 116),
+                                              fontSize: 16),
+                                        ),
+                                        trailing:
+                                            const Icon(Icons.arrow_forward),
+                                        onTap: () {
+                                          Navigator.of(context)
+                                              .push(MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      DetailsTransfer(
+                                                        UserID: widget.UserID,
+                                                        TransferID: transfers
+                                                            .transferId
+                                                            .toString(),
+                                                      )))
+                                              .then((value) => setState(() {}));
+                                        },
+                                      ),
                                     ),
-                                    subtitle: Text(
-                                      'วันที่ : ' +
-                                          f.format(transfers.transferDate),
-                                      style: const TextStyle(
-                                          color: Color.fromARGB(
-                                              255, 116, 116, 116),
-                                          fontSize: 16),
-                                    ),
-                                    trailing: const Icon(Icons.arrow_forward),
-                                    onTap: () {
-                                      Navigator.of(context)
-                                          .push(MaterialPageRoute(
-                                              builder: (context) =>
-                                                  DetailsTransfer(
-                                                    UserID: widget.UserID,
-                                                    TransferID: transfers
-                                                        .transferId
-                                                        .toString(),
-                                                  )))
-                                          .then((value) => setState(() {}));
-                                    },
                                   ),
                                 ),
                               );
@@ -159,7 +205,7 @@ class _ListTransfersState extends State<ListTransfers> {
             return AddTransfers(UserID: widget.UserID);
           })).then((value) => setState(() {}));
         },
-        backgroundColor: kBackground,
+        backgroundColor: colorTabbar,
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );

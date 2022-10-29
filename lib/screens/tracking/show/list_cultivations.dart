@@ -43,16 +43,12 @@ class _ListCultivationsState extends State<ListCultivations> {
         backgroundColor: kBackground,
       ),
       body: Container(
-        // decoration: BoxDecoration(
-        //   gradient: LinearGradient(
-        //     colors: [
-        //       kBackground,
-        //       Colors.white60,
-        //     ],
-        //     begin: Alignment.topLeft,
-        //     end: Alignment.bottomRight,
-        //   ),
-        // ),
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/CardListTracking1.jpg"),
+            fit: BoxFit.cover,
+          ),
+        ),
         child: FutureBuilder(
           future: getAllCultivations(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
@@ -77,60 +73,24 @@ class _ListCultivationsState extends State<ListCultivations> {
               //print(result);
               return Column(
                 children: <Widget>[
-                  Container(
-                    //margin: const EdgeInsets.only(left: 5, right: 5),
-                    height: 130,
-                    decoration: BoxDecoration(
-                      gradient: LinearGradient(
-                        colors: [
-                          kBackground,
-                          Color.fromARGB(103, 6, 137, 141),
-                        ],
-                        stops: [0, 1],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight,
-                      ),
-                      boxShadow: const [
-                        BoxShadow(
-                          blurRadius: 4,
-                          color: Color(0x33000000),
-                          offset: Offset(0, 2),
-                          spreadRadius: 2,
-                        )
-                      ],
-                      borderRadius: BorderRadius.only(
-                        bottomLeft: Radius.circular(20),
-                        bottomRight: Radius.circular(20),
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "บันทึกการปลูก",
-                          style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.white),
-                        ),
-                      ],
+                  Padding(
+                    padding: const EdgeInsets.all(50),
+                    child: Text(
+                      "การปลูก",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
                     ),
                   ),
-                  // Text(
-                  //   "บันทึกการปลูก",
-                  //   style: TextStyle(
-                  //       fontSize: 24,
-                  //       fontWeight: FontWeight.w600,
-                  //       color: Colors.blueAccent),
-                  // ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 20, 30, 1),
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 1),
                     child: Row(
                       children: [
                         const Text(
                           "List Cultivations",
                           style: TextStyle(
-                            color: Colors.black45,
+                            color: Colors.white70,
                             fontWeight: FontWeight.w700,
                             fontSize: 16,
                           ),
@@ -141,8 +101,9 @@ class _ListCultivationsState extends State<ListCultivations> {
                           child: const Text(
                             "all",
                             style: TextStyle(
-                              color: Colors.orange,
-                              fontWeight: FontWeight.w500,
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
                             ),
                           ),
                         )
@@ -152,10 +113,10 @@ class _ListCultivationsState extends State<ListCultivations> {
                   Expanded(
                     child: Container(
                       decoration: const BoxDecoration(
-                        color: Colors.white70,
+                        color: Color.fromARGB(240, 255, 255, 255),
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(50),
-                          topRight: Radius.circular(50),
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40),
                         ),
                       ),
                       child: Align(
@@ -244,7 +205,7 @@ class _ListCultivationsState extends State<ListCultivations> {
             return AddCultivations(UserID: widget.UserID);
           })).then((value) => setState(() {}));
         },
-        backgroundColor: kBackground,
+        backgroundColor: colorTabbar,
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );

@@ -43,13 +43,9 @@ class _ListHarvesteState extends State<ListHarveste> {
       ),
       body: Container(
         decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              kBackground,
-              Colors.white60,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+          image: DecorationImage(
+            image: AssetImage("images/CardListTracking1.jpg"),
+            fit: BoxFit.cover,
           ),
         ),
         child: FutureBuilder(
@@ -76,23 +72,24 @@ class _ListHarvesteState extends State<ListHarveste> {
               //print(result);
               return Column(
                 children: <Widget>[
-                  const SizedBox(height: 20),
-                  const Text(
-                    "การเก็บเกี่ยว",
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white),
-                  ),
-                  const SizedBox(height: 20),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(10, 20, 30, 1),
+                    padding: const EdgeInsets.all(50),
+                    child: Text(
+                      "การเก็บเกี่ยว",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 1),
                     child: Row(
                       children: [
                         const Text(
-                          "List Cultivations",
+                          "List Harvest",
                           style: TextStyle(
-                            color: Colors.black45,
+                            color: Colors.white70,
                             fontWeight: FontWeight.w700,
                             fontSize: 16,
                           ),
@@ -103,8 +100,9 @@ class _ListHarvesteState extends State<ListHarveste> {
                           child: const Text(
                             "all",
                             style: TextStyle(
-                              color: Colors.blue,
-                              fontWeight: FontWeight.w500,
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
                             ),
                           ),
                         )
@@ -114,10 +112,11 @@ class _ListHarvesteState extends State<ListHarveste> {
                   Expanded(
                     child: Container(
                       decoration: const BoxDecoration(
-                        color: Colors.white70,
+                        //color: Colors.white70,
+                        color: Color.fromARGB(240, 255, 255, 255),
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40),
                         ),
                       ),
                       child: Align(
@@ -206,7 +205,7 @@ class _ListHarvesteState extends State<ListHarveste> {
             return AddHarvests(UserID: widget.UserID);
           })).then((value) => setState(() {}));
         },
-        backgroundColor: kBackground,
+        backgroundColor: colorTabbar,
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );
