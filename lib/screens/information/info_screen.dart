@@ -1,5 +1,6 @@
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
 import 'package:cannabis_track_and_trace_application/screens/information/add/chemical_uses.dart';
+import 'package:cannabis_track_and_trace_application/screens/information/add/greenhouses.dart';
 import 'package:cannabis_track_and_trace_application/screens/information/add/inventorys.dart';
 import 'package:cannabis_track_and_trace_application/screens/information/add/locations.dart';
 import 'package:cannabis_track_and_trace_application/screens/information/add/pots.dart';
@@ -104,11 +105,11 @@ class _InfoScreenState extends State<InfoScreen> {
                         final GH = result[index];
                         const Color oddcolorgh = Colors.orange;
                         const Color evencolorgh = Colors.green;
-                         var amountpots = GH.amountpots.toString();
-                      var pot;
-                      amountpots == 'null'
-                          ? pot = '0 กระถาง'
-                          : pot = amountpots + ' กระถาง';
+                        var amountpots = GH.amountpots.toString();
+                        var pot;
+                        amountpots == 'null'
+                            ? pot = '0 กระถาง'
+                            : pot = amountpots + ' กระถาง';
                         return Stack(
                           children: [
                             SingleChildScrollView(
@@ -131,7 +132,9 @@ class _InfoScreenState extends State<InfoScreen> {
                                         Navigator.push(context,
                                             MaterialPageRoute(
                                                 builder: (context) {
-                                          return DetailsGreenHouses(GreenhouseID:GH.greenHouseId.toString());
+                                          return DetailsGreenHouses(
+                                              GreenhouseID:
+                                                  GH.greenHouseId.toString());
                                         })).then((value) => setState(() {}));
                                       },
                                       child: Container(
@@ -184,7 +187,8 @@ class _InfoScreenState extends State<InfoScreen> {
                                               padding: EdgeInsets.all(15),
                                               child: Column(
                                                 children: [
-                                                  Text(GH.nameStrains.toString(),
+                                                  Text(
+                                                      GH.nameStrains.toString(),
                                                       style: TextStyle(
                                                           fontSize: 22,
                                                           fontWeight:
@@ -220,7 +224,9 @@ class _InfoScreenState extends State<InfoScreen> {
                                                       ),
                                                       SizedBox(width: 5),
                                                       Text(
-                                                        GH.plantTotal.toString()+" ต้น",
+                                                        GH.plantTotal
+                                                                .toString() +
+                                                            " ต้น",
                                                         style: TextStyle(
                                                             fontSize: 16),
                                                       ),
@@ -261,6 +267,15 @@ class _InfoScreenState extends State<InfoScreen> {
               openCloseDial: isDialOpen,
               curve: Curves.bounceIn,
               children: [
+                SpeedDialChild(
+                    child: Icon(FontAwesomeIcons.house),
+                    backgroundColor: Colors.yellow,
+                    label: "โรงเรือน ",
+                    labelStyle: TextStyle(fontSize: 18),
+                    onTap: () => Navigator.push(context,
+                            MaterialPageRoute(builder: (context) {
+                          return GreenHouses();
+                        }))),
                 SpeedDialChild(
                     backgroundColor: Colors.yellow,
                     child: Icon(Icons.compost),
@@ -310,6 +325,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     child: Icon(FontAwesomeIcons.accusoft),
                     backgroundColor: Colors.yellow,
                     label: "การใช้สารเคมี",
+                    labelStyle: TextStyle(fontSize: 18),
                     onTap: () => Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return ChemicalUses(UserID: widget.UserID);
