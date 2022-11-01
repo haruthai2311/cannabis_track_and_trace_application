@@ -40,7 +40,7 @@ class _AccountScreenState extends State<AccountScreen> {
                       children: [
                         Icon(
                           Icons.account_circle_sharp,
-                          size: 60,
+                          size: 70,
                         ),
                         SizedBox(width: 10),
                         Expanded(
@@ -81,15 +81,12 @@ class _AccountScreenState extends State<AccountScreen> {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: 5,
-                    ),
                     Container(
                       child: Column(
                         children: [
                           Row(
                             children: [
-                              ElevatedButton(
+                              TextButton.icon(
                                 onPressed: () {
                                   //connect page
                                   Navigator.push(
@@ -101,107 +98,138 @@ class _AccountScreenState extends State<AccountScreen> {
                                       ));
                                   //connect page
                                 },
-                                child: Icon(Icons.person,
+                                icon: Icon(Icons.person,
+                                    size: 40,
                                     color: Color.fromARGB(255, 2, 73, 34)),
-                                style: ElevatedButton.styleFrom(
-                                  shape: CircleBorder(),
-                                  padding: EdgeInsets.all(15),
-                                  primary: Color.fromARGB(255, 156, 255, 176),
-                                  onPrimary: Colors.black,
+                                label: Container(
+                                  width: 292, // change width as you need
+                                  height: 40, // change height as you need
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Wrap(
+                                        children: [
+                                          Text(
+                                            "Personal information",
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                                fontSize: 18,
+                                                color: Color.fromARGB(255, 0, 0,
+                                                    0)), // change max line you need
+                                          ),
+                                          Text(
+                                            "Edit your personal information",
+                                            textAlign: TextAlign.left,
+                                            style: TextStyle(
+                                              fontSize: 14,
+                                              color: Color.fromARGB(
+                                                  255, 129, 129, 129),
+                                            ), // change max line you need
+                                          ),
+                                        ],
+                                      )),
                                 ),
-                              ),
-                              Expanded(
-                                child: ListTile(
-                                  title: Text(
-                                    'Personal information',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color.fromARGB(255, 0, 0, 0)),
-                                  ),
-                                  subtitle: Text(
-                                    'Edit your personnal information',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color:
-                                            Color.fromARGB(255, 158, 158, 158)),
-                                  ),
+                                style: TextButton.styleFrom(
+                                  padding:
+                                      EdgeInsets.fromLTRB(10.0, 8.0, 20.0, 8.0),
+                                  backgroundColor:
+                                      Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
                             ],
                           ),
                           Row(
                             children: [
-                              ElevatedButton(
+                              TextButton.icon(
                                 onPressed: () {
                                   //connect page
                                   Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => Editpassscreen(
+                                        builder: (context) => EditpassScreen(
                                           UserID: widget.UserID,
                                         ),
                                       ));
                                   //connect page
                                 },
-                                child: Icon(Icons.vpn_key,
+                                icon: Icon(Icons.key,
+                                    size: 40,
                                     color: Color.fromARGB(255, 2, 73, 34)),
-                                style: ElevatedButton.styleFrom(
-                                  shape: CircleBorder(),
-                                  padding: EdgeInsets.all(15),
-                                  primary: Color.fromARGB(255, 156, 255, 176),
-                                  onPrimary: Colors.black,
+                                label: Container(
+                                  width: 292, // change width as you need
+                                  height: 40, // change height as you need
+                                  child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Wrap(
+                                        children: [
+                                          Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                "Password",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                    fontSize: 18,
+                                                    color: Color.fromARGB(
+                                                        255,
+                                                        0,
+                                                        0,
+                                                        0)), // change max line you need
+                                              ),
+                                              Text(
+                                                "Edit your password",
+                                                textAlign: TextAlign.left,
+                                                style: TextStyle(
+                                                  fontSize: 14,
+                                                  color: Color.fromARGB(
+                                                      255, 129, 129, 129),
+                                                ), // change max line you need
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      )),
                                 ),
-                              ),
-                              Expanded(
-                                child: ListTile(
-                                  title: Text(
-                                    'User password',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color.fromARGB(255, 0, 0, 0)),
-                                  ),
-                                  subtitle: Text(
-                                    'Edit your password',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color:
-                                            Color.fromARGB(255, 158, 158, 158)),
-                                  ),
+                                style: TextButton.styleFrom(
+                                  padding:
+                                      EdgeInsets.fromLTRB(10.0, 8.0, 20.0, 8.0),
+                                  backgroundColor:
+                                      Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
                             ],
                           ),
                           Row(
                             children: [
-                              ElevatedButton(
-                                onPressed: () {},
-                                child: Icon(Icons.logout,
+                              TextButton.icon(
+                                onPressed: () {
+                                  //logout
+                                },
+                                icon: Icon(Icons.logout,
+                                    size: 40,
                                     color: Color.fromARGB(255, 2, 73, 34)),
-                                style: ElevatedButton.styleFrom(
-                                  shape: CircleBorder(),
-                                  padding: EdgeInsets.all(15),
-                                  primary: Color.fromARGB(255, 156, 255, 176),
-                                  onPrimary: Colors.black,
+                                label: Container(
+                                  width: 292, // change width as you need
+                                  height: 40, // change height as you need
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text(
+                                      "Logout",
+                                      textAlign: TextAlign.left,
+                                      style: TextStyle(
+                                          fontSize: 18,
+                                          color: Color.fromARGB(255, 0, 0,
+                                              0)), // change max line you need
+                                    ),
+                                  ),
                                 ),
-                              ),
-                              Expanded(
-                                child: ListTile(
-                                  title: Text(
-                                    'Log out',
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: Color.fromARGB(255, 0, 0, 0)),
-                                  ),
-                                  subtitle: Text(
-                                    'Log out of the',
-                                    style: TextStyle(
-                                        fontSize: 15,
-                                        color:
-                                            Color.fromARGB(255, 158, 158, 158)),
-                                  ),
+                                style: TextButton.styleFrom(
+                                  padding:
+                                      EdgeInsets.fromLTRB(10.0, 8.0, 20.0, 8.0),
+                                  backgroundColor:
+                                      Color.fromARGB(255, 255, 255, 255),
                                 ),
                               ),
                             ],

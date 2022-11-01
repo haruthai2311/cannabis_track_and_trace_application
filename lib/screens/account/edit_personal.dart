@@ -1,9 +1,13 @@
-// ignore_for_file: deprecated_member_use
+import 'dart:convert';
 
-import 'package:cannabis_track_and_trace_application/screens/account/account_screen.dart';
-import 'package:cannabis_track_and_trace_application/screens/home/bottom_nav_screen.dart';
-import 'package:flat_3d_button/flat_3d_button.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import '../../../api/allcultivations.dart';
+import '../../../api/allgreenhouses.dart';
+import '../../../api/allstrains.dart';
+import '../../../api/hostapi.dart';
+import '../../../config/styles.dart';
 
 class EditAccountScreen extends StatefulWidget {
   final String UserID;
@@ -15,162 +19,277 @@ class EditAccountScreen extends StatefulWidget {
 }
 
 class _EditAccountScreenState extends State<EditAccountScreen> {
-  late double screenWidth, screenHight;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  String? dropdownStrain;
+
+  String? dropdownGH;
+  final f = DateFormat('dd/MM/yyyy  hh:mm:ss');
 
   @override
   Widget build(BuildContext context) {
-    screenWidth = MediaQuery.of(context).size.width;
-    screenHight = MediaQuery.of(context).size.width;
-    return MaterialApp(
-      home: Scaffold(
+    return Scaffold(
         appBar: AppBar(
-            backgroundColor: Color.fromARGB(255, 8, 141, 143),
-            title: Text('Edit your personal infprmation',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Color.fromARGB(255, 255, 255, 255),
-                )),
-            actions: [
-              IconButton(
-                  icon: const Icon(Icons.upload),
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  onPressed: () {}),
-            ]),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 10,
+          title: const Text("Edit your personal information"),
+          backgroundColor: kBackground,
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.save_as_outlined,
+                color: Colors.white,
               ),
-              editemail(),
-              editnameTH(),
-              editsurnameTH(),
-              editnameENG(),
-              editsurnameENG(),
-              nosucced(),
+              onPressed: () {
+                confirmDialog();
+              },
+            )
+          ],
+        ),
+        body: FutureBuilder(
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            return Padding(
+              padding: const EdgeInsets.all(10),
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    const SizedBox(height: 10),
+                    const Text(
+                      "แก้ไขข้อมูลส่วนบุคคล",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          color: Color.fromARGB(255, 8, 143, 114)),
+                    ),
+                    const SizedBox(height: 50),
+                    const SizedBox(height: 20),
+                    email(),
+                    const SizedBox(height: 20),
+                    firstName(),
+                    const SizedBox(height: 20),
+                    usernameth(),
+                    const SizedBox(height: 20),
+                    nameeng(),
+                    const SizedBox(height: 20),
+                    usernameeng(),
+                  ],
+                ),
+              ),
+            );
+            // }
+            return const LinearProgressIndicator();
+          },
+        ));
+  }
+
+  Widget email() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "อีเมล์:",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(height: 10),
+        Container(
+          margin: const EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
             ],
           ),
+          child: TextFormField(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: '',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
         ),
-      ),
+      ],
     );
   }
 
-  Container editemail() {
-    return Container(
-      margin: EdgeInsets.only(top: 5),
-      width: screenWidth * 0.8,
-      child: TextField(
-        decoration: InputDecoration(
-          labelText: 'Email',
-          labelStyle: TextStyle(color: Color.fromARGB(255, 139, 139, 139)),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-              borderSide: BorderSide(color: Color.fromARGB(255, 2, 98, 2))),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color.fromARGB(255, 2, 98, 2))),
+  Widget firstName() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "ชื่อภาษาไทย:",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-      ),
+        const SizedBox(height: 10),
+        Container(
+          margin: const EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: '',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
     );
   }
 
-  Container editnameTH() {
-    return Container(
-      margin: EdgeInsets.only(top: 10),
-      width: screenWidth * 0.8,
-      child: TextField(
-        decoration: InputDecoration(
-          labelText: 'ชื่อภาษาไทย',
-          labelStyle: TextStyle(color: Color.fromARGB(255, 139, 139, 139)),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-              borderSide: BorderSide(color: Color.fromARGB(255, 2, 98, 2))),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color.fromARGB(255, 2, 98, 2))),
+  Widget usernameth() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "นามสกุลภาษาไทย:",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-      ),
+        const SizedBox(height: 10),
+        Container(
+          margin: const EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: '',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
     );
   }
 
-  Container editsurnameTH() {
-    return Container(
-      margin: EdgeInsets.only(top: 10),
-      width: screenWidth * 0.8,
-      child: TextField(
-        decoration: InputDecoration(
-          labelText: 'นามสกุลภาษาไทย',
-          labelStyle: TextStyle(color: Color.fromARGB(255, 139, 139, 139)),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-              borderSide: BorderSide(color: Color.fromARGB(255, 2, 98, 2))),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color.fromARGB(255, 2, 98, 2))),
+  Widget nameeng() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Firstname:",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-      ),
+        const SizedBox(height: 10),
+        Container(
+          margin: const EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: '',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
     );
   }
 
-  Container editnameENG() {
-    return Container(
-      margin: EdgeInsets.only(top: 10),
-      width: screenWidth * 0.8,
-      child: TextField(
-        decoration: InputDecoration(
-          labelText: 'ชื่อภาษาอังกฤษ',
-          labelStyle: TextStyle(color: Color.fromARGB(255, 139, 139, 139)),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-              borderSide: BorderSide(color: Color.fromARGB(255, 2, 98, 2))),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color.fromARGB(255, 2, 98, 2))),
+  Widget usernameeng() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text(
+          "Username:",
+          style: TextStyle(
+              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
-      ),
+        const SizedBox(height: 10),
+        Container(
+          margin: const EdgeInsets.only(left: 15, right: 15),
+          decoration: BoxDecoration(
+            color: const Color.fromARGB(255, 240, 239, 239),
+            borderRadius: BorderRadius.circular(20),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black26,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: TextFormField(
+            style: const TextStyle(color: Colors.black),
+            decoration: const InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.only(left: 15),
+                hintText: '',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+          ),
+        ),
+      ],
     );
   }
 
-  Container editsurnameENG() {
-    return Container(
-      margin: EdgeInsets.only(top: 10),
-      width: screenWidth * 0.8,
-      child: TextField(
-        decoration: InputDecoration(
-          labelText: 'นามสกุลภาษาอังกฤษ',
-          labelStyle: TextStyle(color: Color.fromARGB(255, 139, 139, 139)),
-          enabledBorder: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(30),
-              borderSide: BorderSide(color: Color.fromARGB(255, 2, 98, 2))),
-          focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color.fromARGB(255, 2, 98, 2))),
-        ),
-      ),
-    );
-  }
-
-  Container nosucced() {
-    return Container(
-      margin: EdgeInsets.only(top: 10),
-      width: screenWidth * 0.8,
-      child: Flat3dButton(
-        child: Text(
-          'กลับ',
-          style: TextStyle(color: Colors.white, fontSize: 20.0),
-        ),
-        color: Colors.green,
-        onPressed: () {
-          //connect page
-          Navigator.pop(
-              context,
-              MaterialPageRoute(
-                builder: (context) => AccountScreen(
-                  UserID: widget.UserID,
-                ),
-              ));
-          //connect page
-        },
-        // shape: RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.circular(30),
-        // ),
-      ),
+  Future<Null> confirmDialog() async {
+    showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('ยืนยันการแก้ไข'),
+          content: SingleChildScrollView(
+            child: Column(
+              children: const <Widget>[
+                Text('กรุณากดยืนยันเพื่อดำเนินการแก้ไข'),
+                //Text('Would you like to approve of this message?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('ยืนยัน'),
+              onPressed: () {
+                // EditData();
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('ยกเลิก'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
