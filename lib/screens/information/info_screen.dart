@@ -139,11 +139,11 @@ class _InfoScreenState extends State<InfoScreen> {
                                       },
                                       child: Container(
                                         decoration: BoxDecoration(
-                                            color: Color.fromARGB(
+                                            color: const Color.fromARGB(
                                                 95, 179, 173, 173),
                                             borderRadius:
                                                 BorderRadius.circular(15.0)),
-                                        padding: EdgeInsets.symmetric(
+                                        padding: const EdgeInsets.symmetric(
                                             horizontal: 14.0, vertical: 14.0),
                                         child: Column(
                                           crossAxisAlignment:
@@ -157,10 +157,10 @@ class _InfoScreenState extends State<InfoScreen> {
                                                       ? oddcolorgh
                                                       : evencolorgh,
                                                 ),
-                                                SizedBox(width: 5),
+                                                const SizedBox(width: 5),
                                                 Text(
                                                   GH.nameGh.toString(),
-                                                  style: TextStyle(
+                                                  style: const TextStyle(
                                                       fontSize: 18,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -177,28 +177,28 @@ class _InfoScreenState extends State<InfoScreen> {
                                                   ? oddcolorgh
                                                   : evencolorgh,
                                             ),
-                                            SizedBox(height: 10),
+                                            const SizedBox(height: 10),
                                             Container(
                                               decoration: BoxDecoration(
                                                   color: Colors.white,
                                                   borderRadius:
                                                       BorderRadius.circular(
                                                           15.0)),
-                                              padding: EdgeInsets.all(15),
+                                              padding: const EdgeInsets.all(15),
                                               child: Column(
                                                 children: [
                                                   Text(
                                                       GH.nameStrains.toString(),
-                                                      style: TextStyle(
+                                                      style: const TextStyle(
                                                           fontSize: 22,
                                                           fontWeight:
                                                               FontWeight.bold)),
-                                                  SizedBox(height: 10),
+                                                  const SizedBox(height: 10),
                                                   Image.asset(
                                                     "images/กระถาง.jpg",
                                                     fit: BoxFit.contain,
                                                   ),
-                                                  SizedBox(height: 10),
+                                                  const SizedBox(height: 10),
                                                   Row(
                                                     children: [
                                                       Icon(
@@ -208,13 +208,13 @@ class _InfoScreenState extends State<InfoScreen> {
                                                             : evencolorgh,
                                                         size: 10,
                                                       ),
-                                                      SizedBox(width: 5),
+                                                      const SizedBox(width: 5),
                                                       Text(
                                                         pot,
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 16),
                                                       ),
-                                                      SizedBox(width: 10),
+                                                      const SizedBox(width: 10),
                                                       Icon(
                                                         Icons.circle_rounded,
                                                         color: index.isOdd
@@ -222,12 +222,12 @@ class _InfoScreenState extends State<InfoScreen> {
                                                             : evencolorgh,
                                                         size: 10,
                                                       ),
-                                                      SizedBox(width: 5),
+                                                      const SizedBox(width: 5),
                                                       Text(
                                                         GH.plantTotal
                                                                 .toString() +
                                                             " ต้น",
-                                                        style: TextStyle(
+                                                        style: const TextStyle(
                                                             fontSize: 16),
                                                       ),
                                                     ],
@@ -268,19 +268,19 @@ class _InfoScreenState extends State<InfoScreen> {
               curve: Curves.bounceIn,
               children: [
                 SpeedDialChild(
-                    child: Icon(FontAwesomeIcons.house),
+                    child: const Icon(FontAwesomeIcons.house),
                     backgroundColor: Colors.yellow,
                     label: "โรงเรือน ",
-                    labelStyle: TextStyle(fontSize: 18),
+                    labelStyle: const TextStyle(fontSize: 18),
                     onTap: () => Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
-                          return GreenHouses();
+                          return GreenHouses(UserID: widget.UserID);
                         }))),
                 SpeedDialChild(
                     backgroundColor: Colors.yellow,
-                    child: Icon(Icons.compost),
+                    child: const Icon(Icons.compost),
                     label: "สายพันธุ์ ",
-                    labelStyle: TextStyle(fontSize: 18),
+                    labelStyle: const TextStyle(fontSize: 18),
                     onTap: () => Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return Strains(UserID: widget.UserID);
@@ -289,10 +289,10 @@ class _InfoScreenState extends State<InfoScreen> {
                     //onTap: () => showToast('เลือกเพิ่มข้อมูลสายพันธุ์...'),
                     ),
                 SpeedDialChild(
-                    child: Icon(Icons.edit_location_alt),
+                    child: const Icon(Icons.edit_location_alt),
                     backgroundColor: Colors.yellow,
                     label: "สถานที่ปลูก",
-                    labelStyle: TextStyle(fontSize: 18),
+                    labelStyle: const TextStyle(fontSize: 18),
                     onTap: () => Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return Locations(UserID: widget.UserID);
@@ -300,10 +300,10 @@ class _InfoScreenState extends State<InfoScreen> {
                     //onTap: () => showToast('เลือกเพิ่มข้อมูลสถานที่ปลูก...'),
                     ),
                 SpeedDialChild(
-                    child: Icon(Icons.format_color_fill_rounded),
+                    child: const Icon(Icons.format_color_fill_rounded),
                     backgroundColor: Colors.yellow,
                     label: "กระถาง",
-                    labelStyle: TextStyle(fontSize: 18),
+                    labelStyle: const TextStyle(fontSize: 18),
                     onTap: () => Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return Pots(UserID: widget.UserID);
@@ -311,10 +311,10 @@ class _InfoScreenState extends State<InfoScreen> {
                     //onTap: () => showToast('เลือกเพิ่มข้อมูลกระถาง...'),
                     ),
                 SpeedDialChild(
-                    child: Icon(Icons.fire_hydrant_alt_sharp),
+                    child: const Icon(Icons.fire_hydrant_alt_sharp),
                     backgroundColor: Colors.yellow,
                     label: "วัสดุ",
-                    labelStyle: TextStyle(fontSize: 18),
+                    labelStyle: const TextStyle(fontSize: 18),
                     onTap: () => Navigator.push(context,
                             MaterialPageRoute(builder: (context) {
                           return Inventorys(UserID: widget.UserID);
