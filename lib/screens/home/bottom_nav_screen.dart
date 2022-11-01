@@ -57,7 +57,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
               index: _currentIndex,
               onTap: (index) => setState(() => _currentIndex = index),
               items: [
-                CurvedNavigationBarItem(
+                const CurvedNavigationBarItem(
                   child: Icon(Icons.home, size: 30),
                   label: 'Home',
                   labelStyle: TextStyle(
@@ -65,7 +65,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                     fontSize: 16,
                   ),
                 ),
-                CurvedNavigationBarItem(
+                const CurvedNavigationBarItem(
                   child: Icon(Icons.assignment_rounded, size: 30),
                   label: 'Tracking',
                   labelStyle: TextStyle(
@@ -81,12 +81,12 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                     icon: const Icon(Icons.camera_alt_outlined, size: 25),
                   ),
                   label: 'Scan',
-                  labelStyle: TextStyle(
+                  labelStyle: const TextStyle(
                     color: Colors.white,
                     fontSize: 16,
                   ),
                 ),
-                CurvedNavigationBarItem(
+                const CurvedNavigationBarItem(
                   child: Icon(
                     Icons.info_outline_rounded,
                   ),
@@ -96,7 +96,7 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
                     fontSize: 16,
                   ),
                 ),
-                CurvedNavigationBarItem(
+                const CurvedNavigationBarItem(
                   child: Icon(Icons.people_alt_outlined, size: 30),
                   label: 'Account',
                   labelStyle: TextStyle(

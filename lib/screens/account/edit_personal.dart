@@ -1,6 +1,5 @@
 // ignore_for_file: deprecated_member_use
 
-import 'package:cannabis_track_and_trace_application/screens/home/bottom_nav_screen.dart';
 import 'package:flat_3d_button/flat_3d_button.dart';
 import 'package:flutter/material.dart';
 
