@@ -2,9 +2,7 @@ import 'dart:convert';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-
 import '../../../api/hostapi.dart';
-import '../../../widget/dialog.dart';
 
 class Inventorys extends StatefulWidget {
   final String UserID;
@@ -14,7 +12,7 @@ class Inventorys extends StatefulWidget {
 }
 
 class _InventorysState extends State<Inventorys> {
-  final canceldialog = MyDialog();
+
   final _formKey = GlobalKey<FormState>();
   bool _visible = false;
 
