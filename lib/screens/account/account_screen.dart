@@ -165,13 +165,13 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                       GestureDetector(
                         onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => EditpassScreen(
-                                  UserID: widget.UserID,
-                                ),
-                              ));
+                           Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => EditpassScreen(
+                                        UserID: widget.UserID,
+                                      ),
+                                    ));
                         },
                         child: Row(
                           children: [
