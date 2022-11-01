@@ -2,6 +2,7 @@ import 'package:cannabis_track_and_trace_application/screens/tracking/show/detai
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import 'package:percent_indicator/circular_percent_indicator.dart';
 import '../../../api/allcultivations.dart';
 import '../../../api/hostapi.dart';
 import '../../../config/styles.dart';
@@ -42,14 +43,10 @@ class _ListCultivationsState extends State<ListCultivations> {
         backgroundColor: kBackground,
       ),
       body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              kBackground,
-              Colors.white60,
-            ],
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
+        decoration: const BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("images/CardListTracking1.jpg"),
+            fit: BoxFit.fill,
           ),
         ),
         child: FutureBuilder(
@@ -76,22 +73,50 @@ class _ListCultivationsState extends State<ListCultivations> {
               //print(result);
               return Column(
                 children: <Widget>[
-                  const SizedBox(height: 20),
-                  Text(
-                    "บันทึกการปลูก",
-                    style: TextStyle(
-                        fontSize: 24,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.white),
+                  Padding(
+                    padding: const EdgeInsets.all(50),
+                    child: Text(
+                      "การปลูก",
+                      style: TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.white),
+                    ),
                   ),
-                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(20, 0, 20, 1),
+                    child: Row(
+                      children: [
+                        const Text(
+                          "List Cultivations",
+                          style: TextStyle(
+                            color: Colors.white70,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 16,
+                          ),
+                        ),
+                        const Spacer(),
+                        InkWell(
+                          onTap: () {},
+                          child: const Text(
+                            "all",
+                            style: TextStyle(
+                              color: Colors.black54,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
                   Expanded(
                     child: Container(
-                      decoration: BoxDecoration(
-                        color: Colors.white70,
+                      decoration: const BoxDecoration(
+                        color: Color.fromARGB(240, 255, 255, 255),
                         borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(20),
-                          topRight: Radius.circular(20),
+                          topLeft: Radius.circular(40),
+                          topRight: Radius.circular(40),
                         ),
                       ),
                       child: Align(
@@ -103,40 +128,62 @@ class _ListCultivationsState extends State<ListCultivations> {
                           itemBuilder: (context, index) {
                             final Cul = result[index];
                             return Padding(
-                              padding: const EdgeInsets.only(left: 5, right: 5),
-                              child: Card(
-                                color: Colors.white,
-                                shape: RoundedRectangleBorder(
+                              padding: const EdgeInsets.only(
+                                  left: 10, right: 10, top: 10),
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  boxShadow: const [
+                                    BoxShadow(
+                                      blurRadius: 2,
+                                      color: Color(0x33000000),
+                                      offset: Offset(1, 3),
+                                      spreadRadius: 1,
+                                    )
+                                  ],
                                   borderRadius: BorderRadius.circular(20),
+                                  color: Colors.orange,
+                                  border: Border.all(
+                                    color: const Color(0xFFCFD4DB),
+                                    width: 1,
+                                  ),
                                 ),
-                                child: ListTile(
-                                  title: Text(
-                                    "รอบการปลูก : " + Cul.no.toString(),
-                                    style: TextStyle(
-                                        color: kBackground,
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.bold),
+                                child: Padding(
+                                  padding: const EdgeInsets.only(right: 8),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(20),
+                                      color: Colors.white,
+                                    ),
+                                    child: ListTile(
+                                      title: Text(
+                                        "รอบการปลูก : " + Cul.no.toString(),
+                                        style: TextStyle(
+                                            color: Colors.orange,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      subtitle: Text(
+                                        'โรงปลูก : ' + Cul.nameGh,
+                                        style: TextStyle(
+                                            color: Color.fromARGB(
+                                                255, 116, 116, 116),
+                                            fontSize: 16),
+                                      ),
+                                      trailing: const Icon(Icons.arrow_forward),
+                                      onTap: () {
+                                        Navigator.of(context)
+                                            .push(MaterialPageRoute(
+                                                builder: (context) =>
+                                                    DetailsCultivation(
+                                                      UserID: widget.UserID,
+                                                      CultivationID: Cul
+                                                          .cultivationId
+                                                          .toString(),
+                                                    )))
+                                            .then((value) => setState(() {}));
+                                      },
+                                    ),
                                   ),
-                                  subtitle: Text(
-                                    'โรงปลูก : ' + Cul.nameGh,
-                                    style: TextStyle(
-                                        color:
-                                            Color.fromARGB(255, 116, 116, 116),
-                                        fontSize: 16),
-                                  ),
-                                  trailing: const Icon(Icons.arrow_forward),
-                                  onTap: () {
-                                    Navigator.of(context)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) =>
-                                                DetailsCultivation(
-                                                  UserID: widget.UserID,
-                                                  CultivationID: Cul
-                                                      .cultivationId
-                                                      .toString(),
-                                                )))
-                                        .then((value) => setState(() {}));
-                                  },
                                 ),
                               ),
                             );
@@ -158,7 +205,7 @@ class _ListCultivationsState extends State<ListCultivations> {
             return AddCultivations(UserID: widget.UserID);
           })).then((value) => setState(() {}));
         },
-        backgroundColor: kBackground,
+        backgroundColor: colorTabbar,
         child: const Icon(Icons.add, color: Colors.white),
       ),
     );

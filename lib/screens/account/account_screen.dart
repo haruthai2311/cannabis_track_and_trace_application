@@ -1,7 +1,13 @@
+import 'package:cannabis_track_and_trace_application/config/styles.dart';
 import 'package:cannabis_track_and_trace_application/screens/account/edit_pass.dart';
 import 'package:cannabis_track_and_trace_application/screens/account/edit_personal.dart';
-import 'package:cannabis_track_and_trace_application/screens/home/bottom_nav_screen.dart';
+import 'package:cannabis_track_and_trace_application/screens/login/login.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_profile_picture/flutter_profile_picture.dart';
+import 'dart:math' as math;
+import 'package:http/http.dart' as http;
+import '../../api/hostapi.dart';
+import '../../api/user.dart';
 
 class AccountScreen extends StatefulWidget {
   final String UserID;
@@ -13,235 +19,261 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
+  late List<UserData> _userdata;
+
+  Future getUserdata() async {
+    var url = hostAPI + '/users/getUserbyid?ID=${widget.UserID}';
+    print(url);
+    var response = await http.get(Uri.parse(url));
+    _userdata = userDataFromJson(response.body);
+
+    return _userdata;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getUserdata();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color.fromARGB(255, 8, 141, 143),
-          title: Text('Profile',
-              style: TextStyle(
-                fontSize: 20,
-                color: Color.fromARGB(255, 255, 255, 255),
-              )),
-        ),
-        body: Container(
-          alignment: Alignment.topCenter,
-          padding: const EdgeInsets.all(10),
-          child: ListView(
-            children: [
-              SizedBox(
-                height: 5,
-              ),
-              Container(
-                child: Column(
-                  children: [
-                    Row(
-                      children: [
-                        Icon(
-                          Icons.account_circle_sharp,
-                          size: 70,
-                        ),
-                        SizedBox(width: 10),
-                        Expanded(
-                          child: ListTile(
-                            title: Text(
-                              'Username',
-                              style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 0, 0, 0)),
-                            ),
-                            subtitle: Text(
-                              '@email.com',
-                              style: TextStyle(
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.bold,
-                                  color: Color.fromARGB(255, 158, 158, 158)),
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    Container(
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              Text(
-                                "Manage your account",
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
-                            ],
-                          )
-                        ],
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: kBackground,
+        title: const Text('Profile',
+            style: TextStyle(
+              fontSize: 20,
+              color: Color.fromARGB(255, 255, 255, 255),
+            )),
+      ),
+      body: Container(
+        alignment: Alignment.topCenter,
+        padding: const EdgeInsets.all(10),
+        child: FutureBuilder(
+          future: getUserdata(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              var result = snapshot.data;
+              return Column(
+                children: [
+                  Row(
+                    children: [
+                      ProfilePicture(
+                        name: result[0].fNameE.toString() +
+                            ' ' +
+                            result[0].lNameE.toString(),
+                        radius: 31,
+                        fontsize: 21,
+                        random: true,
+                        tooltip: true,
+                        //img: 'https://avatars.githubusercontent.com/u/37553901?v=4',
                       ),
-                    ),
-                    Container(
-                      child: Column(
-                        children: [
-                          Row(
-                            children: [
-                              TextButton.icon(
-                                onPressed: () {
-                                  //connect page
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditAccountScreen(
-                                          UserID: widget.UserID,
-                                        ),
-                                      ));
-                                  //connect page
-                                },
-                                icon: Icon(Icons.person,
-                                    size: 40,
-                                    color: Color.fromARGB(255, 2, 73, 34)),
-                                label: Container(
-                                  width: 292, // change width as you need
-                                  height: 40, // change height as you need
-                                  child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Wrap(
-                                        children: [
-                                          Text(
-                                            "Personal information",
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                                fontSize: 18,
-                                                color: Color.fromARGB(255, 0, 0,
-                                                    0)), // change max line you need
-                                          ),
-                                          Text(
-                                            "Edit your personal information",
-                                            textAlign: TextAlign.left,
-                                            style: TextStyle(
-                                              fontSize: 14,
-                                              color: Color.fromARGB(
-                                                  255, 129, 129, 129),
-                                            ), // change max line you need
-                                          ),
-                                        ],
-                                      )),
-                                ),
-                                style: TextButton.styleFrom(
-                                  padding:
-                                      EdgeInsets.fromLTRB(10.0, 8.0, 20.0, 8.0),
-                                  backgroundColor:
-                                      Color.fromARGB(255, 255, 255, 255),
-                                ),
-                              ),
-                            ],
+                      const SizedBox(width: 10),
+                      Expanded(
+                        child: ListTile(
+                          title: Text(
+                            result[0].fNameE.toString() +
+                                ' ' +
+                                result[0].lNameE.toString(),
+                            style: const TextStyle(
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 0, 0, 0)),
                           ),
-                          Row(
-                            children: [
-                              TextButton.icon(
-                                onPressed: () {
-                                  //connect page
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => EditpassScreen(
-                                          UserID: widget.UserID,
-                                        ),
-                                      ));
-                                  //connect page
-                                },
-                                icon: Icon(Icons.key,
-                                    size: 40,
-                                    color: Color.fromARGB(255, 2, 73, 34)),
-                                label: Container(
-                                  width: 292, // change width as you need
-                                  height: 40, // change height as you need
-                                  child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Wrap(
-                                        children: [
-                                          Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.start,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                "Password",
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Color.fromARGB(
-                                                        255,
-                                                        0,
-                                                        0,
-                                                        0)), // change max line you need
-                                              ),
-                                              Text(
-                                                "Edit your password",
-                                                textAlign: TextAlign.left,
-                                                style: TextStyle(
-                                                  fontSize: 14,
-                                                  color: Color.fromARGB(
-                                                      255, 129, 129, 129),
-                                                ), // change max line you need
-                                              ),
-                                            ],
-                                          )
-                                        ],
-                                      )),
-                                ),
-                                style: TextButton.styleFrom(
-                                  padding:
-                                      EdgeInsets.fromLTRB(10.0, 8.0, 20.0, 8.0),
-                                  backgroundColor:
-                                      Color.fromARGB(255, 255, 255, 255),
-                                ),
-                              ),
-                            ],
+                          subtitle: Text(
+                            result[0].email.toString(),
+                            style: const TextStyle(
+                                fontSize: 15,
+                                fontWeight: FontWeight.bold,
+                                color: Color.fromARGB(255, 158, 158, 158)),
                           ),
-                          Row(
-                            children: [
-                              TextButton.icon(
-                                onPressed: () {
-                                  //logout
-                                },
-                                icon: Icon(Icons.logout,
-                                    size: 40,
-                                    color: Color.fromARGB(255, 2, 73, 34)),
-                                label: Container(
-                                  width: 292, // change width as you need
-                                  height: 40, // change height as you need
-                                  child: Align(
-                                    alignment: Alignment.centerLeft,
-                                    child: Text(
-                                      "Logout",
-                                      textAlign: TextAlign.left,
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          color: Color.fromARGB(255, 0, 0,
-                                              0)), // change max line you need
-                                    ),
-                                  ),
-                                ),
-                                style: TextButton.styleFrom(
-                                  padding:
-                                      EdgeInsets.fromLTRB(10.0, 8.0, 20.0, 8.0),
-                                  backgroundColor:
-                                      Color.fromARGB(255, 255, 255, 255),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
+                        ),
                       ),
-                    )
-                  ],
-                ),
-              ),
-            ],
-          ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 15,
+                  ),
+                  Row(
+                    children: const [
+                      Text(
+                        "Manage your account",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.bold),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditAccountScreen(
+                                  UserID: widget.UserID,
+                                ),
+                              ));
+                        },
+                        child: Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                //connect page
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => EditAccountScreen(
+                                        UserID: widget.UserID,
+                                      ),
+                                    ));
+                                //connect page
+                              },
+                              child: const Icon(Icons.manage_accounts_outlined,
+                                  size: 30, color: Color(0xFF036568)),
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                padding: const EdgeInsets.all(15),
+                                primary: const Color(0xFFD1F1F2),
+                                onPrimary: Colors.black,
+                              ),
+                            ),
+                            const Expanded(
+                              child: ListTile(
+                                title: Text(
+                                  'Personal Information',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 0, 0, 0)),
+                                ),
+                                subtitle: Text(
+                                  'Edit your personnal information',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color:
+                                          Color.fromARGB(255, 158, 158, 158)),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditpassScreen(
+                                  UserID: widget.UserID,
+                                ),
+                              ));
+                        },
+                        child: Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                //connect page
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => EditpassScreen(
+                                        UserID: widget.UserID,
+                                      ),
+                                    ));
+                                //connect page
+                              },
+                              child: Transform.rotate(
+                                angle: 180 * math.pi / 100,
+                                child: const Icon(Icons.key_rounded,
+                                    size: 30, color: Color(0xFF036568)),
+                              ),
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                padding: const EdgeInsets.all(15),
+                                primary: const Color(0xFFD1F1F2),
+                                onPrimary: Colors.black,
+                              ),
+                            ),
+                            const Expanded(
+                              child: ListTile(
+                                title: Text(
+                                  'Change Password',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 0, 0, 0)),
+                                ),
+                                subtitle: Text(
+                                  'Change your password',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color:
+                                          Color.fromARGB(255, 158, 158, 158)),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const LoginScreen()));
+                        },
+                        child: Row(
+                          children: [
+                            ElevatedButton(
+                              onPressed: () {
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginScreen()));
+                              },
+                              child: const Icon(Icons.power_settings_new,
+                                  size: 30, color: Color(0xFF036568)),
+                              style: ElevatedButton.styleFrom(
+                                shape: const CircleBorder(),
+                                padding: const EdgeInsets.all(15),
+                                primary: const Color(0xFFD1F1F2),
+                                onPrimary: Colors.black,
+                              ),
+                            ),
+                            const Expanded(
+                              child: ListTile(
+                                title: Text(
+                                  'Log out',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold,
+                                      color: Color.fromARGB(255, 0, 0, 0)),
+                                ),
+                                subtitle: Text(
+                                  'Log out of the',
+                                  style: TextStyle(
+                                      fontSize: 15,
+                                      color:
+                                          Color.fromARGB(255, 158, 158, 158)),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              );
+            }
+            return const LinearProgressIndicator();
+          },
         ),
       ),
     );

@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
           title: Text(msg),
           actions: <Widget>[
             TextButton(
-              child: Text("OK"),
+              child: const Text("OK"),
               onPressed: () {
                 Navigator.of(context).pop();
               },
@@ -249,8 +249,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: 193, //width of button
                               child: ElevatedButton(
                                   style: ElevatedButton.styleFrom(
-                                      textStyle: TextStyle(fontSize: 20),
-                                      primary: Color(0xFF036568),
+                                      textStyle: const TextStyle(fontSize: 20),
+                                      primary: const Color(0xFF036568),
                                       shape: RoundedRectangleBorder(
                                           borderRadius:
                                               BorderRadius.circular(30)),
@@ -264,7 +264,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              BottomNavScreen(UserID: "14")),
+                                              const BottomNavScreen(
+                                                  UserID: "14")),
                                       (Route<dynamic> route) => false,
                                     );
                                     // Navigator.push(context,
@@ -273,7 +274,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     // }));
                                     //}
                                   },
-                                  child: Text("Login"))),
+                                  child: const Text("Login"))),
                         ),
                         const SizedBox(
                           height: 30,
@@ -282,7 +283,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => RegisterScreen(),
+                                builder: (context) => const RegisterScreen(),
                               ),
                             );
                           },

@@ -156,7 +156,9 @@ class _AddCultivationsState extends State<AddCultivations> {
                 Icons.save_as_outlined,
                 color: Colors.white,
               ),
-              onPressed: () { addCultivations();},
+              onPressed: () {
+                addCultivations();
+              },
             )
           ],
         ),
@@ -180,7 +182,7 @@ class _AddCultivationsState extends State<AddCultivations> {
               }
               // print(nameStrains);
 
-              return  Padding(
+              return Padding(
                 padding: const EdgeInsets.all(10),
                 child: SingleChildScrollView(
                   child: Column(
@@ -206,13 +208,10 @@ class _AddCultivationsState extends State<AddCultivations> {
                           ),
                           const SizedBox(height: 10),
                           Container(
-                            margin:
-                                const EdgeInsets.only(left: 15, right: 15),
-                            padding:
-                                const EdgeInsets.only(left: 15, right: 15),
+                            margin: const EdgeInsets.only(left: 15, right: 15),
+                            padding: const EdgeInsets.only(left: 15, right: 15),
                             decoration: BoxDecoration(
-                              color:
-                                  const Color.fromARGB(255, 240, 239, 239),
+                              color: const Color.fromARGB(255, 240, 239, 239),
                               borderRadius: BorderRadius.circular(20),
                               boxShadow: const [
                                 BoxShadow(
@@ -363,7 +362,6 @@ class _AddCultivationsState extends State<AddCultivations> {
                     ],
                   ),
                 ),
-             
               );
             }
             return const LinearProgressIndicator();
@@ -386,8 +384,8 @@ class _AddCultivationsState extends State<AddCultivations> {
           decoration: BoxDecoration(
             color: const Color.fromARGB(255, 240, 239, 239),
             borderRadius: BorderRadius.circular(20),
-            boxShadow: const[
-               BoxShadow(
+            boxShadow: const [
+              BoxShadow(
                 color: Colors.black26,
                 offset: Offset(0, 2),
               ),
@@ -401,7 +399,7 @@ class _AddCultivationsState extends State<AddCultivations> {
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
-                hintStyle:  TextStyle(color: Colors.black38, fontSize: 18)),
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
       ],
@@ -414,7 +412,7 @@ class _AddCultivationsState extends State<AddCultivations> {
       children: [
         const Text(
           "วันที่เพาะเมล็ด :",
-          style:  TextStyle(
+          style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
         const SizedBox(height: 10),
@@ -593,9 +591,9 @@ class _AddCultivationsState extends State<AddCultivations> {
             style: const TextStyle(color: Colors.black),
             decoration: const InputDecoration(
                 border: InputBorder.none,
-                contentPadding:  EdgeInsets.only(left: 15),
+                contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
-                hintStyle:  TextStyle(color: Colors.black38, fontSize: 18)),
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
       ],
@@ -632,7 +630,7 @@ class _AddCultivationsState extends State<AddCultivations> {
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
-                hintStyle:  TextStyle(color: Colors.black38, fontSize: 18)),
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
       ],
@@ -704,7 +702,7 @@ class _AddCultivationsState extends State<AddCultivations> {
             style: const TextStyle(color: Colors.black),
             decoration: const InputDecoration(
                 border: InputBorder.none,
-                contentPadding:  EdgeInsets.only(left: 15),
+                contentPadding: EdgeInsets.only(left: 15),
                 hintText: 'ระบุ',
                 hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
@@ -742,7 +740,7 @@ class _AddCultivationsState extends State<AddCultivations> {
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
                 hintText: '**หมายเหตุ**',
-                hintStyle:  TextStyle(color: Colors.black38, fontSize: 18)),
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
       ],

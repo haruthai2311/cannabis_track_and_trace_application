@@ -44,11 +44,11 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kBackground,
-        title: Text("Plant Tracking"),
+        title: const Text("Plant Tracking"),
       ),
       body: Container(
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
             colors: [
               kBackground,
@@ -104,8 +104,8 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                     height: MediaQuery.of(context).size.height * 0.5,
                   ),
                   Padding(
-                    padding: EdgeInsets.fromLTRB(0.0, 350.0, 0.0, 0.0),
-                    child: Container(
+                    padding: const EdgeInsets.fromLTRB(0.0, 350.0, 0.0, 0.0),
+                    child: SizedBox(
                       height: MediaQuery.of(context).size.height,
                       width: MediaQuery.of(context).size.width,
                       child: Material(
@@ -114,7 +114,7 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                           children: <Widget>[
                             Padding(
                               padding:
-                                  EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
+                                  const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
                               child: Column(
                                 children: [
                                   const SizedBox(

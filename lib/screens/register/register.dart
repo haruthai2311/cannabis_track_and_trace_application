@@ -573,9 +573,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             width: 193, //width of button
                             child: ElevatedButton(
                                 style: ElevatedButton.styleFrom(
-                                    textStyle: TextStyle(fontSize: 20),
+                                    textStyle: const TextStyle(fontSize: 20),
                                     //primary: Color(0xFF036568),
-                                    primary: Color.fromARGB(255, 4, 126, 8),
+                                    primary: const Color(0xFF036568),
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(30)),
@@ -585,7 +585,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     register();
                                   }
                                 },
-                                child: Text("Register"))),
+                                child: const Text("Register"))),
                         const SizedBox(
                           height: 10,
                         ),
@@ -593,7 +593,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           onTap: () {
                             Navigator.of(context).push(
                               MaterialPageRoute(
-                                builder: (context) => LoginScreen(),
+                                builder: (context) => const LoginScreen(),
                               ),
                             );
                           },

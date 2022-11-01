@@ -44,14 +44,10 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
           backgroundColor: kBackground,
         ),
         body: Container(
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                kBackground,
-                Colors.white60,
-              ],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("images/CardListTracking1.jpg"),
+              fit: BoxFit.fill,
             ),
           ),
           child: FutureBuilder(
@@ -78,29 +74,61 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
                 //print(result);
                 return Column(
                   children: <Widget>[
-                    const SizedBox(height: 20),
-                    const Text(
-                      "บันทึกผลตรวจประจำวัน",
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
+                    Padding(
+                      padding: const EdgeInsets.all(40),
+                      child: Column(
+                        children: [
+                          Text(
+                            "บันทึกผลตรวจประจำวัน",
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                          ),
+                          Text(
+                            "กระถางหมายเลข : ${result[0].potsName}",
+                            style: const TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white),
+                          ),
+                        ],
+                      ),
                     ),
-                    Text(
-                      "กระถางหมายเลข : ${result[0].potsName}",
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                          color: Colors.white),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 1),
+                      child: Row(
+                        children: [
+                          const Text(
+                            "List Plant Tracking",
+                            style: TextStyle(
+                              color: Colors.white70,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 16,
+                            ),
+                          ),
+                          const Spacer(),
+                          InkWell(
+                            onTap: () {},
+                            child: const Text(
+                              "all",
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                              ),
+                            ),
+                          )
+                        ],
+                      ),
                     ),
-                    const SizedBox(height: 20),
                     Expanded(
                       child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white70,
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(240, 255, 255, 255),
                           borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(20),
-                            topRight: Radius.circular(20),
+                            topLeft: Radius.circular(40),
+                            topRight: Radius.circular(40),
                           ),
                         ),
                         child: Align(
@@ -111,30 +139,53 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
                               itemBuilder: (context, index) {
                                 final Plantracking = result[index];
                                 return Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 5, right: 5),
-                                  child: Card(
-                                    color: Colors.white,
-                                    shape: RoundedRectangleBorder(
+                                  padding: const EdgeInsets.only(
+                                      left: 10, right: 10, top: 10),
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      boxShadow: const [
+                                        BoxShadow(
+                                          blurRadius: 2,
+                                          color: Color(0x33000000),
+                                          offset: Offset(1, 3),
+                                          spreadRadius: 1,
+                                        )
+                                      ],
                                       borderRadius: BorderRadius.circular(20),
+                                      color: Colors.pink,
+                                      border: Border.all(
+                                        color: const Color(0xFFCFD4DB),
+                                        width: 1,
+                                      ),
                                     ),
-                                    child: ListTile(
-                                      title: Text("วันที่ : " +
-                                          f.format(Plantracking.checkDate)),
-                                      subtitle: const Text('Tracking'),
-                                      trailing: const Icon(Icons.arrow_forward),
-                                      onTap: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    DetailsPlantTrackingPage(
-                                                        PlantrackingID:
-                                                            Plantracking
-                                                                .plantTrackingId
-                                                                .toString(),
-                                                        UserID:
-                                                            widget.UserID)));
-                                      },
+                                    child: Padding(
+                                      padding: const EdgeInsets.only(right: 8),
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(20),
+                                          color: Colors.white,
+                                        ),
+                                        child: ListTile(
+                                          title: Text("วันที่ : " +
+                                              f.format(Plantracking.checkDate)),
+                                          subtitle: const Text('Tracking'),
+                                          trailing:
+                                              const Icon(Icons.arrow_forward),
+                                          onTap: () {
+                                            Navigator.of(context).push(
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DetailsPlantTrackingPage(
+                                                            PlantrackingID:
+                                                                Plantracking
+                                                                    .plantTrackingId
+                                                                    .toString(),
+                                                            UserID: widget
+                                                                .UserID)));
+                                          },
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 );
