@@ -117,7 +117,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                 builder: (context) => EditAccountScreen(
                                   UserID: widget.UserID,
                                 ),
-                              ));
+                              )).then((value) => setState(() {}));
                         },
                         child: Row(
                           children: [
@@ -130,7 +130,7 @@ class _AccountScreenState extends State<AccountScreen> {
                                       builder: (context) => EditAccountScreen(
                                         UserID: widget.UserID,
                                       ),
-                                    ));
+                                    )).then((value) => setState(() {}));
                                 //connect page
                               },
                               child: const Icon(Icons.manage_accounts_outlined,

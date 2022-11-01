@@ -3,11 +3,9 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
-import '../../../api/allcultivations.dart';
-import '../../../api/allgreenhouses.dart';
-import '../../../api/allstrains.dart';
 import '../../../api/hostapi.dart';
 import '../../../config/styles.dart';
+import '../../api/user.dart';
 
 class EditAccountScreen extends StatefulWidget {
   final String UserID;
@@ -19,21 +17,37 @@ class EditAccountScreen extends StatefulWidget {
 }
 
 class _EditAccountScreenState extends State<EditAccountScreen> {
+  final _formKey = GlobalKey<FormState>();
+  bool _visible = false;
+
+  final _ctlFirstNameT = TextEditingController();
+  final _ctlLastnameT = TextEditingController();
+  final _ctlFirstNameE = TextEditingController();
+  final _ctlLastnameE = TextEditingController();
+  final _ctlEmail = TextEditingController();
+
+  late List<UserData> _userdata;
+
+  Future getUserdata() async {
+    var url = hostAPI + '/users/getUserbyid?ID=${widget.UserID}';
+    print(url);
+    var response = await http.get(Uri.parse(url));
+    _userdata = userDataFromJson(response.body);
+
+    return _userdata;
+  }
+
   @override
   void initState() {
     super.initState();
+    getUserdata();
   }
-
-  String? dropdownStrain;
-
-  String? dropdownGH;
-  final f = DateFormat('dd/MM/yyyy  hh:mm:ss');
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Edit your personal information"),
+          title: const Text("Edit information"),
           backgroundColor: kBackground,
           actions: <Widget>[
             IconButton(
@@ -48,36 +62,43 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
           ],
         ),
         body: FutureBuilder(
+          future: getUserdata(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            return Padding(
-              padding: const EdgeInsets.all(10),
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    const Text(
-                      "แก้ไขข้อมูลส่วนบุคคล",
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 8, 143, 114)),
-                    ),
-                    const SizedBox(height: 50),
-                    const SizedBox(height: 20),
-                    email(),
-                    const SizedBox(height: 20),
-                    firstName(),
-                    const SizedBox(height: 20),
-                    usernameth(),
-                    const SizedBox(height: 20),
-                    nameeng(),
-                    const SizedBox(height: 20),
-                    usernameeng(),
-                  ],
+            if (snapshot.connectionState == ConnectionState.done) {
+              var result = snapshot.data;
+              _ctlFirstNameT.text = result[0].fNameT.toString();
+              _ctlLastnameT.text = result[0].lNameT.toString();
+              _ctlFirstNameE.text = result[0].fNameE.toString();
+              _ctlLastnameE.text = result[0].lNameE.toString();
+              _ctlEmail.text = result[0].email.toString();
+              return Padding(
+                padding: const EdgeInsets.all(10),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(height: 10),
+                      const Text(
+                        "แก้ไขข้อมูลส่วนบุคคล",
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.w600,
+                            color: Color.fromARGB(255, 8, 143, 114)),
+                      ),
+                      const SizedBox(height: 50),
+                      firstNameT(),
+                      const SizedBox(height: 20),
+                      lastnameT(),
+                      const SizedBox(height: 20),
+                      firstNameE(),
+                      const SizedBox(height: 20),
+                      lastnameE(),
+                      const SizedBox(height: 20),
+                      email(),
+                    ],
+                  ),
                 ),
-              ),
-            );
-            // }
+              );
+            }
             return const LinearProgressIndicator();
           },
         ));
@@ -88,7 +109,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "อีเมล์:",
+          "อีเมล:",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -106,6 +127,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlEmail,
             style: const TextStyle(color: Colors.black),
             decoration: const InputDecoration(
                 border: InputBorder.none,
@@ -118,12 +140,12 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     );
   }
 
-  Widget firstName() {
+  Widget firstNameT() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "ชื่อภาษาไทย:",
+          "ชื่อ (ภาษาไทย) :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -141,6 +163,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlFirstNameT,
             style: const TextStyle(color: Colors.black),
             decoration: const InputDecoration(
                 border: InputBorder.none,
@@ -153,12 +176,12 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     );
   }
 
-  Widget usernameth() {
+  Widget lastnameT() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "นามสกุลภาษาไทย:",
+          "นามสกุล (ภาษาไทย) :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -176,6 +199,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlLastnameT,
             style: const TextStyle(color: Colors.black),
             decoration: const InputDecoration(
                 border: InputBorder.none,
@@ -188,12 +212,12 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     );
   }
 
-  Widget nameeng() {
+  Widget firstNameE() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "Firstname:",
+          "ชื่อ (ภาษาอังกฤษ) :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -211,6 +235,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlFirstNameE,
             style: const TextStyle(color: Colors.black),
             decoration: const InputDecoration(
                 border: InputBorder.none,
@@ -223,12 +248,12 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
     );
   }
 
-  Widget usernameeng() {
+  Widget lastnameE() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         const Text(
-          "Username:",
+          "นามสกุล (ภาษาอังกฤษ) :",
           style: TextStyle(
               color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
         ),
@@ -246,6 +271,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
             ],
           ),
           child: TextFormField(
+            controller: _ctlLastnameE,
             style: const TextStyle(color: Colors.black),
             decoration: const InputDecoration(
                 border: InputBorder.none,
@@ -277,7 +303,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
             TextButton(
               child: Text('ยืนยัน'),
               onPressed: () {
-                // EditData();
+                Editdata();
                 Navigator.of(context).pop();
               },
             ),
@@ -292,4 +318,76 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
       },
     );
   }
+
+  Future Editdata() async {
+    var url = hostAPI + "/users/editProfile";
+    // Showing LinearProgressIndicator.
+    setState(() {
+      _visible = true;
+    });
+
+    var response = await http.put(Uri.parse(url), body: {
+      "userID": widget.UserID,
+      "fnameT": _ctlFirstNameT.text,
+      "lnameT": _ctlLastnameT.text,
+      "fnameE": _ctlFirstNameE.text,
+      "lnameE": _ctlLastnameE.text,
+      "email": _ctlEmail.text,
+      "UpdateBy": widget.UserID,
+    });
+    print('Response status : ${response.statusCode}');
+    print('Response body : ${response.body}');
+    if (response.statusCode == 200) {
+      print(response.body);
+      var msg = jsonDecode(response.body);
+
+      //Check Login Status
+      if (msg['success'] == true) {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+        });
+        //showMessage(msg["message"]);
+      } else {
+        setState(() {
+          //hide progress indicator
+          _visible = false;
+
+          //Show Error Message Dialog
+          showMessage(msg["message"]);
+          
+        });
+        //showMessage(context, 'เกิดข้อผิดพลาด');
+      }
+    } else {
+      setState(() {
+        //hide progress indicator
+        _visible = false;
+
+        //Show Error Message Dialog
+        showMessage("Error during connecting to Server.");
+      });
+    }
+  }
+
+  Future<dynamic> showMessage(String msg) async {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(msg),
+          actions: <Widget>[
+            TextButton(
+              child: const Text("OK"),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  
 }
