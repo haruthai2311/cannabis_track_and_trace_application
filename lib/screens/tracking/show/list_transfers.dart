@@ -100,7 +100,7 @@ class _ListTransfersState extends State<ListTransfers> {
                             "all",
                             style: TextStyle(
                               color: Colors.black54,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w800,
                               fontSize: 16,
                             ),
                           ),
@@ -170,7 +170,7 @@ class _ListTransfersState extends State<ListTransfers> {
                                               fontSize: 16),
                                         ),
                                         trailing:
-                                            const Icon(Icons.arrow_forward),
+                                            const Icon(Icons.chevron_right),
                                         onTap: () {
                                           Navigator.of(context)
                                               .push(MaterialPageRoute(

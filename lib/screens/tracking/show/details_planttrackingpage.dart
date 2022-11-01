@@ -95,436 +95,516 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                 SoilMoisture = "N/A";
               }
               return SingleChildScrollView(
-                  child: Stack(
+                  child: Column(
                 children: <Widget>[
-                  Image.network(
-                    hostAPI + result[0].fileName,
-                    fit: BoxFit.cover,
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height * 0.5,
-                  ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0.0, 350.0, 0.0, 0.0),
-                    child: SizedBox(
-                      height: MediaQuery.of(context).size.height,
-                      width: MediaQuery.of(context).size.width,
-                      child: Material(
-                        borderRadius: BorderRadius.circular(35.0),
-                        child: Column(
-                          children: <Widget>[
-                            Padding(
-                              padding:
-                                  const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 20.0),
-                              child: Column(
-                                children: [
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-
-                                  Row(
-                                    children: <Widget>[
-                                      Expanded(
-                                        child: Row(
-                                          children: [
-                                            const Expanded(
-                                              child: Text(
-                                                "โรงปลูก : ",
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.normal),
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                result[0].ghName.toString(),
-                                                style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Row(
-                                          children: <Widget>[
-                                            const Expanded(
-                                              child: Text(
-                                                "รอบปลูก :",
-                                                style: TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.normal),
-                                              ),
-                                            ),
-                                            Expanded(
-                                              child: Text(
-                                                result[0].no.toString(),
-                                                style: const TextStyle(
-                                                    color: Colors.black,
-                                                    fontSize: 20,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      )
-                                    ],
-                                  ),
-
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Expanded(
-                                        child: Text(
-                                          "หมายเลขกระถาง :",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          result[0].potsName.toString(),
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-
-                                  //buildBox("รอบที่ปลูก :", _ctlCulNo),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Text(
-                                        "วันที่บันทึก :  ",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                      Text(
-                                        f
-                                            .format(result[0].checkDate)
-                                            .toString(),
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-
-                                  //buildBox("วันที่บันทึก :", _ctlCheckDate),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Expanded(
-                                        child: Text(
-                                          "สถานะปัจจุบัน : ",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          Status,
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-
-                                  //buildBox("สถานะปัจจุบัน :", _ctlPlantStatus),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Expanded(
-                                        child: Text(
-                                          "ความชื้นของดิน : ",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          SoilMoisture,
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-
-                                  //buildBox("ความชื้นของดิน :", _ctlSoilMoisture),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Expanded(
-                                        child: Text(
-                                          "หมายเหตุ :\n(ความชื้นของดิน) ",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          result[0].soilRemark.toString(),
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  // buildBox(
-                                  //     "หมายเหตุ(ความชื้นของดิน) :", _ctlSoilRemark),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Expanded(
-                                        child: Text(
-                                          "หมายเหตุ : ",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          result[0].remark.toString(),
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  //buildBox("โรคที่พบ :", _ctlDisease),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Expanded(
-                                        child: Text(
-                                          "โรคที่พบ : ",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          result[0].disease,
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Expanded(
-                                        child: Text(
-                                          "วิธีแก้ไข : ",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          result[0].fixDisease,
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  //buildBox("วิธีแก้ไข :", _ctlFixDisease),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Expanded(
-                                        child: Text(
-                                          "แมลงที่พบ : ",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          result[0].insect,
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  // buildBox("แมลงที่พบ :", _ctlInsect),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Expanded(
-                                        child: Text(
-                                          "วิธีแก้ไข : ",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          result[0].fixInsect,
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  // buildBox("วิธีแก้ไข :", _ctlFixInsect),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Expanded(
-                                        child: Text(
-                                          "เก็บซาก : ",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          result[0].weight.toString() + ' Kg',
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  // buildBox("เก็บซาก :", _ctlWeight),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Text(
-                                        "วันที่เก็บซาก :  ",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.normal),
-                                      ),
-                                      Text(
-                                        f.format(result[0].logTime).toString(),
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      ),
-                                    ],
-                                  ),
-                                  // buildBox("วันที่เก็บซาก :", _ctlLogtime),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Expanded(
-                                        child: Text(
-                                          "เหตุผลที่เก็บซาก : ",
-                                          style: TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal),
-                                        ),
-                                      ),
-                                      Expanded(
-                                        child: Text(
-                                          result[0].trashRemark,
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  // buildBox("เหตุผลที่เก็บซาก :", _ctlTrashRemark),
-                                  const SizedBox(
-                                    height: 15,
-                                  ),
-                                ],
+                    padding: EdgeInsets.all(10),
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
+                      child: Column(
+                        children: <Widget>[
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 5, 0, 20),
+                            child: Container(
+                              width: 60,
+                              height: 4,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFDBE2E7),
+                                borderRadius: BorderRadius.circular(8),
                               ),
-                            )
-                          ],
-                        ),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Plant Tracking Summary',
+                                style: TextStyle(
+                                  color: Colors.pink,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w500,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 10,
+                          ),
+                          // Padding(
+                          //   padding: const EdgeInsets.all(8.0),
+                          //   child: ClipRRect(
+                          //     borderRadius: BorderRadius.circular(8.0),
+                          //     child: Image.network(
+                          //       hostAPI + result[0].fileName,
+                          //       fit: BoxFit.cover,
+                          //       width: double.infinity,
+                          //       height:
+                          //           MediaQuery.of(context).size.height * 0.5,
+                          //     ),
+                          //   ),
+                          // ),
+                          Container(
+                            height: 250,
+                            width: double.infinity,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: Color(0xFFF1F4F8),
+                                width: 2,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.all(15),
+                              child: Image.network(
+                                hostAPI + result[0].fileName,
+                                fit: BoxFit.cover,
+                                width: MediaQuery.of(context).size.width,
+                                height:
+                                    MediaQuery.of(context).size.height * 0.5,
+                              ),
+                            ),
+                          ),
+                          // SizedBox(
+                          //   height: 10,
+                          // ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 8),
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        color: Color(0xFFF1F4F8),
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                            padding: EdgeInsets.only(left: 10)),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 12, 0),
+                                          child: Icon(
+                                            Icons.home,
+                                            color: Colors.green,
+                                            size: 24,
+                                          ),
+                                        ),
+                                        Text(
+                                          "โรงปลูก :  ",
+                                          style: TextStyle(
+                                            color: colorDetails3,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        Text(
+                                          result[0].ghName.toString(),
+                                          style: TextStyle(
+                                            color: colorDetails2,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsetsDirectional.fromSTEB(
+                                      0, 0, 0, 8),
+                                  child: Container(
+                                    width: double.infinity,
+                                    height: 60,
+                                    decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius: BorderRadius.circular(8),
+                                      border: Border.all(
+                                        color: Color(0xFFF1F4F8),
+                                        width: 2,
+                                      ),
+                                    ),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                            padding: EdgeInsets.only(left: 10)),
+                                        Padding(
+                                          padding:
+                                              EdgeInsetsDirectional.fromSTEB(
+                                                  0, 0, 12, 0),
+                                          child: Icon(
+                                            Icons.grade,
+                                            color: Colors.orange,
+                                            size: 20,
+                                          ),
+                                        ),
+                                        Text(
+                                          "รอบปลูก :  ",
+                                          style: TextStyle(
+                                            color: colorDetails3,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                        Text(
+                                          result[0].no.toString(),
+                                          style: TextStyle(
+                                            color: colorDetails2,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 10),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text(
+                                      "หมายเลขกระถาง :  ",
+                                      style: TextStyle(
+                                        color: colorDetails3,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      result[0].potsName.toString(),
+                                      style: TextStyle(
+                                        color: colorDetails2,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "วันที่บันทึก :  ",
+                                      style: TextStyle(
+                                        color: colorDetails3,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      f.format(result[0].checkDate).toString(),
+                                      style: TextStyle(
+                                        color: colorDetails2,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "สถานะปัจจุบัน :  ",
+                                      style: TextStyle(
+                                        color: colorDetails3,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      Status,
+                                      style: TextStyle(
+                                        color: colorDetails2,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                //SizedBox(height: 5),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 8, right: 8),
+                                  child: Divider(
+                                    height: 24,
+                                    thickness: 2,
+                                    color: Color(0xFFF1F4F8),
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "ความชื้นของดิน :  ",
+                                      style: TextStyle(
+                                        color: colorDetails3,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: Text(
+                                        SoilMoisture,
+                                        style: TextStyle(
+                                          color: colorDetails2,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.normal,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+
+                                //SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "หมายเหตุ :  ",
+                                      style: TextStyle(
+                                        color: colorDetails3,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      result[0].soilRemark.toString(),
+                                      style: TextStyle(
+                                        color: colorDetails2,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 8, right: 8),
+                                  child: Divider(
+                                    height: 24,
+                                    thickness: 2,
+                                    color: Color(0xFFF1F4F8),
+                                  ),
+                                ),
+
+                                Row(
+                                  children: [
+                                    Text(
+                                      "โรคที่พบ :  ",
+                                      style: TextStyle(
+                                        color: colorDetails3,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      result[0].disease,
+                                      style: TextStyle(
+                                        color: colorDetails2,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "วิธีแก้ไข :  ",
+                                      style: TextStyle(
+                                        color: colorDetails3,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      result[0].fixDisease,
+                                      style: TextStyle(
+                                        color: colorDetails2,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                //SizedBox(height: 5),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 8, right: 8),
+                                  child: Divider(
+                                    height: 24,
+                                    thickness: 2,
+                                    color: Color(0xFFF1F4F8),
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "แมลงที่พบ :  ",
+                                      style: TextStyle(
+                                        color: colorDetails3,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      result[0].insect,
+                                      style: TextStyle(
+                                        color: colorDetails2,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "วิธีแก้ไข :  ",
+                                      style: TextStyle(
+                                        color: colorDetails3,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      result[0].fixInsect,
+                                      style: TextStyle(
+                                        color: colorDetails2,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                //SizedBox(height: 5),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.only(left: 8, right: 8),
+                                  child: Divider(
+                                    height: 24,
+                                    thickness: 2,
+                                    color: Color(0xFFF1F4F8),
+                                  ),
+                                ),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "เก็บซาก :  ",
+                                      style: TextStyle(
+                                        color: colorDetails3,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      result[0].weight.toString() + ' Kg',
+                                      style: TextStyle(
+                                        color: colorDetails2,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "วันที่เก็บซาก :  ",
+                                      style: TextStyle(
+                                        color: colorDetails3,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      f.format(result[0].logTime).toString(),
+                                      style: TextStyle(
+                                        color: colorDetails2,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SizedBox(height: 5),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "เหตุผลที่เก็บซาก :  ",
+                                      style: TextStyle(
+                                        color: colorDetails3,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      result[0].trashRemark,
+                                      style: TextStyle(
+                                        color: colorDetails2,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                //SizedBox(height: 10),
+                                Divider(
+                                  height: 24,
+                                  thickness: 2,
+                                  color: Color(0xFFF1F4F8),
+                                ),
+                                SizedBox(height: 10),
+                                Row(
+                                  children: [
+                                    Text(
+                                      "*** หมายเหตุ :  ",
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 82, 82, 82),
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    Text(
+                                      result[0].remark.toString(),
+                                      style: TextStyle(
+                                        color: colorDetails2,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                        ],
                       ),
                     ),
-                  )
+                  ),
                 ],
               ));
             }

@@ -114,7 +114,7 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
                               "all",
                               style: TextStyle(
                                 color: Colors.black54,
-                                fontWeight: FontWeight.w700,
+                                fontWeight: FontWeight.w800,
                                 fontSize: 16,
                               ),
                             ),
@@ -171,7 +171,7 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
                                               f.format(Plantracking.checkDate)),
                                           subtitle: const Text('Tracking'),
                                           trailing:
-                                              const Icon(Icons.arrow_forward),
+                                              const Icon(Icons.chevron_right),
                                           onTap: () {
                                             Navigator.of(context).push(
                                                 MaterialPageRoute(

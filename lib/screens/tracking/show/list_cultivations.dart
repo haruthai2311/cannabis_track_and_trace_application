@@ -102,7 +102,7 @@ class _ListCultivationsState extends State<ListCultivations> {
                             "all",
                             style: TextStyle(
                               color: Colors.black54,
-                              fontWeight: FontWeight.w700,
+                              fontWeight: FontWeight.w800,
                               fontSize: 16,
                             ),
                           ),
@@ -169,7 +169,7 @@ class _ListCultivationsState extends State<ListCultivations> {
                                                 255, 116, 116, 116),
                                             fontSize: 16),
                                       ),
-                                      trailing: const Icon(Icons.arrow_forward),
+                                      trailing: const Icon(Icons.chevron_right),
                                       onTap: () {
                                         Navigator.of(context)
                                             .push(MaterialPageRoute(

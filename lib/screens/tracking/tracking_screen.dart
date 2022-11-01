@@ -3,6 +3,7 @@ import 'package:cannabis_track_and_trace_application/screens/tracking/add/plant_
 import 'package:cannabis_track_and_trace_application/screens/tracking/show/list_cultivations.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/show/list_harvests.dart';
 import 'package:cannabis_track_and_trace_application/screens/tracking/show/list_transfers.dart';
+import 'package:cannabis_track_and_trace_application/test.dart';
 import 'package:flutter/material.dart';
 
 class TrackingScreen extends StatefulWidget {
@@ -26,6 +27,15 @@ class _TrackingScreenState extends State<TrackingScreen> {
       appBar: AppBar(
         backgroundColor: kBackground,
         title: const Text("Tracking"),
+        // actions: [
+        //   IconButton(
+        //       onPressed: () {
+        //         Navigator.push(context, MaterialPageRoute(builder: (context) {
+        //           return Test();
+        //         }));
+        //       },
+        //       icon: Icon(Icons.add))
+        // ],
       ),
       extendBody: true,
       body: SingleChildScrollView(
