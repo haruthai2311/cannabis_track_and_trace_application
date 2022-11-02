@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
+import 'package:cannabis_track_and_trace_application/widget/forminput.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../api/allgreenhouses.dart';
@@ -162,248 +163,257 @@ class _AddCultivationsState extends State<AddCultivations> {
             )
           ],
         ),
-        body: FutureBuilder(
-          future: getData(),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              var result1 = snapshot.data[0];
-              var result2 = snapshot.data[1];
-              var nameGH = ['N/A'];
-              for (var i = 0; i < result1.length; i++) {
-                nameGH.add(result1[i].name);
-              }
-              print(nameGH);
+        body: Container(
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                kBackground,
+                Colors.white60,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: FutureBuilder(
+            future: getData(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                var result1 = snapshot.data[0];
+                var result2 = snapshot.data[1];
+                var nameGH = ['N/A'];
+                for (var i = 0; i < result1.length; i++) {
+                  nameGH.add(result1[i].name);
+                }
+                print(nameGH);
 
-              var nameStrains = [
-                'N/A',
-              ];
-              for (var i = 0; i < result2.length; i++) {
-                nameStrains.add(result2[i].name);
-              }
-              // print(nameStrains);
+                var nameStrains = [
+                  'N/A',
+                ];
+                for (var i = 0; i < result2.length; i++) {
+                  nameStrains.add(result2[i].name);
+                }
+                // print(nameStrains);
 
-              return Padding(
-                padding: const EdgeInsets.all(10),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      const Text(
-                        "บันทึกข้อมูลการปลูก",
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(255, 8, 143, 114)),
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
                       ),
-                      const SizedBox(height: 50),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Column(
                         children: [
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 5, 0, 20),
+                            child: Container(
+                              width: 60,
+                              height: 4,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFDBE2E7),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
                           const Text(
-                            "โรงปลูก :",
+                            "บันทึกข้อมูลการปลูก",
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
+                                fontSize: 24,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.orange),
+                          ),
+                          const SizedBox(height: 20),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8, right: 8),
+                            child: Divider(
+                              height: 24,
+                              thickness: 2,
+                              color: Color(0xFFF1F4F8),
+                            ),
                           ),
                           const SizedBox(height: 10),
-                          Container(
-                            margin: const EdgeInsets.only(left: 15, right: 15),
-                            padding: const EdgeInsets.only(left: 15, right: 15),
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 240, 239, 239),
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  offset: Offset(0, 2),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "โรงปลูก :",
+                                style: const TextStyle(
+                                  color: colorDetails3,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
                                 ),
-                              ],
-                            ),
-                            child: DropdownButton(
-                              dropdownColor: Colors.white,
-                              iconSize: 30,
-                              isExpanded: true,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
                               ),
-                              value: dropdownGH,
-                              icon: const Icon(Icons.keyboard_arrow_down),
-                              items: nameGH.map((String items) {
-                                return DropdownMenuItem(
-                                  value: items,
-                                  child: Text(items),
-                                );
-                              }).toList(),
-                              onChanged: (String? newValue) {
-                                setState(
-                                  () {
-                                    dropdownGH = newValue!;
+                              const SizedBox(height: 10),
+                              Container(
+                                padding:
+                                    const EdgeInsets.only(left: 15, right: 15),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                    color: Color.fromARGB(255, 238, 238, 240),
+                                    width: 2,
+                                  ),
+                                ),
+                                child: DropdownButton(
+                                  dropdownColor: Colors.white,
+                                  iconSize: 30,
+                                  isExpanded: true,
+                                  style: const TextStyle(
+                                    color: colorDetails2,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  value: dropdownGH,
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  items: nameGH.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(
+                                      () {
+                                        dropdownGH = newValue!;
+                                      },
+                                    );
                                   },
-                                );
-                              },
-                            ),
+                                ),
+                              ),
+                            ],
                           ),
+                          const SizedBox(height: 20),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text(
+                                "สายพันธุ์ :",
+                                style: const TextStyle(
+                                  color: colorDetails3,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Container(
+                                padding:
+                                    const EdgeInsets.only(left: 15, right: 15),
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                    color: Color.fromARGB(255, 238, 238, 240),
+                                    width: 2,
+                                  ),
+                                ),
+                                child: DropdownButton(
+                                  dropdownColor: Colors.white,
+                                  iconSize: 30,
+                                  isExpanded: true,
+                                  style: const TextStyle(
+                                    color: colorDetails2,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  value: dropdownStrain,
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  items: nameStrains.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(
+                                      () {
+                                        dropdownStrain = newValue!;
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                          const SizedBox(height: 20),
+                          MyForm().buildform("รอบการผลิต : ", _ctlNo),
+                          const SizedBox(height: 20),
+                          buildSeedData(),
+                          const SizedBox(height: 20),
+                          buildMoveData(),
+                          const SizedBox(height: 20),
+                          MyForm().buildform("จำนวนเมล็ด : ", _ctlSeedtotal),
+                          const SizedBox(height: 20),
+                          MyForm().buildform("น้ำหนักเมล็ด : ", _ctlSeedNet),
+                          const SizedBox(height: 20),
+                          MyForm()
+                              .buildform("จำนวนต้นทั้งหมด : ", _ctlPlantTotal),
+                          const SizedBox(height: 20),
+                          MyForm().buildform(
+                              "จำนวนต้นเป็นทั้งหมด : ", _ctlPlantLive),
+                          const SizedBox(height: 20),
+                          MyForm().buildform(
+                              "จำนวนต้นตายทั้งหมด : ", _ctlPlantDead),
+                          const SizedBox(height: 20),
+                          MyForm()
+                              .buildformRemake("หมายเหตุ : ", _ctlPlantRemake),
+                          const SizedBox(height: 20),
+                          // Row(
+                          //   mainAxisAlignment: MainAxisAlignment.end,
+                          //   children: [
+                          //     Column(
+                          //       children: [
+                          //         ElevatedButton(
+                          //           style: ElevatedButton.styleFrom(
+                          //               textStyle: TextStyle(fontSize: 18),
+                          //               primary: Color.fromARGB(255, 10, 94, 3),
+                          //               shape: RoundedRectangleBorder(
+                          //                   borderRadius:
+                          //                       BorderRadius.circular(30)),
+                          //               padding: const EdgeInsets.all(15)),
+                          //           onPressed: () {
+                          //             addCultivations();
+                          //           },
+                          //           child: Text("บันทึก"),
+                          //         ),
+                          //       ],
+                          //     ),
+                          //     SizedBox(width: 10),
+                          //     Column(
+                          //       children: [
+                          //         ElevatedButton(
+                          //           style: ElevatedButton.styleFrom(
+                          //               textStyle: TextStyle(fontSize: 18),
+                          //               primary:
+                          //                   Color.fromARGB(255, 197, 16, 4),
+                          //               shape: RoundedRectangleBorder(
+                          //                   borderRadius:
+                          //                       BorderRadius.circular(30)),
+                          //               padding: const EdgeInsets.all(15)),
+                          //           onPressed: () {
+                          //             canceldialog.showDialogCancel(context);
+                          //           },
+                          //           child: Text("ยกเลิก"),
+                          //         ),
+                          //       ],
+                          //     )
+                          //   ],
+                          // ),
                         ],
                       ),
-                      const SizedBox(height: 20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "สายพันธุ์ :",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
-                          ),
-                          const SizedBox(height: 10),
-                          Container(
-                            margin: const EdgeInsets.only(left: 15, right: 15),
-                            padding: const EdgeInsets.only(left: 15, right: 15),
-                            decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 240, 239, 239),
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: DropdownButton(
-                              dropdownColor: Colors.white,
-                              iconSize: 30,
-                              isExpanded: true,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
-                              ),
-                              value: dropdownStrain,
-                              icon: const Icon(Icons.keyboard_arrow_down),
-                              items: nameStrains.map((String items) {
-                                return DropdownMenuItem(
-                                  value: items,
-                                  child: Text(items),
-                                );
-                              }).toList(),
-                              onChanged: (String? newValue) {
-                                setState(
-                                  () {
-                                    dropdownStrain = newValue!;
-                                  },
-                                );
-                              },
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      buildNo(),
-                      const SizedBox(height: 20),
-                      buildSeedData(),
-                      const SizedBox(height: 20),
-                      buildMoveData(),
-                      const SizedBox(height: 20),
-                      buildSeedtotal(),
-                      const SizedBox(height: 20),
-                      buildSeedNet(),
-                      const SizedBox(height: 20),
-                      buildPlantTotal(),
-                      const SizedBox(height: 20),
-                      buildPlantLive(),
-                      const SizedBox(height: 20),
-                      buildPlantDead(),
-                      const SizedBox(height: 20),
-                      buildPlantRemake(),
-                      const SizedBox(height: 50),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.end,
-                      //   children: [
-                      //     Column(
-                      //       children: [
-                      //         ElevatedButton(
-                      //           style: ElevatedButton.styleFrom(
-                      //               textStyle: TextStyle(fontSize: 18),
-                      //               primary: Color.fromARGB(255, 10, 94, 3),
-                      //               shape: RoundedRectangleBorder(
-                      //                   borderRadius:
-                      //                       BorderRadius.circular(30)),
-                      //               padding: const EdgeInsets.all(15)),
-                      //           onPressed: () {
-                      //             addCultivations();
-                      //           },
-                      //           child: Text("บันทึก"),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //     SizedBox(width: 10),
-                      //     Column(
-                      //       children: [
-                      //         ElevatedButton(
-                      //           style: ElevatedButton.styleFrom(
-                      //               textStyle: TextStyle(fontSize: 18),
-                      //               primary:
-                      //                   Color.fromARGB(255, 197, 16, 4),
-                      //               shape: RoundedRectangleBorder(
-                      //                   borderRadius:
-                      //                       BorderRadius.circular(30)),
-                      //               padding: const EdgeInsets.all(15)),
-                      //           onPressed: () {
-                      //             canceldialog.showDialogCancel(context);
-                      //           },
-                      //           child: Text("ยกเลิก"),
-                      //         ),
-                      //       ],
-                      //     )
-                      //   ],
-                      // ),
-                    ],
+                    ),
                   ),
-                ),
-              );
-            }
-            return const LinearProgressIndicator();
-          },
+                );
+              }
+              return const LinearProgressIndicator();
+            },
+          ),
         ));
-  }
-
-  Widget buildNo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "รอบการผลิต :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlNo,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
   }
 
   Widget buildSeedData() {
@@ -412,22 +422,23 @@ class _AddCultivationsState extends State<AddCultivations> {
       children: [
         const Text(
           "วันที่เพาะเมล็ด :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            color: colorDetails3,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 10),
         Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
           padding: const EdgeInsets.only(left: 15, right: 15),
+          width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Color.fromARGB(255, 238, 238, 240),
+              width: 2,
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -435,7 +446,11 @@ class _AddCultivationsState extends State<AddCultivations> {
               Text(
                 '${SeedDate.year}/${SeedDate.month}/${SeedDate.day}',
                 //'${date.day}/${date.month}/${date.year}',
-                style: const TextStyle(fontSize: 18, color: Colors.black),
+                style: const TextStyle(
+                  color: colorDetails2,
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               OutlinedButton(
                 child: const Icon(Icons.date_range_outlined),
@@ -472,22 +487,23 @@ class _AddCultivationsState extends State<AddCultivations> {
       children: [
         const Text(
           "วันที่ย้ายปลูก :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            color: colorDetails3,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 10),
         Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
           padding: const EdgeInsets.only(left: 15, right: 15),
+          width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Color.fromARGB(255, 238, 238, 240),
+              width: 2,
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -495,7 +511,11 @@ class _AddCultivationsState extends State<AddCultivations> {
               Text(
                 '${MoveDate.year}/${MoveDate.month}/${MoveDate.day}',
                 //'${date.day}/${date.month}/${date.year}',
-                style: const TextStyle(fontSize: 18, color: Colors.black),
+                style: const TextStyle(
+                  color: colorDetails2,
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               OutlinedButton(
                 child: const Icon(Icons.date_range_outlined),
@@ -520,227 +540,6 @@ class _AddCultivationsState extends State<AddCultivations> {
                 ),
               ),
             ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildSeedtotal() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "จำนวนเมล็ด :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlSeedtotal,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildSeedNet() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "น้ำหนักเมล็ด :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlSeedNet,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildPlantTotal() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "จำนวนต้นทั้งหมด :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlPlantTotal,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildPlantLive() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "จำนวนต้นเป็นทั้งหมด :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlPlantLive,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildPlantDead() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "จำนวนต้นตายทั้งหมด :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlPlantDead,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildPlantRemake() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "หมายเหตุ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlPlantRemake,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: '**หมายเหตุ**',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
       ],

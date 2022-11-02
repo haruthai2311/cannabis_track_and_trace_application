@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
+import 'package:cannabis_track_and_trace_application/widget/forminput.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -15,7 +16,6 @@ class AddTransfers extends StatefulWidget {
 }
 
 class _AddTransfersState extends State<AddTransfers> {
- 
   DateTime date = DateTime.now();
   final _formKey = GlobalKey<FormState>();
   bool _visible = false;
@@ -139,21 +139,33 @@ class _AddTransfersState extends State<AddTransfers> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: kBackground,
-          actions: <Widget>[
-            IconButton(
-              icon: const Icon(
-                Icons.save_as_outlined,
-                color: Colors.white,
-              ),
-              onPressed: () {
-                addTransfers();
-              },
-            )
-          ],
+      appBar: AppBar(
+        backgroundColor: kBackground,
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(
+              Icons.save_as_outlined,
+              color: Colors.white,
+            ),
+            onPressed: () {
+              addTransfers();
+            },
+          )
+        ],
+      ),
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              kBackground,
+              Colors.white60,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
         ),
-        body: FutureBuilder(
+        child: FutureBuilder(
           future: getData(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
@@ -164,153 +176,175 @@ class _AddTransfersState extends State<AddTransfers> {
               }
               print(itemHvtID);
 
-              return SafeArea(
-                child: Container(
-                  child: Padding(
-                    padding: const EdgeInsets.all(10),
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: [
-                          const SizedBox(height: 10),
-                          const Text(
-                            "บันทึกข้อมูลการส่งมอบ",
-                            style: TextStyle(
-                                fontSize: 24,
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 20),
+                          child: Container(
+                            width: 60,
+                            height: 4,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFDBE2E7),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                        const Text(
+                          "บันทึกข้อมูลการส่งมอบ",
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.blue),
+                        ),
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8, right: 8),
+                          child: Divider(
+                            height: 24,
+                            thickness: 2,
+                            color: Color(0xFFF1F4F8),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "หมายเลขการเก็บเกี่ยว :",
+                              style: const TextStyle(
+                                color: colorDetails3,
+                                fontSize: 20,
                                 fontWeight: FontWeight.w600,
-                                color: Color.fromARGB(255, 8, 143, 114)),
-                          ),
-                          const SizedBox(height: 50),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "หมายเลขการเก็บเกี่ยว :",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
                               ),
-                              const SizedBox(height: 10),
-                              Container(
-                                margin:
-                                    const EdgeInsets.only(left: 15, right: 15),
-                                padding:
-                                    const EdgeInsets.only(left: 15, right: 15),
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(255, 240, 239, 239),
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.black26,
-                                      offset: Offset(0, 2),
-                                    ),
-                                  ],
+                            ),
+                            const SizedBox(height: 10),
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color: Color.fromARGB(255, 238, 238, 240),
+                                  width: 2,
                                 ),
-                                child: DropdownButton(
-                                  dropdownColor: Colors.white,
-                                  iconSize: 30,
-                                  isExpanded: true,
-                                  style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18,
-                                  ),
-                                  value: dropdownHvtID,
-                                  icon: const Icon(Icons.keyboard_arrow_down),
-                                  items: itemHvtID.map((String items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: Text(items),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? newValue) {
-                                    setState(
-                                      () {
-                                        dropdownHvtID = newValue!;
-                                        if (itemHvtID.indexOf(dropdownHvtID) ==
-                                            0) {
-                                          _ctlHarvestNo.text = "";
-                                        } else {
-                                          _ctlHarvestNo.text = result[itemHvtID
-                                                      .indexOf(dropdownHvtID) -
-                                                  1]
-                                              .harvestNo
-                                              .toString();
-                                        }
+                              ),
+                              child: DropdownButton(
+                                dropdownColor: Colors.white,
+                                iconSize: 30,
+                                isExpanded: true,
+                                style: const TextStyle(
+                                  color: colorDetails2,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.normal,
+                                ),
+                                value: dropdownHvtID,
+                                icon: const Icon(Icons.keyboard_arrow_down),
+                                items: itemHvtID.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    child: Text(items),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(
+                                    () {
+                                      dropdownHvtID = newValue!;
+                                      if (itemHvtID.indexOf(dropdownHvtID) ==
+                                          0) {
+                                        _ctlHarvestNo.text = "";
+                                      } else {
+                                        _ctlHarvestNo.text = result[itemHvtID
+                                                    .indexOf(dropdownHvtID) -
+                                                1]
+                                            .harvestNo
+                                            .toString();
+                                      }
 
-                                        //print(itemHvtID.indexOf(dropdownHvtID));
-                                        //print(result[itemHvtID.indexOf(dropdownHvtID) - 1].harvestNo.toString());
-                                      },
-                                    );
-                                  },
-                                ),
+                                      //print(itemHvtID.indexOf(dropdownHvtID));
+                                      //print(result[itemHvtID.indexOf(dropdownHvtID) - 1].harvestNo.toString());
+                                    },
+                                  );
+                                },
                               ),
-                            ],
-                          ),
-                          const SizedBox(height: 20),
-                          buildHarvestNo(),
-                          const SizedBox(height: 20),
-                          buildTransferDate(),
-                          const SizedBox(height: 20),
-                          buildType(),
-                          const SizedBox(height: 20),
-                          buildweight(),
-                          const SizedBox(height: 20),
-                          buildLotNo(),
-                          const SizedBox(height: 20),
-                          buildGetByName(),
-                          const SizedBox(height: 20),
-                          buildGetByPlate(),
-                          const SizedBox(height: 20),
-                          buildLicenseNo(),
-                          const SizedBox(height: 20),
-                          buildLicensePlate(),
-                          const SizedBox(height: 20),
-                          buildTrackRemake(),
-                          const SizedBox(height: 50),
-                          // Row(
-                          //   mainAxisAlignment: MainAxisAlignment.end,
-                          //   children: [
-                          //     Column(
-                          //       children: [
-                          //         ElevatedButton(
-                          //           style: ElevatedButton.styleFrom(
-                          //               textStyle: TextStyle(fontSize: 18),
-                          //               primary: Color.fromARGB(255, 10, 94, 3),
-                          //               shape: RoundedRectangleBorder(
-                          //                   borderRadius:
-                          //                       BorderRadius.circular(30)),
-                          //               padding: const EdgeInsets.all(15)),
-                          //           onPressed: () {
-                          //             addTransfers();
-                          //           },
-                          //           child: Text("บันทึก"),
-                          //         ),
-                          //       ],
-                          //     ),
-                          //     SizedBox(width: 10),
-                          //     Column(
-                          //       children: [
-                          //         ElevatedButton(
-                          //           style: ElevatedButton.styleFrom(
-                          //               textStyle: TextStyle(fontSize: 18),
-                          //               primary:
-                          //                   Color.fromARGB(255, 197, 16, 4),
-                          //               shape: RoundedRectangleBorder(
-                          //                   borderRadius:
-                          //                       BorderRadius.circular(30)),
-                          //               padding: const EdgeInsets.all(15)),
-                          //           onPressed: () {
-                          //             canceldialog.showDialogCancel(context);
-                          //           },
-                          //           child: Text("ยกเลิก"),
-                          //         ),
-                          //       ],
-                          //     )
-                          //  ],
-                          //),
-                        ],
-                      ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        MyForm().buildform("ครั้งที่ : ", _ctlHarvestNo),
+                        const SizedBox(height: 20),
+                        buildTransferDate(),
+                        const SizedBox(height: 20),
+                        buildType(),
+                        const SizedBox(height: 20),
+                        MyForm().buildform("น้ำหนัก (kg) : ", _ctlWeight),
+                        const SizedBox(height: 20),
+                        MyForm().buildform("หมายเลขล็อต : ", _ctlLotNo),
+                        const SizedBox(height: 20),
+                        MyForm().buildform("ชื่อผู้รับ : ", _ctlGetByName),
+                        const SizedBox(height: 20),
+                        MyForm().buildform("ชื่อสถานที่ : ", _ctlGetByPlate),
+                        const SizedBox(height: 20),
+                        MyForm().buildform("เลขที่ใบอนุญาต : ", _ctlLicenseNo),
+                        const SizedBox(height: 20),
+                        MyForm()
+                            .buildform("ป้ายทะเบียนรถ : ", _ctlLicensePlate),
+                        const SizedBox(height: 20),
+                        MyForm()
+                            .buildformRemake("หมายเหตุ : ", _ctlTrackRemake),
+                        const SizedBox(height: 20),
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.end,
+                        //   children: [
+                        //     Column(
+                        //       children: [
+                        //         ElevatedButton(
+                        //           style: ElevatedButton.styleFrom(
+                        //               textStyle: TextStyle(fontSize: 18),
+                        //               primary: Color.fromARGB(255, 10, 94, 3),
+                        //               shape: RoundedRectangleBorder(
+                        //                   borderRadius:
+                        //                       BorderRadius.circular(30)),
+                        //               padding: const EdgeInsets.all(15)),
+                        //           onPressed: () {
+                        //             addTransfers();
+                        //           },
+                        //           child: Text("บันทึก"),
+                        //         ),
+                        //       ],
+                        //     ),
+                        //     SizedBox(width: 10),
+                        //     Column(
+                        //       children: [
+                        //         ElevatedButton(
+                        //           style: ElevatedButton.styleFrom(
+                        //               textStyle: TextStyle(fontSize: 18),
+                        //               primary:
+                        //                   Color.fromARGB(255, 197, 16, 4),
+                        //               shape: RoundedRectangleBorder(
+                        //                   borderRadius:
+                        //                       BorderRadius.circular(30)),
+                        //               padding: const EdgeInsets.all(15)),
+                        //           onPressed: () {
+                        //             canceldialog.showDialogCancel(context);
+                        //           },
+                        //           child: Text("ยกเลิก"),
+                        //         ),
+                        //       ],
+                        //     )
+                        //  ],
+                        //),
+                      ],
                     ),
                   ),
                 ),
@@ -318,7 +352,9 @@ class _AddTransfersState extends State<AddTransfers> {
             }
             return const LinearProgressIndicator();
           },
-        ));
+        ),
+      ),
+    );
   }
 
   Widget buildTransferDate() {
@@ -327,22 +363,23 @@ class _AddTransfersState extends State<AddTransfers> {
       children: [
         const Text(
           "วันที่ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            color: colorDetails3,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 10),
         Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
           padding: const EdgeInsets.only(left: 15, right: 15),
+          width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Color.fromARGB(255, 238, 238, 240),
+              width: 2,
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -350,7 +387,11 @@ class _AddTransfersState extends State<AddTransfers> {
               Text(
                 '${date.year}/${date.month}/${date.day}',
                 //'${date.day}/${date.month}/${date.year}',
-                style: const TextStyle(fontSize: 18, color: Colors.black),
+                style: const TextStyle(
+                  color: colorDetails2,
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               OutlinedButton(
                 child: const Icon(Icons.date_range_outlined),
@@ -387,30 +428,32 @@ class _AddTransfersState extends State<AddTransfers> {
       children: [
         const Text(
           "ประเภท :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            color: colorDetails3,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 10),
         Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
           padding: const EdgeInsets.only(left: 15, right: 15),
+          width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Color.fromARGB(255, 238, 238, 240),
+              width: 2,
+            ),
           ),
           child: DropdownButton(
             dropdownColor: Colors.white,
             iconSize: 30,
             isExpanded: true,
             style: const TextStyle(
-              color: Colors.black,
-              fontSize: 18,
+              color: colorDetails2,
+              fontSize: 20,
+              fontWeight: FontWeight.normal,
             ),
             value: dropdowntype,
             icon: const Icon(Icons.keyboard_arrow_down),
