@@ -29,7 +29,7 @@ class Countcht {
     int greenHouseId;
     String nameGreenhouse;
     String nameLocation;
-    String address;
+    dynamic address;
     dynamic ghiDcul;
     dynamic countCul;
     dynamic yearCul;

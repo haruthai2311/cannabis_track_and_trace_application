@@ -170,9 +170,9 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                               ),
                             ),
                           ),
-                          // SizedBox(
-                          //   height: 10,
-                          // ),
+                          SizedBox(
+                            height: 10,
+                          ),
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
