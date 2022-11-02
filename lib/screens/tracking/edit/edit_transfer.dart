@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cannabis_track_and_trace_application/widget/forminput.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../api/allharvests.dart';
@@ -76,91 +77,125 @@ class _EditTransferState extends State<EditTransfer> {
             )
           ],
         ),
-        body: FutureBuilder(
-          future: getData(),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              var dataHarvests = snapshot.data[0];
-              var dataTransfer = snapshot.data[1];
-              var itemHvtID = ['N/A'];
-              for (var i = 0; i < dataHarvests.length; i++) {
-                itemHvtID.add(dataHarvests[i].harvestId.toString());
-              }
-              print(itemHvtID);
+        body: Container(
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                kBackground,
+                Colors.white60,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: FutureBuilder(
+            future: getData(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                var dataHarvests = snapshot.data[0];
+                var dataTransfer = snapshot.data[1];
+                var itemHvtID = ['N/A'];
+                for (var i = 0; i < dataHarvests.length; i++) {
+                  itemHvtID.add(dataHarvests[i].harvestId.toString());
+                }
+                print(itemHvtID);
 
-              String TypeTransfer;
-              String type = dataTransfer[0].type.toString();
-              if (type == "1") {
-                TypeTransfer = "ใบ";
-              } else if (type == "2") {
-                TypeTransfer = "ดอก";
-              } else if (type == "3") {
-                TypeTransfer = "ก้าน";
-              } else {
-                TypeTransfer = "N/A";
-              }
-              selectDropdown ??= type;
-              dropdownHvtID ??= dataTransfer[0].harvestId.toString();
+                String TypeTransfer;
+                String type = dataTransfer[0].type.toString();
+                if (type == "1") {
+                  TypeTransfer = "ใบ";
+                } else if (type == "2") {
+                  TypeTransfer = "ดอก";
+                } else if (type == "3") {
+                  TypeTransfer = "ก้าน";
+                } else {
+                  TypeTransfer = "N/A";
+                }
+                selectDropdown ??= type;
+                dropdownHvtID ??= dataTransfer[0].harvestId.toString();
 
-              _ctlWeight.text = dataTransfer[0].weight.toString();
-              _ctlLotNo.text = dataTransfer[0].lotNo.toString();
-              _ctlGetByName.text = dataTransfer[0].getByName.toString();
-              _ctlGetByPlate.text = dataTransfer[0].licenseNo.toString();
-              _ctlLicenseNo.text = dataTransfer[0].licenseNo.toString();
-              _ctlLicensePlate.text = dataTransfer[0].licensePlate.toString();
-              _ctlTrackRemake.text = dataTransfer[0].remark.toString();
-              date = dataTransfer[0].transferDate;
+                _ctlWeight.text = dataTransfer[0].weight.toString();
+                _ctlLotNo.text = dataTransfer[0].lotNo.toString();
+                _ctlGetByName.text = dataTransfer[0].getByName.toString();
+                _ctlGetByPlate.text = dataTransfer[0].licenseNo.toString();
+                _ctlLicenseNo.text = dataTransfer[0].licenseNo.toString();
+                _ctlLicensePlate.text = dataTransfer[0].licensePlate.toString();
+                _ctlTrackRemake.text = dataTransfer[0].remark.toString();
+                _ctlHarvestNo.text = dataTransfer[0].harvestNo.toString();
+                date = dataTransfer[0].transferDate;
 
-              return SafeArea(
-                child: Container(
+                return SingleChildScrollView(
                   child: Padding(
                     padding: const EdgeInsets.all(10),
-                    child: SingleChildScrollView(
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
                       child: Column(
                         children: [
-                          const SizedBox(height: 10),
+                          Padding(
+                            padding:
+                                EdgeInsetsDirectional.fromSTEB(0, 5, 0, 20),
+                            child: Container(
+                              width: 60,
+                              height: 4,
+                              decoration: BoxDecoration(
+                                color: Color(0xFFDBE2E7),
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                          ),
                           const Text(
                             "แก้ไขข้อมูลการส่งมอบ",
                             style: TextStyle(
                                 fontSize: 24,
                                 fontWeight: FontWeight.w600,
-                                color: Color.fromARGB(255, 8, 143, 114)),
+                                color: Colors.blue),
                           ),
-                          const SizedBox(height: 50),
+                          const SizedBox(height: 20),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8, right: 8),
+                            child: Divider(
+                              height: 24,
+                              thickness: 2,
+                              color: Color(0xFFF1F4F8),
+                            ),
+                          ),
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               const Text(
                                 "หมายเลขการเก็บเกี่ยว :",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                  color: colorDetails3,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                margin:
-                                    const EdgeInsets.only(left: 15, right: 15),
                                 padding:
                                     const EdgeInsets.only(left: 15, right: 15),
+                                width: double.infinity,
                                 decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(255, 240, 239, 239),
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.black26,
-                                      offset: Offset(0, 2),
-                                    ),
-                                  ],
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                    color: Color.fromARGB(255, 238, 238, 240),
+                                    width: 2,
+                                  ),
                                 ),
                                 child: DropdownButton(
                                   dropdownColor: Colors.white,
                                   iconSize: 30,
                                   isExpanded: true,
                                   style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18,
+                                    color: colorDetails2,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal,
                                   ),
                                   hint: Text(
                                     dataTransfer[0].harvestId.toString(),
@@ -203,47 +238,7 @@ class _EditTransferState extends State<EditTransfer> {
                             ],
                           ),
                           const SizedBox(height: 20),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              const Text(
-                                "ครั้งที่ :",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
-                              ),
-                              const SizedBox(height: 10),
-                              Container(
-                                margin:
-                                    const EdgeInsets.only(left: 15, right: 15),
-                                decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(255, 240, 239, 239),
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.black26,
-                                      offset: Offset(0, 2),
-                                    ),
-                                  ],
-                                ),
-                                child: TextFormField(
-                                  readOnly: true,
-                                  controller: _ctlHarvestNo,
-                                  keyboardType: TextInputType.number,
-                                  style: const TextStyle(color: Colors.black),
-                                  decoration: InputDecoration(
-                                      border: InputBorder.none,
-                                      contentPadding: EdgeInsets.only(left: 15),
-                                      hintText:
-                                          dataTransfer[0].harvestNo.toString(),
-                                      hintStyle: TextStyle(
-                                          color: Colors.black, fontSize: 18)),
-                                ),
-                              ),
-                            ],
-                          ),
+                          MyForm().buildform("ครั้งที่ : ", _ctlHarvestNo),
                           const SizedBox(height: 20),
                           buildTransferDate(),
                           const SizedBox(height: 20),
@@ -252,41 +247,40 @@ class _EditTransferState extends State<EditTransfer> {
                             children: [
                               const Text(
                                 "ประเภท :",
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.bold),
+                                style: const TextStyle(
+                                  color: colorDetails3,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                               const SizedBox(height: 10),
                               Container(
-                                margin:
-                                    const EdgeInsets.only(left: 15, right: 15),
                                 padding:
                                     const EdgeInsets.only(left: 15, right: 15),
+                                width: double.infinity,
                                 decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(255, 240, 239, 239),
-                                  borderRadius: BorderRadius.circular(20),
-                                  boxShadow: const [
-                                    BoxShadow(
-                                      color: Colors.black26,
-                                      offset: Offset(0, 2),
-                                    ),
-                                  ],
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                    color: Color.fromARGB(255, 238, 238, 240),
+                                    width: 2,
+                                  ),
                                 ),
                                 child: DropdownButton(
                                   dropdownColor: Colors.white,
                                   iconSize: 30,
                                   isExpanded: true,
                                   style: const TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 18,
+                                    color: colorDetails2,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal,
                                   ),
                                   hint: Text(
                                     TypeTransfer,
                                     style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
+                                      color: colorDetails2,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
                                     ),
                                   ),
                                   value: dropdowntype,
@@ -318,29 +312,33 @@ class _EditTransferState extends State<EditTransfer> {
                             ],
                           ),
                           const SizedBox(height: 20),
-                          buildweight(),
+                          MyForm().buildform("น้ำหนัก (kg) : ", _ctlWeight),
                           const SizedBox(height: 20),
-                          buildLotNo(),
+                          MyForm().buildform("หมายเลขล็อต : ", _ctlLotNo),
                           const SizedBox(height: 20),
-                          buildGetByName(),
+                          MyForm().buildform("ชื่อผู้รับ : ", _ctlGetByName),
                           const SizedBox(height: 20),
-                          buildGetByPlate(),
+                          MyForm()
+                              .buildformText("ชื่อสถานที่ : ", _ctlGetByPlate),
                           const SizedBox(height: 20),
-                          buildLicenseNo(),
+                          MyForm()
+                              .buildform("เลขที่ใบอนุญาต : ", _ctlLicenseNo),
                           const SizedBox(height: 20),
-                          buildLicensePlate(),
+                          MyForm()
+                              .buildform("ป้ายทะเบียนรถ : ", _ctlLicensePlate),
                           const SizedBox(height: 20),
-                          buildTrackRemake(),
-                          const SizedBox(height: 50),
+                          MyForm()
+                              .buildformRemake("หมายเหตุ : ", _ctlTrackRemake),
+                          const SizedBox(height: 20),
                         ],
                       ),
                     ),
                   ),
-                ),
-              );
-            }
-            return const LinearProgressIndicator();
-          },
+                );
+              }
+              return const LinearProgressIndicator();
+            },
+          ),
         ));
   }
 
@@ -350,22 +348,23 @@ class _EditTransferState extends State<EditTransfer> {
       children: [
         const Text(
           "วันที่ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            color: colorDetails3,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 10),
         Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
           padding: const EdgeInsets.only(left: 15, right: 15),
+          width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Color.fromARGB(255, 238, 238, 240),
+              width: 2,
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -373,7 +372,11 @@ class _EditTransferState extends State<EditTransfer> {
               Text(
                 '${date.year}/${date.month}/${date.day}',
                 //'${date.day}/${date.month}/${date.year}',
-                style: const TextStyle(fontSize: 18, color: Colors.black),
+                style: const TextStyle(
+                  color: colorDetails2,
+                  fontSize: 20,
+                  fontWeight: FontWeight.normal,
+                ),
               ),
               OutlinedButton(
                 child: const Icon(Icons.date_range_outlined),
@@ -398,262 +401,6 @@ class _EditTransferState extends State<EditTransfer> {
                 ),
               ),
             ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildweight() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "น้ำหนัก (kg) :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlWeight,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุน้ำหนัก',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildLotNo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "หมายเลขล๊อต :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlLotNo,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildGetByName() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "ชื่อผู้รับ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlGetByName,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'กรอกชื่อผู้รับ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildGetByPlate() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "ชื่อสถานที่ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlGetByPlate,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'กรอกชื่อสถานที่',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildLicenseNo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "เลขที่ใบอนุญาต :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlLicenseNo,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildLicensePlate() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "ป้ายทะเบียนรถ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlLicensePlate,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildTrackRemake() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "หมายเหตุ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlTrackRemake,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: '**หมายเหตุ**',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
       ],

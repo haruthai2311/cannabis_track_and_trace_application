@@ -145,7 +145,7 @@ class _EditCultivationState extends State<EditCultivation> {
                     padding: const EdgeInsets.all(10),
                     //padding: const EdgeInsets.only(top: 50),
                     child: Container(
-                      padding: const EdgeInsets.all(10),
+                      padding: const EdgeInsets.all(15),
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.all(Radius.circular(20)),
@@ -313,15 +313,19 @@ class _EditCultivationState extends State<EditCultivation> {
                           const SizedBox(height: 20),
                           MyForm().buildform("น้ำหนักเมล็ด : ", _ctlSeedNet),
                           const SizedBox(height: 20),
-                          MyForm().buildform("จำนวนต้นทั้งหมด : ", _ctlPlantTotal),
+                          MyForm()
+                              .buildform("จำนวนต้นทั้งหมด : ", _ctlPlantTotal),
                           const SizedBox(height: 20),
-                          MyForm().buildform("จำนวนต้นเป็นทั้งหมด : ", _ctlPlantLive),
+                          MyForm().buildform(
+                              "จำนวนต้นเป็นทั้งหมด : ", _ctlPlantLive),
                           const SizedBox(height: 20),
                           //MyForm.buildform("จำนวนต้นตายทั้งหมด : ", _ctlPlantDead),
-                          MyForm().buildform("จำนวนต้นตายทั้งหมด : ", _ctlPlantDead),
+                          MyForm().buildform(
+                              "จำนวนต้นตายทั้งหมด : ", _ctlPlantDead),
                           const SizedBox(height: 20),
-                          buildPlantRemake(),
-                          const SizedBox(height: 50),
+                          MyForm()
+                              .buildformRemake("หมายเหตุ : ", _ctlPlantRemake),
+                          const SizedBox(height: 20),
                         ],
                       ),
                     ),
