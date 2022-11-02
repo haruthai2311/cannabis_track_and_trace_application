@@ -300,7 +300,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     //onTap: () => showToast('เลือกเพิ่มข้อมูลสถานที่ปลูก...'),
                     ),
                 SpeedDialChild(
-                    child: const Icon(Icons.format_color_fill_rounded),
+                    child: const Icon(Icons.local_drink),
                     backgroundColor: Colors.yellow,
                     label: "กระถาง",
                     labelStyle: const TextStyle(fontSize: 18),
@@ -311,7 +311,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     //onTap: () => showToast('เลือกเพิ่มข้อมูลกระถาง...'),
                     ),
                 SpeedDialChild(
-                    child: const Icon(Icons.fire_hydrant_alt_sharp),
+                    child: const Icon(Icons.home_repair_service),
                     backgroundColor: Colors.yellow,
                     label: "วัสดุ",
                     labelStyle: const TextStyle(fontSize: 18),
@@ -322,7 +322,7 @@ class _InfoScreenState extends State<InfoScreen> {
                     //onTap: () => showToast('เลือกเพิ่มข้อมูลวัสดุ...'),
                     ),
                 SpeedDialChild(
-                    child: Icon(FontAwesomeIcons.accusoft),
+                    child: Icon(FontAwesomeIcons.exclamation),
                     backgroundColor: Colors.yellow,
                     label: "การใช้สารเคมี",
                     labelStyle: TextStyle(fontSize: 18),
