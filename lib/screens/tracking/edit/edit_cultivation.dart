@@ -8,6 +8,7 @@ import '../../../api/allgreenhouses.dart';
 import '../../../api/allstrains.dart';
 import '../../../api/hostapi.dart';
 import '../../../config/styles.dart';
+import '../../../widget/forminput.dart';
 
 class EditCultivation extends StatefulWidget {
   final String UserID;
@@ -302,21 +303,22 @@ class _EditCultivationState extends State<EditCultivation> {
                             ],
                           ),
                           const SizedBox(height: 20),
-                          buildfrom("รอบการปลูก : ", _ctlNo),
+                          MyForm().buildform("รอบการปลูก : ", _ctlNo),
                           const SizedBox(height: 20),
                           buildSeedData(),
                           const SizedBox(height: 20),
                           buildMoveData(),
                           const SizedBox(height: 20),
-                          buildfrom("จำนวนเมล็ด : ", _ctlSeedtotal),
+                          MyForm().buildform("จำนวนเมล็ด : ", _ctlSeedtotal),
                           const SizedBox(height: 20),
-                          buildfrom("น้ำหนักเมล็ด : ", _ctlSeedNet),
+                          MyForm().buildform("น้ำหนักเมล็ด : ", _ctlSeedNet),
                           const SizedBox(height: 20),
-                          buildfrom("จำนวนต้นทั้งหมด : ", _ctlPlantTotal),
+                          MyForm().buildform("จำนวนต้นทั้งหมด : ", _ctlPlantTotal),
                           const SizedBox(height: 20),
-                          buildfrom("จำนวนต้นเป็นทั้งหมด : ", _ctlPlantLive),
+                          MyForm().buildform("จำนวนต้นเป็นทั้งหมด : ", _ctlPlantLive),
                           const SizedBox(height: 20),
-                          buildfrom("จำนวนต้นตายทั้งหมด : ", _ctlPlantDead),
+                          //MyForm.buildform("จำนวนต้นตายทั้งหมด : ", _ctlPlantDead),
+                          MyForm().buildform("จำนวนต้นตายทั้งหมด : ", _ctlPlantDead),
                           const SizedBox(height: 20),
                           buildPlantRemake(),
                           const SizedBox(height: 50),
@@ -332,47 +334,47 @@ class _EditCultivationState extends State<EditCultivation> {
         ));
   }
 
-  Widget buildfrom(title, controllor) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            color: colorDetails3,
-            fontSize: 20,
-            fontWeight: FontWeight.w600,
-          ),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          width: double.infinity,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(16),
-            border: Border.all(
-              color: Color.fromARGB(255, 238, 238, 240),
-              width: 2,
-            ),
-          ),
-          child: TextFormField(
-            controller: controllor,
-            keyboardType: TextInputType.number,
-            style: TextStyle(
-              color: colorDetails2,
-              fontSize: 20,
-              fontWeight: FontWeight.normal,
-            ),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
+  // Widget buildform(title, controllor) {
+  //   return Column(
+  //     crossAxisAlignment: CrossAxisAlignment.start,
+  //     children: [
+  //       Text(
+  //         title,
+  //         style: const TextStyle(
+  //           color: colorDetails3,
+  //           fontSize: 20,
+  //           fontWeight: FontWeight.w600,
+  //         ),
+  //       ),
+  //       const SizedBox(height: 10),
+  //       Container(
+  //         width: double.infinity,
+  //         decoration: BoxDecoration(
+  //           color: Colors.white,
+  //           borderRadius: BorderRadius.circular(16),
+  //           border: Border.all(
+  //             color: Color.fromARGB(255, 238, 238, 240),
+  //             width: 2,
+  //           ),
+  //         ),
+  //         child: TextFormField(
+  //           controller: controllor,
+  //           keyboardType: TextInputType.number,
+  //           style: const TextStyle(
+  //             color: colorDetails2,
+  //             fontSize: 20,
+  //             fontWeight: FontWeight.normal,
+  //           ),
+  //           decoration: const InputDecoration(
+  //               border: InputBorder.none,
+  //               contentPadding: EdgeInsets.only(left: 15),
+  //               hintText: 'ระบุ',
+  //               hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+  //         ),
+  //       ),
+  //     ],
+  //   );
+  // }
 
   Widget buildSeedData() {
     return Column(
@@ -404,7 +406,7 @@ class _EditCultivationState extends State<EditCultivation> {
               Text(
                 '${SeedDate.year}/${SeedDate.month}/${SeedDate.day}',
                 //'${date.day}/${date.month}/${date.year}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: colorDetails2,
                   fontSize: 20,
                   fontWeight: FontWeight.normal,
@@ -469,7 +471,7 @@ class _EditCultivationState extends State<EditCultivation> {
               Text(
                 '${MoveDate.year}/${MoveDate.month}/${MoveDate.day}',
                 //'${date.day}/${date.month}/${date.year}',
-                style: TextStyle(
+                style: const TextStyle(
                   color: colorDetails2,
                   fontSize: 20,
                   fontWeight: FontWeight.normal,
@@ -531,7 +533,7 @@ class _EditCultivationState extends State<EditCultivation> {
           ),
           child: TextFormField(
             controller: _ctlPlantRemake,
-            style: TextStyle(
+            style: const TextStyle(
               color: colorDetails2,
               fontSize: 20,
               fontWeight: FontWeight.normal,
