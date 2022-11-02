@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
+import 'package:cannabis_track_and_trace_application/widget/forminput.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../api/getcultivations.dart';
@@ -127,12 +128,12 @@ class _PotsState extends State<Pots> {
     return [_allGreenhouses, _getCultivations];
   }
 
-  String dropdownGH = 'N/A';
+  String? dropdownGH;
   //var itemGH = ['N/A', 'โรงเรือน 1', 'โรงเรือน 2'];
-  String dropdownCul = 'N/A';
+  String? dropdownCul;
   //var itemCul = ['N/A', '1', '2', '3', '4'];
   String selectDropdownIsTest = '';
-  String dropdownIsTest = 'N/A';
+  String? dropdownIsTest;
   var itemIsTest = ['N/A', 'YES', 'NO'];
 
   @override
@@ -195,49 +196,52 @@ class _PotsState extends State<Pots> {
                           const Text(
                             "โรงปลูก :",
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
+                              color: colorDetails3,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                           const SizedBox(height: 10),
                           Container(
-                            margin: const EdgeInsets.only(left: 15, right: 15),
                             padding: const EdgeInsets.only(left: 15, right: 15),
+                            width: double.infinity,
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 240, 239, 239),
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: DropdownButton(
-                              dropdownColor: Colors.white,
-                              iconSize: 30,
-                              isExpanded: true,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: Color.fromARGB(255, 238, 238, 240),
+                                width: 2,
                               ),
-                              value: dropdownGH,
-                              icon: const Icon(Icons.keyboard_arrow_down),
-                              items: nameGH.map((String items) {
-                                return DropdownMenuItem(
-                                  value: items,
-                                  child: Text(items),
-                                );
-                              }).toList(),
-                              onChanged: (String? newValue) {
-                                setState(
-                                  () {
-                                    dropdownGH = newValue!;
-                                    NameGHParameters = "?NameGH=" + dropdownGH;
-                                    dropdownCul = 'N/A';
-                                  },
-                                );
-                              },
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                dropdownColor: Colors.white,
+                                iconSize: 30,
+                                isExpanded: true,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                                hint: Text("N/A"),
+                                value: dropdownGH,
+                                icon: const Icon(Icons.keyboard_arrow_down),
+                                items: nameGH.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    child: Text(items),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(
+                                    () {
+                                      dropdownGH = newValue!;
+                                      NameGHParameters =
+                                          "?NameGH=" + dropdownGH!;
+                                      dropdownCul = null;
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ],
@@ -249,101 +253,62 @@ class _PotsState extends State<Pots> {
                           const Text(
                             "หมายเลขการปลูก :",
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
+                              color: colorDetails3,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                           const SizedBox(height: 10),
                           Container(
-                            margin: const EdgeInsets.only(left: 15, right: 15),
                             padding: const EdgeInsets.only(left: 15, right: 15),
+                            width: double.infinity,
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 240, 239, 239),
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: DropdownButton(
-                              dropdownColor: Colors.white,
-                              iconSize: 30,
-                              isExpanded: true,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: Color.fromARGB(255, 238, 238, 240),
+                                width: 2,
                               ),
-                              value: dropdownCul,
-                              icon: const Icon(Icons.keyboard_arrow_down),
-                              items: itemCul.map((String items) {
-                                return DropdownMenuItem(
-                                  value: items,
-                                  child: Text(items),
-                                );
-                              }).toList(),
-                              onChanged: (String? newValue) {
-                                setState(
-                                  () {
-                                    dropdownCul = newValue!;
-                                  },
-                                );
-                              },
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                dropdownColor: Colors.white,
+                                iconSize: 30,
+                                isExpanded: true,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                                hint: Text("N/A"),
+                                value: dropdownCul,
+                                icon: const Icon(Icons.keyboard_arrow_down),
+                                items: itemCul.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    child: Text(items),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(
+                                    () {
+                                      dropdownCul = newValue!;
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 20),
-                      buildPotName(),
+                      MyForm().buildform("หมายเลขกระถาง :", _ctlName),
                       const SizedBox(height: 20),
-                      buildBarcode(),
+                      MyForm().buildform("บาร์โค้ด :", _ctlBarcode),
                       const SizedBox(height: 20),
                       buildIsTestPot(),
                       const SizedBox(height: 20),
-                      buildPotRemake(),
+                      MyForm().buildform("หมายเหตุ :", _ctlRemake),
                       const SizedBox(height: 50),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.end,
-                      //   children: [
-                      //     Column(
-                      //       children: [
-                      //         ElevatedButton(
-                      //           style: ElevatedButton.styleFrom(
-                      //               textStyle: const TextStyle(fontSize: 18),
-                      //               primary: const Color.fromARGB(255, 10, 94, 3),
-                      //               shape: RoundedRectangleBorder(
-                      //                   borderRadius:
-                      //                       BorderRadius.circular(30)),
-                      //               padding: const EdgeInsets.all(15)),
-                      //           onPressed: () {
-                      //             addPots();
-                      //           },
-                      //           child: Text("บันทึก"),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //     SizedBox(width: 10),
-                      //     Column(
-                      //       children: [
-                      //         ElevatedButton(
-                      //           style: ElevatedButton.styleFrom(
-                      //               textStyle: TextStyle(fontSize: 18),
-                      //               primary:
-                      //                   Color.fromARGB(255, 197, 16, 4),
-                      //               shape: RoundedRectangleBorder(
-                      //                   borderRadius:
-                      //                       BorderRadius.circular(30)),
-                      //               padding: const EdgeInsets.all(15)),
-                      //           onPressed: () {
-                      //             canceldialog.showDialogCancel(context);
-                      //           },
-                      //           child: Text("ยกเลิก"),
-                      //         ),
-                      //       ],
-                      //     )
-                      //   ],
-                      // ),
                     ],
                   ),
                 ),
@@ -354,79 +319,6 @@ class _PotsState extends State<Pots> {
         ));
   }
 
-  Widget buildPotName() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "หมายเลขกระถาง :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlName,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildBarcode() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "บาร์โค้ด :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlBarcode,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget buildIsTestPot() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -434,86 +326,54 @@ class _PotsState extends State<Pots> {
         const Text(
           "กระถางทดลอง :",
           style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+            color: colorDetails3,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 10),
         Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
           padding: const EdgeInsets.only(left: 15, right: 15),
+          width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: DropdownButton(
-            dropdownColor: Colors.white,
-            iconSize: 30,
-            isExpanded: true,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 18,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Color.fromARGB(255, 238, 238, 240),
+              width: 2,
             ),
-            value: dropdownIsTest,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            items: itemIsTest.map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(
-                () {
-                  dropdownIsTest = newValue!;
-                  if (dropdownIsTest == 'YES') {
-                    selectDropdownIsTest = "Y";
-                  } else {
-                    selectDropdownIsTest = "N";
-                  }
-                },
-              );
-            },
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildPotRemake() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "หมายเหตุ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton(
+              dropdownColor: Colors.white,
+              iconSize: 30,
+              isExpanded: true,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 18,
               ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlRemake,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: '**หมายเหตุ**',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+              hint: Text("N/A"),
+              value: dropdownIsTest,
+              icon: const Icon(Icons.keyboard_arrow_down),
+              items: itemIsTest.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(
+                  () {
+                    dropdownIsTest = newValue!;
+                    if (dropdownIsTest == 'YES') {
+                      selectDropdownIsTest = "Y";
+                    } else {
+                      selectDropdownIsTest = "N";
+                    }
+                  },
+                );
+              },
+            ),
           ),
         ),
       ],

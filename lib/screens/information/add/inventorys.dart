@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
+import 'package:cannabis_track_and_trace_application/widget/forminput.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../api/hostapi.dart';
@@ -12,7 +13,6 @@ class Inventorys extends StatefulWidget {
 }
 
 class _InventorysState extends State<Inventorys> {
-
   final _formKey = GlobalKey<FormState>();
   bool _visible = false;
 
@@ -99,7 +99,7 @@ class _InventorysState extends State<Inventorys> {
     super.initState();
   }
 
-  String dropdownIsA = 'N/A';
+  String? dropdownIsA;
   String selectDropdownIsA = '';
   var itemIsA = ['N/A', 'ON', 'OFF'];
   @override
@@ -133,128 +133,16 @@ class _InventorysState extends State<Inventorys> {
                     color: Color.fromARGB(255, 8, 143, 114)),
               ),
               const SizedBox(height: 50),
-              buildName(),
+              MyForm().buildform("ชื่อ :", _ctlName),
               const SizedBox(height: 20),
-              buildCommercialName(),
+              MyForm().buildform("ชื่อทางการค้า :", _ctlCommercialName),
               const SizedBox(height: 20),
               buildIsActive(),
               const SizedBox(height: 20),
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.end,
-              //   children: [
-              //     Column(
-              //       children: [
-              //         ElevatedButton(
-              //           style: ElevatedButton.styleFrom(
-              //               textStyle: TextStyle(fontSize: 18),
-              //               primary: Color.fromARGB(255, 10, 94, 3),
-              //               shape: RoundedRectangleBorder(
-              //                   borderRadius: BorderRadius.circular(30)),
-              //               padding: const EdgeInsets.all(15)),
-              //           onPressed: () {
-              //             addInventorys();
-              //           },
-              //           child: Text("บันทึก"),
-              //         ),
-              //       ],
-              //     ),
-              //     SizedBox(width: 10),
-              //     Column(
-              //       children: [
-              //         ElevatedButton(
-              //           style: ElevatedButton.styleFrom(
-              //               textStyle: TextStyle(fontSize: 18),
-              //               primary: Color.fromARGB(255, 197, 16, 4),
-              //               shape: RoundedRectangleBorder(
-              //                   borderRadius: BorderRadius.circular(30)),
-              //               padding: const EdgeInsets.all(15)),
-              //           onPressed: () {
-              //             canceldialog.showDialogCancel(context);
-              //           },
-              //           child: Text("ยกเลิก"),
-              //         ),
-              //       ],
-              //     )
-              //   ],
-              // ),
             ],
           ),
         ),
       ),
-    );
-  }
-
-  Widget buildName() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "ชื่อ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlName,
-            keyboardType: TextInputType.text,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildCommercialName() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "ชื่อทางการค้า :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlCommercialName,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
     );
   }
 
@@ -265,50 +153,54 @@ class _InventorysState extends State<Inventorys> {
         const Text(
           "สถานะการใช้งาน :",
           style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+            color: colorDetails3,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 10),
         Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
           padding: const EdgeInsets.only(left: 15, right: 15),
+          width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: DropdownButton(
-            dropdownColor: Colors.white,
-            iconSize: 30,
-            isExpanded: true,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 18,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Color.fromARGB(255, 238, 238, 240),
+              width: 2,
             ),
-            value: dropdownIsA,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            items: itemIsA.map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(
-                () {
-                  dropdownIsA = newValue!;
-                  if (dropdownIsA == 'ON') {
-                    selectDropdownIsA = "Y";
-                  } else {
-                    selectDropdownIsA = "N";
-                  }
-                },
-              );
-            },
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton(
+              dropdownColor: Colors.white,
+              iconSize: 30,
+              isExpanded: true,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+              ),
+              hint: Text("N/A"),
+              value: dropdownIsA,
+              icon: const Icon(Icons.keyboard_arrow_down),
+              items: itemIsA.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(
+                  () {
+                    dropdownIsA = newValue!;
+                    if (dropdownIsA == 'ON') {
+                      selectDropdownIsA = "Y";
+                    } else {
+                      selectDropdownIsA = "N";
+                    }
+                  },
+                );
+              },
+            ),
           ),
         ),
       ],

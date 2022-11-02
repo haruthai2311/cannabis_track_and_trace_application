@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
+import 'package:cannabis_track_and_trace_application/widget/forminput.dart';
 import 'package:dropdown_search2/dropdown_search2.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -80,7 +81,7 @@ class _LocationsState extends State<Locations> {
     _ctlRemark.clear();
     _ctlCreateBy.clear();
     _ctlUpdateBy.clear();
-    dropdownIsA = 'N/A';
+    dropdownIsA = null;
     selectSubDistricts = null;
     selectDistricts = null;
     selectProvinces = null;
@@ -195,7 +196,7 @@ class _LocationsState extends State<Locations> {
     return [_listProvinces, _listDistricts, _listSubDistricts];
   }
 
-  String dropdownIsA = 'N/A';
+  String? dropdownIsA;
   String selectDropdownIsA = '';
   var itemIsA = ['N/A', 'ON', 'OFF'];
   //var provinces = ['N/A', 'ON', 'OFF'];
@@ -264,13 +265,13 @@ class _LocationsState extends State<Locations> {
                             color: Color.fromARGB(255, 8, 143, 114)),
                       ),
                       const SizedBox(height: 50),
-                      buildName(),
+                      MyForm().buildform("ชื่อ :", _ctlName),
                       const SizedBox(height: 20),
-                      buildAddNo(),
+                      MyForm().buildform("เลขที่ :", _ctlAddrNo),
                       const SizedBox(height: 20),
-                      buildMoo(),
+                      MyForm().buildform("หมู่ :", _ctlMoo),
                       const SizedBox(height: 20),
-                      buildRoad(),
+                      MyForm().buildform("ถนน :", _ctlRoad),
                       const SizedBox(height: 20),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -278,22 +279,22 @@ class _LocationsState extends State<Locations> {
                           const Text(
                             "จังหวัด :",
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
+                              color: colorDetails3,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                           const SizedBox(height: 10),
                           Container(
-                            margin: const EdgeInsets.only(left: 15, right: 15),
+                            // padding: const EdgeInsets.only(left: 15, right: 15),
+                            width: double.infinity,
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 240, 239, 239),
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: Color.fromARGB(255, 238, 238, 240),
+                                width: 2,
+                              ),
                             ),
                             child: DropdownSearch<String>(
                               //mode of dropdown
@@ -340,22 +341,22 @@ class _LocationsState extends State<Locations> {
                           const Text(
                             "อำเภอ :",
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
+                              color: colorDetails3,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                           const SizedBox(height: 10),
                           Container(
-                            margin: const EdgeInsets.only(left: 15, right: 15),
+                            //padding: const EdgeInsets.only(left: 15, right: 15),
+                            width: double.infinity,
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 240, 239, 239),
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: Color.fromARGB(255, 238, 238, 240),
+                                width: 2,
+                              ),
                             ),
                             child: DropdownSearch<String>(
                               //mode of dropdown
@@ -404,22 +405,22 @@ class _LocationsState extends State<Locations> {
                           const Text(
                             "ตำบล :",
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
+                              color: colorDetails3,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                           const SizedBox(height: 10),
                           Container(
-                            margin: const EdgeInsets.only(left: 15, right: 15),
+                            //padding: const EdgeInsets.only(left: 15, right: 15),
+                            width: double.infinity,
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 240, 239, 239),
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: Color.fromARGB(255, 238, 238, 240),
+                                width: 2,
+                              ),
                             ),
                             child: DropdownSearch<String>(
                               //mode of dropdown
@@ -463,54 +464,16 @@ class _LocationsState extends State<Locations> {
                         ],
                       ),
                       const SizedBox(height: 20),
-                      buildPostCode(),
+                      MyForm().buildform("รหัสไปรษณีย์ :", _ctlPostCode),
                       const SizedBox(height: 20),
-                      buildTelephone(),
+                      MyForm().buildform("โทรศัพท์ :", _ctlTelephone),
                       const SizedBox(height: 20),
                       buildLatLng(),
                       const SizedBox(height: 20),
                       buildIsActive(),
                       const SizedBox(height: 20),
-                      buildLocationRemake(),
+                      MyForm().buildform("หมายเหตุ :", _ctlRemark),
                       const SizedBox(height: 50),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.end,
-                      //   children: [
-                      //     Column(
-                      //       children: [
-                      //         ElevatedButton(
-                      //           style: ElevatedButton.styleFrom(
-                      //               textStyle: TextStyle(fontSize: 18),
-                      //               primary: Color.fromARGB(255, 10, 94, 3),
-                      //               shape: RoundedRectangleBorder(
-                      //                   borderRadius: BorderRadius.circular(30)),
-                      //               padding: const EdgeInsets.all(15)),
-                      //           onPressed: () {
-                      //             addLocations();
-                      //           },
-                      //           child: Text("บันทึก"),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //     SizedBox(width: 10),
-                      //     Column(
-                      //       children: [
-                      //         ElevatedButton(
-                      //           style: ElevatedButton.styleFrom(
-                      //               textStyle: TextStyle(fontSize: 18),
-                      //               primary: Color.fromARGB(255, 197, 16, 4),
-                      //               shape: RoundedRectangleBorder(
-                      //                   borderRadius: BorderRadius.circular(30)),
-                      //               padding: const EdgeInsets.all(15)),
-                      //           onPressed: () {
-                      //             canceldialog.showDialogCancel(context);
-                      //           },
-                      //           child: Text("ยกเลิก"),
-                      //         ),
-                      //       ],
-                      //     )
-                      //   ],
-                      // ),
                     ],
                   ),
                 ),
@@ -521,298 +484,6 @@ class _LocationsState extends State<Locations> {
         ));
   }
 
-  Widget buildName() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "ชื่อ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlName,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildAddNo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "เลขที่ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlAddrNo,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildMoo() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "หมู่ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlMoo,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildRoad() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "ถนน :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlRoad,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildSubDistrictID() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "ตำบล :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlSubDistrictID,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildDistrictID() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "อำเภอ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlDistrictID,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildProvinceID() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "จังหวัด :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlProvinceID,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildPostCode() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "รหัสไปรษณีย์ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlPostCode,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget buildLatLng() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -820,14 +491,23 @@ class _LocationsState extends State<Locations> {
         const Text(
           "ตำแหน่ง :",
           style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+            color: colorDetails3,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 10),
         Container(
           margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(border: Border.all(color: Colors.grey)),
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Color.fromARGB(255, 238, 238, 240),
+              width: 2,
+            ),
+          ),
           height: 250,
-          width: 500,
+          width: 550,
           child: latlng == null
               ? CircularProgressIndicator()
               : GoogleMap(
@@ -852,43 +532,6 @@ class _LocationsState extends State<Locations> {
     );
   }
 
-  Widget buildTelephone() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "โทรศัพท์ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlTelephone,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget buildIsActive() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -896,86 +539,54 @@ class _LocationsState extends State<Locations> {
         const Text(
           "สถานะการใช้งาน :",
           style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+            color: colorDetails3,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 10),
         Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
           padding: const EdgeInsets.only(left: 15, right: 15),
+          width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: DropdownButton(
-            dropdownColor: Colors.white,
-            iconSize: 30,
-            isExpanded: true,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 18,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Color.fromARGB(255, 238, 238, 240),
+              width: 2,
             ),
-            value: dropdownIsA,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            items: itemIsA.map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(
-                () {
-                  dropdownIsA = newValue!;
-                  if (dropdownIsA == 'ON') {
-                    selectDropdownIsA = "Y";
-                  } else {
-                    selectDropdownIsA = "N";
-                  }
-                },
-              );
-            },
           ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildLocationRemake() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "หมายเหตุ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton(
+              dropdownColor: Colors.white,
+              iconSize: 30,
+              isExpanded: true,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 18,
               ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlRemark,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: '**หมายเหตุ**',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
+              hint: Text("N/A"),
+              value: dropdownIsA,
+              icon: const Icon(Icons.keyboard_arrow_down),
+              items: itemIsA.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(
+                  () {
+                    dropdownIsA = newValue!;
+                    if (dropdownIsA == 'ON') {
+                      selectDropdownIsA = "Y";
+                    } else {
+                      selectDropdownIsA = "N";
+                    }
+                  },
+                );
+              },
+            ),
           ),
         ),
       ],

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
+import 'package:cannabis_track_and_trace_application/widget/forminput.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import '../../../api/allInventorys.dart';
@@ -127,12 +128,8 @@ class _ChemicalUsesState extends State<ChemicalUses> {
     return [_allGreenhouses, _allInventory];
   }
 
-  String dropdowntype = 'N/A';
-  String selectDropdown = '00';
-  var itemtype = ['N/A', 'ใบ', 'ดอก', 'ก้าน'];
-
-  String dropdownGH = 'N/A';
-  String dropdownIV = 'N/A';
+  String? dropdownGH;
+  String? dropdownIV;
 
   @override
   Widget build(BuildContext context) {
@@ -195,47 +192,49 @@ class _ChemicalUsesState extends State<ChemicalUses> {
                           const Text(
                             "โรงปลูก :",
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
+                              color: colorDetails3,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                           const SizedBox(height: 10),
                           Container(
-                            margin: const EdgeInsets.only(left: 15, right: 15),
                             padding: const EdgeInsets.only(left: 15, right: 15),
+                            width: double.infinity,
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 240, 239, 239),
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: DropdownButton(
-                              dropdownColor: Colors.white,
-                              iconSize: 30,
-                              isExpanded: true,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: Color.fromARGB(255, 238, 238, 240),
+                                width: 2,
                               ),
-                              value: dropdownGH,
-                              icon: const Icon(Icons.keyboard_arrow_down),
-                              items: nameGH.map((String items) {
-                                return DropdownMenuItem(
-                                  value: items,
-                                  child: Text(items),
-                                );
-                              }).toList(),
-                              onChanged: (String? newValue) {
-                                setState(
-                                  () {
-                                    dropdownGH = newValue!;
-                                  },
-                                );
-                              },
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                dropdownColor: Colors.white,
+                                iconSize: 30,
+                                isExpanded: true,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                                hint: Text("N/A"),
+                                value: dropdownGH,
+                                icon: const Icon(Icons.keyboard_arrow_down),
+                                items: nameGH.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    child: Text(items),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(
+                                    () {
+                                      dropdownGH = newValue!;
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ],
@@ -247,103 +246,64 @@ class _ChemicalUsesState extends State<ChemicalUses> {
                           const Text(
                             "วัสดุ :",
                             style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 20,
-                                fontWeight: FontWeight.bold),
+                              color: colorDetails3,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                           const SizedBox(height: 10),
                           Container(
-                            margin: const EdgeInsets.only(left: 15, right: 15),
                             padding: const EdgeInsets.only(left: 15, right: 15),
+                            width: double.infinity,
                             decoration: BoxDecoration(
-                              color: const Color.fromARGB(255, 240, 239, 239),
-                              borderRadius: BorderRadius.circular(20),
-                              boxShadow: const [
-                                BoxShadow(
-                                  color: Colors.black26,
-                                  offset: Offset(0, 2),
-                                ),
-                              ],
-                            ),
-                            child: DropdownButton(
-                              dropdownColor: Colors.white,
-                              iconSize: 30,
-                              isExpanded: true,
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 18,
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: Color.fromARGB(255, 238, 238, 240),
+                                width: 2,
                               ),
-                              value: dropdownIV,
-                              icon: const Icon(Icons.keyboard_arrow_down),
-                              items: nameIV.map((String items) {
-                                return DropdownMenuItem(
-                                  value: items,
-                                  child: Text(items),
-                                );
-                              }).toList(),
-                              onChanged: (String? newValue) {
-                                setState(
-                                  () {
-                                    dropdownIV = newValue!;
-                                  },
-                                );
-                              },
+                            ),
+                            child: DropdownButtonHideUnderline(
+                              child: DropdownButton(
+                                dropdownColor: Colors.white,
+                                iconSize: 30,
+                                isExpanded: true,
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 18,
+                                ),
+                                hint: Text("N/A"),
+                                value: dropdownIV,
+                                icon: const Icon(Icons.keyboard_arrow_down),
+                                items: nameIV.map((String items) {
+                                  return DropdownMenuItem(
+                                    value: items,
+                                    child: Text(items),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(
+                                    () {
+                                      dropdownIV = newValue!;
+                                    },
+                                  );
+                                },
+                              ),
                             ),
                           ),
                         ],
                       ),
                       const SizedBox(height: 20),
-                      buildUseAmount(),
+                      MyForm().buildform("ปริมาณ :", _ctlUseAmount),
                       const SizedBox(height: 20),
-                      buildUnit(),
+                      MyForm().buildform("หน่วย :", _ctlUnit),
                       const SizedBox(height: 20),
-                      buildUseRemake(),
+                      MyForm().buildform("เหตุผลที่ใช้ :", _ctlUseRemark),
                       const SizedBox(height: 20),
                       buildPHI(),
                       const SizedBox(height: 20),
-                      buildChemicalRemake(),
+                      MyForm().buildform("หมายเหตุ :", _ctlRemake),
                       const SizedBox(height: 50),
-                      // Row(
-                      //   mainAxisAlignment: MainAxisAlignment.end,
-                      //   children: [
-                      //     Column(
-                      //       children: [
-                      //         ElevatedButton(
-                      //           style: ElevatedButton.styleFrom(
-                      //               textStyle: const TextStyle(fontSize: 18),
-                      //               primary: const Color.fromARGB(255, 10, 94, 3),
-                      //               shape: RoundedRectangleBorder(
-                      //                   borderRadius:
-                      //                       BorderRadius.circular(30)),
-                      //               padding: const EdgeInsets.all(15)),
-                      //           onPressed: () {
-                      //             addChemicalUses();
-                      //           },
-                      //           child: const Text("บันทึก"),
-                      //         ),
-                      //       ],
-                      //     ),
-                      //     const SizedBox(width: 10),
-                      //     Column(
-                      //       children: [
-                      //         ElevatedButton(
-                      //           style: ElevatedButton.styleFrom(
-                      //               textStyle: const TextStyle(fontSize: 18),
-                      //               primary:
-                      //                   const Color.fromARGB(255, 197, 16, 4),
-                      //               shape: RoundedRectangleBorder(
-                      //                   borderRadius:
-                      //                       BorderRadius.circular(30)),
-                      //               padding: const EdgeInsets.all(15)),
-                      //           onPressed: () {
-                      //             canceldialog.showDialogCancel(context);
-                      //           },
-                      //           child: const Text("ยกเลิก"),
-                      //         ),
-                      //       ],
-                      //     )
-                      //   ],
-                      // ),
                     ],
                   ),
                 ),
@@ -354,115 +314,6 @@ class _ChemicalUsesState extends State<ChemicalUses> {
         ));
   }
 
-  Widget buildUseAmount() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "ปริมาณ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlUseAmount,
-            keyboardType: TextInputType.number,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildUnit() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "หน่วย :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlUnit,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildUseRemake() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "เหตุผลที่ใช้ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlUseRemark,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget buildPHI() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -470,21 +321,22 @@ class _ChemicalUsesState extends State<ChemicalUses> {
         const Text(
           "วันที่ปลอดภัยหลังใช้ :",
           style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+            color: colorDetails3,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 10),
         Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
           padding: const EdgeInsets.only(left: 15, right: 15),
+          width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Color.fromARGB(255, 238, 238, 240),
+              width: 2,
+            ),
           ),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -517,42 +369,6 @@ class _ChemicalUsesState extends State<ChemicalUses> {
                 ),
               ),
             ],
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildChemicalRemake() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "หมายเหตุ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlRemake,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: '**หมายเหตุ**',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),
       ],

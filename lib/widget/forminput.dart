@@ -27,7 +27,7 @@ class MyForm {
           ),
           child: TextFormField(
             controller: controllor,
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType.text,
             style: const TextStyle(
               color: colorDetails2,
               fontSize: 20,
