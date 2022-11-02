@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
+import 'package:cannabis_track_and_trace_application/widget/forminput.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,7 +27,7 @@ class _GreenHousesState extends State<GreenHouses> {
     _ctlName.clear();
     _ctlRemark.clear();
     dropdownLocations = null;
-    dropdownIsA = 'N/A';
+    dropdownIsA = null;
   }
 
   Future addGreenhouse() async {
@@ -115,7 +116,7 @@ class _GreenHousesState extends State<GreenHouses> {
   String? dropdownLocations;
   // var nameLocations = ['1', '2', '3'];
 
-  String dropdownIsA = 'N/A';
+  String? dropdownIsA;
   String selectDropdownIsA = '';
   var itemIsA = ['N/A', 'ON', 'OFF'];
   @override
@@ -161,13 +162,13 @@ class _GreenHousesState extends State<GreenHouses> {
                             color: Color.fromARGB(255, 8, 143, 114)),
                       ),
                       const SizedBox(height: 50),
-                      buildGH_Name(),
+                      MyForm().buildform("ชื่อโรงเรือน :", _ctlName),
                       const SizedBox(height: 20),
                       buildGH_location(nameLocations),
                       const SizedBox(height: 20),
                       buildGH_IsActive(),
                       const SizedBox(height: 20),
-                      buildGH_Remark(),
+                      MyForm().buildform("หมายเหตุ :", _ctlRemark),
                       const SizedBox(height: 50),
                     ],
                   ),
@@ -179,41 +180,7 @@ class _GreenHousesState extends State<GreenHouses> {
         ));
   }
 
-  Widget buildGH_Name() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "ชื่อโรงเรือน :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlName,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
+ 
 
   Widget buildGH_location(nameLocations) {
     return Column(
@@ -222,47 +189,51 @@ class _GreenHousesState extends State<GreenHouses> {
         const Text(
           "ชื่อสถานที่ :",
           style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+            color: colorDetails3,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 10),
         Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
           padding: const EdgeInsets.only(left: 15, right: 15),
+          width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: DropdownButton<String>(
-            dropdownColor: Colors.white,
-            iconSize: 30,
-            isExpanded: true,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 18,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Color.fromARGB(255, 238, 238, 240),
+              width: 2,
             ),
-            hint: const Text("เลือกสถานที่"),
-            value: dropdownLocations,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            items: nameLocations.map<DropdownMenuItem<String>>((String items) {
-              return DropdownMenuItem<String>(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(
-                () {
-                  dropdownLocations = newValue!;
-                  print(dropdownLocations.toString());
-                },
-              );
-            },
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton<String>(
+              dropdownColor: Colors.white,
+              iconSize: 30,
+              isExpanded: true,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+              ),
+              hint: const Text("เลือกสถานที่"),
+              value: dropdownLocations,
+              icon: const Icon(Icons.keyboard_arrow_down),
+              items:
+                  nameLocations.map<DropdownMenuItem<String>>((String items) {
+                return DropdownMenuItem<String>(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(
+                  () {
+                    dropdownLocations = newValue!;
+                    print(dropdownLocations.toString());
+                  },
+                );
+              },
+            ),
           ),
         ),
       ],
@@ -276,89 +247,59 @@ class _GreenHousesState extends State<GreenHouses> {
         const Text(
           "สถานะการใช้งาน :",
           style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+            color: colorDetails3,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 10),
         Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
           padding: const EdgeInsets.only(left: 15, right: 15),
+          width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: DropdownButton(
-            dropdownColor: Colors.white,
-            iconSize: 30,
-            isExpanded: true,
-            style: const TextStyle(
-              color: Colors.black,
-              fontSize: 18,
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Color.fromARGB(255, 238, 238, 240),
+              width: 2,
             ),
-            value: dropdownIsA,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            items: itemIsA.map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(
-                () {
-                  dropdownIsA = newValue!;
-                  if (dropdownIsA == 'ON') {
-                    selectDropdownIsA = "Y";
-                  } else {
-                    selectDropdownIsA = "N";
-                  }
-                },
-              );
-            },
+          ),
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton(
+              dropdownColor: Colors.white,
+              iconSize: 30,
+              isExpanded: true,
+              style: const TextStyle(
+                color: Colors.black,
+                fontSize: 18,
+              ),
+              hint: const Text('N/A'),
+              value: dropdownIsA,
+              icon: const Icon(Icons.keyboard_arrow_down),
+              items: itemIsA.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(
+                  () {
+                    dropdownIsA = newValue!;
+                    if (dropdownIsA == 'ON') {
+                      selectDropdownIsA = "Y";
+                    } else {
+                      selectDropdownIsA = "N";
+                    }
+                  },
+                );
+              },
+            ),
           ),
         ),
       ],
     );
   }
 
-  Widget buildGH_Remark() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "หมายเหตุ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlRemark,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
+ 
 }

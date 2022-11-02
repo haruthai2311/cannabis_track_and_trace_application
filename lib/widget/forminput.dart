@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import '../config/styles.dart';
 
-class MyForm{
-
+class MyForm {
   Widget buildform(title, controllor) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +27,7 @@ class MyForm{
           ),
           child: TextFormField(
             controller: controllor,
-            keyboardType: TextInputType.number,
+            keyboardType: TextInputType.text,
             style: const TextStyle(
               color: colorDetails2,
               fontSize: 20,
