@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_launcher_icons/xml_templates.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
+import '../../../api/allgreenhouses.dart';
 import '../../../api/allharvests.dart';
 import '../../../api/hostapi.dart';
 import '../../../config/styles.dart';
@@ -20,6 +21,7 @@ class EditHarvest extends StatefulWidget {
 
 class _EditHarvestState extends State<EditHarvest> {
   late List<Harvests> _Harvests;
+  late List<AllGreenhouses> _allGreenhouses;
   DateTime date = DateTime.now();
   final _formKey = GlobalKey<FormState>();
   bool _visible = false;
@@ -31,19 +33,23 @@ class _EditHarvestState extends State<EditHarvest> {
   final _ctlLotNo = TextEditingController();
   final _ctlHavestRemake = TextEditingController();
 
-  Future<List<Harvests>> getHarvests() async {
+  Future getHarvests() async {
     var url = hostAPI + '/trackings/getHarvest?id=' + widget.harvestId;
     print(url);
     var response = await http.get(Uri.parse(url));
     _Harvests = harvestsFromJson(response.body);
 
-    return _Harvests;
+    var urlGH = hostAPI + '/informations/getAllGreenhouses';
+    var responseGH = await http.get(Uri.parse(urlGH));
+    _allGreenhouses = allGreenhousesFromJson(responseGH.body);
+
+    return [_Harvests, _allGreenhouses];
   }
 
   String? dropdowntype;
   String? selectDropdown;
   var itemtype = ['N/A', 'ใบ', 'ดอก', 'ก้าน'];
-
+  String? dropdownGH;
   @override
   void initState() {
     super.initState();
@@ -90,7 +96,8 @@ class _EditHarvestState extends State<EditHarvest> {
               if (snapshot.data == null) {
                 Container();
               }
-              var result = snapshot.data;
+              var result = snapshot.data[0];
+              var ghname = snapshot.data[1];
               String TypeHarvest;
               String type = result[0].type.toString();
               if (type == "1") {
@@ -102,8 +109,16 @@ class _EditHarvestState extends State<EditHarvest> {
               } else {
                 TypeHarvest = "N/A";
               }
+
+              var nameGH = ['N/A'];
+              for (var i = 0; i < ghname.length; i++) {
+                //print(result[i].newCase);
+                nameGH.add(ghname[i].name);
+                //print(casenewsort);
+              }
+
               selectDropdown ??= type;
-              _ctlNameGH.text = result[0].nameGh.toString();
+              String namegh = result[0].nameGh.toString();
               _ctlHarvestNo.text = result[0].harvestNo.toString();
               _ctlWeight.text = result[0].weight.toString();
               _ctlLotNo.text = result[0].lotNo.toString();
@@ -149,7 +164,68 @@ class _EditHarvestState extends State<EditHarvest> {
                           ),
                         ),
                         const SizedBox(height: 10),
-                        MyForm().buildformText('โรงปลูก', _ctlNameGH),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "โรงปลูก :",
+                              style: const TextStyle(
+                                color: colorDetails3,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color: Color.fromARGB(255, 238, 238, 240),
+                                  width: 2,
+                                ),
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  dropdownColor: Colors.white,
+                                  iconSize: 30,
+                                  isExpanded: true,
+                                  style: const TextStyle(
+                                    color: colorDetails2,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  hint: Text(
+                                    namegh,
+                                    style: const TextStyle(
+                                      color: colorDetails2,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  value: dropdownGH,
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  items: nameGH.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(
+                                      () {
+                                        dropdownGH = newValue!;
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
                         const SizedBox(height: 20),
                         buildHarvestDate(),
                         const SizedBox(height: 20),
@@ -179,47 +255,49 @@ class _EditHarvestState extends State<EditHarvest> {
                                   width: 2,
                                 ),
                               ),
-                              child: DropdownButton(
-                                dropdownColor: Colors.white,
-                                iconSize: 30,
-                                isExpanded: true,
-                                style: const TextStyle(
-                                  color: colorDetails2,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                                hint: Text(
-                                  TypeHarvest,
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  dropdownColor: Colors.white,
+                                  iconSize: 30,
+                                  isExpanded: true,
                                   style: const TextStyle(
                                     color: colorDetails2,
                                     fontSize: 20,
                                     fontWeight: FontWeight.normal,
                                   ),
+                                  hint: Text(
+                                    TypeHarvest,
+                                    style: const TextStyle(
+                                      color: colorDetails2,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                  value: dropdowntype,
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  items: itemtype.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(
+                                      () {
+                                        dropdowntype = newValue!;
+                                        if (dropdowntype == "N/A") {
+                                          selectDropdown = "00";
+                                        } else if (dropdowntype == "ใบ") {
+                                          selectDropdown = "01";
+                                        } else if (dropdowntype == "ดอก") {
+                                          selectDropdown = "02";
+                                        } else {
+                                          selectDropdown = "03";
+                                        }
+                                      },
+                                    );
+                                  },
                                 ),
-                                value: dropdowntype,
-                                icon: const Icon(Icons.keyboard_arrow_down),
-                                items: itemtype.map((String items) {
-                                  return DropdownMenuItem(
-                                    value: items,
-                                    child: Text(items),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  setState(
-                                    () {
-                                      dropdowntype = newValue!;
-                                      if (dropdowntype == "N/A") {
-                                        selectDropdown = "00";
-                                      } else if (dropdowntype == "ใบ") {
-                                        selectDropdown = "01";
-                                      } else if (dropdowntype == "ดอก") {
-                                        selectDropdown = "02";
-                                      } else {
-                                        selectDropdown = "03";
-                                      }
-                                    },
-                                  );
-                                },
                               ),
                             ),
                           ],
