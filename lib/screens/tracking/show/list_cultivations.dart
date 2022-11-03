@@ -78,8 +78,8 @@ class _ListCultivationsState extends State<ListCultivations> {
                     child: Text(
                       "การปลูก",
                       style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
                   ),

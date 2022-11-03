@@ -169,4 +169,45 @@ class MyForm {
     );
   }
 
+  Widget buildformSection(title, icon, color) {
+    return Container(
+      width: 220,
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+            blurRadius: 2,
+            color: color,
+            spreadRadius: 1,
+          )
+        ],
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.white,
+        border: Border.all(
+          color: const Color(0xFFCFD4DB),
+          width: 1,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              icon,
+              size: 30,
+              color: Colors.black54,
+            ),
+            const SizedBox(
+              width: 10,
+            ),
+            Text(
+              title,
+              style: TextStyle(
+                  fontSize: 20, color: color, fontWeight: FontWeight.bold),
+            ),
+          ],
+        ),
+      ),
+    );
   }
+}

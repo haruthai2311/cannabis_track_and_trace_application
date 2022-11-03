@@ -102,11 +102,11 @@ class _DetailsTransferState extends State<DetailsTransfer> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(
-                              'Transfer Summary',
+                              'รายละเอียดข้อมูลการส่งมอบ',
                               style: TextStyle(
                                 color: Colors.green,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w500,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ],

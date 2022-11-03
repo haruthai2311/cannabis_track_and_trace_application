@@ -140,6 +140,7 @@ class _AddTransfersState extends State<AddTransfers> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('Transfer'),
         backgroundColor: kBackground,
         actions: <Widget>[
           IconButton(
@@ -201,8 +202,8 @@ class _AddTransfersState extends State<AddTransfers> {
                         const Text(
                           "บันทึกข้อมูลการส่งมอบ",
                           style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
                               color: Colors.blue),
                         ),
                         const SizedBox(height: 20),

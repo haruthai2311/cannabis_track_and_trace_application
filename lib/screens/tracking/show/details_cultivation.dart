@@ -96,11 +96,11 @@ class _DetailsCultivationState extends State<DetailsCultivation> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Cultivation Summary',
+                                  'รายละเอียดข้อมูลการปลูก',
                                   style: TextStyle(
                                     color: Colors.orange,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ],

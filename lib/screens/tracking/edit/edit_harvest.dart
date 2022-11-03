@@ -58,7 +58,7 @@ class _EditHarvestState extends State<EditHarvest> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kBackground,
-        title: const Text("Edit Harvest"),
+        title: const Text("Harvest Edit"),
         actions: <Widget>[
           IconButton(
             icon: const Icon(
@@ -135,8 +135,8 @@ class _EditHarvestState extends State<EditHarvest> {
                         const Text(
                           "แก้ไขข้อมูลการเก็บเกี่ยว",
                           style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
                               color: Colors.blue),
                         ),
                         const SizedBox(height: 20),

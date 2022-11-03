@@ -77,8 +77,8 @@ class _ListHarvesteState extends State<ListHarveste> {
                     child: Text(
                       "การเก็บเกี่ยว",
                       style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 22,
+                         fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
                   ),

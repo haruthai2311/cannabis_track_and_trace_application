@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'dart:math';
+import 'package:cannabis_track_and_trace_application/widget/forminput.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -35,6 +36,11 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
   final _ctlFixInsect = TextEditingController();
   final _ctlWeight = TextEditingController();
   final _ctlTrashRemark = TextEditingController();
+  final _ctlTrashDate = TextEditingController();
+  final _ctlCheckDate = TextEditingController();
+  final _ctlPotsname = TextEditingController();
+  final _ctlCulNo = TextEditingController();
+  final _ctlGH = TextEditingController();
 
   Future<List<Plantracking>> getPlanttracking() async {
     var url = hostAPI + '/trackings/Plantracking?id=' + widget.PlantrackingID;
@@ -75,6 +81,7 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('Plant Tracking Edit'),
         backgroundColor: kBackground,
         actions: <Widget>[
           IconButton(
@@ -88,589 +95,537 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
           )
         ],
       ),
-      body: FutureBuilder(
-        future: getPlanttracking(),
-        builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            if (snapshot.data == null) {
-              Container();
-            }
-            var result = snapshot.data;
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              kBackground,
+              Colors.white60,
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: FutureBuilder(
+          future: getPlanttracking(),
+          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+            if (snapshot.connectionState == ConnectionState.done) {
+              if (snapshot.data == null) {
+                Container();
+              }
+              var result = snapshot.data;
 
-            String plantStatus;
+              String plantStatus;
 
-            String status = result[0].plantStatus.toString();
-            if (status == "1") {
-              plantStatus = "ปกติ";
-            } else if (status == "2") {
-              plantStatus = "ไม่สมบูรณ์ ";
-            } else if (status == "3") {
-              plantStatus = "ตัดทิ้ง";
-            } else {
-              plantStatus = "N/A";
-            }
+              String status = result[0].plantStatus.toString();
+              if (status == "1") {
+                plantStatus = "ปกติ";
+              } else if (status == "2") {
+                plantStatus = "ไม่สมบูรณ์ ";
+              } else if (status == "3") {
+                plantStatus = "ตัดทิ้ง";
+              } else {
+                plantStatus = "N/A";
+              }
 
-            String SoilMoisture;
-            String Soil = result[0].soilMoisture.toString();
-            if (Soil == "1") {
-              SoilMoisture = "ดินชิ้นเหมาะสม";
-            } else if (Soil == "2") {
-              SoilMoisture = "ดินชื้นมาก ไม่มีผลต่อการเจริญเติบโต";
-            } else if (Soil == "3") {
-              SoilMoisture = "ดินชื้นมาก มีผลต่อการเจริญเติบโต";
-            } else if (Soil == "4") {
-              SoilMoisture = "ดินแห้ง พบต้นเหี่ยวช่วงบ่าย";
-            } else if (Soil == "5") {
-              SoilMoisture = "ดินแห้ง ไม่พบต้นเหี่ยวช่วงบ่าย";
-            } else {
-              SoilMoisture = "N/A";
-            }
-            // final _ctlSoilMoisture =
-            //    TextEditingController(text: SoilMoisture);
-            // if (dropdownStatus == null) {
-            //   selectdropdownStatus = status;
-            // }
-            selectdropdownStatus ??= '0' + status;
-            selectdropdownSoi ??= '0' + Soil;
-            if (file == null) {
-              urlPathImage = result[0].fileName;
-            }
+              String SoilMoisture;
+              String Soil = result[0].soilMoisture.toString();
+              if (Soil == "1") {
+                SoilMoisture = "ดินชิ้นเหมาะสม";
+              } else if (Soil == "2") {
+                SoilMoisture = "ดินชื้นมาก ไม่มีผลต่อการเจริญเติบโต";
+              } else if (Soil == "3") {
+                SoilMoisture = "ดินชื้นมาก มีผลต่อการเจริญเติบโต";
+              } else if (Soil == "4") {
+                SoilMoisture = "ดินแห้ง พบต้นเหี่ยวช่วงบ่าย";
+              } else if (Soil == "5") {
+                SoilMoisture = "ดินแห้ง ไม่พบต้นเหี่ยวช่วงบ่าย";
+              } else {
+                SoilMoisture = "N/A";
+              }
+              // final _ctlSoilMoisture =
+              //    TextEditingController(text: SoilMoisture);
+              // if (dropdownStatus == null) {
+              //   selectdropdownStatus = status;
+              // }
+              selectdropdownStatus ??= '0' + status;
+              selectdropdownSoi ??= '0' + Soil;
+              if (file == null) {
+                urlPathImage = result[0].fileName;
+              }
 
-            _ctlSoilRemark.text = result[0].soilRemark;
-            _ctlDisease.text = result[0].disease;
-            _ctlFixDisease.text = result[0].fixDisease;
-            _ctlInsect.text = result[0].insect;
-            _ctlFixInsect.text = result[0].fixInsect;
-            _ctlWeight.text = result[0].weight.toString() + ' Kg';
-            _ctlTrashRemark.text = result[0].trashRemark;
-            _ctlRemark.text = result[0].remark;
+              _ctlSoilRemark.text = result[0].soilRemark;
+              _ctlDisease.text = result[0].disease;
+              _ctlFixDisease.text = result[0].fixDisease;
+              _ctlInsect.text = result[0].insect;
+              _ctlFixInsect.text = result[0].fixInsect;
+              _ctlWeight.text = result[0].weight.toString() + ' Kg';
+              _ctlTrashRemark.text = result[0].trashRemark;
+              _ctlRemark.text = result[0].remark;
+              _ctlTrashDate.text =
+                  f.format(result[0].logTime).toString() + ' น.';
+              _ctlCheckDate.text =
+                  f.format(result[0].checkDate).toString() + ' น.';
+              _ctlPotsname.text = result[0].potsName.toString();
+              _ctlCulNo.text = result[0].no.toString();
+              _ctlGH.text = result[0].ghName.toString();
 
-            return SingleChildScrollView(
-                child: Stack(
-              children: <Widget>[
-                Stack(
-                  children: [
-                    GestureDetector(
-                      child: file == null
-                          ? Image.network(
-                              hostAPI + result[0].fileName,
-                              fit: BoxFit.cover,
-                              width: MediaQuery.of(context).size.width,
-                              height: MediaQuery.of(context).size.height * 0.5,
-                            )
-                          : Image.file(file!),
-                      //*คลิกดูรูปใหญ่*//
-                      // onTap: () {
-                      //   Navigator.push(context, MaterialPageRoute(builder: (_) {
-                      //     return DetailScreen();
-                      //   }));
-                      // },
-                    ),
-                    Positioned(
-                      top: 300,
-                      left: 10,
-                      right: 10,
-                      bottom: 10,
-                      child: Column(
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                  //alignment: Alignment.bottomRight,
-                                  height: 40,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.circle),
-                                  child: IconButton(
-                                    onPressed: ((() =>
-                                        chooseImage(ImageSource.camera))),
-                                    icon: const Icon(
-                                      Icons.add_a_photo,
-                                    ),
-                                    color:
-                                        const Color.fromARGB(255, 2, 184, 144),
-                                    iconSize: 25,
-                                  )),
-                              const SizedBox(
-                                width: 5,
-                              ),
-                              Container(
-                                  //alignment: Alignment.bottomRight,
-                                  height: 40,
-                                  width: 40,
-                                  decoration: const BoxDecoration(
-                                      color: Colors.white,
-                                      shape: BoxShape.circle),
-                                  child: IconButton(
-                                    onPressed: ((() =>
-                                        chooseImage(ImageSource.gallery))),
-                                    icon: const Icon(
-                                      Icons.add_photo_alternate,
-                                    ),
-                                    color:
-                                        const Color.fromARGB(255, 2, 184, 144),
-                                    iconSize: 25,
-                                  )),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
-                ),
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0.0, 350.0, 0.0, 0.0),
-                  child: SizedBox(
-                    //height: MediaQuery.of(context).size.height,
-                    width: MediaQuery.of(context).size.width,
-                    child: Material(
-                      borderRadius: BorderRadius.circular(35.0),
-                      child: Column(
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(
-                                20.0, 20.0, 20.0, 20.0),
-                            child: Column(
-                              children: [
-                                const SizedBox(
-                                  height: 15,
+              return SingleChildScrollView(
+                child: Column(
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Container(
+                        padding: const EdgeInsets.all(15),
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                        ),
+                        child: Column(
+                          children: [
+                            Padding(
+                              padding:
+                                  EdgeInsetsDirectional.fromSTEB(0, 5, 0, 20),
+                              child: Container(
+                                width: 60,
+                                height: 4,
+                                decoration: BoxDecoration(
+                                  color: Color(0xFFDBE2E7),
+                                  borderRadius: BorderRadius.circular(8),
                                 ),
-
-                                Row(
-                                  children: <Widget>[
-                                    Expanded(
-                                      child: Row(
-                                        children: [
-                                          const Expanded(
-                                            child: Text(
-                                              "โรงปลูก : ",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            ),
-                                          ),
-                                          Expanded(
-                                            child: Text(
-                                              result[0].ghName.toString(),
-                                              style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'แก้ไขผลตรวจประจำวัน',
+                                  style: TextStyle(
+                                    color: Colors.pink,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                                SizedBox(width: 5),
+                                Icon(
+                                  Icons.edit,
+                                  color: Colors.black54,
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 30),
+                            Container(
+                              //height: 250,
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                border: Border.all(
+                                  color: Color(0xFFF1F4F8),
+                                  width: 2,
+                                ),
+                              ),
+                              child: Padding(
+                                padding: const EdgeInsets.all(10),
+                                child: Stack(
+                                  children: [
+                                    GestureDetector(
+                                      child: file == null
+                                          ? Image.network(
+                                              hostAPI + result[0].fileName,
+                                              fit: BoxFit.cover,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.5,
+                                            )
+                                          : Image.file(file!),
+                                      //*คลิกดูรูปใหญ่*//
+                                      // onTap: () {
+                                      //   Navigator.push(context, MaterialPageRoute(builder: (_) {
+                                      //     return DetailScreen();
+                                      //   }));
+                                      // },
                                     ),
-                                    Expanded(
-                                      child: Row(
-                                        children: <Widget>[
-                                          const Expanded(
-                                            child: Text(
-                                              "รอบปลูก :",
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20,
-                                                  fontWeight:
-                                                      FontWeight.normal),
-                                            ),
+                                    Positioned(
+                                      top: 330,
+                                      left: 0,
+                                      right: 0,
+                                      bottom: 0,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Color.fromARGB(
+                                              129, 255, 255, 255),
+                                          // borderRadius: BorderRadius.only(
+                                          //   topLeft: Radius.circular(20),
+                                          //   topRight: Radius.circular(20),
+                                          // ),
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(5),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Container(
+                                                  //alignment: Alignment.bottomRight,
+                                                  height: 50,
+                                                  width: 50,
+                                                  decoration:
+                                                      const BoxDecoration(
+                                                          color:
+                                                              Color.fromARGB(
+                                                                  255,
+                                                                  78,
+                                                                  78,
+                                                                  78),
+                                                          shape:
+                                                              BoxShape.circle),
+                                                  child: IconButton(
+                                                    onPressed: ((() =>
+                                                        chooseImage(ImageSource
+                                                            .camera))),
+                                                    icon: const Icon(
+                                                      Icons.add_a_photo,
+                                                    ),
+                                                    color: Colors.white,
+                                                    iconSize: 25,
+                                                  )),
+                                              const SizedBox(
+                                                width: 5,
+                                              ),
+                                              Container(
+                                                //alignment: Alignment.bottomRight,
+                                                height: 50,
+                                                width: 50,
+                                                decoration: BoxDecoration(
+                                                  color: Color.fromARGB(
+                                                      255, 78, 78, 78),
+                                                  borderRadius:
+                                                      BorderRadius.circular(5),
+                                                ),
+                                                child: IconButton(
+                                                  onPressed: ((() =>
+                                                      chooseImage(ImageSource
+                                                          .gallery))),
+                                                  icon: const Icon(
+                                                    Icons.add_photo_alternate,
+                                                  ),
+                                                  color: Colors.white,
+                                                  iconSize: 30,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          Expanded(
-                                            child: Text(
-                                              result[0].no.toString(),
-                                              style: const TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 20,
-                                                  fontWeight: FontWeight.bold),
-                                            ),
-                                          ),
-                                        ],
+                                        ),
                                       ),
                                     )
                                   ],
                                 ),
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            MyForm()
+                                .buildformLog("โรงปลูกปลูก : ", _ctlGH, true),
+                            const SizedBox(height: 15),
+                            MyForm()
+                                .buildformLog("รอบปลูก : ", _ctlCulNo, true),
+                            const SizedBox(height: 15),
+                            MyForm().buildformLog(
+                                "หมายเลขกระถาง : ", _ctlPotsname, true),
 
-                                const SizedBox(
-                                  height: 15,
+                            //buildBox("รอบที่ปลูก :", _ctlCulNo),
+                            const SizedBox(height: 20),
+                            MyForm().buildformLog(
+                                "วันที่บันทึก : ", _ctlCheckDate, true),
+                            const SizedBox(
+                              height: 15,
+                            ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "สถานะ :",
+                                  style: TextStyle(
+                                    color: colorDetails3,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ),
-                                Row(
-                                  children: <Widget>[
-                                    const Expanded(
-                                      child: Text(
-                                        "หมายเลขกระถาง :",
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.normal),
-                                      ),
+                                const SizedBox(height: 10),
+                                Container(
+                                  padding: const EdgeInsets.only(
+                                      left: 15, right: 15),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(
+                                      color: Color.fromARGB(255, 238, 238, 240),
+                                      width: 2,
                                     ),
-                                    Expanded(
-                                      child: Text(
-                                        result[0].potsName.toString(),
-                                        style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold),
-                                      ),
+                                  ),
+                                  child: DropdownButton(
+                                    dropdownColor: Colors.white,
+                                    iconSize: 30,
+                                    isExpanded: true,
+                                    style: const TextStyle(
+                                      color: colorDetails2,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
                                     ),
-                                  ],
-                                ),
-
-                                //buildBox("รอบที่ปลูก :", _ctlCulNo),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    const Text(
-                                      "วันที่บันทึก : ",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                    Text(
-                                      f.format(result[0].checkDate).toString(),
+                                    hint: Text(
+                                      plantStatus,
                                       style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-
-                                //buildBox("วันที่บันทึก :", _ctlCheckDate),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      "สถานะ :",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          left: 15, right: 15),
-                                      padding: const EdgeInsets.only(
-                                          left: 15, right: 15),
-                                      decoration: BoxDecoration(
-                                        color: const Color.fromARGB(
-                                            255, 240, 239, 239),
-                                        borderRadius: BorderRadius.circular(20),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Colors.black26,
-                                            offset: Offset(0, 2),
-                                          ),
-                                        ],
+                                        color: colorDetails2,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
                                       ),
-                                      child: DropdownButton(
-                                        dropdownColor: Colors.white,
-                                        iconSize: 30,
-                                        isExpanded: true,
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                        ),
-                                        hint: Text(
-                                          plantStatus,
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                        value: dropdownStatus,
-                                        icon: const Icon(
-                                            Icons.keyboard_arrow_down),
-                                        items: itemStatus.map((String items) {
-                                          return DropdownMenuItem(
-                                            value: items,
-                                            child: Text(items),
-                                          );
-                                        }).toList(),
-                                        onChanged: (String? newValue) {
-                                          //dropdownStatus = newValue!;
-                                          setState(
-                                            () {
-                                              dropdownStatus = newValue!;
-                                              // if (dropdownStatus == null) {
-                                              //   selectdropdownStatus = status;
-                                              // } else
-                                              if (dropdownStatus == "ปกติ") {
-                                                selectdropdownStatus = "01";
-                                              } else if (dropdownStatus ==
-                                                  "ไม่สมบูรณ์ ") {
-                                                selectdropdownStatus = "02";
-                                              } else if (dropdownStatus ==
-                                                  "ตัดทิ้ง") {
-                                                selectdropdownStatus = "03";
-                                              } else {
-                                                selectdropdownStatus = "00";
-                                              }
-                                              print(selectdropdownStatus);
-                                            },
-                                          );
+                                    ),
+                                    value: dropdownStatus,
+                                    icon: const Icon(Icons.keyboard_arrow_down),
+                                    items: itemStatus.map((String items) {
+                                      return DropdownMenuItem(
+                                        value: items,
+                                        child: Text(items),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? newValue) {
+                                      //dropdownStatus = newValue!;
+                                      setState(
+                                        () {
+                                          dropdownStatus = newValue!;
+                                          // if (dropdownStatus == null) {
+                                          //   selectdropdownStatus = status;
+                                          // } else
+                                          if (dropdownStatus == "ปกติ") {
+                                            selectdropdownStatus = "01";
+                                          } else if (dropdownStatus ==
+                                              "ไม่สมบูรณ์ ") {
+                                            selectdropdownStatus = "02";
+                                          } else if (dropdownStatus ==
+                                              "ตัดทิ้ง") {
+                                            selectdropdownStatus = "03";
+                                          } else {
+                                            selectdropdownStatus = "00";
+                                          }
+                                          print(selectdropdownStatus);
                                         },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                // buildBox(
-                                //     "ความชื้นของดิน :", false, _ctlSoilMoisture),
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text(
-                                      "ความชื้นในดิน :",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                    const SizedBox(height: 10),
-                                    Container(
-                                      margin: const EdgeInsets.only(
-                                          left: 15, right: 15),
-                                      padding: const EdgeInsets.only(
-                                          left: 15, right: 15),
-                                      decoration: BoxDecoration(
-                                        color: const Color.fromARGB(
-                                            255, 240, 239, 239),
-                                        borderRadius: BorderRadius.circular(20),
-                                        boxShadow: const [
-                                          BoxShadow(
-                                            color: Colors.black26,
-                                            offset: Offset(0, 2),
-                                          ),
-                                        ],
-                                      ),
-                                      child: DropdownButton(
-                                        dropdownColor: Colors.white,
-                                        iconSize: 30,
-                                        isExpanded: true,
-                                        style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 18,
-                                        ),
-                                        hint: Text(
-                                          SoilMoisture,
-                                          style: const TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 18,
-                                          ),
-                                        ),
-                                        value: dropdownSoi,
-                                        icon: const Icon(
-                                            Icons.keyboard_arrow_down),
-                                        items: itemSoi.map((String items) {
-                                          return DropdownMenuItem(
-                                            value: items,
-                                            child: Text(items),
-                                          );
-                                        }).toList(),
-                                        onChanged: (String? newValue) {
-                                          setState(
-                                            () {
-                                              dropdownSoi = newValue!;
-                                              if (dropdownSoi ==
-                                                  "ดินชิ้นเหมาะสม") {
-                                                selectdropdownSoi = "01";
-                                              } else if (dropdownSoi ==
-                                                  "ดินชื้นมาก ไม่มีผลต่อการเจริญเติบโต") {
-                                                selectdropdownSoi = "02";
-                                              } else if (dropdownSoi ==
-                                                  "ดินชื้นมาก มีผลต่อการเจริญเติบโต") {
-                                                selectdropdownSoi = "03";
-                                              } else if (dropdownSoi ==
-                                                  "ดินแห้ง พบต้นเหี่ยวช่วงบ่าย") {
-                                                selectdropdownSoi = "04";
-                                              } else if (dropdownSoi ==
-                                                  "ดินแห้ง ไม่พบต้นเหี่ยวช่วงบ่าย") {
-                                                selectdropdownSoi = "05";
-                                              } else {
-                                                selectdropdownSoi = "00";
-                                              }
-                                              print(selectdropdownSoi);
-                                            },
-                                          );
-                                        },
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                buildBox("หมายเหตุ(ความชื้นของดิน) :", false,
-                                    _ctlSoilRemark),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                buildBox("หมายเหตุ :", false, _ctlRemark),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-
-                                buildBox("โรคที่พบ :", false, _ctlDisease),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                buildBox("วิธีแก้ไข :", false, _ctlFixDisease),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                buildBox("แมลงที่พบ :", false, _ctlInsect),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                buildBox("วิธีแก้ไข :", false, _ctlFixInsect),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  children: const [
-                                    Text(
-                                      "การเก็บซาก ",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 22,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                Row(
-                                  children: <Widget>[
-                                    const Text(
-                                      "วันที่เก็บซาก : ",
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal),
-                                    ),
-                                    Text(
-                                      f.format(result[0].logTime).toString(),
-                                      style: const TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ],
-                                ),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-                                buildBox("เก็บซาก :", false, _ctlWeight),
-                                const SizedBox(
-                                  height: 15,
-                                ),
-
-                                buildBox("เหตุผลที่เก็บซาก :", false,
-                                    _ctlTrashRemark),
-
-                                const SizedBox(
-                                  height: 15,
+                                      );
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
-                          )
-                        ],
+                            const SizedBox(height: 30),
+                            MyForm().buildformSection(
+                                'การสำรวจดิน', Icons.grass, Colors.brown),
+                            const SizedBox(height: 20),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "ความชื้นในดิน :",
+                                  style: const TextStyle(
+                                    color: colorDetails3,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                Container(
+                                  height: 70,
+                                  padding: const EdgeInsets.only(
+                                      left: 15, right: 15),
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(16),
+                                    border: Border.all(
+                                      color: Color.fromARGB(255, 238, 238, 240),
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: DropdownButton(
+                                    dropdownColor: Colors.white,
+                                    iconSize: 30,
+                                    isExpanded: true,
+                                    style: const TextStyle(
+                                      color: colorDetails2,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                    hint: Text(
+                                      SoilMoisture,
+                                      style: const TextStyle(
+                                        color: colorDetails2,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                    value: dropdownSoi,
+                                    icon: const Icon(Icons.keyboard_arrow_down),
+                                    items: itemSoi.map((String items) {
+                                      return DropdownMenuItem(
+                                        value: items,
+                                        child: Text(items),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? newValue) {
+                                      setState(
+                                        () {
+                                          dropdownSoi = newValue!;
+                                          if (dropdownSoi == "ดินชิ้นเหมาะสม") {
+                                            selectdropdownSoi = "01";
+                                          } else if (dropdownSoi ==
+                                              "ดินชื้นมาก ไม่มีผลต่อการเจริญเติบโต") {
+                                            selectdropdownSoi = "02";
+                                          } else if (dropdownSoi ==
+                                              "ดินชื้นมาก มีผลต่อการเจริญเติบโต") {
+                                            selectdropdownSoi = "03";
+                                          } else if (dropdownSoi ==
+                                              "ดินแห้ง พบต้นเหี่ยวช่วงบ่าย") {
+                                            selectdropdownSoi = "04";
+                                          } else if (dropdownSoi ==
+                                              "ดินแห้ง ไม่พบต้นเหี่ยวช่วงบ่าย") {
+                                            selectdropdownSoi = "05";
+                                          } else {
+                                            selectdropdownSoi = "00";
+                                          }
+                                          print(selectdropdownSoi);
+                                        },
+                                      );
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 15),
+                            MyForm()
+                                .buildformText("**หมายเหตุ : ", _ctlSoilRemark),
+                            const SizedBox(height: 30),
+                            MyForm().buildformSection('การสำรวจโรค',
+                                Icons.coronavirus, Colors.purple),
+                            const SizedBox(height: 20),
+                            MyForm().buildformText("โรคที่พบ : ", _ctlDisease),
+                            const SizedBox(height: 15),
+                            MyForm()
+                                .buildformText("วิธีแก้ไข : ", _ctlFixDisease),
+                            const SizedBox(height: 30),
+                            MyForm().buildformSection(
+                              'การสำรวจแมลง',
+                              Icons.emoji_nature,
+                              Color.fromARGB(255, 2, 88, 158),
+                            ),
+                            const SizedBox(height: 20),
+                            MyForm().buildformText("แมลงที่พบ : ", _ctlInsect),
+                            const SizedBox(height: 15),
+                            MyForm()
+                                .buildformText("วิธีแก้ไข : ", _ctlFixInsect),
+                            const SizedBox(height: 30),
+                            MyForm().buildformSection(
+                                'การเก็บซาก',
+                                Icons.auto_delete,
+                                Color.fromARGB(255, 1, 126, 12)),
+                            const SizedBox(height: 20),
+                            MyForm().buildformLog(
+                                "วันที่เก็บซาก : ", _ctlTrashDate, true),
+                            const SizedBox(height: 15),
+                            MyForm().buildform("เก็บซาก : ", _ctlWeight),
+                            const SizedBox(height: 15),
+                            MyForm().buildformText(
+                                "**เหตุผลที่เก็บซาก : ", _ctlTrashRemark),
+                            const SizedBox(height: 30),
+                            MyForm().buildformRemake("หมายเหตุ : ", _ctlRemark),
+                            const SizedBox(height: 20),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                )
-              ],
-            ));
-          }
-          return const LinearProgressIndicator();
+                  ],
+                ),
+              );
+            }
+            return const LinearProgressIndicator();
 
-          //                   Row(
-          //                     mainAxisAlignment: MainAxisAlignment.end,
-          //                     children: [
-          //                       Column(
-          //                         children: [
-          //                           ElevatedButton(
-          //                             style: ElevatedButton.styleFrom(
-          //                                 textStyle: TextStyle(fontSize: 18),
-          //                                 primary:
-          //                                     Color.fromARGB(255, 10, 94, 3),
-          //                                 shape: RoundedRectangleBorder(
-          //                                     borderRadius:
-          //                                         BorderRadius.circular(30)),
-          //                                 padding: const EdgeInsets.all(15)),
-          //                             onPressed: () {
-          //                               //ส่งค่าจากปุ่มบันทึก
-          //                               selectdropdownStatus ??= '0' + status;
-          //                               selectdropdownSoi ??= '0' + Soil;
-          //                               String urlPathImage =
-          //                                   result[0].fileName;
+            //                   Row(
+            //                     mainAxisAlignment: MainAxisAlignment.end,
+            //                     children: [
+            //                       Column(
+            //                         children: [
+            //                           ElevatedButton(
+            //                             style: ElevatedButton.styleFrom(
+            //                                 textStyle: TextStyle(fontSize: 18),
+            //                                 primary:
+            //                                     Color.fromARGB(255, 10, 94, 3),
+            //                                 shape: RoundedRectangleBorder(
+            //                                     borderRadius:
+            //                                         BorderRadius.circular(30)),
+            //                                 padding: const EdgeInsets.all(15)),
+            //                             onPressed: () {
+            //                               //ส่งค่าจากปุ่มบันทึก
+            //                               selectdropdownStatus ??= '0' + status;
+            //                               selectdropdownSoi ??= '0' + Soil;
+            //                               String urlPathImage =
+            //                                   result[0].fileName;
 
-          //                               // dialog.normalDialog(
-          //                               //     context,
-          //                               //     selectdropdownStatus.toString() +
-          //                               //         selectdropdownSoi.toString());
-          //                               //confirmDialog();
-          //                               showDialog(
-          //                                 context: context,
-          //                                 builder: (context) => SimpleDialog(
-          //                                   title: Text("ยืนยันการแก้ไขข้อมูล"),
-          //                                   children: <Widget>[
-          //                                     Row(
-          //                                       mainAxisAlignment:
-          //                                           MainAxisAlignment.center,
-          //                                       children: <Widget>[
-          //                                         OutlinedButton(
-          //                                             onPressed: () {
-          //                                               Navigator.pop(context);
-          //                                               EditData(
-          //                                                   selectdropdownStatus,
-          //                                                   selectdropdownSoi,
-          //                                                   _ctlSoilRemark,
-          //                                                   _ctlRemark,
-          //                                                   _ctlDisease,
-          //                                                   _ctlFixDisease,
-          //                                                   _ctlInsect,
-          //                                                   _ctlFixInsect,
-          //                                                   _ctlWeight,
-          //                                                   _ctlLogtime,
-          //                                                   _ctlTrashRemark,
-          //                                                   urlPathImage);
-          //                                             },
-          //                                             child:
-          //                                                 const Text('ยืนยัน')),
-          //                                         const SizedBox(
-          //                                           width: 5,
-          //                                         ),
-          //                                         OutlinedButton(
-          //                                             onPressed: () =>
-          //                                                 Navigator.pop(
-          //                                                     context),
-          //                                             child: Text('ยกเลิก'))
-          //                                       ],
-          //                                     )
-          //                                   ],
-          //                                 ),
-          //                               );
-          //                             },
-          //                             child: Text("บันทึก"),
-          //                           ),
-          //                         ],
-          //                       ),
-        },
+            //                               // dialog.normalDialog(
+            //                               //     context,
+            //                               //     selectdropdownStatus.toString() +
+            //                               //         selectdropdownSoi.toString());
+            //                               //confirmDialog();
+            //                               showDialog(
+            //                                 context: context,
+            //                                 builder: (context) => SimpleDialog(
+            //                                   title: Text("ยืนยันการแก้ไขข้อมูล"),
+            //                                   children: <Widget>[
+            //                                     Row(
+            //                                       mainAxisAlignment:
+            //                                           MainAxisAlignment.center,
+            //                                       children: <Widget>[
+            //                                         OutlinedButton(
+            //                                             onPressed: () {
+            //                                               Navigator.pop(context);
+            //                                               EditData(
+            //                                                   selectdropdownStatus,
+            //                                                   selectdropdownSoi,
+            //                                                   _ctlSoilRemark,
+            //                                                   _ctlRemark,
+            //                                                   _ctlDisease,
+            //                                                   _ctlFixDisease,
+            //                                                   _ctlInsect,
+            //                                                   _ctlFixInsect,
+            //                                                   _ctlWeight,
+            //                                                   _ctlLogtime,
+            //                                                   _ctlTrashRemark,
+            //                                                   urlPathImage);
+            //                                             },
+            //                                             child:
+            //                                                 const Text('ยืนยัน')),
+            //                                         const SizedBox(
+            //                                           width: 5,
+            //                                         ),
+            //                                         OutlinedButton(
+            //                                             onPressed: () =>
+            //                                                 Navigator.pop(
+            //                                                     context),
+            //                                             child: Text('ยกเลิก'))
+            //                                       ],
+            //                                     )
+            //                                   ],
+            //                                 ),
+            //                               );
+            //                             },
+            //                             child: Text("บันทึก"),
+            //                           ),
+            //                         ],
+            //                       ),
+          },
+        ),
       ),
     );
   }

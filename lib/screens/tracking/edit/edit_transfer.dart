@@ -64,6 +64,7 @@ class _EditTransferState extends State<EditTransfer> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          title: Text('Transfer Edit'),
           backgroundColor: kBackground,
           actions: <Widget>[
             IconButton(
@@ -151,9 +152,9 @@ class _EditTransferState extends State<EditTransfer> {
                           const Text(
                             "แก้ไขข้อมูลการส่งมอบ",
                             style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.blue),
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.green),
                           ),
                           const SizedBox(height: 20),
                           Padding(

@@ -123,11 +123,11 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                'Plant Tracking Summary',
+                                'รายละเอียดผลตรวจประจำวัน',
                                 style: TextStyle(
                                   color: Colors.pink,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w500,
+                                  fontSize: 22,
+                                    fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],

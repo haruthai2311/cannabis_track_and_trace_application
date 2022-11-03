@@ -76,8 +76,8 @@ class _ListTransfersState extends State<ListTransfers> {
                     child: Text(
                       "การส่งมอบ",
                       style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
+                          fontSize: 22,
+                          fontWeight: FontWeight.bold,
                           color: Colors.white),
                     ),
                   ),

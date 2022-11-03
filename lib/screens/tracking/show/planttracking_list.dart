@@ -81,8 +81,8 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
                           Text(
                             "บันทึกผลตรวจประจำวัน",
                             style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
                                 color: Colors.white),
                           ),
                           Text(

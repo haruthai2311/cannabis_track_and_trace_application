@@ -132,6 +132,7 @@ class _AddHarvestsState extends State<AddHarvests> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('Harvest'),
         backgroundColor: kBackground,
         actions: <Widget>[
           IconButton(
@@ -202,8 +203,8 @@ class _AddHarvestsState extends State<AddHarvests> {
                         const Text(
                           "บันทึกข้อมูลการเก็บเกี่ยว",
                           style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
                               color: Colors.green),
                         ),
                         const SizedBox(height: 20),

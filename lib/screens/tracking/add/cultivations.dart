@@ -149,7 +149,7 @@ class _AddCultivationsState extends State<AddCultivations> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Cultivations"),
+          title: const Text("Cultivation"),
           backgroundColor: kBackground,
           actions: <Widget>[
             IconButton(
@@ -221,8 +221,8 @@ class _AddCultivationsState extends State<AddCultivations> {
                           const Text(
                             "บันทึกข้อมูลการปลูก",
                             style: TextStyle(
-                                fontSize: 24,
-                                fontWeight: FontWeight.w600,
+                                fontSize: 22,
+                                fontWeight: FontWeight.bold,
                                 color: Colors.orange),
                           ),
                           const SizedBox(height: 20),

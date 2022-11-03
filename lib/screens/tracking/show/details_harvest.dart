@@ -104,11 +104,11 @@ class _DetailsHarvestState extends State<DetailsHarvest> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
-                                  'Harvest Summary',
+                                  'รายละเอียดข้อมูลการเก็บเกี่ยว',
                                   style: TextStyle(
                                     color: Colors.blue,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w500,
+                                    fontSize: 22,
+                                    fontWeight: FontWeight.bold,
                                   ),
                                 ),
                               ],

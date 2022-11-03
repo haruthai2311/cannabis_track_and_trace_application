@@ -201,6 +201,7 @@ class _PlantTrackingState extends State<PlantTracking> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        title: Text('Plant Tracking'),
         backgroundColor: kBackground,
         actions: <Widget>[
           IconButton(
@@ -279,8 +280,8 @@ class _PlantTrackingState extends State<PlantTracking> {
                         const Text(
                           "บันทึกผลตรวจประจำวัน",
                           style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w600,
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
                               color: Colors.pink),
                         ),
                         const SizedBox(height: 30),
@@ -403,27 +404,34 @@ class _PlantTrackingState extends State<PlantTracking> {
                         const SizedBox(height: 20),
                         buildPlantStatus(),
                         const SizedBox(height: 20),
-                        buildSectionSoi(),
+                        MyForm().buildformSection(
+                            'การสำรวจดิน', Icons.grass, Colors.brown),
                         const SizedBox(height: 20),
                         buildSoiMoisture(),
                         const SizedBox(height: 20),
                         MyForm().buildform("** หมายเหตุ : ", _ctlSoilRemark),
                         const SizedBox(height: 20),
-                        buildSectionDise(),
+                        MyForm().buildformSection(
+                            'การสำรวจโรค', Icons.coronavirus, Colors.purple),
                         const SizedBox(height: 20),
                         MyForm().buildform("โรคที่พบ : ", _ctlDisease),
                         const SizedBox(height: 20),
                         MyForm().buildform(
                             "การแก้ไขที่ทำไปแล้ว : ", _ctlFixDisease),
                         const SizedBox(height: 20),
-                        buildSectionInsect(),
+                        MyForm().buildformSection(
+                          'การสำรวจแมลง',
+                          Icons.emoji_nature,
+                          Color.fromARGB(255, 2, 88, 158),
+                        ),
                         const SizedBox(height: 20),
                         MyForm().buildform("แมลงที่พบ : ", _ctlInsect),
                         const SizedBox(height: 20),
                         MyForm()
                             .buildform("การแก้ไขที่ทำไปแล้ว : ", _ctlFixInsect),
                         const SizedBox(height: 20),
-                        buildSectionTrash(),
+                        MyForm().buildformSection('การเก็บซาก',
+                            Icons.auto_delete, Color.fromARGB(255, 1, 126, 12)),
                         const SizedBox(height: 20),
                         MyForm().buildform("น้ำหนัก (kg) : ", _ctlWeight),
                         const SizedBox(height: 20),
@@ -802,255 +810,6 @@ class _PlantTrackingState extends State<PlantTracking> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget buildTrashRemark() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "เหตุผลการเก็บซาก :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlTrashRemark,
-            keyboardType: TextInputType.text,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: 'ระบุ',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildRemakeTrash_log() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "หมายเหตุ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlRemarkTrash_log,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: '**หมายเหตุ**',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget buildSectionSoi() {
-    return Container(
-      width: 200,
-      decoration: BoxDecoration(
-        boxShadow: const [
-          BoxShadow(
-            blurRadius: 2,
-            color: Colors.brown,
-            spreadRadius: 1,
-          )
-        ],
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-        border: Border.all(
-          color: const Color(0xFFCFD4DB),
-          width: 1,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.grass,
-              size: 30,
-              color: Colors.black54,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              'การสำรวจดิน',
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.brown,
-                  fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildSectionDise() {
-    return Container(
-      width: 200,
-      decoration: BoxDecoration(
-        boxShadow: const [
-          BoxShadow(
-            blurRadius: 2,
-            color: Colors.purple,
-            spreadRadius: 1,
-          )
-        ],
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-        border: Border.all(
-          color: const Color(0xFFCFD4DB),
-          width: 1,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.coronavirus,
-              size: 30,
-              color: Colors.black54,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              'การสำรวจโรค',
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.purple,
-                  fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildSectionInsect() {
-    return Container(
-      width: 220,
-      decoration: BoxDecoration(
-        boxShadow: const [
-          BoxShadow(
-            blurRadius: 2,
-            color: Color.fromARGB(255, 2, 88, 158),
-            spreadRadius: 1,
-          )
-        ],
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-        border: Border.all(
-          color: const Color(0xFFCFD4DB),
-          width: 1,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.emoji_nature,
-              size: 30,
-              color: Colors.black54,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              'การสำรวจแมลง',
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Color.fromARGB(255, 2, 88, 158),
-                  fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget buildSectionTrash() {
-    return Container(
-      width: 200,
-      decoration: BoxDecoration(
-        boxShadow: const [
-          BoxShadow(
-            blurRadius: 2,
-            color: Color.fromARGB(255, 1, 126, 12),
-            spreadRadius: 1,
-          )
-        ],
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-        border: Border.all(
-          color: const Color(0xFFCFD4DB),
-          width: 1,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            const Icon(
-              Icons.auto_delete,
-              size: 30,
-              color: Colors.black54,
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            Text(
-              'การเก็บซาก',
-              style: TextStyle(
-                  fontSize: 20,
-                  color: Color.fromARGB(255, 1, 126, 12),
-                  fontWeight: FontWeight.bold),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }
