@@ -241,30 +241,32 @@ class _AddHarvestsState extends State<AddHarvests> {
                                   width: 2,
                                 ),
                               ),
-                              child: DropdownButton(
-                                dropdownColor: Colors.white,
-                                iconSize: 30,
-                                isExpanded: true,
-                                style: const TextStyle(
-                                  color: colorDetails2,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.normal,
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  dropdownColor: Colors.white,
+                                  iconSize: 30,
+                                  isExpanded: true,
+                                  style: const TextStyle(
+                                    color: colorDetails2,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  value: dropdownGH,
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  items: nameGH.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(
+                                      () {
+                                        dropdownGH = newValue!;
+                                      },
+                                    );
+                                  },
                                 ),
-                                value: dropdownGH,
-                                icon: const Icon(Icons.keyboard_arrow_down),
-                                items: nameGH.map((String items) {
-                                  return DropdownMenuItem(
-                                    value: items,
-                                    child: Text(items),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  setState(
-                                    () {
-                                      dropdownGH = newValue!;
-                                    },
-                                  );
-                                },
                               ),
                             ),
                           ],
@@ -283,48 +285,6 @@ class _AddHarvestsState extends State<AddHarvests> {
                         MyForm()
                             .buildformRemake("หมายเหตุ : ", _ctlHavestRemake),
                         const SizedBox(height: 20),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.end,
-                        //   children: [
-                        //     Column(
-                        //       children: [
-                        //         ElevatedButton(
-                        //           style: ElevatedButton.styleFrom(
-                        //               textStyle: const TextStyle(fontSize: 18),
-                        //               primary: const Color.fromARGB(255, 10, 94, 3),
-                        //               shape: RoundedRectangleBorder(
-                        //                   borderRadius:
-                        //                       BorderRadius.circular(30)),
-                        //               padding: const EdgeInsets.all(15)),
-                        //           onPressed: () {
-                        //             if (_formKey.currentState!.validate()) {
-                        //               addHarvests();
-                        //             }
-                        //           },
-                        //           child: Text("บันทึก"),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //     SizedBox(width: 10),
-                        //     Column(
-                        //       children: [
-                        //         ElevatedButton(
-                        //           style: ElevatedButton.styleFrom(
-                        //               textStyle: TextStyle(fontSize: 18),
-                        //               primary: Color.fromARGB(255, 197, 16, 4),
-                        //               shape: RoundedRectangleBorder(
-                        //                   borderRadius:
-                        //                       BorderRadius.circular(30)),
-                        //               padding: const EdgeInsets.all(15)),
-                        //           onPressed: () {
-                        //             canceldialog.showDialogCancel(context);
-                        //           },
-                        //           child: Text("ยกเลิก"),
-                        //         ),
-                        //       ],
-                        //     )
-                        //   ],
-                        // ),
                       ],
                     ),
                   ),

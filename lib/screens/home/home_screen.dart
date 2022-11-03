@@ -1,6 +1,5 @@
 import 'package:cannabis_track_and_trace_application/api/countdiseaseandinsect.dart';
 import 'package:cannabis_track_and_trace_application/config/styles.dart';
-import 'package:cannabis_track_and_trace_application/test.dart';
 import 'package:flutter/material.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 import 'package:http/http.dart' as http;
@@ -22,18 +21,22 @@ class _HomeScreenState extends State<HomeScreen> {
   late List<Count> _countDisease;
   late List<Count> _countInsect;
 
+  String? CulIDParameters;
   Future getAllCultivations() async {
     var url = hostAPI + '/trackings/AllCultivations';
     print(url);
     var response = await http.get(Uri.parse(url));
     _listCultivation = cultivationsFromJson(response.body);
 
-    var urlCountDisease = hostAPI + '/trackings/CountDisease';
+    var urlCountDisease =
+        hostAPI + '/trackings/CountDisease?culid=$CulIDParameters';
+    print(urlCountDisease);
     var responseCountDisease = await http.get(Uri.parse(urlCountDisease));
     _countDisease = countFromJson(responseCountDisease.body);
 
-    var urlCountInsect = hostAPI + '/trackings/CountInsect';
-
+    var urlCountInsect =
+        hostAPI + '/trackings/CountInsect?culid=$CulIDParameters';
+    print(urlCountInsect);
     var responseCountInsect = await http.get(Uri.parse(urlCountInsect));
     _countInsect = countFromJson(responseCountInsect.body);
 
@@ -67,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
     } else {
       if (_searchController.text.isNotEmpty) {
         _searchController.clear();
+        CulIDParameters = null;
         setState(() {});
       } else {
         _searchController.clear();
@@ -114,7 +118,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 for (var i = 0; i < result.length; i++) {
                   culGH.add(result[i].culGh);
                 }
-                //print(result);
+
+                CulIDParameters ??= result[0].cultivationId.toString();
+                //print(CulIDParameters);
+                //print(result[0].cultivationId);
                 return Stack(children: [
                   SingleChildScrollView(
                     child: Container(
@@ -168,7 +175,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           item: culGH))
                                       .toList(),
                                   // suggestionState: Suggestion.hidden,
-                                  hasOverlay: true,
+                                  //hasOverlay: true,
                                   controller: _searchController,
                                   // hint: 'Search by country name',
                                   maxSuggestionsInViewPort: 5,
@@ -197,9 +204,13 @@ class _HomeScreenState extends State<HomeScreen> {
                                               .harvestNo
                                               .toString();
                                         } */
-                                      // print(result[culGH.indexOf(select)]
-                                      //         .cultivationId
-                                      //         .toString() +
+                                      CulIDParameters =
+                                          result[culGH.indexOf(select)]
+                                              .cultivationId
+                                              .toString();
+                                      print(result[culGH.indexOf(select)]
+                                          .cultivationId
+                                          .toString());
                                       //     "  " +
                                       //     result[culGH.indexOf(select)]
                                       //         .culGh
@@ -218,542 +229,18 @@ class _HomeScreenState extends State<HomeScreen> {
                             if (_searchController.text.isEmpty) {
                               return Column(
                                 children: [
-                                  Text(
-                                    "รายงานรอบการปลูกที่  " +
-                                        result[0].no.toString(),
-                                    style: TextStyle(fontSize: 18),
-                                  ),
-
+                                  buildTaskHead(
+                                      result[0].no.toString(),
+                                      result[0].plantTotal.toString(),
+                                      result[0].nameGh.toString()),
                                   const SizedBox(height: 10),
-                                  Container(
-                                    margin: const EdgeInsets.only(
-                                        left: 5, right: 5),
-                                    height: 170,
-                                    decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                        image: AssetImage("images/Home1.jpg"),
-                                        fit: BoxFit.cover,
-                                      ),
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          blurRadius: 4,
-                                          color: Color(0x33000000),
-                                          offset: Offset(0, 2),
-                                          spreadRadius: 2,
-                                        )
-                                      ],
-                                      borderRadius: BorderRadius.circular(40),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Row(
-                                        children: [
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              const Text(
-                                                'จำนวนต้นทั้งหมด',
-                                                style: TextStyle(
-                                                  fontSize: 20,
-                                                  color: Colors.white,
-                                                ),
-                                              ),
-                                              SizedBox(height: 10),
-                                              Text(
-                                                result[0]
-                                                        .plantTotal
-                                                        .toString() +
-                                                    '  ต้น',
-                                                style: const TextStyle(
-                                                    fontSize: 25,
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ],
-                                          ),
-                                          const SizedBox(width: 70),
-                                          Column(
-                                            mainAxisSize: MainAxisSize.max,
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.center,
-                                            children: [
-                                              SizedBox(height: 40),
-                                              const Text(
-                                                'โรงเรือน',
-                                                style: TextStyle(
-                                                    fontSize: 22,
-                                                    color: Colors.white),
-                                              ),
-                                              SizedBox(height: 10),
-                                              Text(
-                                                result[0].nameGh.toString(),
-                                                style: const TextStyle(
-                                                    fontSize: 25,
-                                                    color: Colors.white,
-                                                    fontWeight:
-                                                        FontWeight.bold),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                  buildAmount(result[0].plantLive.toString(),
+                                      result[0].plantDead.toString()),
                                   const SizedBox(height: 10),
-                                  //จำนวนต้นปกติมต้นตาย
-                                  Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: Row(
-                                      mainAxisSize: MainAxisSize.max,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceAround,
-                                      children: [
-                                        //card1
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                blurRadius: 4,
-                                                color: Color(0x33000000),
-                                                offset: Offset(2, 4),
-                                                spreadRadius: 2,
-                                              )
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                            color: Colors.white,
-                                            border: Border.all(
-                                              color: const Color(0xFFCFD4DB),
-                                              width: 1,
-                                            ),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                20, 15, 20, 15),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Container(
-                                                  height: 40,
-                                                  width: 40,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    color: Color.fromARGB(
-                                                        255, 166, 245, 168),
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.favorite,
-                                                    color: Colors.green,
-                                                    size: 25,
-                                                  ),
-                                                ),
-                                                SizedBox(width: 20),
-                                                Column(
-                                                  //
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      result[0]
-                                                          .plantLive
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                          fontSize: 20,
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    const Text(
-                                                      'ต้นปกติ',
-                                                      style: TextStyle(
-                                                        fontSize: 18,
-                                                        color: Color.fromARGB(
-                                                            255, 14, 117, 17),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-
-                                        //Card2
-                                        Container(
-                                          decoration: BoxDecoration(
-                                            boxShadow: const [
-                                              BoxShadow(
-                                                blurRadius: 4,
-                                                color: Color(0x33000000),
-                                                offset: Offset(2, 4),
-                                                spreadRadius: 2,
-                                              )
-                                            ],
-                                            borderRadius:
-                                                BorderRadius.circular(15),
-                                            color: Colors.white,
-                                            border: Border.all(
-                                              color: const Color(0xFFCFD4DB),
-                                              width: 1,
-                                            ),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                20, 15, 20, 15),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.spaceAround,
-                                              children: [
-                                                Container(
-                                                  height: 40,
-                                                  width: 40,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                    color: Color.fromARGB(
-                                                        255, 209, 207, 207),
-                                                    shape: BoxShape.circle,
-                                                  ),
-                                                  child: const Icon(
-                                                    Icons.favorite,
-                                                    color: Color.fromARGB(
-                                                        255, 230, 28, 13),
-                                                    size: 25,
-                                                  ),
-                                                ),
-                                                SizedBox(width: 20),
-                                                Column(
-                                                  //
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.center,
-                                                  children: [
-                                                    Text(
-                                                      result[0]
-                                                          .plantDead
-                                                          .toString(),
-                                                      style: const TextStyle(
-                                                          fontSize: 20,
-                                                          color: Colors.black,
-                                                          fontWeight:
-                                                              FontWeight.bold),
-                                                    ),
-                                                    const Text(
-                                                      'ต้นตาย',
-                                                      style: TextStyle(
-                                                        fontSize: 18,
-                                                        color: Color.fromARGB(
-                                                            255, 230, 28, 13),
-                                                      ),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                                  buildGraph(result[0].percentageLive),
                                   const SizedBox(height: 10),
-                                  //*กราฟ*//
-                                  Container(
-                                    width: double.infinity,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      boxShadow: const [
-                                        BoxShadow(
-                                          blurRadius: 4,
-                                          color:
-                                              Color.fromARGB(255, 176, 4, 211),
-                                          offset: Offset(0, 0),
-                                          spreadRadius: 2,
-                                        )
-                                      ],
-                                      borderRadius: BorderRadius.circular(20),
-                                      border: Border.all(
-                                        color: const Color.fromARGB(
-                                            255, 134, 3, 160),
-                                        width: 3,
-                                      ),
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(10),
-                                      child: Column(
-                                        children: [
-                                          const Text(
-                                            'การเจริญเติบโตทั่วไป',
-                                            style: TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold),
-                                          ),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceAround,
-                                            children: [
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.all(10),
-                                                child: CircularPercentIndicator(
-                                                  percent:
-                                                      result[0].percentageLive /
-                                                          100,
-                                                  radius: 80,
-                                                  lineWidth: 20,
-                                                  animation: true,
-                                                  progressColor: colorGraph1,
-                                                  backgroundColor: colorGraph2,
-                                                  center: Text(
-                                                    result[0]
-                                                            .percentageLive
-                                                            .toString() +
-                                                        '%',
-                                                    style: const TextStyle(
-                                                        fontSize: 26,
-                                                        color: Colors.black,
-                                                        fontWeight:
-                                                            FontWeight.bold),
-                                                  ),
-                                                  circularStrokeCap:
-                                                      CircularStrokeCap.round,
-                                                ),
-                                              ),
-                                              Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Row(
-                                                    children: const [
-                                                      Icon(
-                                                        Icons.label,
-                                                        color: colorGraph1,
-                                                      ),
-                                                      SizedBox(width: 5),
-                                                      Text(
-                                                        'ต้นดี',
-                                                        style: TextStyle(
-                                                          fontSize: 20,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  Row(
-                                                    children: const [
-                                                      Icon(
-                                                        Icons.label,
-                                                        color: colorGraph2,
-                                                      ),
-                                                      SizedBox(width: 5),
-                                                      Text(
-                                                        'ต้นไม่ดี ',
-                                                        style: TextStyle(
-                                                          fontSize: 20,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Column(
-                                    children: [
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              blurRadius: 4,
-                                              color: Color(0x33000000),
-                                              offset: Offset(2, 4),
-                                              spreadRadius: 2,
-                                            )
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: Colors.white,
-                                          border: Border.all(
-                                            color: const Color(0xFFCFD4DB),
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    height: 90,
-                                                    child:
-                                                        const VerticalDivider(
-                                                      color: colorResult1,
-                                                      thickness: 5,
-                                                      indent: 3,
-                                                      endIndent: 3,
-                                                      width: 5,
-                                                    ),
-                                                  ),
-                                                  const Icon(
-                                                    Icons.search,
-                                                    size: 50,
-                                                    color: Colors.black,
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: const [
-                                                      Text(
-                                                        'การสำรวจโรค',
-                                                        style: TextStyle(
-                                                            fontSize: 20,
-                                                            color: colorResult1,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                      Text(
-                                                        'พบโรค',
-                                                        style: TextStyle(
-                                                          fontSize: 18,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    EdgeInsets.only(right: 15),
-                                                child: Text(
-                                                  countDisease[0]
-                                                          .count
-                                                          .toString() +
-                                                      ' กระถาง',
-                                                  style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      const SizedBox(height: 10),
-                                      Container(
-                                        decoration: BoxDecoration(
-                                          boxShadow: const [
-                                            BoxShadow(
-                                              blurRadius: 4,
-                                              color: Color(0x33000000),
-                                              offset: Offset(2, 4),
-                                              spreadRadius: 2,
-                                            )
-                                          ],
-                                          borderRadius:
-                                              BorderRadius.circular(10),
-                                          color: Colors.white,
-                                          border: Border.all(
-                                            color: Color(0xFFCFD4DB),
-                                            width: 1,
-                                          ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(10),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  Container(
-                                                    height: 90,
-                                                    child:
-                                                        const VerticalDivider(
-                                                      color: colorResult2,
-                                                      thickness: 5,
-                                                      indent: 3,
-                                                      endIndent: 3,
-                                                      width: 5,
-                                                    ),
-                                                  ),
-                                                  const Icon(
-                                                    Icons.search,
-                                                    size: 50,
-                                                    color: Colors.black,
-                                                  ),
-                                                  const SizedBox(
-                                                    width: 10,
-                                                  ),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: const [
-                                                      Text(
-                                                        'การสำรวจแมลง',
-                                                        style: TextStyle(
-                                                            fontSize: 20,
-                                                            color: colorResult2,
-                                                            fontWeight:
-                                                                FontWeight
-                                                                    .bold),
-                                                      ),
-                                                      Text(
-                                                        'พบแมลง',
-                                                        style: TextStyle(
-                                                          fontSize: 18,
-                                                          color: Colors.black,
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              Padding(
-                                                padding:
-                                                    EdgeInsets.only(right: 15),
-                                                child: Text(
-                                                  countInsect[0]
-                                                          .count
-                                                          .toString() +
-                                                      ' กระถาง',
-                                                  style: TextStyle(
-                                                    fontSize: 18,
-                                                    color: Colors.black,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  buildResult(countDisease[0].count.toString(),
+                                      countInsect[0].count.toString()),
                                   const SizedBox(height: 70),
                                 ],
                               );
@@ -1113,7 +600,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget buildResult(String CountDisease, String CountInsect) {
+  Widget buildResult(CDisease, CInsect) {
     return Column(
       children: [
         Container(
@@ -1182,7 +669,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.only(right: 15),
                   child: Text(
-                    CountDisease + ' กระถาง',
+                    CDisease + ' กระถาง',
                     style: const TextStyle(
                       fontSize: 18,
                       color: Colors.black,
@@ -1261,7 +748,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Padding(
                   padding: const EdgeInsets.only(right: 15),
                   child: Text(
-                    CountInsect + ' กระถาง',
+                    CInsect + ' กระถาง',
                     style: const TextStyle(
                       fontSize: 18,
                       color: Colors.black,

@@ -136,51 +136,87 @@ class _GreenHousesState extends State<GreenHouses> {
             )
           ],
         ),
-        body: FutureBuilder(
-          future: getData(),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              var result = snapshot.data;
+        body: Container(
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                kBackground,
+                Colors.white60,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: FutureBuilder(
+            future: getData(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                var result = snapshot.data;
 
-              var nameLocations = <String>[];
-              for (var i = 0; i < result.length; i++) {
-                nameLocations.add(result[i].name);
-              }
-              print(nameLocations);
+                var nameLocations = <String>[];
+                for (var i = 0; i < result.length; i++) {
+                  nameLocations.add(result[i].name);
+                }
+                print(nameLocations);
 
-              return Padding(
-                padding: const EdgeInsets.all(10),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      const Text(
-                        "บันทึกข้อมูลโรงเรือน ",
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(255, 8, 143, 114)),
-                      ),
-                      const SizedBox(height: 50),
-                      MyForm().buildform("ชื่อโรงเรือน :", _ctlName),
-                      const SizedBox(height: 20),
-                      buildGH_location(nameLocations),
-                      const SizedBox(height: 20),
-                      buildGH_IsActive(),
-                      const SizedBox(height: 20),
-                      MyForm().buildform("หมายเหตุ :", _ctlRemark),
-                      const SizedBox(height: 50),
-                    ],
+                return SingleChildScrollView(
+                    child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 20),
+                          child: Container(
+                            width: 60,
+                            height: 4,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFDBE2E7),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                        const Text(
+                          "บันทึกข้อมูลโรงเรือน ",
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(255, 8, 143, 114)),
+                        ),
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8, right: 8),
+                          child: Divider(
+                            height: 24,
+                            thickness: 2,
+                            color: Color(0xFFF1F4F8),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        MyForm().buildform("ชื่อโรงเรือน :", _ctlName),
+                        const SizedBox(height: 20),
+                        buildGH_location(nameLocations),
+                        const SizedBox(height: 20),
+                        buildGH_IsActive(),
+                        const SizedBox(height: 20),
+                        MyForm().buildformRemake("หมายเหตุ :", _ctlRemark),
+                        const SizedBox(height: 50),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }
-            return const LinearProgressIndicator();
-          },
+                ));
+              }
+              return const LinearProgressIndicator();
+            },
+          ),
         ));
   }
-
- 
 
   Widget buildGH_location(nameLocations) {
     return Column(
@@ -300,6 +336,4 @@ class _GreenHousesState extends State<GreenHouses> {
       ],
     );
   }
-
- 
 }

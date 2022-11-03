@@ -105,45 +105,86 @@ class _InventorysState extends State<Inventorys> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: kBackground,
-        actions: <Widget>[
-          IconButton(
-            icon: const Icon(
-              Icons.save_as_outlined,
-              color: Colors.white,
-            ),
-            onPressed: () {
-              addInventorys();
-            },
-          )
-        ],
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              const Text(
-                "บันทึกข้อมูลวัสดุ",
-                style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 8, 143, 114)),
+        appBar: AppBar(
+          backgroundColor: kBackground,
+          actions: <Widget>[
+            IconButton(
+              icon: const Icon(
+                Icons.save_as_outlined,
+                color: Colors.white,
               ),
-              const SizedBox(height: 50),
-              MyForm().buildform("ชื่อ :", _ctlName),
-              const SizedBox(height: 20),
-              MyForm().buildform("ชื่อทางการค้า :", _ctlCommercialName),
-              const SizedBox(height: 20),
-              buildIsActive(),
-              const SizedBox(height: 20),
-            ],
-          ),
+              onPressed: () {
+                addInventorys();
+              },
+            )
+          ],
         ),
-      ),
-    );
+        body: Container(
+            height: double.infinity,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                colors: [
+                  kBackground,
+                  Colors.white60,
+                ],
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+              ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(10),
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 20),
+                          child: Container(
+                            width: 60,
+                            height: 4,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFDBE2E7),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                        const Text(
+                          "บันทึกข้อมูลวัสดุ",
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(255, 8, 143, 114)),
+                        ),
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8, right: 8),
+                          child: Divider(
+                            height: 24,
+                            thickness: 2,
+                            color: Color(0xFFF1F4F8),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        MyForm().buildform("ชื่อ :", _ctlName),
+                        const SizedBox(height: 20),
+                        MyForm()
+                            .buildform("ชื่อทางการค้า :", _ctlCommercialName),
+                        const SizedBox(height: 20),
+                        buildIsActive(),
+                        const SizedBox(height: 20),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+            )));
   }
 
   Widget buildIsActive() {

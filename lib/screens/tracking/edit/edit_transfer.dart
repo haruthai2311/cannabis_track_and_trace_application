@@ -123,7 +123,7 @@ class _EditTransferState extends State<EditTransfer> {
                 _ctlLicenseNo.text = dataTransfer[0].licenseNo.toString();
                 _ctlLicensePlate.text = dataTransfer[0].licensePlate.toString();
                 _ctlTrackRemake.text = dataTransfer[0].remark.toString();
-                _ctlHarvestNo.text = dataTransfer[0].harvestNo.toString();
+                var hintHarvestNo = dataTransfer[0].harvestNo.toString();
                 date = dataTransfer[0].transferDate;
 
                 return SingleChildScrollView(
@@ -239,7 +239,51 @@ class _EditTransferState extends State<EditTransfer> {
                             ],
                           ),
                           const SizedBox(height: 20),
-                          MyForm().buildform("ครั้งที่ : ", _ctlHarvestNo),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "ครั้งที่ :",
+                                style: const TextStyle(
+                                  color: colorDetails3,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              const SizedBox(height: 10),
+                              Container(
+                                width: double.infinity,
+                                decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  borderRadius: BorderRadius.circular(16),
+                                  border: Border.all(
+                                    color: Color.fromARGB(255, 238, 238, 240),
+                                    width: 2,
+                                  ),
+                                ),
+                                child: TextFormField(
+                                  readOnly: true,
+                                  controller: _ctlHarvestNo,
+                                  keyboardType: TextInputType.text,
+                                  style: const TextStyle(
+                                    color: colorDetails2,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  decoration: InputDecoration(
+                                    border: InputBorder.none,
+                                    contentPadding: EdgeInsets.only(left: 15),
+                                    hintText: hintHarvestNo,
+                                    hintStyle: TextStyle(
+                                      color: colorDetails2,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                           const SizedBox(height: 20),
                           buildTransferDate(),
                           const SizedBox(height: 20),
@@ -267,47 +311,49 @@ class _EditTransferState extends State<EditTransfer> {
                                     width: 2,
                                   ),
                                 ),
-                                child: DropdownButton(
-                                  dropdownColor: Colors.white,
-                                  iconSize: 30,
-                                  isExpanded: true,
-                                  style: const TextStyle(
-                                    color: colorDetails2,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                  hint: Text(
-                                    TypeTransfer,
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton(
+                                    dropdownColor: Colors.white,
+                                    iconSize: 30,
+                                    isExpanded: true,
                                     style: const TextStyle(
                                       color: colorDetails2,
                                       fontSize: 20,
                                       fontWeight: FontWeight.normal,
                                     ),
+                                    hint: Text(
+                                      TypeTransfer,
+                                      style: const TextStyle(
+                                        color: colorDetails2,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.normal,
+                                      ),
+                                    ),
+                                    value: dropdowntype,
+                                    icon: const Icon(Icons.keyboard_arrow_down),
+                                    items: itemtype.map((String items) {
+                                      return DropdownMenuItem(
+                                        value: items,
+                                        child: Text(items),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? newValue) {
+                                      setState(
+                                        () {
+                                          dropdowntype = newValue!;
+                                          if (dropdowntype == "N/A") {
+                                            selectDropdown = "00";
+                                          } else if (dropdowntype == "ใบ") {
+                                            selectDropdown = "01";
+                                          } else if (dropdowntype == "ดอก") {
+                                            selectDropdown = "02";
+                                          } else {
+                                            selectDropdown = "03";
+                                          }
+                                        },
+                                      );
+                                    },
                                   ),
-                                  value: dropdowntype,
-                                  icon: const Icon(Icons.keyboard_arrow_down),
-                                  items: itemtype.map((String items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: Text(items),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? newValue) {
-                                    setState(
-                                      () {
-                                        dropdowntype = newValue!;
-                                        if (dropdowntype == "N/A") {
-                                          selectDropdown = "00";
-                                        } else if (dropdowntype == "ใบ") {
-                                          selectDropdown = "01";
-                                        } else if (dropdowntype == "ดอก") {
-                                          selectDropdown = "02";
-                                        } else {
-                                          selectDropdown = "03";
-                                        }
-                                      },
-                                    );
-                                  },
                                 ),
                               ),
                             ],

@@ -47,27 +47,65 @@ class _EditpassScreenState extends State<EditpassScreen> {
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 10),
-              const Text(
-                "แก้ไขรหัสผ่าน",
-                style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                    color: Color.fromARGB(255, 8, 143, 114)),
-              ),
-              const SizedBox(height: 50),
-              const SizedBox(height: 20),
-              password(),
-              const SizedBox(height: 20),
-              newpassword(),
-              const SizedBox(height: 20),
-              confirmpassword(),
+      body: Container(
+        height: double.infinity,
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              kBackground,
+              Colors.white60,
             ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(10),
+            child: Container(
+              padding: const EdgeInsets.all(15),
+              decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(20)),
+              ),
+              child: Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 20),
+                    child: Container(
+                      width: 60,
+                      height: 4,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFDBE2E7),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                    ),
+                  ),
+                  const Text(
+                    "แก้ไขรหัสผ่าน",
+                    style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.w600,
+                        color: Color.fromARGB(255, 8, 143, 114)),
+                  ),
+                  const SizedBox(height: 20),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 8, right: 8),
+                    child: Divider(
+                      height: 24,
+                      thickness: 2,
+                      color: Color(0xFFF1F4F8),
+                    ),
+                  ),
+                  const SizedBox(height: 10),
+                  password(),
+                  const SizedBox(height: 20),
+                  newpassword(),
+                  const SizedBox(height: 20),
+                  confirmpassword(),
+                ],
+              ),
+            ),
           ),
         ),
       ),
@@ -81,42 +119,44 @@ class _EditpassScreenState extends State<EditpassScreen> {
       children: [
         const Text(
           "รหัสผ่านปัจจุบัน :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            color: colorDetails3,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 10),
         Container(
-          // height: 60,
-          padding: const EdgeInsets.only(left: 15, right: 15),
-          margin: const EdgeInsets.only(left: 15, right: 15),
+          width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Color.fromARGB(255, 238, 238, 240),
+              width: 2,
+            ),
           ),
-          child: TextFormField(
-            controller: _ctlPassword,
-            obscureText: _isHiddenP,
-            style: const TextStyle(color: Colors.black, fontSize: 18),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              //contentPadding: EdgeInsets.only(left: 15),
-              hintText: 'กรอกรหัสผ่านปัจจุบัน',
-              hintStyle: TextStyle(color: Colors.black38, fontSize: 18),
-              suffixIcon: InkWell(
-                onTap: () {
-                  setState(() {
-                    _isHiddenP = !_isHiddenP;
-                  });
-                },
-                child: Icon(
-                  _isHiddenP ? Icons.visibility : Icons.visibility_off,
-                  color: const Color(0xFF828282),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: TextFormField(
+              controller: _ctlPassword,
+              obscureText: _isHiddenP,
+              style: const TextStyle(color: Colors.black, fontSize: 18),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                //contentPadding: EdgeInsets.only(left: 15),
+                hintText: 'กรอกรหัสผ่านปัจจุบัน',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18),
+                suffixIcon: InkWell(
+                  onTap: () {
+                    setState(() {
+                      _isHiddenP = !_isHiddenP;
+                    });
+                  },
+                  child: Icon(
+                    _isHiddenP ? Icons.visibility_off : Icons.visibility,
+                    color: const Color(0xFF828282),
+                  ),
                 ),
               ),
             ),
@@ -132,41 +172,44 @@ class _EditpassScreenState extends State<EditpassScreen> {
       children: [
         const Text(
           "รหัสผ่านใหม่ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            color: colorDetails3,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 10),
         Container(
-          padding: const EdgeInsets.only(left: 15, right: 15),
-          margin: const EdgeInsets.only(left: 15, right: 15),
+          width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Color.fromARGB(255, 238, 238, 240),
+              width: 2,
+            ),
           ),
-          child: TextFormField(
-            controller: _ctlNewPasseord,
-            obscureText: _isHiddenNP,
-            style: const TextStyle(color: Colors.black),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              //contentPadding: EdgeInsets.only(left: 15),
-              hintText: 'กรอกรหัสผ่านใหม่',
-              hintStyle: TextStyle(color: Colors.black38, fontSize: 18),
-              suffixIcon: InkWell(
-                onTap: () {
-                  setState(() {
-                    _isHiddenNP = !_isHiddenNP;
-                  });
-                },
-                child: Icon(
-                  _isHiddenNP ? Icons.visibility : Icons.visibility_off,
-                  color: const Color(0xFF828282),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: TextFormField(
+              controller: _ctlNewPasseord,
+              obscureText: _isHiddenNP,
+              style: const TextStyle(color: Colors.black),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                //contentPadding: EdgeInsets.only(left: 15),
+                hintText: 'กรอกรหัสผ่านใหม่',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18),
+                suffixIcon: InkWell(
+                  onTap: () {
+                    setState(() {
+                      _isHiddenNP = !_isHiddenNP;
+                    });
+                  },
+                  child: Icon(
+                    _isHiddenNP ? Icons.visibility_off : Icons.visibility,
+                    color: const Color(0xFF828282),
+                  ),
                 ),
               ),
             ),
@@ -182,41 +225,43 @@ class _EditpassScreenState extends State<EditpassScreen> {
       children: [
         const Text(
           "ยืนยันรหัสผ่านใหม่ :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
+          style: const TextStyle(
+            color: colorDetails3,
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+          ),
         ),
         const SizedBox(height: 10),
         Container(
-          padding: const EdgeInsets.only(left: 15, right: 15),
-          margin: const EdgeInsets.only(left: 15, right: 15),
+          width: double.infinity,
           decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+            border: Border.all(
+              color: Color.fromARGB(255, 238, 238, 240),
+              width: 2,
+            ),
           ),
-          child: TextFormField(
-            controller: _ctlConfirmnewPassword,
-            obscureText: _isHiddenCNP,
-            style: const TextStyle(color: Colors.black),
-            decoration: InputDecoration(
-              border: InputBorder.none,
-              //contentPadding: EdgeInsets.only(left: 15),
-              hintText: 'ยืนยันรหัสผ่านใหม่อีกครั้ง',
-              hintStyle: TextStyle(color: Colors.black38, fontSize: 18),
-              suffixIcon: InkWell(
-                onTap: () {
-                  setState(() {
-                    _isHiddenCNP = !_isHiddenCNP;
-                  });
-                },
-                child: Icon(
-                  _isHiddenCNP ? Icons.visibility : Icons.visibility_off,
-                  color: const Color(0xFF828282),
+          child: Padding(
+            padding: const EdgeInsets.only(left: 15),
+            child: TextFormField(
+              controller: _ctlConfirmnewPassword,
+              obscureText: _isHiddenCNP,
+              style: const TextStyle(color: Colors.black),
+              decoration: InputDecoration(
+                border: InputBorder.none,
+                hintText: 'ยืนยันรหัสผ่านใหม่อีกครั้ง',
+                hintStyle: TextStyle(color: Colors.black38, fontSize: 18),
+                suffixIcon: InkWell(
+                  onTap: () {
+                    setState(() {
+                      _isHiddenCNP = !_isHiddenCNP;
+                    });
+                  },
+                  child: Icon(
+                    _isHiddenCNP ? Icons.visibility_off : Icons.visibility,
+                    color: const Color(0xFF828282),
+                  ),
                 ),
               ),
             ),
