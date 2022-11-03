@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cannabis_track_and_trace_application/widget/forminput.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -61,227 +62,87 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
             )
           ],
         ),
-        body: FutureBuilder(
-          future: getUserdata(),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              var result = snapshot.data;
-              _ctlFirstNameT.text = result[0].fNameT.toString();
-              _ctlLastnameT.text = result[0].lNameT.toString();
-              _ctlFirstNameE.text = result[0].fNameE.toString();
-              _ctlLastnameE.text = result[0].lNameE.toString();
-              _ctlEmail.text = result[0].email.toString();
-              return Padding(
-                padding: const EdgeInsets.all(10),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      const Text(
-                        "แก้ไขข้อมูลส่วนบุคคล",
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(255, 8, 143, 114)),
-                      ),
-                      const SizedBox(height: 50),
-                      firstNameT(),
-                      const SizedBox(height: 20),
-                      lastnameT(),
-                      const SizedBox(height: 20),
-                      firstNameE(),
-                      const SizedBox(height: 20),
-                      lastnameE(),
-                      const SizedBox(height: 20),
-                      email(),
-                    ],
+        body: Container(
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                kBackground,
+                Colors.white60,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: FutureBuilder(
+            future: getUserdata(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                var result = snapshot.data;
+                _ctlFirstNameT.text = result[0].fNameT.toString();
+                _ctlLastnameT.text = result[0].lNameT.toString();
+                _ctlFirstNameE.text = result[0].fNameE.toString();
+                _ctlLastnameE.text = result[0].lNameE.toString();
+                _ctlEmail.text = result[0].email.toString();
+                return SingleChildScrollView(
+                    child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 20),
+                          child: Container(
+                            width: 60,
+                            height: 4,
+                            decoration: BoxDecoration(
+                              color: Color(0xFFDBE2E7),
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                        const Text(
+                          "แก้ไขข้อมูลส่วนบุคคล",
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(255, 8, 143, 114)),
+                        ),
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8, right: 8),
+                          child: Divider(
+                            height: 24,
+                            thickness: 2,
+                            color: Color(0xFFF1F4F8),
+                          ),
+                        ),
+                        const SizedBox(height: 10),
+                        MyForm().buildform("ชื่อ (ภาษาไทย):", _ctlFirstNameT),
+                        const SizedBox(height: 20),
+                        MyForm().buildform("นามสกุล (ภาษาไทย):", _ctlLastnameT),
+                        const SizedBox(height: 20),
+                        MyForm()
+                            .buildform("ชื่อ (ภาษาอังกฤษ):", _ctlFirstNameE),
+                        const SizedBox(height: 20),
+                        MyForm()
+                            .buildform("นามสกุล (ภาษาอังกฤษ):", _ctlLastnameE),
+                        const SizedBox(height: 20),
+                        MyForm().buildform("อีเมล:", _ctlEmail),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }
-            return const LinearProgressIndicator();
-          },
+                ));
+              }
+              return const LinearProgressIndicator();
+            },
+          ),
         ));
-  }
-
-  Widget email() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "อีเมล:",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlEmail,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: '',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget firstNameT() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "ชื่อ (ภาษาไทย) :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlFirstNameT,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: '',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget lastnameT() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "นามสกุล (ภาษาไทย) :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlLastnameT,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: '',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget firstNameE() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "ชื่อ (ภาษาอังกฤษ) :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlFirstNameE,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: '',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget lastnameE() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          "นามสกุล (ภาษาอังกฤษ) :",
-          style: TextStyle(
-              color: Colors.black, fontSize: 20, fontWeight: FontWeight.bold),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          margin: const EdgeInsets.only(left: 15, right: 15),
-          decoration: BoxDecoration(
-            color: const Color.fromARGB(255, 240, 239, 239),
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: const [
-              BoxShadow(
-                color: Colors.black26,
-                offset: Offset(0, 2),
-              ),
-            ],
-          ),
-          child: TextFormField(
-            controller: _ctlLastnameE,
-            style: const TextStyle(color: Colors.black),
-            decoration: const InputDecoration(
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.only(left: 15),
-                hintText: '',
-                hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
-          ),
-        ),
-      ],
-    );
   }
 
   Future<Null> confirmDialog() async {
@@ -355,7 +216,6 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
 
           //Show Error Message Dialog
           showMessage(msg["message"]);
-          
         });
         //showMessage(context, 'เกิดข้อผิดพลาด');
       }
@@ -388,6 +248,4 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
       },
     );
   }
-
-  
 }
