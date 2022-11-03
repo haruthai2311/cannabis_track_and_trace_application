@@ -153,169 +153,209 @@ class _PotsState extends State<Pots> {
             )
           ],
         ),
-        body: FutureBuilder(
-          future: getData(),
-          builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
-            if (snapshot.connectionState == ConnectionState.done) {
-              if (snapshot.data == null) {
-                Container();
-              }
-              var result1 = snapshot.data[0];
-              var result2 = snapshot.data[1];
-              var nameGH = ['N/A'];
-              for (var i = 0; i < result1.length; i++) {
-                nameGH.add(result1[i].name);
-              }
-              print(nameGH);
+        body: Container(
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                kBackground,
+                Colors.white60,
+              ],
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+            ),
+          ),
+          child: FutureBuilder(
+            future: getData(),
+            builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                if (snapshot.data == null) {
+                  Container();
+                }
+                var result1 = snapshot.data[0];
+                var result2 = snapshot.data[1];
+                var nameGH = ['N/A'];
+                for (var i = 0; i < result1.length; i++) {
+                  nameGH.add(result1[i].name);
+                }
+                print(nameGH);
 
-              var itemCul = [
-                'N/A',
-              ];
-              for (var i = 0; i < result2.length; i++) {
-                itemCul.add(result2[i].cultivationId.toString());
-              }
-              // print(nameStrains);
+                var itemCul = [
+                  'N/A',
+                ];
+                for (var i = 0; i < result2.length; i++) {
+                  itemCul.add(result2[i].cultivationId.toString());
+                }
+                // print(nameStrains);
 
-              return Padding(
-                padding: const EdgeInsets.all(10),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      const SizedBox(height: 10),
-                      const Text(
-                        "บันทึกข้อมูลกระถาง",
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(255, 8, 143, 114)),
-                      ),
-                      const SizedBox(height: 50),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "โรงปลูก :",
-                            style: TextStyle(
-                              color: colorDetails3,
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Container(
-                            padding: const EdgeInsets.only(left: 15, right: 15),
-                            width: double.infinity,
+                return SingleChildScrollView(
+                    child: Padding(
+                  padding: const EdgeInsets.all(10),
+                  child: Container(
+                    padding: const EdgeInsets.all(15),
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.all(Radius.circular(20)),
+                    ),
+                    child: Column(
+                      children: [
+                        Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(0, 5, 0, 20),
+                          child: Container(
+                            width: 60,
+                            height: 4,
                             decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(
-                                color: Color.fromARGB(255, 238, 238, 240),
-                                width: 2,
-                              ),
-                            ),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton(
-                                dropdownColor: Colors.white,
-                                iconSize: 30,
-                                isExpanded: true,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
-                                ),
-                                hint: Text("N/A"),
-                                value: dropdownGH,
-                                icon: const Icon(Icons.keyboard_arrow_down),
-                                items: nameGH.map((String items) {
-                                  return DropdownMenuItem(
-                                    value: items,
-                                    child: Text(items),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  setState(
-                                    () {
-                                      dropdownGH = newValue!;
-                                      NameGHParameters =
-                                          "?NameGH=" + dropdownGH!;
-                                      dropdownCul = null;
-                                    },
-                                  );
-                                },
-                              ),
+                              color: Color(0xFFDBE2E7),
+                              borderRadius: BorderRadius.circular(8),
                             ),
                           ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          const Text(
-                            "หมายเลขการปลูก :",
-                            style: TextStyle(
-                              color: colorDetails3,
-                              fontSize: 20,
+                        ),
+                        const Text(
+                          "บันทึกข้อมูลกระถาง",
+                          style: TextStyle(
+                              fontSize: 24,
                               fontWeight: FontWeight.w600,
-                            ),
+                              color: Color.fromARGB(255, 8, 143, 114)),
+                        ),
+                        const SizedBox(height: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 8, right: 8),
+                          child: Divider(
+                            height: 24,
+                            thickness: 2,
+                            color: Color(0xFFF1F4F8),
                           ),
-                          const SizedBox(height: 10),
-                          Container(
-                            padding: const EdgeInsets.only(left: 15, right: 15),
-                            width: double.infinity,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(16),
-                              border: Border.all(
-                                color: Color.fromARGB(255, 238, 238, 240),
-                                width: 2,
+                        ),
+                        const SizedBox(height: 10),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "โรงปลูก :",
+                              style: TextStyle(
+                                color: colorDetails3,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
                               ),
                             ),
-                            child: DropdownButtonHideUnderline(
-                              child: DropdownButton(
-                                dropdownColor: Colors.white,
-                                iconSize: 30,
-                                isExpanded: true,
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 18,
+                            const SizedBox(height: 10),
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color: Color.fromARGB(255, 238, 238, 240),
+                                  width: 2,
                                 ),
-                                hint: Text("N/A"),
-                                value: dropdownCul,
-                                icon: const Icon(Icons.keyboard_arrow_down),
-                                items: itemCul.map((String items) {
-                                  return DropdownMenuItem(
-                                    value: items,
-                                    child: Text(items),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  setState(
-                                    () {
-                                      dropdownCul = newValue!;
-                                    },
-                                  );
-                                },
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  dropdownColor: Colors.white,
+                                  iconSize: 30,
+                                  isExpanded: true,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
+                                  hint: Text("N/A"),
+                                  value: dropdownGH,
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  items: nameGH.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(
+                                      () {
+                                        dropdownGH = newValue!;
+                                        NameGHParameters =
+                                            "?NameGH=" + dropdownGH!;
+                                        dropdownCul = null;
+                                      },
+                                    );
+                                  },
+                                ),
                               ),
                             ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(height: 20),
-                      MyForm().buildform("หมายเลขกระถาง :", _ctlName),
-                      const SizedBox(height: 20),
-                      MyForm().buildform("บาร์โค้ด :", _ctlBarcode),
-                      const SizedBox(height: 20),
-                      buildIsTestPot(),
-                      const SizedBox(height: 20),
-                      MyForm().buildform("หมายเหตุ :", _ctlRemake),
-                      const SizedBox(height: 50),
-                    ],
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text(
+                              "หมายเลขการปลูก :",
+                              style: TextStyle(
+                                color: colorDetails3,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const SizedBox(height: 10),
+                            Container(
+                              padding:
+                                  const EdgeInsets.only(left: 15, right: 15),
+                              width: double.infinity,
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                borderRadius: BorderRadius.circular(16),
+                                border: Border.all(
+                                  color: Color.fromARGB(255, 238, 238, 240),
+                                  width: 2,
+                                ),
+                              ),
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  dropdownColor: Colors.white,
+                                  iconSize: 30,
+                                  isExpanded: true,
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 18,
+                                  ),
+                                  hint: Text("N/A"),
+                                  value: dropdownCul,
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  items: itemCul.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(
+                                      () {
+                                        dropdownCul = newValue!;
+                                      },
+                                    );
+                                  },
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        const SizedBox(height: 20),
+                        MyForm().buildform("หมายเลขกระถาง :", _ctlName),
+                        const SizedBox(height: 20),
+                        MyForm().buildform("บาร์โค้ด :", _ctlBarcode),
+                        const SizedBox(height: 20),
+                        buildIsTestPot(),
+                        const SizedBox(height: 20),
+                        MyForm().buildformRemake("หมายเหตุ :", _ctlRemake),
+                        const SizedBox(height: 50),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            }
-            return const LinearProgressIndicator();
-          },
+                ));
+              }
+              return const LinearProgressIndicator();
+            },
+          ),
         ));
   }
 
