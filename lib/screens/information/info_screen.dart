@@ -119,7 +119,6 @@ class _InfoScreenState extends State<InfoScreen> {
                                 child: Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    const SizedBox(height: 15),
                                     // buildHead(),
                                     // const SizedBox(height: 15),
                                     // buildNews(),
@@ -239,7 +238,6 @@ class _InfoScreenState extends State<InfoScreen> {
                                         ),
                                       ),
                                     ),
-                                    const SizedBox(height: 10),
                                   ],
                                 ),
                               ),

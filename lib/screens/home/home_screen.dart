@@ -126,19 +126,21 @@ class _HomeScreenState extends State<HomeScreen> {
                   SingleChildScrollView(
                     child: Container(
                       margin: const EdgeInsets.symmetric(
-                          vertical: 10, horizontal: 15),
+                          vertical: 15, horizontal: 10),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Column(
                             children: [
                               Container(
-                                //padding: EdgeInsets.only(top: 5),
-                                height: 50,
+                                height: 55,
                                 decoration: BoxDecoration(
-                                  color:
-                                      const Color.fromARGB(95, 179, 173, 173),
+                                  color: Colors.white,
                                   borderRadius: BorderRadius.circular(30),
+                                  border: Border.all(
+                                    color: Color.fromARGB(255, 238, 238, 240),
+                                    width: 2,
+                                  ),
                                 ),
                                 child: SearchField(
                                   searchInputDecoration: InputDecoration(
@@ -163,7 +165,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         }
                                         clearSearch();
                                       },
-                                      iconSize: 30,
+                                      iconSize: 25,
                                       color: Colors.black54,
                                     ),
                                   ),
@@ -400,8 +402,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    height: 30,
-                    width: 30,
+                    height: 50,
+                    width: 50,
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 166, 245, 168),
                       shape: BoxShape.circle,
@@ -409,7 +411,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: const Icon(
                       Icons.favorite,
                       color: Colors.green,
-                      size: 20,
+                      size: 30,
                     ),
                   ),
                   Column(
@@ -463,8 +465,8 @@ class _HomeScreenState extends State<HomeScreen> {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Container(
-                    height: 30,
-                    width: 30,
+                    height: 50,
+                    width: 50,
                     decoration: const BoxDecoration(
                       color: Color.fromARGB(255, 209, 207, 207),
                       shape: BoxShape.circle,
@@ -472,7 +474,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: const Icon(
                       Icons.favorite,
                       color: Color.fromARGB(255, 230, 28, 13),
-                      size: 20,
+                      size: 30,
                     ),
                   ),
                   Column(
