@@ -904,7 +904,7 @@ class _PlantTrackingState extends State<PlantTracking> {
             const Icon(
               Icons.grass,
               size: 30,
-              color: Colors.black,
+              color: Colors.black54,
             ),
             const SizedBox(
               width: 10,
