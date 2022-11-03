@@ -207,7 +207,7 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
                                     fontWeight: FontWeight.bold,
                                   ),
                                 ),
-                                SizedBox(width: 5),
+                                SizedBox(width: 10),
                                 Icon(
                                   Icons.edit,
                                   color: Colors.black54,
@@ -505,16 +505,14 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
                               ],
                             ),
                             const SizedBox(height: 15),
-                            MyForm()
-                                .buildformText("**หมายเหตุ : ", _ctlSoilRemark),
+                            MyForm().buildform("**หมายเหตุ : ", _ctlSoilRemark),
                             const SizedBox(height: 30),
                             MyForm().buildformSection('การสำรวจโรค',
                                 Icons.coronavirus, Colors.purple),
                             const SizedBox(height: 20),
-                            MyForm().buildformText("โรคที่พบ : ", _ctlDisease),
+                            MyForm().buildform("โรคที่พบ : ", _ctlDisease),
                             const SizedBox(height: 15),
-                            MyForm()
-                                .buildformText("วิธีแก้ไข : ", _ctlFixDisease),
+                            MyForm().buildform("วิธีแก้ไข : ", _ctlFixDisease),
                             const SizedBox(height: 30),
                             MyForm().buildformSection(
                               'การสำรวจแมลง',
@@ -522,10 +520,9 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
                               Color.fromARGB(255, 2, 88, 158),
                             ),
                             const SizedBox(height: 20),
-                            MyForm().buildformText("แมลงที่พบ : ", _ctlInsect),
+                            MyForm().buildform("แมลงที่พบ : ", _ctlInsect),
                             const SizedBox(height: 15),
-                            MyForm()
-                                .buildformText("วิธีแก้ไข : ", _ctlFixInsect),
+                            MyForm().buildform("วิธีแก้ไข : ", _ctlFixInsect),
                             const SizedBox(height: 30),
                             MyForm().buildformSection(
                                 'การเก็บซาก',
@@ -537,7 +534,7 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
                             const SizedBox(height: 15),
                             MyForm().buildform("เก็บซาก : ", _ctlWeight),
                             const SizedBox(height: 15),
-                            MyForm().buildformText(
+                            MyForm().buildform(
                                 "**เหตุผลที่เก็บซาก : ", _ctlTrashRemark),
                             const SizedBox(height: 30),
                             MyForm().buildformRemake("หมายเหตุ : ", _ctlRemark),

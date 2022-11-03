@@ -192,7 +192,6 @@ class _DetailsHarvestState extends State<DetailsHarvest> {
                                         0, 0, 0, 8),
                                     child: Container(
                                       width: double.infinity,
-                                      height: 60,
                                       decoration: BoxDecoration(
                                         color: Colors.white,
                                         borderRadius: BorderRadius.circular(8),
@@ -201,38 +200,95 @@ class _DetailsHarvestState extends State<DetailsHarvest> {
                                           width: 2,
                                         ),
                                       ),
-                                      child: Row(
-                                        children: [
-                                          Padding(
-                                              padding:
-                                                  EdgeInsets.only(left: 10)),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 12, 0),
-                                            child: Icon(
-                                              Icons.grade,
-                                              color: Colors.orange,
-                                              size: 20,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          children: [
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.calendar_month,
+                                                  color: Colors.black54,
+                                                  size: 20,
+                                                ),
+                                                SizedBox(width: 12),
+                                                Text(
+                                                  "วันที่เก็บเกี่ยว :  ",
+                                                  style: TextStyle(
+                                                    color: colorDetails3,
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.w600,
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                          ),
-                                          Text(
-                                            "ครั้งที่ :  ",
-                                            style: TextStyle(
-                                              color: colorDetails3,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w600,
+                                            Row(
+                                              children: [
+                                                SizedBox(width: 35),
+                                                Text(
+                                                  f
+                                                          .format(result[0]
+                                                              .harvestDate)
+                                                          .toString() +
+                                                      ' น.',
+                                                  style: TextStyle(
+                                                    color: colorDetails2,
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                        FontWeight.normal,
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0, 0, 0, 8),
+                                    child: Container(
+                                      width: double.infinity,
+                                      decoration: BoxDecoration(
+                                        color: Colors.white,
+                                        borderRadius: BorderRadius.circular(8),
+                                        border: Border.all(
+                                          color: Color(0xFFF1F4F8),
+                                          width: 2,
+                                        ),
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10),
+                                        child: Row(
+                                          children: [
+                                            Padding(
+                                              padding: EdgeInsetsDirectional
+                                                  .fromSTEB(0, 0, 12, 0),
+                                              child: Icon(
+                                                Icons.grade,
+                                                color: Colors.orange,
+                                                size: 20,
+                                              ),
                                             ),
-                                          ),
-                                          Text(
-                                            result[0].harvestNo.toString(),
-                                            style: const TextStyle(
-                                              color: colorDetails2,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal,
+                                            Text(
+                                              "ครั้งที่ :  ",
+                                              style: TextStyle(
+                                                color: colorDetails3,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.w600,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                            Text(
+                                              result[0].harvestNo.toString(),
+                                              style: const TextStyle(
+                                                color: colorDetails2,
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.normal,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -242,30 +298,8 @@ class _DetailsHarvestState extends State<DetailsHarvest> {
                             Padding(
                               padding: const EdgeInsets.only(left: 10),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "วันที่เก็บเกี่ยว : ",
-                                        style: TextStyle(
-                                          color: colorDetails3,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Text(
-                                        f
-                                            .format(result[0].harvestDate)
-                                            .toString(),
-                                        style: TextStyle(
-                                          color: colorDetails2,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 5),
                                   Row(
                                     children: [
                                       Text(

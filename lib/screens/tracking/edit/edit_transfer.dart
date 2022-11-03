@@ -116,7 +116,7 @@ class _EditTransferState extends State<EditTransfer> {
                 selectDropdown ??= type;
                 dropdownHvtID ??= dataTransfer[0].harvestId.toString();
 
-                _ctlWeight.text = dataTransfer[0].weight.toString();
+                _ctlWeight.text = dataTransfer[0].weight.toString() + ' kg';
                 _ctlLotNo.text = dataTransfer[0].lotNo.toString();
                 _ctlGetByName.text = dataTransfer[0].getByName.toString();
                 _ctlGetByPlate.text = dataTransfer[0].licenseNo.toString();
@@ -359,20 +359,19 @@ class _EditTransferState extends State<EditTransfer> {
                             ],
                           ),
                           const SizedBox(height: 20),
-                          MyForm().buildform("น้ำหนัก (kg) : ", _ctlWeight),
+                          MyForm().buildformNum("น้ำหนัก (kg) : ", _ctlWeight),
                           const SizedBox(height: 20),
-                          MyForm().buildform("หมายเลขล็อต : ", _ctlLotNo),
+                          MyForm().buildformNum("หมายเลขล็อต : ", _ctlLotNo),
                           const SizedBox(height: 20),
                           MyForm().buildform("ชื่อผู้รับ : ", _ctlGetByName),
                           const SizedBox(height: 20),
-                          MyForm()
-                              .buildformText("ชื่อสถานที่ : ", _ctlGetByPlate),
+                          MyForm().buildform("ชื่อสถานที่ : ", _ctlGetByPlate),
                           const SizedBox(height: 20),
                           MyForm()
-                              .buildform("เลขที่ใบอนุญาต : ", _ctlLicenseNo),
+                              .buildformNum("เลขที่ใบอนุญาต : ", _ctlLicenseNo),
                           const SizedBox(height: 20),
-                          MyForm()
-                              .buildform("ป้ายทะเบียนรถ : ", _ctlLicensePlate),
+                          MyForm().buildformNum(
+                              "ป้ายทะเบียนรถ : ", _ctlLicensePlate),
                           const SizedBox(height: 20),
                           MyForm()
                               .buildformRemake("หมายเหตุ : ", _ctlTrackRemake),

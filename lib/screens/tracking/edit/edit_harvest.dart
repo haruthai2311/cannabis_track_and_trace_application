@@ -120,7 +120,7 @@ class _EditHarvestState extends State<EditHarvest> {
               selectDropdown ??= type;
               String namegh = result[0].nameGh.toString();
               _ctlHarvestNo.text = result[0].harvestNo.toString();
-              _ctlWeight.text = result[0].weight.toString();
+              _ctlWeight.text = result[0].weight.toString() + ' kg';
               _ctlLotNo.text = result[0].lotNo.toString();
               _ctlHavestRemake.text = result[0].remark.toString();
               date = result[0].harvestDate;
@@ -229,7 +229,7 @@ class _EditHarvestState extends State<EditHarvest> {
                         const SizedBox(height: 20),
                         buildHarvestDate(),
                         const SizedBox(height: 20),
-                        MyForm().buildform('ครั้งที่', _ctlHarvestNo),
+                        MyForm().buildformNum('ครั้งที่', _ctlHarvestNo),
                         const SizedBox(height: 20),
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -303,9 +303,9 @@ class _EditHarvestState extends State<EditHarvest> {
                           ],
                         ),
                         const SizedBox(height: 20),
-                        MyForm().buildform('น้ำหนัก (kg)', _ctlWeight),
+                        MyForm().buildformNum('น้ำหนัก (kg)', _ctlWeight),
                         const SizedBox(height: 20),
-                        MyForm().buildform('หมายเลขล็อต', _ctlLotNo),
+                        MyForm().buildformNum('หมายเลขล็อต', _ctlLotNo),
                         const SizedBox(height: 20),
                         MyForm().buildformRemake('หมายหตุ', _ctlHavestRemake),
                         const SizedBox(height: 20),

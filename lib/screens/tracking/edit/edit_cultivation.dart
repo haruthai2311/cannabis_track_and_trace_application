@@ -128,11 +128,13 @@ class _EditCultivationState extends State<EditCultivation> {
                 var nameGreenHouse = resultCul[0].nameGh.toString();
                 var nameStrain = resultCul[0].nameStrains.toString();
                 _ctlNo.text = resultCul[0].no.toString();
-                _ctlSeedtotal.text = resultCul[0].seedTotal.toString();
-                _ctlSeedNet.text = resultCul[0].seedNet.toString();
-                _ctlPlantTotal.text = resultCul[0].plantTotal.toString();
-                _ctlPlantLive.text = resultCul[0].plantLive.toString();
-                _ctlPlantDead.text = resultCul[0].plantDead.toString();
+                _ctlSeedtotal.text =
+                    resultCul[0].seedTotal.toString() + ' เมล็ด';
+                _ctlSeedNet.text = resultCul[0].seedNet.toString() + ' kg';
+                _ctlPlantTotal.text =
+                    resultCul[0].plantTotal.toString() + ' ต้น';
+                _ctlPlantLive.text = resultCul[0].plantLive.toString() + ' ต้น';
+                _ctlPlantDead.text = resultCul[0].plantDead.toString() + ' ต้น';
                 _ctlPlantRemake.text = resultCul[0].remark.toString();
                 SeedDate = resultCul[0].seedDate;
                 MoveDate = resultCul[0].moveDate;
@@ -303,24 +305,24 @@ class _EditCultivationState extends State<EditCultivation> {
                             ],
                           ),
                           const SizedBox(height: 20),
-                          MyForm().buildform("รอบการปลูก : ", _ctlNo),
+                          MyForm().buildformNum("รอบการปลูก : ", _ctlNo),
                           const SizedBox(height: 20),
                           buildSeedData(),
                           const SizedBox(height: 20),
                           buildMoveData(),
                           const SizedBox(height: 20),
-                          MyForm().buildform("จำนวนเมล็ด : ", _ctlSeedtotal),
+                          MyForm().buildformNum("จำนวนเมล็ด : ", _ctlSeedtotal),
                           const SizedBox(height: 20),
-                          MyForm().buildform("น้ำหนักเมล็ด : ", _ctlSeedNet),
+                          MyForm().buildformNum("น้ำหนักเมล็ด : ", _ctlSeedNet),
                           const SizedBox(height: 20),
-                          MyForm()
-                              .buildform("จำนวนต้นทั้งหมด : ", _ctlPlantTotal),
+                          MyForm().buildformNum(
+                              "จำนวนต้นทั้งหมด : ", _ctlPlantTotal),
                           const SizedBox(height: 20),
-                          MyForm().buildform(
+                          MyForm().buildformNum(
                               "จำนวนต้นเป็นทั้งหมด : ", _ctlPlantLive),
                           const SizedBox(height: 20),
                           //MyForm.buildform("จำนวนต้นตายทั้งหมด : ", _ctlPlantDead),
-                          MyForm().buildform(
+                          MyForm().buildformNum(
                               "จำนวนต้นตายทั้งหมด : ", _ctlPlantDead),
                           const SizedBox(height: 20),
                           MyForm()

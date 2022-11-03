@@ -1,4 +1,5 @@
 import 'package:cannabis_track_and_trace_application/screens/tracking/edit/editplanttracking.dart';
+import 'package:cannabis_track_and_trace_application/widget/formDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import '../../../api/hostapi.dart';
@@ -127,7 +128,7 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                                 style: TextStyle(
                                   color: Colors.pink,
                                   fontSize: 22,
-                                    fontWeight: FontWeight.bold,
+                                  fontWeight: FontWeight.bold,
                                 ),
                               ),
                             ],
@@ -177,102 +178,16 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                             padding: const EdgeInsets.all(8.0),
                             child: Column(
                               children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 60,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8),
-                                      border: Border.all(
-                                        color: Color(0xFFF1F4F8),
-                                        width: 2,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                            padding: EdgeInsets.only(left: 10)),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 12, 0),
-                                          child: Icon(
-                                            Icons.home,
-                                            color: Colors.green,
-                                            size: 24,
-                                          ),
-                                        ),
-                                        Text(
-                                          "โรงปลูก :  ",
-                                          style: TextStyle(
-                                            color: colorDetails3,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        Text(
-                                          result[0].ghName.toString(),
-                                          style: TextStyle(
-                                            color: colorDetails2,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsetsDirectional.fromSTEB(
-                                      0, 0, 0, 8),
-                                  child: Container(
-                                    width: double.infinity,
-                                    height: 60,
-                                    decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(8),
-                                      border: Border.all(
-                                        color: Color(0xFFF1F4F8),
-                                        width: 2,
-                                      ),
-                                    ),
-                                    child: Row(
-                                      children: [
-                                        Padding(
-                                            padding: EdgeInsets.only(left: 10)),
-                                        Padding(
-                                          padding:
-                                              EdgeInsetsDirectional.fromSTEB(
-                                                  0, 0, 12, 0),
-                                          child: Icon(
-                                            Icons.grade,
-                                            color: Colors.orange,
-                                            size: 20,
-                                          ),
-                                        ),
-                                        Text(
-                                          "รอบปลูก :  ",
-                                          style: TextStyle(
-                                            color: colorDetails3,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                        Text(
-                                          result[0].no.toString(),
-                                          style: TextStyle(
-                                            color: colorDetails2,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.normal,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
+                                FormDetail().buildSubject(
+                                    "โรงปลูก :  ",
+                                    result[0].ghName.toString(),
+                                    Icons.home,
+                                    Colors.green),
+                                FormDetail().buildSubject(
+                                    "รอบปลูก :  ",
+                                    result[0].no.toString(),
+                                    Icons.grade,
+                                    Colors.orange),
                               ],
                             ),
                           ),
@@ -280,69 +195,17 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                             padding: const EdgeInsets.only(left: 10),
                             child: Column(
                               children: [
-                                Row(
-                                  children: [
-                                    Text(
-                                      "หมายเลขกระถาง :  ",
-                                      style: TextStyle(
-                                        color: colorDetails3,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      result[0].potsName.toString(),
-                                      style: TextStyle(
-                                        color: colorDetails2,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
+                                FormDetail().buildText("หมายเลขกระถาง :  ",
+                                    result[0].potsName.toString()),
+                                SizedBox(height: 5),
+                                FormDetail().buildText(
+                                  "วันที่บันทึก :  ",
+                                  f.format(result[0].checkDate).toString() +
+                                      ' น.',
                                 ),
                                 SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "วันที่บันทึก :  ",
-                                      style: TextStyle(
-                                        color: colorDetails3,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      f.format(result[0].checkDate).toString(),
-                                      style: TextStyle(
-                                        color: colorDetails2,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "สถานะปัจจุบัน :  ",
-                                      style: TextStyle(
-                                        color: colorDetails3,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      Status,
-                                      style: TextStyle(
-                                        color: colorDetails2,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                //SizedBox(height: 5),
+                                FormDetail()
+                                    .buildText("สถานะปัจจุบัน :  ", Status),
                                 Padding(
                                   padding:
                                       const EdgeInsets.only(left: 8, right: 8),
@@ -352,50 +215,38 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                                     color: Color(0xFFF1F4F8),
                                   ),
                                 ),
-                                Row(
+                                Column(
                                   children: [
-                                    Text(
-                                      "ความชื้นของดิน :  ",
-                                      style: TextStyle(
-                                        color: colorDetails3,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        SoilMoisture,
-                                        style: TextStyle(
-                                          color: colorDetails2,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "ความชื้นของดิน :  ",
+                                          style: TextStyle(
+                                            color: colorDetails3,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                          ),
                                         ),
-                                      ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 5),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          SoilMoisture,
+                                          style: TextStyle(
+                                            color: colorDetails2,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ],
                                 ),
-
-                                //SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "หมายเหตุ :  ",
-                                      style: TextStyle(
-                                        color: colorDetails3,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      result[0].soilRemark.toString(),
-                                      style: TextStyle(
-                                        color: colorDetails2,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                SizedBox(height: 5),
+                                FormDetail().buildText("** หมายเหตุ :  ",
+                                    result[0].soilRemark.toString()),
                                 Padding(
                                   padding:
                                       const EdgeInsets.only(left: 8, right: 8),
@@ -405,49 +256,11 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                                     color: Color(0xFFF1F4F8),
                                   ),
                                 ),
-
-                                Row(
-                                  children: [
-                                    Text(
-                                      "โรคที่พบ :  ",
-                                      style: TextStyle(
-                                        color: colorDetails3,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      result[0].disease,
-                                      style: TextStyle(
-                                        color: colorDetails2,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                FormDetail().buildText(
+                                    "โรคที่พบ :  ", result[0].disease),
                                 SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "วิธีแก้ไข :  ",
-                                      style: TextStyle(
-                                        color: colorDetails3,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      result[0].fixDisease,
-                                      style: TextStyle(
-                                        color: colorDetails2,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                //SizedBox(height: 5),
+                                FormDetail().buildText(
+                                    "วิธีแก้ไข :  ", result[0].fixDisease),
                                 Padding(
                                   padding:
                                       const EdgeInsets.only(left: 8, right: 8),
@@ -457,48 +270,11 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                                     color: Color(0xFFF1F4F8),
                                   ),
                                 ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "แมลงที่พบ :  ",
-                                      style: TextStyle(
-                                        color: colorDetails3,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      result[0].insect,
-                                      style: TextStyle(
-                                        color: colorDetails2,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                FormDetail().buildText(
+                                    "แมลงที่พบ :  ", result[0].insect),
                                 SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "วิธีแก้ไข :  ",
-                                      style: TextStyle(
-                                        color: colorDetails3,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      result[0].fixInsect,
-                                      style: TextStyle(
-                                        color: colorDetails2,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                //SizedBox(height: 5),
+                                FormDetail().buildText(
+                                    "วิธีแก้ไข :  ", result[0].fixInsect),
                                 Padding(
                                   padding:
                                       const EdgeInsets.only(left: 8, right: 8),
@@ -508,95 +284,24 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                                     color: Color(0xFFF1F4F8),
                                   ),
                                 ),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "เก็บซาก :  ",
-                                      style: TextStyle(
-                                        color: colorDetails3,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      result[0].weight.toString() + ' Kg',
-                                      style: TextStyle(
-                                        color: colorDetails2,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                FormDetail().buildText("เก็บซาก :  ",
+                                    result[0].weight.toString() + ' Kg'),
                                 SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "วันที่เก็บซาก :  ",
-                                      style: TextStyle(
-                                        color: colorDetails3,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      f.format(result[0].logTime).toString(),
-                                      style: TextStyle(
-                                        color: colorDetails2,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                FormDetail().buildText(
+                                    "วันที่เก็บซาก : ",
+                                    f.format(result[0].logTime).toString() +
+                                        ' น.'),
                                 SizedBox(height: 5),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "เหตุผลที่เก็บซาก :  ",
-                                      style: TextStyle(
-                                        color: colorDetails3,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      result[0].trashRemark,
-                                      style: TextStyle(
-                                        color: colorDetails2,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                //SizedBox(height: 10),
+                                FormDetail().buildText("เหตุผลที่เก็บซาก :  ",
+                                    result[0].trashRemark),
                                 Divider(
                                   height: 24,
                                   thickness: 2,
                                   color: Color(0xFFF1F4F8),
                                 ),
                                 SizedBox(height: 10),
-                                Row(
-                                  children: [
-                                    Text(
-                                      "*** หมายเหตุ :  ",
-                                      style: TextStyle(
-                                        color: Color.fromARGB(255, 82, 82, 82),
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                    Text(
-                                      result[0].remark.toString(),
-                                      style: TextStyle(
-                                        color: colorDetails2,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.normal,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                FormDetail().buildText("*** หมายเหตุ :  ",
+                                    result[0].remark.toString()),
                               ],
                             ),
                           ),

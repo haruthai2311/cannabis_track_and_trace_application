@@ -1,4 +1,5 @@
 import 'package:cannabis_track_and_trace_application/screens/tracking/edit/edit_cultivation.dart';
+import 'package:cannabis_track_and_trace_application/widget/formDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:http/http.dart' as http;
@@ -130,101 +131,16 @@ class _DetailsCultivationState extends State<DetailsCultivation> {
                               padding: const EdgeInsets.all(8.0),
                               child: Column(
                                 children: [
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 8),
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: 60,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(
-                                          color: Color(0xFFF1F4F8),
-                                          width: 2,
-                                        ),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Padding(
-                                              padding:
-                                                  EdgeInsets.only(left: 10)),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 12, 0),
-                                            child: Icon(
-                                              Icons.home,
-                                              color: Colors.green,
-                                              size: 24,
-                                            ),
-                                          ),
-                                          Text(
-                                            "โรงปลูก :  ",
-                                            style: TextStyle(
-                                              color: colorDetails3,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                          Text(
-                                            result[0].nameGh.toString(),
-                                            style: TextStyle(
-                                              color: colorDetails2,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        0, 0, 0, 8),
-                                    child: Container(
-                                      width: double.infinity,
-                                      height: 60,
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(8),
-                                        border: Border.all(
-                                          color: Color(0xFFF1F4F8),
-                                          width: 2,
-                                        ),
-                                      ),
-                                      child: Row(
-                                        children: [
-                                          Padding(
-                                              padding:
-                                                  EdgeInsets.only(left: 10)),
-                                          Padding(
-                                            padding:
-                                                EdgeInsetsDirectional.fromSTEB(
-                                                    0, 0, 12, 0),
-                                            child: Icon(Icons.calendar_month,
-                                                color: Colors.blueGrey),
-                                          ),
-                                          Text(
-                                            "รอบปลูก :  ",
-                                            style: TextStyle(
-                                              color: colorDetails3,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w600,
-                                            ),
-                                          ),
-                                          Text(
-                                            result[0].no.toString(),
-                                            style: TextStyle(
-                                              color: colorDetails2,
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.normal,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
+                                  FormDetail().buildSubject(
+                                      "โรงปลูก :  ",
+                                      result[0].nameGh.toString(),
+                                      Icons.home,
+                                      Colors.green),
+                                  FormDetail().buildSubject(
+                                      "รอบปลูก :  ",
+                                      result[0].no.toString(),
+                                      Icons.calendar_month,
+                                      Colors.blueGrey),
                                 ],
                               ),
                             ),
@@ -232,217 +148,36 @@ class _DetailsCultivationState extends State<DetailsCultivation> {
                               padding: const EdgeInsets.only(left: 20),
                               child: Column(
                                 children: [
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "สายพันธุ์ :  ",
-                                        style: TextStyle(
-                                          color: colorDetails3,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Text(
-                                        result[0].nameStrains.toString(),
-                                        style: TextStyle(
-                                          color: colorDetails2,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  FormDetail().buildText("สายพันธุ์ :  ",
+                                      result[0].nameStrains.toString()),
                                   SizedBox(height: 5),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "วันที่เพาะเมล็ด :  ",
-                                        style: TextStyle(
-                                          color: colorDetails3,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Text(
-                                        f.format(result[0].seedDate).toString(),
-                                        style: TextStyle(
-                                          color: colorDetails2,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  FormDetail().buildText("วันที่เพาะเมล็ด :  ",
+                                      f.format(result[0].seedDate).toString()),
                                   SizedBox(height: 5),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "วันที่ย้ายปลูก :  ",
-                                        style: TextStyle(
-                                          color: colorDetails3,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Text(
-                                        f.format(result[0].moveDate).toString(),
-                                        style: const TextStyle(
-                                          color: colorDetails2,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  FormDetail().buildText("วันที่ย้ายปลูก :  ",
+                                      f.format(result[0].moveDate).toString()),
                                   SizedBox(height: 5),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "จำนวนเมล็ด :  ",
-                                        style: TextStyle(
-                                          color: colorDetails3,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Text(
-                                        result[0].seedTotal.toString(),
-                                        style: const TextStyle(
-                                          color: colorDetails2,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  FormDetail().buildText(
+                                      "จำนวนเมล็ด :  ",
+                                      result[0].seedTotal.toString() +
+                                          ' เมล็ด'),
                                   SizedBox(height: 5),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "น้ำหนักเมล็ด :  ",
-                                        style: TextStyle(
-                                          color: colorDetails3,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Text(
-                                        result[0].seedNet.toString() + " Kg.",
-                                        style: const TextStyle(
-                                          color: colorDetails2,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  FormDetail().buildText("น้ำหนักเมล็ด :  ",
+                                      result[0].seedNet.toString() + " Kg."),
                                   SizedBox(height: 5),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "จำนวนต้นทั้งหมด :  ",
-                                        style: TextStyle(
-                                          color: colorDetails3,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Text(
-                                        result[0].plantTotal.toString(),
-                                        style: const TextStyle(
-                                          color: colorDetails2,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  FormDetail().buildText("จำนวนต้นทั้งหมด :  ",
+                                      result[0].plantTotal.toString() + ' ต้น'),
                                   SizedBox(height: 5),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "จำนวนต้นเป็นทั้งหมด :  ",
-                                        style: TextStyle(
-                                          color: colorDetails3,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Text(
-                                        result[0].plantLive.toString(),
-                                        style: const TextStyle(
-                                          color: colorDetails2,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  FormDetail().buildText(
+                                      "จำนวนต้นเป็นทั้งหมด :  ",
+                                      result[0].plantLive.toString() + ' ต้น'),
                                   SizedBox(height: 5),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "จำนวนต้นตายทั้งหมด :  ",
-                                        style: TextStyle(
-                                          color: colorDetails3,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Text(
-                                        result[0].plantDead.toString(),
-                                        style: const TextStyle(
-                                          color: colorDetails2,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  FormDetail().buildText(
+                                      "จำนวนต้นตายทั้งหมด :  ",
+                                      result[0].plantDead.toString() + ' ต้น'),
                                   SizedBox(height: 5),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "หมายเหตุ :  ",
-                                        style: TextStyle(
-                                          color: colorDetails3,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Text(
-                                        result[0].remark.toString(),
-                                        style: const TextStyle(
-                                          color: colorDetails2,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(height: 5),
-                                  Row(
-                                    children: [
-                                      Text(
-                                        "หมายเหตุ :  ",
-                                        style: TextStyle(
-                                          color: colorDetails3,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                          //fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                      Text(
-                                        result[0].remark.toString(),
-                                        style: const TextStyle(
-                                          color: colorDetails2,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                          //fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                                  FormDetail().buildText("หมายเหตุ :  ",
+                                      result[0].remark.toString()),
                                 ],
                               ),
                             ),

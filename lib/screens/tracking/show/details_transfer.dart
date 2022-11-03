@@ -1,4 +1,5 @@
 import 'package:cannabis_track_and_trace_application/screens/tracking/edit/edit_transfer.dart';
+import 'package:cannabis_track_and_trace_application/widget/formDetail.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -136,100 +137,20 @@ class _DetailsTransferState extends State<DetailsTransfer> {
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
                             children: [
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(
-                                      color: Color(0xFFF1F4F8),
-                                      width: 2,
-                                    ),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                          padding: EdgeInsets.only(left: 10)),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 12, 0),
-                                        child: Icon(
-                                          Icons.pin,
-                                          color: Colors.green,
-                                          size: 20,
-                                        ),
-                                      ),
-                                      Text(
-                                        "หมายเลขการเก็บเกี่ยว :  ",
-                                        style: TextStyle(
-                                          color: colorDetails3,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Text(
-                                        result[0].harvestId.toString(),
-                                        style: TextStyle(
-                                          color: colorDetails2,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Padding(
-                                padding:
-                                    EdgeInsetsDirectional.fromSTEB(0, 0, 0, 8),
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 60,
-                                  decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(8),
-                                    border: Border.all(
-                                      color: Color(0xFFF1F4F8),
-                                      width: 2,
-                                    ),
-                                  ),
-                                  child: Row(
-                                    children: [
-                                      Padding(
-                                          padding: EdgeInsets.only(left: 10)),
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0, 0, 12, 0),
-                                        child: Icon(
-                                          Icons.grade,
-                                          color: Colors.orange,
-                                          size: 20,
-                                        ),
-                                      ),
-                                      Text(
-                                        "ครั้งที่ :  ",
-                                        style: TextStyle(
-                                          color: colorDetails3,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                        ),
-                                      ),
-                                      Text(
-                                        result[0].harvestNo.toString(),
-                                        style: TextStyle(
-                                          color: colorDetails2,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.normal,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                              FormDetail().buildSubject(
+                                  "หมายเลขการเก็บเกี่ยว :  ",
+                                  result[0].harvestId.toString(),
+                                  Icons.pin,
+                                  Colors.green),
+                              FormDetail().buildSubjectDat(
+                                  "วันที่ :  ",
+                                  f.format(result[0].transferDate).toString() +
+                                      ' น.'),
+                              FormDetail().buildSubject(
+                                  "ครั้งที่ :  ",
+                                  result[0].harvestNo.toString(),
+                                  Icons.grade,
+                                  Colors.orange),
                             ],
                           ),
                         ),
@@ -237,190 +158,28 @@ class _DetailsTransferState extends State<DetailsTransfer> {
                           padding: const EdgeInsets.only(left: 20),
                           child: Column(
                             children: [
-                              Row(
-                                children: [
-                                  Text(
-                                    "วันที่ :  ",
-                                    style: TextStyle(
-                                      color: colorDetails3,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    f.format(result[0].transferDate).toString(),
-                                    style: TextStyle(
-                                      color: colorDetails2,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              FormDetail().buildText("ประเภท :  ", Type),
                               SizedBox(height: 5),
-                              Row(
-                                children: [
-                                  Text(
-                                    "ประเภท :  ",
-                                    style: TextStyle(
-                                      color: colorDetails3,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    Type,
-                                    style: TextStyle(
-                                      color: colorDetails2,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              FormDetail().buildText("น้ำหนัก :  ",
+                                  result[0].weight.toString() + " Kg"),
                               SizedBox(height: 5),
-                              Row(
-                                children: [
-                                  Text(
-                                    "น้ำหนัก :  ",
-                                    style: TextStyle(
-                                      color: colorDetails3,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    result[0].weight.toString() + " Kg",
-                                    style: TextStyle(
-                                      color: colorDetails2,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              FormDetail().buildText("หมายเลขล๊อต :  ",
+                                  result[0].lotNo.toString()),
                               SizedBox(height: 5),
-                              Row(
-                                children: [
-                                  Text(
-                                    "หมายเลขล๊อต :  ",
-                                    style: TextStyle(
-                                      color: colorDetails3,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    result[0].lotNo.toString(),
-                                    style: TextStyle(
-                                      color: colorDetails2,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              FormDetail().buildText("ชื่อผู้รับ :  ",
+                                  result[0].getByName.toString()),
                               SizedBox(height: 5),
-                              Row(
-                                children: [
-                                  Text(
-                                    "ชื่อผู้รับ :  ",
-                                    style: TextStyle(
-                                      color: colorDetails3,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    result[0].getByName.toString(),
-                                    style: TextStyle(
-                                      color: colorDetails2,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              FormDetail().buildText("ชื่อสถานที่ :  ",
+                                  result[0].getByPlace.toString()),
                               SizedBox(height: 5),
-                              Row(
-                                children: [
-                                  Text(
-                                    "ชื่อสถานที่ :  ",
-                                    style: TextStyle(
-                                      color: colorDetails3,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    result[0].getByPlace.toString(),
-                                    style: TextStyle(
-                                      color: colorDetails2,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              FormDetail().buildText("เลขที่ใบอนุญาต :  ",
+                                  result[0].licenseNo.toString()),
                               SizedBox(height: 5),
-                              Row(children: [
-                                Text(
-                                  "เลขที่ใบอนุญาต :  ",
-                                  style: TextStyle(
-                                    color: colorDetails3,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Text(
-                                  result[0].licenseNo.toString(),
-                                  style: TextStyle(
-                                    color: colorDetails2,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                              ]),
+                              FormDetail().buildText("ป้ายทะเบียนรถ :  ",
+                                  result[0].licensePlate.toString()),
                               SizedBox(height: 5),
-                              Row(children: [
-                                Text(
-                                  "ป้ายทะเบียนรถ :  ",
-                                  style: TextStyle(
-                                    color: colorDetails3,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                                Text(
-                                  result[0].licensePlate.toString(),
-                                  style: TextStyle(
-                                    color: colorDetails2,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                ),
-                              ]),
-                              SizedBox(height: 5),
-                              Row(
-                                children: [
-                                  Text(
-                                    "หมายเหตุ :  ",
-                                    style: TextStyle(
-                                      color: colorDetails3,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                  ),
-                                  Text(
-                                    result[0].remark.toString(),
-                                    style: TextStyle(
-                                      color: colorDetails2,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.normal,
-                                    ),
-                                  ),
-                                ],
-                              ),
+                              FormDetail().buildText(
+                                  "หมายเหตุ :  ", result[0].remark.toString()),
                             ],
                           ),
                         ),

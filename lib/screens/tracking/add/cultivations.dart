@@ -341,23 +341,23 @@ class _AddCultivationsState extends State<AddCultivations> {
                             ],
                           ),
                           const SizedBox(height: 20),
-                          MyForm().buildform("รอบการผลิต : ", _ctlNo),
+                          MyForm().buildformNum("รอบการผลิต : ", _ctlNo),
                           const SizedBox(height: 20),
                           buildSeedData(),
                           const SizedBox(height: 20),
                           buildMoveData(),
                           const SizedBox(height: 20),
-                          MyForm().buildform("จำนวนเมล็ด : ", _ctlSeedtotal),
+                          MyForm().buildformNum("จำนวนเมล็ด : ", _ctlSeedtotal),
                           const SizedBox(height: 20),
-                          MyForm().buildform("น้ำหนักเมล็ด : ", _ctlSeedNet),
+                          MyForm().buildformNum("น้ำหนักเมล็ด : ", _ctlSeedNet),
                           const SizedBox(height: 20),
-                          MyForm()
-                              .buildform("จำนวนต้นทั้งหมด : ", _ctlPlantTotal),
+                          MyForm().buildformNum(
+                              "จำนวนต้นทั้งหมด : ", _ctlPlantTotal),
                           const SizedBox(height: 20),
-                          MyForm().buildform(
+                          MyForm().buildformNum(
                               "จำนวนต้นเป็นทั้งหมด : ", _ctlPlantLive),
                           const SizedBox(height: 20),
-                          MyForm().buildform(
+                          MyForm().buildformNum(
                               "จำนวนต้นตายทั้งหมด : ", _ctlPlantDead),
                           const SizedBox(height: 20),
                           MyForm()

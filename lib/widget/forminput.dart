@@ -44,7 +44,7 @@ class MyForm {
     );
   }
 
-  Widget buildformText(title, controllor) {
+  Widget buildformNum(title, controllor) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -69,6 +69,7 @@ class MyForm {
           ),
           child: TextFormField(
             controller: controllor,
+            keyboardType: TextInputType.number,
             style: const TextStyle(
               color: colorDetails2,
               fontSize: 20,

@@ -433,15 +433,14 @@ class _PlantTrackingState extends State<PlantTracking> {
                         MyForm().buildformSection('การเก็บซาก',
                             Icons.auto_delete, Color.fromARGB(255, 1, 126, 12)),
                         const SizedBox(height: 20),
-                        MyForm().buildform("น้ำหนัก (kg) : ", _ctlWeight),
+                        MyForm().buildformNum("น้ำหนัก (kg) : ", _ctlWeight),
                         const SizedBox(height: 20),
                         buildTrashLogTime(),
                         const SizedBox(height: 20),
                         MyForm()
                             .buildform("เหตุผลที่เก็บซาก : ", _ctlTrashRemark),
                         const SizedBox(height: 20),
-                        MyForm()
-                            .buildformText("** หมายเหตุ : ", _ctlTrashRemark),
+                        MyForm().buildform("** หมายเหตุ : ", _ctlTrashRemark),
                         const SizedBox(height: 30),
                         MyForm().buildformRemake("หมายเหตุ : ", _ctlRemark),
                         const SizedBox(height: 20),
@@ -695,6 +694,7 @@ class _PlantTrackingState extends State<PlantTracking> {
         Container(
           padding: const EdgeInsets.only(left: 15, right: 15),
           width: double.infinity,
+          height: 70,
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(16),
