@@ -44,7 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   //DateTime date = new DateTime(now.year, now.month, now.day);
-
+  FocusNode focus = FocusNode();
   @override
   void initState() {
     super.initState();
@@ -52,31 +52,22 @@ class _HomeScreenState extends State<HomeScreen> {
     print(DateTime.now().year);
   }
 
-  @override
-  void dispose() {
-    _searchController.dispose();
-    focus.dispose();
-    super.dispose();
-  }
-
   final _searchController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
-  final focus = FocusNode();
-
-  void clearSearch() {
-    if (focus.hasFocus) {
-      _searchController.clear();
-    } else {
-      if (_searchController.text.isNotEmpty) {
-        _searchController.clear();
-        CulIDParameters = null;
-        setState(() {});
-      } else {
-        _searchController.clear();
-      }
-    }
-  }
+  // void clearSearch() {
+  //   if (focus.hasFocus) {
+  //     _searchController.clear();
+  //   } else {
+  //     if (_searchController.text.isNotEmpty) {
+  //       _searchController.clear();
+  //       CulIDParameters = null;
+  //       setState(() {});
+  //     } else {
+  //       _searchController.clear();
+  //     }
+  //   }
+  // }
 
   String select = "";
 
@@ -160,24 +151,34 @@ class _HomeScreenState extends State<HomeScreen> {
                                         size: 20,
                                       ),
                                       onPressed: () {
-                                        if (_searchController.text.isEmpty) {
-                                          focus.unfocus();
+                                        // if (_searchController.text.isEmpty) {
+                                        //   focus.unfocus();
+                                        // }
+                                        //clearSearch();
+                                        if (_searchController.text.isNotEmpty) {
+                                          _searchController.clear();
+                                          FocusScope.of(context)
+                                              .requestFocus(FocusNode());
+                                          //focus.unfocus();
+                                          CulIDParameters = null;
+                                          setState(() {});
+                                        } else {
+                                          _searchController.clear();
                                         }
-                                        clearSearch();
                                       },
                                       iconSize: 25,
                                       color: Colors.black54,
                                     ),
                                   ),
 
-                                  focusNode: focus,
+                                  //focusNode: focus,
                                   suggestions: culGH
                                       .map((culgh) => SearchFieldListItem(
                                           culgh.toString(),
                                           item: culGH))
                                       .toList(),
-                                  // suggestionState: Suggestion.hidden,
-                                  //hasOverlay: true,
+                                  suggestionState: Suggestion.hidden,
+                                  hasOverlay: true,
                                   controller: _searchController,
                                   // hint: 'Search by country name',
                                   maxSuggestionsInViewPort: 5,
