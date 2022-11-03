@@ -375,7 +375,7 @@ class _HomeScreenState extends State<HomeScreen> {
       //padding: EdgeInsetsDirectional.fromSTEB(16, 0, 16, 0),
       child: Row(
         mainAxisSize: MainAxisSize.max,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
             width: 170,
