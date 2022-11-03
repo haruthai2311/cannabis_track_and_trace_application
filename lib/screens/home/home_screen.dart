@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                           FocusScope.of(context)
                                               .requestFocus(FocusNode());
                                           //focus.unfocus();
-                                          CulIDParameters = null;
+                                          CulIDParameters = result[0].cultivationId.toString();
                                           setState(() {});
                                         } else {
                                           _searchController.clear();
