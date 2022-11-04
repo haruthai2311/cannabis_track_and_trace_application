@@ -99,15 +99,142 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
                 //print(snapshot.data[0].length);
                 if (snapshot.data[0].length == 0) {
-                  return Center(
-                    child: Text(
-                      'ไม่พบข้อมูล',
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 143, 8, 8)),
-                    ),
-                  );
+                  var culGH = ["N/A"];
+                  return Stack(children: [
+                    SingleChildScrollView(
+                      child: Container(
+                        margin: const EdgeInsets.symmetric(
+                            vertical: 15, horizontal: 10),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              children: [
+                                Container(
+                                  height: 55,
+                                  decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    borderRadius: BorderRadius.circular(30),
+                                    border: Border.all(
+                                      color: Color.fromARGB(255, 238, 238, 240),
+                                      width: 2,
+                                    ),
+                                  ),
+                                  child: SearchField(
+                                    searchInputDecoration: InputDecoration(
+                                      border: InputBorder.none,
+                                      //contentPadding: EdgeInsets.only(left: 15),
+                                      hintText: 'เลือกรอบการปลูก',
+                                      hintStyle: const TextStyle(
+                                          color: Colors.black54, fontSize: 18),
+                                      prefixIcon: const Icon(
+                                        Icons.search,
+                                        size: 30,
+                                        color: Colors.black54,
+                                      ),
+                                      suffixIcon: IconButton(
+                                        icon: Icon(
+                                          Icons.clear,
+                                          size: 20,
+                                        ),
+                                        onPressed: () {
+                                          if (_searchController.text.isEmpty) {
+                                            focus.unfocus();
+                                            if (_searchController
+                                                .text.isNotEmpty) {
+                                              _searchController.clear();
+                                              FocusScope.of(context)
+                                                  .requestFocus(FocusNode());
+                                              //focus.unfocus();
+                                              CulIDParameters = null;
+                                              setState(() {});
+                                            } else {
+                                              _searchController.clear();
+                                            }
+                                          }
+                                          //clearSearch();
+                                        },
+                                        iconSize: 25,
+                                        color: Colors.black54,
+                                      ),
+                                    ),
+
+                                    //focusNode: focus,
+                                    suggestions: culGH
+                                        .map((culgh) => SearchFieldListItem(
+                                            culgh.toString(),
+                                            item: culGH))
+                                        .toList(),
+                                    // suggestionState: Suggestion.hidden,
+                                    //hasOverlay: true,
+                                    controller: _searchController,
+                                    // hint: 'Search by country name',
+                                    maxSuggestionsInViewPort: 5,
+                                    itemHeight: 50,
+
+                                    // validator: (x) {
+                                    //   if (x!.isEmpty || !containsCountry(x)) {
+                                    //     return 'Please Enter a valid Country';
+                                    //   }
+                                    //   return null;
+                                    // },
+                                    inputType: TextInputType.text,
+                                    onSuggestionTap: (newValue) {
+                                      setState(() {
+                                        select = newValue.searchKey;
+                                        // print(culGH.indexOf(select));
+                                        /*ถ้าเอาไปใช้จริงให้ใส่เงื่อนไข If เหมือนตัวอย่างข้างล่าง
+                          if (itemHvtID.indexOf(dropdownHvtID!) ==
+                                            0) {
+                                          _ctlHarvestNo.text = "";
+                                        } else {
+                                          _ctlHarvestNo.text = dataHarvests[
+                                                  itemHvtID.indexOf(
+                                                          dropdownHvtID!) -
+                                                      1]
+                                              .harvestNo
+                                              .toString();
+                                        } */
+                                        // CulIDParameters =
+                                        //     result[culGH.indexOf(select)]
+                                        //         .cultivationId
+                                        //         .toString();
+                                        // print(result[culGH.indexOf(select)]
+                                        //     .cultivationId
+                                        //     .toString());
+                                        //     "  " +
+                                        //     result[culGH.indexOf(select)]
+                                        //         .culGh
+                                        //         .toString());
+                                        // print(_searchController.text);
+                                      });
+                                      //_formKey.currentState!.validate();
+                                      focus.unfocus();
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const SizedBox(height: 15),
+                            LayoutBuilder(builder: (context, constraints) {
+                              return Column(
+                                children: [
+                                  buildTaskHead("", "", ""),
+                                  const SizedBox(height: 10),
+                                  buildAmount("", ""),
+                                  const SizedBox(height: 10),
+                                  buildGraph(0),
+                                  const SizedBox(height: 10),
+                                  buildResult("-", "-"),
+                                  const SizedBox(height: 70),
+                                ],
+                              );
+                            })
+                          ],
+                        ),
+                      ),
+                    )
+                  ]);
                 }
 
                 var result = snapshot.data[0];
@@ -162,16 +289,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                       onPressed: () {
                                         if (_searchController.text.isEmpty) {
                                           focus.unfocus();
-                                          if (_searchController.text.isNotEmpty) {
-                                          _searchController.clear();
-                                          FocusScope.of(context)
-                                              .requestFocus(FocusNode());
-                                          //focus.unfocus();
-                                          CulIDParameters = null;
-                                          setState(() {});
-                                        } else {
-                                          _searchController.clear();
-                                        }
+                                          if (_searchController
+                                              .text.isNotEmpty) {
+                                            _searchController.clear();
+                                            FocusScope.of(context)
+                                                .requestFocus(FocusNode());
+                                            //focus.unfocus();
+                                            CulIDParameters = null;
+                                            setState(() {});
+                                          } else {
+                                            _searchController.clear();
+                                          }
                                         }
                                         //clearSearch();
                                       },
