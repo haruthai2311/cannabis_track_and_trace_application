@@ -99,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 }
                 //print(snapshot.data[0].length);
                 if (snapshot.data[0].length == 0) {
-                  var culGH = ["N/A"];
+                  var culGH = [];
                   return Stack(children: [
                     SingleChildScrollView(
                       child: Container(
@@ -371,7 +371,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 children: [
                                   buildTaskHead(
                                       result[0].no.toString(),
-                                      result[0].plantTotal.toString(),
+                                      result[0].plantTotal.toString() + '  ต้น',
                                       result[0].nameGh.toString()),
                                   const SizedBox(height: 10),
                                   buildAmount(result[0].plantLive.toString(),
@@ -392,8 +392,9 @@ class _HomeScreenState extends State<HomeScreen> {
                                           .no
                                           .toString(),
                                       result[culGH.indexOf(select)]
-                                          .plantTotal
-                                          .toString(),
+                                              .plantTotal
+                                              .toString() +
+                                          '  ต้น',
                                       result[culGH.indexOf(select)]
                                           .nameGh
                                           .toString()),
@@ -470,7 +471,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const SizedBox(height: 10),
                     Text(
-                      plantTotal + '  ต้น',
+                      plantTotal,
                       style: const TextStyle(
                           fontSize: 25,
                           color: Colors.white,
