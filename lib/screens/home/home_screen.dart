@@ -160,9 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         size: 20,
                                       ),
                                       onPressed: () {
-                                        if (_searchController.text.isEmpty) {
-                                          focus.unfocus();
-                                          if (_searchController.text.isNotEmpty) {
+                                        if (_searchController.text.isNotEmpty) {
                                           _searchController.clear();
                                           FocusScope.of(context)
                                               .requestFocus(FocusNode());
@@ -172,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                         } else {
                                           _searchController.clear();
                                         }
-                                        }
+
                                         //clearSearch();
                                       },
                                       iconSize: 25,
