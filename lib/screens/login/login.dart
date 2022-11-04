@@ -256,23 +256,15 @@ class _LoginScreenState extends State<LoginScreen> {
                                               BorderRadius.circular(30)),
                                       padding: const EdgeInsets.all(20)),
                                   onPressed: () {
-                                    // if (_formKey.currentState!.validate()) {
-                                    //   login();
-                                    // }
-                                    //if (_formKey.currentState!.validate()) {
-                                    Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const BottomNavScreen(
-                                                  UserID: "14")),
-                                      (Route<dynamic> route) => false,
-                                    );
-                                    // Navigator.push(context,
-                                    //     MaterialPageRoute(builder: (context) {
-                                    //   return BottomNavScreen(UserID: "14");
-                                    // }));
-                                    //}
+                                    login();
+                                    // Navigator.pushAndRemoveUntil(
+                                    //   context,
+                                    //   MaterialPageRoute(
+                                    //       builder: (context) =>
+                                    //           const BottomNavScreen(
+                                    //               UserID: "14")),
+                                    //   (Route<dynamic> route) => false,
+                                    // );
                                   },
                                   child: const Text("Login"))),
                         ),

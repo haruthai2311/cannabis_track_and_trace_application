@@ -4,6 +4,7 @@ import 'package:cannabis_track_and_trace_application/screens/account/edit_person
 import 'package:cannabis_track_and_trace_application/screens/login/login.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_profile_picture/flutter_profile_picture.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'dart:math' as math;
 import 'package:http/http.dart' as http;
 import '../../api/hostapi.dart';
@@ -133,13 +134,15 @@ class _AccountScreenState extends State<AccountScreen> {
                                     )).then((value) => setState(() {}));
                                 //connect page
                               },
-                              child: const Icon(Icons.manage_accounts_outlined,
-                                  size: 30, color: Color(0xFF036568)),
+                              child: Container(
+                                height: 55,
+                                width: 55,
+                                child: Image.asset(
+                                  "images/icon_profile.png",
+                                ),
+                              ),
                               style: ElevatedButton.styleFrom(
                                 shape: const CircleBorder(),
-                                padding: const EdgeInsets.all(15),
-                                primary: const Color(0xFFD1F1F2),
-                                onPrimary: Colors.black,
                               ),
                             ),
                             const Expanded(
@@ -163,108 +166,114 @@ class _AccountScreenState extends State<AccountScreen> {
                           ],
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                           Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => EditpassScreen(
-                                        UserID: widget.UserID,
-                                      ),
-                                    ));
-                        },
-                        child: Row(
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                //connect page
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => EditpassScreen(
-                                        UserID: widget.UserID,
-                                      ),
-                                    ));
-                                //connect page
-                              },
-                              child: Transform.rotate(
-                                angle: 180 * math.pi / 100,
-                                child: const Icon(Icons.key_rounded,
-                                    size: 30, color: Color(0xFF036568)),
-                              ),
-                              style: ElevatedButton.styleFrom(
-                                shape: const CircleBorder(),
-                                padding: const EdgeInsets.all(15),
-                                primary: const Color(0xFFD1F1F2),
-                                onPrimary: Colors.black,
-                              ),
-                            ),
-                            const Expanded(
-                              child: ListTile(
-                                title: Text(
-                                  'Change Password',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 0, 0, 0)),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EditpassScreen(
+                                    UserID: widget.UserID,
+                                  ),
+                                ));
+                          },
+                          child: Row(
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  //connect page
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => EditpassScreen(
+                                          UserID: widget.UserID,
+                                        ),
+                                      ));
+                                  //connect page
+                                },
+                                child: Transform.rotate(
+                                  angle: 180 * math.pi / 100,
+                                  child: const Icon(Icons.key_rounded,
+                                      size: 30, color: Colors.black87),
                                 ),
-                                subtitle: Text(
-                                  'Change your password',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color:
-                                          Color.fromARGB(255, 158, 158, 158)),
+                                style: ElevatedButton.styleFrom(
+                                  shape: const CircleBorder(),
+                                  padding: const EdgeInsets.all(15),
+                                  primary: Color.fromARGB(255, 255, 232, 156),
+                                  onPrimary: Colors.black,
                                 ),
                               ),
-                            ),
-                          ],
+                              const Expanded(
+                                child: ListTile(
+                                  title: Text(
+                                    'Change Password',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 0, 0, 0)),
+                                  ),
+                                  subtitle: Text(
+                                    'Change your password',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color:
+                                            Color.fromARGB(255, 158, 158, 158)),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginScreen()));
-                        },
-                        child: Row(
-                          children: [
-                            ElevatedButton(
-                              onPressed: () {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const LoginScreen()));
-                              },
-                              child: const Icon(Icons.power_settings_new,
-                                  size: 30, color: Color(0xFF036568)),
-                              style: ElevatedButton.styleFrom(
-                                shape: const CircleBorder(),
-                                padding: const EdgeInsets.all(15),
-                                primary: const Color(0xFFD1F1F2),
-                                onPrimary: Colors.black,
-                              ),
-                            ),
-                            const Expanded(
-                              child: ListTile(
-                                title: Text(
-                                  'Log out',
-                                  style: TextStyle(
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                      color: Color.fromARGB(255, 0, 0, 0)),
-                                ),
-                                subtitle: Text(
-                                  'Log out of the',
-                                  style: TextStyle(
-                                      fontSize: 15,
-                                      color:
-                                          Color.fromARGB(255, 158, 158, 158)),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 10),
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginScreen()));
+                          },
+                          child: Row(
+                            children: [
+                              ElevatedButton(
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const LoginScreen()));
+                                },
+                                child: const Icon(Icons.power_settings_new,
+                                    size: 30, color: Colors.white),
+                                style: ElevatedButton.styleFrom(
+                                  shape: const CircleBorder(),
+                                  padding: const EdgeInsets.all(15),
+                                  primary: Color.fromARGB(255, 183, 40, 30),
+                                  onPrimary: Colors.black,
                                 ),
                               ),
-                            ),
-                          ],
+                              const Expanded(
+                                child: ListTile(
+                                  title: Text(
+                                    'Log out',
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                        color: Color.fromARGB(255, 0, 0, 0)),
+                                  ),
+                                  subtitle: Text(
+                                    'Log out of the',
+                                    style: TextStyle(
+                                        fontSize: 15,
+                                        color:
+                                            Color.fromARGB(255, 158, 158, 158)),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                     ],
