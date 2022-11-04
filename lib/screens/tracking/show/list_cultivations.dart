@@ -58,7 +58,7 @@ class _ListCultivationsState extends State<ListCultivations> {
               }
 
               if (snapshot.data.length == 0) {
-                return const Center(
+                return Center(
                   child: Text(
                     'ไม่พบข้อมูล',
                     style: TextStyle(

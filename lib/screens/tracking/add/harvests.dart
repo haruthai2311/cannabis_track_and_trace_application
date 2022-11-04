@@ -113,12 +113,11 @@ class _AddHarvestsState extends State<AddHarvests> {
     super.initState();
   }
 
-  Future<List<AllGreenhouses>> getAllGreenhouses() async {
-    var url = hostAPI + '/informations/getAllGreenhouses';
+  Future getAllGreenhouses() async {
+    var url = hostAPI + "/informations/getAllGreenhouses";
     var response = await http.get(Uri.parse(url));
     _allGreenhouses = allGreenhousesFromJson(response.body);
-    //print(_allGreenhouses.result[0].name.toString());
-    //print(_allGreenhouses.result[1].name.toString());
+
     return _allGreenhouses;
   }
 
@@ -164,12 +163,32 @@ class _AddHarvestsState extends State<AddHarvests> {
           future: getAllGreenhouses(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
+              // if (snapshot.data == null) {
+              //   return Padding(
+              //       padding: const EdgeInsets.all(8.0),
+              //       child: Container(
+              //         padding: const EdgeInsets.all(15),
+              //         decoration: const BoxDecoration(
+              //           color: Colors.white,
+              //           borderRadius: BorderRadius.all(Radius.circular(20)),
+              //         ),
+              //         child: Center(
+              //           child: Text(
+              //             'ไม่พบข้อมูลตั้งต้น',
+              //             style: TextStyle(
+              //                 fontSize: 24,
+              //                 fontWeight: FontWeight.w600,
+              //                 color: Color.fromARGB(255, 143, 8, 8)),
+              //           ),
+              //         ),
+              //       ));
+              // }
               var result = snapshot.data;
 
               var nameGH = ['N/A'];
               for (var i = 0; i < result.length; i++) {
                 //print(result[i].newCase);
-                nameGH.add(result[i].name);
+                nameGH.add(result[i].name.toString());
                 //print(casenewsort);
 
                 //

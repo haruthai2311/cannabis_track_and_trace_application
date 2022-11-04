@@ -235,8 +235,28 @@ class _PlantTrackingState extends State<PlantTracking> {
           future: getData(),
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
+              // if (snapshot.data == null) {
+              //   Container();
+              // }
               if (snapshot.data == null) {
-                Container();
+                return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Container(
+                      padding: const EdgeInsets.all(15),
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                      ),
+                      child: Center(
+                        child: Text(
+                          'ไม่พบข้อมูลตั้งต้น',
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.w600,
+                              color: Color.fromARGB(255, 143, 8, 8)),
+                        ),
+                      ),
+                    ));
               }
               var result1 = snapshot.data[0];
               var result2 = snapshot.data[1];

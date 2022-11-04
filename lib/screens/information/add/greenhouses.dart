@@ -154,7 +154,7 @@ class _GreenHousesState extends State<GreenHouses> {
               if (snapshot.connectionState == ConnectionState.done) {
                 var result = snapshot.data;
 
-                var nameLocations = <String>[];
+                var nameLocations = <String>["N/A"];
                 for (var i = 0; i < result.length; i++) {
                   nameLocations.add(result[i].name);
                 }

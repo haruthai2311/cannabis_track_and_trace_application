@@ -64,19 +64,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final focus = FocusNode();
 
-  void clearSearch() {
-    if (focus.hasFocus) {
-      _searchController.clear();
-    } else {
-      if (_searchController.text.isNotEmpty) {
-        _searchController.clear();
-        CulIDParameters = null;
-        setState(() {});
-      } else {
-        _searchController.clear();
-      }
-    }
-  }
+  // void clearSearch() {
+  //   if (focus.hasFocus) {
+  //     _searchController.clear();
+  //   } else {
+  //     if (_searchController.text.isNotEmpty) {
+  //       _searchController.clear();
+  //       CulIDParameters = null;
+  //       setState(() {});
+  //     } else {
+  //       _searchController.clear();
+  //     }
+  //   }
+  // }
 
   String select = "";
 
@@ -97,9 +97,9 @@ class _HomeScreenState extends State<HomeScreen> {
                 if (snapshot.data == null) {
                   Container();
                 }
-
-                if (snapshot.data.length == 0) {
-                  return const Center(
+                //print(snapshot.data[0].length);
+                if (snapshot.data[0].length == 0) {
+                  return Center(
                     child: Text(
                       'ไม่พบข้อมูล',
                       style: TextStyle(
@@ -162,15 +162,25 @@ class _HomeScreenState extends State<HomeScreen> {
                                       onPressed: () {
                                         if (_searchController.text.isEmpty) {
                                           focus.unfocus();
+                                          if (_searchController.text.isNotEmpty) {
+                                          _searchController.clear();
+                                          FocusScope.of(context)
+                                              .requestFocus(FocusNode());
+                                          //focus.unfocus();
+                                          CulIDParameters = null;
+                                          setState(() {});
+                                        } else {
+                                          _searchController.clear();
                                         }
-                                        clearSearch();
+                                        }
+                                        //clearSearch();
                                       },
                                       iconSize: 25,
                                       color: Colors.black54,
                                     ),
                                   ),
 
-                                  focusNode: focus,
+                                  //focusNode: focus,
                                   suggestions: culGH
                                       .map((culgh) => SearchFieldListItem(
                                           culgh.toString(),
