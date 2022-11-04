@@ -332,33 +332,35 @@ class _PlantTrackingState extends State<PlantTracking> {
                                   width: 2,
                                 ),
                               ),
-                              child: DropdownButton(
-                                dropdownColor: Colors.white,
-                                iconSize: 30,
-                                isExpanded: true,
-                                style: const TextStyle(
-                                  color: colorDetails2,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.normal,
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  dropdownColor: Colors.white,
+                                  iconSize: 30,
+                                  isExpanded: true,
+                                  style: const TextStyle(
+                                    color: colorDetails2,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  value: dropdownGH,
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  items: itemGH.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(
+                                      () {
+                                        dropdownGH = newValue!;
+                                        NameGHParameters =
+                                            "?NameGH=" + dropdownGH;
+                                        dropdownPotID = 'N/A';
+                                      },
+                                    );
+                                  },
                                 ),
-                                value: dropdownGH,
-                                icon: const Icon(Icons.keyboard_arrow_down),
-                                items: itemGH.map((String items) {
-                                  return DropdownMenuItem(
-                                    value: items,
-                                    child: Text(items),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  setState(
-                                    () {
-                                      dropdownGH = newValue!;
-                                      NameGHParameters =
-                                          "?NameGH=" + dropdownGH;
-                                      dropdownPotID = 'N/A';
-                                    },
-                                  );
-                                },
                               ),
                             ),
                           ],
@@ -393,30 +395,32 @@ class _PlantTrackingState extends State<PlantTracking> {
                                   width: 2,
                                 ),
                               ),
-                              child: DropdownButton(
-                                dropdownColor: Colors.white,
-                                iconSize: 30,
-                                isExpanded: true,
-                                style: const TextStyle(
-                                  color: colorDetails2,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.normal,
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  dropdownColor: Colors.white,
+                                  iconSize: 30,
+                                  isExpanded: true,
+                                  style: const TextStyle(
+                                    color: colorDetails2,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  value: dropdownPotID,
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  items: itemPotID.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(
+                                      () {
+                                        dropdownPotID = newValue!;
+                                      },
+                                    );
+                                  },
                                 ),
-                                value: dropdownPotID,
-                                icon: const Icon(Icons.keyboard_arrow_down),
-                                items: itemPotID.map((String items) {
-                                  return DropdownMenuItem(
-                                    value: items,
-                                    child: Text(items),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  setState(
-                                    () {
-                                      dropdownPotID = newValue!;
-                                    },
-                                  );
-                                },
                               ),
                             ),
                           ],
@@ -524,37 +528,63 @@ class _PlantTrackingState extends State<PlantTracking> {
   }
 
   Widget buildImages() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SizedBox(
-          height: 200,
-          // decoration:
-          //     BoxDecoration(border: Border.all(color: Color(0xffC4C4C4))),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              IconButton(
-                  onPressed: ((() => chooseImage(ImageSource.camera))),
-                  icon: const Icon(
-                    Icons.add_a_photo,
-                  )),
-              SizedBox(
-                  width: 250,
-                  //height: 190,
-                  child: file == null
-                      ? Image.asset(
-                          "images/Group639.png",
-                          fit: BoxFit.cover,
-                        )
-                      : Image.file(file!)),
-              IconButton(
-                  onPressed: (() => chooseImage(ImageSource.gallery)),
-                  icon: const Icon(Icons.add_photo_alternate)),
-            ],
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        //color: Colors.grey,
+        border: Border.all(
+          color: Color.fromARGB(255, 238, 238, 240),
+          width: 2,
         ),
-      ],
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          children: [
+            SizedBox(
+                //width: 280,
+                //height: 200,
+                child: file == null
+                    ? Image.asset(
+                        "images/take-a-photo.png",
+                        fit: BoxFit.cover,
+                      )
+                    : Image.file(file!)),
+            Padding(
+              padding: const EdgeInsets.only(top: 5),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                      decoration: const BoxDecoration(
+                          color: Color.fromARGB(187, 201, 199, 199),
+                          shape: BoxShape.circle),
+                      child: IconButton(
+                        onPressed: ((() => chooseImage(ImageSource.camera))),
+                        icon: Image.asset("images/icon_camera.png"),
+                        iconSize: 25,
+                      )),
+                  const SizedBox(
+                    width: 5,
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Color.fromARGB(187, 201, 199, 199),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: IconButton(
+                      onPressed: ((() => chooseImage(ImageSource.gallery))),
+                      icon: Image.asset("images/iconpicture.png"),
+                      color: Colors.white,
+                      iconSize: 25,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
@@ -658,39 +688,41 @@ class _PlantTrackingState extends State<PlantTracking> {
               width: 2,
             ),
           ),
-          child: DropdownButton(
-            dropdownColor: Colors.white,
-            iconSize: 30,
-            isExpanded: true,
-            style: const TextStyle(
-              color: colorDetails2,
-              fontSize: 20,
-              fontWeight: FontWeight.normal,
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton(
+              dropdownColor: Colors.white,
+              iconSize: 30,
+              isExpanded: true,
+              style: const TextStyle(
+                color: colorDetails2,
+                fontSize: 20,
+                fontWeight: FontWeight.normal,
+              ),
+              value: dropdownStatus,
+              icon: const Icon(Icons.keyboard_arrow_down),
+              items: itemStatus.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(
+                  () {
+                    dropdownStatus = newValue!;
+                    if (dropdownStatus == "ปกติ") {
+                      selectdropdownStatus = "01";
+                    } else if (dropdownStatus == "ไม่สมบูรณ์") {
+                      selectdropdownStatus = "02";
+                    } else if (dropdownStatus == "ตัดทิ้ง") {
+                      selectdropdownStatus = "03";
+                    } else {
+                      selectdropdownStatus = "00";
+                    }
+                  },
+                );
+              },
             ),
-            value: dropdownStatus,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            items: itemStatus.map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(
-                () {
-                  dropdownStatus = newValue!;
-                  if (dropdownStatus == "ปกติ") {
-                    selectdropdownStatus = "01";
-                  } else if (dropdownStatus == "ไม่สมบูรณ์") {
-                    selectdropdownStatus = "02";
-                  } else if (dropdownStatus == "ตัดทิ้ง") {
-                    selectdropdownStatus = "03";
-                  } else {
-                    selectdropdownStatus = "00";
-                  }
-                },
-              );
-            },
           ),
         ),
       ],
@@ -723,45 +755,48 @@ class _PlantTrackingState extends State<PlantTracking> {
               width: 2,
             ),
           ),
-          child: DropdownButton(
-            dropdownColor: Colors.white,
-            iconSize: 30,
-            isExpanded: true,
-            style: const TextStyle(
-              color: colorDetails2,
-              fontSize: 20,
-              fontWeight: FontWeight.normal,
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton(
+              dropdownColor: Colors.white,
+              iconSize: 30,
+              isExpanded: true,
+              style: const TextStyle(
+                color: colorDetails2,
+                fontSize: 20,
+                fontWeight: FontWeight.normal,
+              ),
+              value: dropdownSoi,
+              icon: const Icon(Icons.keyboard_arrow_down),
+              items: itemSoi.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(
+                  () {
+                    dropdownSoi = newValue!;
+                    if (dropdownSoi == "ดินชิ้นเหมาะสม") {
+                      selectdropdownSoi = "01";
+                    } else if (dropdownSoi ==
+                        "ดินชื้นมาก ไม่มีผลต่อการเจริญเติบโต") {
+                      selectdropdownSoi = "02";
+                    } else if (dropdownSoi ==
+                        "ดินชื้นมาก มีผลต่อการเจริญเติบโต") {
+                      selectdropdownSoi = "03";
+                    } else if (dropdownSoi == "ดินแห้ง พบต้นเหี่ยวช่วงบ่าย") {
+                      selectdropdownSoi = "04";
+                    } else if (dropdownSoi ==
+                        "ดินแห้ง ไม่พบต้นเหี่ยวช่วงบ่าย") {
+                      selectdropdownSoi = "05";
+                    } else {
+                      selectdropdownSoi = "00";
+                    }
+                  },
+                );
+              },
             ),
-            value: dropdownSoi,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            items: itemSoi.map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(
-                () {
-                  dropdownSoi = newValue!;
-                  if (dropdownSoi == "ดินชิ้นเหมาะสม") {
-                    selectdropdownSoi = "01";
-                  } else if (dropdownSoi ==
-                      "ดินชื้นมาก ไม่มีผลต่อการเจริญเติบโต") {
-                    selectdropdownSoi = "02";
-                  } else if (dropdownSoi ==
-                      "ดินชื้นมาก มีผลต่อการเจริญเติบโต") {
-                    selectdropdownSoi = "03";
-                  } else if (dropdownSoi == "ดินแห้ง พบต้นเหี่ยวช่วงบ่าย") {
-                    selectdropdownSoi = "04";
-                  } else if (dropdownSoi == "ดินแห้ง ไม่พบต้นเหี่ยวช่วงบ่าย") {
-                    selectdropdownSoi = "05";
-                  } else {
-                    selectdropdownSoi = "00";
-                  }
-                },
-              );
-            },
           ),
         ),
       ],

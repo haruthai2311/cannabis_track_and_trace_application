@@ -406,39 +406,41 @@ class _AddHarvestsState extends State<AddHarvests> {
               width: 2,
             ),
           ),
-          child: DropdownButton(
-            dropdownColor: Colors.white,
-            iconSize: 30,
-            isExpanded: true,
-            style: const TextStyle(
-              color: colorDetails2,
-              fontSize: 20,
-              fontWeight: FontWeight.normal,
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton(
+              dropdownColor: Colors.white,
+              iconSize: 30,
+              isExpanded: true,
+              style: const TextStyle(
+                color: colorDetails2,
+                fontSize: 20,
+                fontWeight: FontWeight.normal,
+              ),
+              value: dropdowntype,
+              icon: const Icon(Icons.keyboard_arrow_down),
+              items: itemtype.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(
+                  () {
+                    dropdowntype = newValue!;
+                    if (dropdowntype == "N/A") {
+                      selectDropdown = "00";
+                    } else if (dropdowntype == "ใบ") {
+                      selectDropdown = "01";
+                    } else if (dropdowntype == "ดอก") {
+                      selectDropdown = "02";
+                    } else {
+                      selectDropdown = "03";
+                    }
+                  },
+                );
+              },
             ),
-            value: dropdowntype,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            items: itemtype.map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(
-                () {
-                  dropdowntype = newValue!;
-                  if (dropdowntype == "N/A") {
-                    selectDropdown = "00";
-                  } else if (dropdowntype == "ใบ") {
-                    selectDropdown = "01";
-                  } else if (dropdowntype == "ดอก") {
-                    selectDropdown = "02";
-                  } else {
-                    selectDropdown = "03";
-                  }
-                },
-              );
-            },
           ),
         ),
       ],

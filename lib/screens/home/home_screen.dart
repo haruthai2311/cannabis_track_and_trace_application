@@ -517,8 +517,8 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           Container(
-            width: 170,
-            height: 80,
+            // width: 170,
+            // height: 80,
             decoration: BoxDecoration(
               boxShadow: const [
                 BoxShadow(
@@ -536,7 +536,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
@@ -580,8 +580,8 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
           ),
           Container(
-            width: 170,
-            height: 80,
+            // width: 170,
+            // height: 80,
             decoration: BoxDecoration(
               boxShadow: const [
                 BoxShadow(
@@ -599,7 +599,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.all(10),
+              padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
