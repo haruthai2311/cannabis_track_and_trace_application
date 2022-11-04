@@ -59,14 +59,69 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
                 }
 
                 if (snapshot.data.length == 0) {
-                  return const Center(
-                    child: Text(
-                      'ไม่พบข้อมูลบาร์โค้ด',
-                      style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.w600,
-                          color: Color.fromARGB(255, 143, 8, 8)),
-                    ),
+                  return Column(
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(40),
+                        child: Column(
+                          children: [
+                            Text(
+                              "บันทึกผลตรวจประจำวัน",
+                              style: TextStyle(
+                                  fontSize: 22,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.white),
+                            ),
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(20, 0, 20, 1),
+                        child: Row(
+                          children: [
+                            const Text(
+                              "List Plant Tracking",
+                              style: TextStyle(
+                                color: Colors.white70,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 16,
+                              ),
+                            ),
+                            const Spacer(),
+                            InkWell(
+                              onTap: () {},
+                              child: const Text(
+                                "all",
+                                style: TextStyle(
+                                  color: Colors.black54,
+                                  fontWeight: FontWeight.w800,
+                                  fontSize: 16,
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Expanded(
+                          child: Container(
+                        decoration: const BoxDecoration(
+                          color: Color.fromARGB(240, 255, 255, 255),
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(40),
+                            topRight: Radius.circular(40),
+                          ),
+                        ),
+                        child: const Center(
+                          child: Text(
+                            'ไม่พบข้อมูลบาร์โค้ด',
+                            style: TextStyle(
+                                fontSize: 24,
+                                fontWeight: FontWeight.w600,
+                                color: Color.fromARGB(255, 143, 8, 8)),
+                          ),
+                        ),
+                      ))
+                    ],
                   );
                 }
 
