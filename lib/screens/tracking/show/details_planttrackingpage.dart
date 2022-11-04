@@ -120,6 +120,7 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                               ),
                             ),
                           ),
+
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
@@ -134,7 +135,7 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                             ],
                           ),
                           SizedBox(
-                            height: 10,
+                            height: 30,
                           ),
                           // Padding(
                           //   padding: const EdgeInsets.all(8.0),
@@ -169,6 +170,7 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                                 height:
                                     MediaQuery.of(context).size.height * 0.5,
                               ),
+                              
                             ),
                           ),
                           SizedBox(

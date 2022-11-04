@@ -216,7 +216,7 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
                             ),
                             const SizedBox(height: 30),
                             Container(
-                              //height: 250,
+                              height: 250,
                               width: double.infinity,
                               decoration: BoxDecoration(
                                 color: Colors.white,
@@ -243,91 +243,82 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
                                                       .height *
                                                   0.5,
                                             )
-                                          : Image.file(file!),
+                                          : Image.file(
+                                              file!,
+                                              fit: BoxFit.cover,
+                                              width: MediaQuery.of(context)
+                                                  .size
+                                                  .width,
+                                              height: MediaQuery.of(context)
+                                                      .size
+                                                      .height *
+                                                  0.5,
+                                            ),
                                       //*คลิกดูรูปใหญ่*//
-                                      // onTap: () {
-                                      //   Navigator.push(context, MaterialPageRoute(builder: (_) {
-                                      //     return DetailScreen();
-                                      //   }));
-                                      // },
+                                      onTap: () {
+                                        if (file != null) {
+                                          Container();
+                                        } else {
+                                          Navigator.push(context,
+                                              MaterialPageRoute(builder: (_) {
+                                            return DetailScreen(
+                                                result[0].fileName);
+                                          }));
+                                        }
+                                      },
                                     ),
                                     Positioned(
-                                      top: 330,
+                                      top: 170,
                                       left: 0,
                                       right: 0,
                                       bottom: 0,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Color.fromARGB(
-                                              129, 255, 255, 255),
-                                          // borderRadius: BorderRadius.only(
-                                          //   topLeft: Radius.circular(20),
-                                          //   topRight: Radius.circular(20),
-                                          // ),
-                                        ),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(5),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Container(
-                                                  //alignment: Alignment.bottomRight,
-                                                  height: 50,
-                                                  width: 50,
-                                                  decoration:
-                                                      const BoxDecoration(
-                                                          color:
-                                                              Color.fromARGB(
-                                                                  255,
-                                                                  78,
-                                                                  78,
-                                                                  78),
-                                                          shape:
-                                                              BoxShape.circle),
-                                                  child: IconButton(
-                                                    onPressed: ((() =>
-                                                        chooseImage(ImageSource
-                                                            .camera))),
-                                                    icon: const Icon(
-                                                      Icons.add_a_photo,
-                                                    ),
-                                                    color: Colors.white,
-                                                    iconSize: 25,
-                                                  )),
-                                              const SizedBox(
-                                                width: 5,
-                                              ),
-                                              Container(
-                                                //alignment: Alignment.bottomRight,
-                                                height: 50,
-                                                width: 50,
-                                                decoration: BoxDecoration(
-                                                  color: Color.fromARGB(
-                                                      255, 78, 78, 78),
-                                                  borderRadius:
-                                                      BorderRadius.circular(5),
-                                                ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(5),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Container(
+                                                decoration: const BoxDecoration(
+                                                    color: Color.fromARGB(
+                                                        187, 201, 199, 199),
+                                                    shape: BoxShape.circle),
                                                 child: IconButton(
                                                   onPressed: ((() =>
-                                                      chooseImage(ImageSource
-                                                          .gallery))),
-                                                  icon: const Icon(
-                                                    Icons.add_photo_alternate,
-                                                  ),
-                                                  color: Colors.white,
-                                                  iconSize: 30,
-                                                ),
+                                                      chooseImage(
+                                                          ImageSource.camera))),
+                                                  icon: Image.asset(
+                                                      "images/icon_camera.png"),
+                                                  iconSize: 25,
+                                                )),
+                                            const SizedBox(
+                                              width: 5,
+                                            ),
+                                            Container(
+                                              decoration: BoxDecoration(
+                                                color: Color.fromARGB(
+                                                    187, 201, 199, 199),
+                                                borderRadius:
+                                                    BorderRadius.circular(10),
                                               ),
-                                            ],
-                                          ),
+                                              child: IconButton(
+                                                onPressed: ((() => chooseImage(
+                                                    ImageSource.gallery))),
+                                                icon: Image.asset(
+                                                    "images/iconpicture.png"),
+                                                color: Colors.white,
+                                                iconSize: 25,
+                                              ),
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                               ),
                             ),
+
                             const SizedBox(height: 20),
                             MyForm()
                                 .buildformLog("โรงปลูกปลูก : ", _ctlGH, true),
@@ -548,79 +539,6 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
               );
             }
             return const LinearProgressIndicator();
-
-            //                   Row(
-            //                     mainAxisAlignment: MainAxisAlignment.end,
-            //                     children: [
-            //                       Column(
-            //                         children: [
-            //                           ElevatedButton(
-            //                             style: ElevatedButton.styleFrom(
-            //                                 textStyle: TextStyle(fontSize: 18),
-            //                                 primary:
-            //                                     Color.fromARGB(255, 10, 94, 3),
-            //                                 shape: RoundedRectangleBorder(
-            //                                     borderRadius:
-            //                                         BorderRadius.circular(30)),
-            //                                 padding: const EdgeInsets.all(15)),
-            //                             onPressed: () {
-            //                               //ส่งค่าจากปุ่มบันทึก
-            //                               selectdropdownStatus ??= '0' + status;
-            //                               selectdropdownSoi ??= '0' + Soil;
-            //                               String urlPathImage =
-            //                                   result[0].fileName;
-
-            //                               // dialog.normalDialog(
-            //                               //     context,
-            //                               //     selectdropdownStatus.toString() +
-            //                               //         selectdropdownSoi.toString());
-            //                               //confirmDialog();
-            //                               showDialog(
-            //                                 context: context,
-            //                                 builder: (context) => SimpleDialog(
-            //                                   title: Text("ยืนยันการแก้ไขข้อมูล"),
-            //                                   children: <Widget>[
-            //                                     Row(
-            //                                       mainAxisAlignment:
-            //                                           MainAxisAlignment.center,
-            //                                       children: <Widget>[
-            //                                         OutlinedButton(
-            //                                             onPressed: () {
-            //                                               Navigator.pop(context);
-            //                                               EditData(
-            //                                                   selectdropdownStatus,
-            //                                                   selectdropdownSoi,
-            //                                                   _ctlSoilRemark,
-            //                                                   _ctlRemark,
-            //                                                   _ctlDisease,
-            //                                                   _ctlFixDisease,
-            //                                                   _ctlInsect,
-            //                                                   _ctlFixInsect,
-            //                                                   _ctlWeight,
-            //                                                   _ctlLogtime,
-            //                                                   _ctlTrashRemark,
-            //                                                   urlPathImage);
-            //                                             },
-            //                                             child:
-            //                                                 const Text('ยืนยัน')),
-            //                                         const SizedBox(
-            //                                           width: 5,
-            //                                         ),
-            //                                         OutlinedButton(
-            //                                             onPressed: () =>
-            //                                                 Navigator.pop(
-            //                                                     context),
-            //                                             child: Text('ยกเลิก'))
-            //                                       ],
-            //                                     )
-            //                                   ],
-            //                                 ),
-            //                               );
-            //                             },
-            //                             child: Text("บันทึก"),
-            //                           ),
-            //                         ],
-            //                       ),
           },
         ),
       ),
@@ -865,8 +783,9 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
 }
 
 class DetailScreen extends StatelessWidget {
-  // final String Image;
-  // const DetailScreen({Key? key, required this.Image}) : super(key: key);
+  DetailScreen(this.ImageName);
+
+  final String ImageName;
 
   @override
   Widget build(BuildContext context) {
@@ -874,7 +793,7 @@ class DetailScreen extends StatelessWidget {
       body: GestureDetector(
         child: Center(
           child: Image.network(
-            hostAPI + "/Image757337.jpg",
+            hostAPI + ImageName,
           ),
         ),
         onTap: () {
