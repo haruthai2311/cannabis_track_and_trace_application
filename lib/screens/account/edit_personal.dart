@@ -107,7 +107,7 @@ class _EditAccountScreenState extends State<EditAccountScreen> {
                           ),
                         ),
                         const Text(
-                          "แก้ไขข้อมูลส่วนบุคคล",
+                          "แก้ไขข้อมูลผู้ใช้",
                           style: TextStyle(
                               fontSize: 24,
                               fontWeight: FontWeight.w600,

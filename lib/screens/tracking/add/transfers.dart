@@ -240,43 +240,45 @@ class _AddTransfersState extends State<AddTransfers> {
                                   width: 2,
                                 ),
                               ),
-                              child: DropdownButton(
-                                dropdownColor: Colors.white,
-                                iconSize: 30,
-                                isExpanded: true,
-                                style: const TextStyle(
-                                  color: colorDetails2,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.normal,
-                                ),
-                                value: dropdownHvtID,
-                                icon: const Icon(Icons.keyboard_arrow_down),
-                                items: itemHvtID.map((String items) {
-                                  return DropdownMenuItem(
-                                    value: items,
-                                    child: Text(items),
-                                  );
-                                }).toList(),
-                                onChanged: (String? newValue) {
-                                  setState(
-                                    () {
-                                      dropdownHvtID = newValue!;
-                                      if (itemHvtID.indexOf(dropdownHvtID) ==
-                                          0) {
-                                        _ctlHarvestNo.text = "";
-                                      } else {
-                                        _ctlHarvestNo.text = result[itemHvtID
-                                                    .indexOf(dropdownHvtID) -
-                                                1]
-                                            .harvestNo
-                                            .toString();
-                                      }
+                              child: DropdownButtonHideUnderline(
+                                child: DropdownButton(
+                                  dropdownColor: Colors.white,
+                                  iconSize: 30,
+                                  isExpanded: true,
+                                  style: const TextStyle(
+                                    color: colorDetails2,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.normal,
+                                  ),
+                                  value: dropdownHvtID,
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  items: itemHvtID.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(
+                                      () {
+                                        dropdownHvtID = newValue!;
+                                        if (itemHvtID.indexOf(dropdownHvtID) ==
+                                            0) {
+                                          _ctlHarvestNo.text = "";
+                                        } else {
+                                          _ctlHarvestNo.text = result[itemHvtID
+                                                      .indexOf(dropdownHvtID) -
+                                                  1]
+                                              .harvestNo
+                                              .toString();
+                                        }
 
-                                      //print(itemHvtID.indexOf(dropdownHvtID));
-                                      //print(result[itemHvtID.indexOf(dropdownHvtID) - 1].harvestNo.toString());
-                                    },
-                                  );
-                                },
+                                        //print(itemHvtID.indexOf(dropdownHvtID));
+                                        //print(result[itemHvtID.indexOf(dropdownHvtID) - 1].harvestNo.toString());
+                                      },
+                                    );
+                                  },
+                                ),
                               ),
                             ),
                           ],
@@ -448,39 +450,41 @@ class _AddTransfersState extends State<AddTransfers> {
               width: 2,
             ),
           ),
-          child: DropdownButton(
-            dropdownColor: Colors.white,
-            iconSize: 30,
-            isExpanded: true,
-            style: const TextStyle(
-              color: colorDetails2,
-              fontSize: 20,
-              fontWeight: FontWeight.normal,
+          child: DropdownButtonHideUnderline(
+            child: DropdownButton(
+              dropdownColor: Colors.white,
+              iconSize: 30,
+              isExpanded: true,
+              style: const TextStyle(
+                color: colorDetails2,
+                fontSize: 20,
+                fontWeight: FontWeight.normal,
+              ),
+              value: dropdowntype,
+              icon: const Icon(Icons.keyboard_arrow_down),
+              items: itemtype.map((String items) {
+                return DropdownMenuItem(
+                  value: items,
+                  child: Text(items),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(
+                  () {
+                    dropdowntype = newValue!;
+                    if (dropdowntype == "N/A") {
+                      selectDropdown = "00";
+                    } else if (dropdowntype == "ใบ") {
+                      selectDropdown = "01";
+                    } else if (dropdowntype == "ดอก") {
+                      selectDropdown = "02";
+                    } else {
+                      selectDropdown = "03";
+                    }
+                  },
+                );
+              },
             ),
-            value: dropdowntype,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            items: itemtype.map((String items) {
-              return DropdownMenuItem(
-                value: items,
-                child: Text(items),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(
-                () {
-                  dropdowntype = newValue!;
-                  if (dropdowntype == "N/A") {
-                    selectDropdown = "00";
-                  } else if (dropdowntype == "ใบ") {
-                    selectDropdown = "01";
-                  } else if (dropdowntype == "ดอก") {
-                    selectDropdown = "02";
-                  } else {
-                    selectDropdown = "03";
-                  }
-                },
-              );
-            },
           ),
         ),
       ],

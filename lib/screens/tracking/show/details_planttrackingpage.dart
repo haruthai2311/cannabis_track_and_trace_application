@@ -207,10 +207,37 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                                 FormDetail().buildText("หมายเลขกระถาง :  ",
                                     result[0].potsName.toString()),
                                 SizedBox(height: 5),
-                                FormDetail().buildText(
-                                  "วันที่บันทึก :  ",
-                                  f.format(result[0].checkDate).toString() +
-                                      ' น.',
+                                Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "วันที่บันทึก :  ",
+                                          style: TextStyle(
+                                            color: colorDetails3,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 5),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          f
+                                                  .format(result[0].checkDate)
+                                                  .toString() +
+                                              ' น.',
+                                          style: TextStyle(
+                                            color: colorDetails2,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
                                 ),
                                 SizedBox(height: 5),
                                 FormDetail()
@@ -296,10 +323,38 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                                 FormDetail().buildText("เก็บซาก :  ",
                                     result[0].weight.toString() + ' Kg'),
                                 SizedBox(height: 5),
-                                FormDetail().buildText(
-                                    "วันที่เก็บซาก : ",
-                                    f.format(result[0].logTime).toString() +
-                                        ' น.'),
+                                Column(
+                                  children: [
+                                    Row(
+                                      children: [
+                                        Text(
+                                          "วันที่เก็บซาก : ",
+                                          style: TextStyle(
+                                            color: colorDetails3,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    SizedBox(height: 5),
+                                    Row(
+                                      children: [
+                                        Text(
+                                          f
+                                                  .format(result[0].logTime)
+                                                  .toString() +
+                                              ' น.',
+                                          style: TextStyle(
+                                            color: colorDetails2,
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.normal,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                                 SizedBox(height: 5),
                                 FormDetail().buildText("เหตุผลที่เก็บซาก :  ",
                                     result[0].trashRemark),

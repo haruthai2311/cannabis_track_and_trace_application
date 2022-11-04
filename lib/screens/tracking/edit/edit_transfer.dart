@@ -189,51 +189,54 @@ class _EditTransferState extends State<EditTransfer> {
                                     width: 2,
                                   ),
                                 ),
-                                child: DropdownButton(
-                                  dropdownColor: Colors.white,
-                                  iconSize: 30,
-                                  isExpanded: true,
-                                  style: const TextStyle(
-                                    color: colorDetails2,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                  hint: Text(
-                                    dataTransfer[0].harvestId.toString(),
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton(
+                                    dropdownColor: Colors.white,
+                                    iconSize: 30,
+                                    isExpanded: true,
                                     style: const TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 18,
+                                      color: colorDetails2,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
                                     ),
-                                  ),
-                                  value: dropdownHvtID,
-                                  icon: const Icon(Icons.keyboard_arrow_down),
-                                  items: itemHvtID.map((String items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: Text(items),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? newValue) {
-                                    setState(
-                                      () {
-                                        dropdownHvtID = newValue!;
-                                        if (itemHvtID.indexOf(dropdownHvtID!) ==
-                                            0) {
-                                          _ctlHarvestNo.text = "";
-                                        } else {
-                                          _ctlHarvestNo.text = dataHarvests[
-                                                  itemHvtID.indexOf(
-                                                          dropdownHvtID!) -
-                                                      1]
-                                              .harvestNo
-                                              .toString();
-                                        }
+                                    hint: Text(
+                                      dataTransfer[0].harvestId.toString(),
+                                      style: const TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                    value: dropdownHvtID,
+                                    icon: const Icon(Icons.keyboard_arrow_down),
+                                    items: itemHvtID.map((String items) {
+                                      return DropdownMenuItem(
+                                        value: items,
+                                        child: Text(items),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? newValue) {
+                                      setState(
+                                        () {
+                                          dropdownHvtID = newValue!;
+                                          if (itemHvtID
+                                                  .indexOf(dropdownHvtID!) ==
+                                              0) {
+                                            _ctlHarvestNo.text = "";
+                                          } else {
+                                            _ctlHarvestNo.text = dataHarvests[
+                                                    itemHvtID.indexOf(
+                                                            dropdownHvtID!) -
+                                                        1]
+                                                .harvestNo
+                                                .toString();
+                                          }
 
-                                        //print(itemHvtID.indexOf(dropdownHvtID));
-                                        //print(result[itemHvtID.indexOf(dropdownHvtID) - 1].harvestNo.toString());
-                                      },
-                                    );
-                                  },
+                                          //print(itemHvtID.indexOf(dropdownHvtID));
+                                          //print(result[itemHvtID.indexOf(dropdownHvtID) - 1].harvestNo.toString());
+                                        },
+                                      );
+                                    },
+                                  ),
                                 ),
                               ),
                             ],

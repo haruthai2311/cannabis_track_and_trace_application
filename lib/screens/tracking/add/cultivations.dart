@@ -279,30 +279,32 @@ class _AddCultivationsState extends State<AddCultivations> {
                                     width: 2,
                                   ),
                                 ),
-                                child: DropdownButton(
-                                  dropdownColor: Colors.white,
-                                  iconSize: 30,
-                                  isExpanded: true,
-                                  style: const TextStyle(
-                                    color: colorDetails2,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.normal,
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton(
+                                    dropdownColor: Colors.white,
+                                    iconSize: 30,
+                                    isExpanded: true,
+                                    style: const TextStyle(
+                                      color: colorDetails2,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                    value: dropdownGH,
+                                    icon: const Icon(Icons.keyboard_arrow_down),
+                                    items: nameGH.map((String items) {
+                                      return DropdownMenuItem(
+                                        value: items,
+                                        child: Text(items),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? newValue) {
+                                      setState(
+                                        () {
+                                          dropdownGH = newValue!;
+                                        },
+                                      );
+                                    },
                                   ),
-                                  value: dropdownGH,
-                                  icon: const Icon(Icons.keyboard_arrow_down),
-                                  items: nameGH.map((String items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: Text(items),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? newValue) {
-                                    setState(
-                                      () {
-                                        dropdownGH = newValue!;
-                                      },
-                                    );
-                                  },
                                 ),
                               ),
                             ],
@@ -332,30 +334,32 @@ class _AddCultivationsState extends State<AddCultivations> {
                                     width: 2,
                                   ),
                                 ),
-                                child: DropdownButton(
-                                  dropdownColor: Colors.white,
-                                  iconSize: 30,
-                                  isExpanded: true,
-                                  style: const TextStyle(
-                                    color: colorDetails2,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.normal,
+                                child: DropdownButtonHideUnderline(
+                                  child: DropdownButton(
+                                    dropdownColor: Colors.white,
+                                    iconSize: 30,
+                                    isExpanded: true,
+                                    style: const TextStyle(
+                                      color: colorDetails2,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.normal,
+                                    ),
+                                    value: dropdownStrain,
+                                    icon: const Icon(Icons.keyboard_arrow_down),
+                                    items: nameStrains.map((String items) {
+                                      return DropdownMenuItem(
+                                        value: items,
+                                        child: Text(items),
+                                      );
+                                    }).toList(),
+                                    onChanged: (String? newValue) {
+                                      setState(
+                                        () {
+                                          dropdownStrain = newValue!;
+                                        },
+                                      );
+                                    },
                                   ),
-                                  value: dropdownStrain,
-                                  icon: const Icon(Icons.keyboard_arrow_down),
-                                  items: nameStrains.map((String items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: Text(items),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? newValue) {
-                                    setState(
-                                      () {
-                                        dropdownStrain = newValue!;
-                                      },
-                                    );
-                                  },
                                 ),
                               ),
                             ],
