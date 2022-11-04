@@ -83,13 +83,102 @@ class _InfoScreenState extends State<InfoScreen> {
                   }
 
                   if (snapshot.data.length == 0) {
-                    return const Center(
-                      child: Text(
-                        'ไม่พบข้อมูล',
-                        style: TextStyle(
-                            fontSize: 24,
-                            fontWeight: FontWeight.w600,
-                            color: Color.fromARGB(255, 143, 8, 8)),
+                    return Container(
+                      margin: const EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          // buildHead(),
+                          // const SizedBox(height: 15),
+                          // buildNews(),
+                          // const SizedBox(height: 15),
+                          // buildSearch(),
+                          // const SizedBox(height: 15),
+
+                          Container(
+                            decoration: BoxDecoration(
+                                color: const Color.fromARGB(95, 179, 173, 173),
+                                borderRadius: BorderRadius.circular(15.0)),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 14.0, vertical: 14.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  children: [
+                                    Icon(Icons.circle_rounded,
+                                        color: Colors.green),
+                                    const SizedBox(width: 5),
+                                    Text(
+                                      "โรงปลูก",
+                                      style: const TextStyle(
+                                          fontSize: 18,
+                                          fontWeight: FontWeight.bold,
+                                          color: Colors.black54),
+                                    ),
+                                  ],
+                                ),
+                                Divider(
+                                  height: 20,
+                                  thickness: 5,
+                                  indent: 20,
+                                  endIndent: 0,
+                                  color: Colors.green,
+                                ),
+                                const SizedBox(height: 10),
+                                Container(
+                                  decoration: BoxDecoration(
+                                      color: Colors.white,
+                                      borderRadius:
+                                          BorderRadius.circular(15.0)),
+                                  padding: const EdgeInsets.all(15),
+                                  child: Column(
+                                    children: [
+                                      Text("สายพันธุ์",
+                                          style: const TextStyle(
+                                              fontSize: 22,
+                                              fontWeight: FontWeight.bold)),
+                                      const SizedBox(height: 10),
+                                      Image.asset(
+                                        "images/กระถาง.jpg",
+                                        fit: BoxFit.contain,
+                                      ),
+                                      const SizedBox(height: 10),
+                                      Row(
+                                        children: [
+                                          Icon(
+                                            Icons.circle_rounded,
+                                            color: Colors.green,
+                                            size: 10,
+                                          ),
+                                          const SizedBox(width: 5),
+                                          Text(
+                                            "0 กระถาง",
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                          ),
+                                          const SizedBox(width: 10),
+                                          Icon(
+                                            Icons.circle_rounded,
+                                            color: Colors.green,
+                                            size: 10,
+                                          ),
+                                          const SizedBox(width: 5),
+                                          Text(
+                                            "0 ต้น",
+                                            style:
+                                                const TextStyle(fontSize: 16),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   }
