@@ -163,14 +163,21 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                             ),
                             child: Padding(
                               padding: const EdgeInsets.all(15),
-                              child: Image.network(
-                                hostAPI + result[0].fileName,
-                                fit: BoxFit.cover,
-                                width: MediaQuery.of(context).size.width,
-                                height:
-                                    MediaQuery.of(context).size.height * 0.5,
+                              child: GestureDetector(
+                                child: Image.network(
+                                  hostAPI + result[0].fileName,
+                                  fit: BoxFit.cover,
+                                  width: MediaQuery.of(context).size.width,
+                                  height:
+                                      MediaQuery.of(context).size.height * 0.5,
+                                ),
+                                onTap: () {
+                                  Navigator.push(context,
+                                      MaterialPageRoute(builder: (_) {
+                                    return DetailScreen(result[0].fileName);
+                                  }));
+                                },
                               ),
-                              
                             ),
                           ),
                           SizedBox(
