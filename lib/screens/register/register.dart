@@ -129,7 +129,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("images/bg_register.jpg"),
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
           child: ListView(
@@ -494,8 +494,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   onTap: _togglePasswordView,
                                   child: Icon(
                                     _isHidden
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
                                     color: const Color(0xFF828282),
                                   ),
                                 ),
@@ -552,8 +552,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   onTap: _togglePasswordView,
                                   child: Icon(
                                     _isHidden
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
                                     color: const Color(0xFF828282),
                                   ),
                                 ),

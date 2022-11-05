@@ -101,7 +101,7 @@ class _LoginScreenState extends State<LoginScreen> {
           decoration: const BoxDecoration(
             image: DecorationImage(
               image: AssetImage("images/bg_login.jpg"),
-              fit: BoxFit.cover,
+              fit: BoxFit.fill,
             ),
           ),
           child: ListView(
@@ -115,16 +115,16 @@ class _LoginScreenState extends State<LoginScreen> {
                     child: Column(
                       children: [
                         const SizedBox(
-                          height: 30,
+                          height: 50,
                         ),
                         const Text(
-                          "Cannabis Track and \n Trace Application",
+                          "Cannabis \n Track and Trace",
                           style: TextStyle(
-                              fontSize: 26, fontWeight: FontWeight.w600),
+                              fontSize: 30, fontWeight: FontWeight.w600),
                           textAlign: TextAlign.center,
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(top: 15, bottom: 30),
+                          padding: const EdgeInsets.only(top: 30, bottom: 30),
                           child: Image.asset(
                             "images/kulogo.png",
                             width: 200,
@@ -226,8 +226,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                   onTap: _togglePasswordView,
                                   child: Icon(
                                     _isHidden
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
+                                        ? Icons.visibility_off
+                                        : Icons.visibility,
                                     color: const Color(0xFF828282),
                                   ),
                                 ),
