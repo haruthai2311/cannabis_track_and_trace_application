@@ -7,11 +7,11 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 import 'package:location/location.dart';
+
 import '../../../api/hostapi.dart';
 import '../../../api/masterprovinces/districts.dart';
 import '../../../api/masterprovinces/provinces.dart';
 import '../../../api/masterprovinces/subdistricts.dart';
-import '../../../widget/dialog.dart';
 
 class Locations extends StatefulWidget {
   final String UserID;
@@ -21,8 +21,27 @@ class Locations extends StatefulWidget {
 }
 
 class _LocationsState extends State<Locations> {
+  // late double lat, lng;
+
+  // Future<Null> findLatLng() async {
+  //   LocationData? locationData = await findLocationData();
+  //   if (locationData != null) {
+  //     lat = locationData.latitude!;
+  //     lng = locationData.longitude!;
+  //     print('lat = ${lat}, lng = ${lng}');
+  //   }
+  // }
+
+  // Future<LocationData?> findLocationData() async {
+  //   Location _location = Location();
+  //   try {
+  //     return _location.getLocation();
+  //   } catch (e) {
+  //     return null;
+  //   }
+  // }
   LatLng? latlng;
-  Future<Null> findLatLng() async {
+  Future<void> findLatLng() async {
     Position? position = await findPosition();
     if (position != null) {
       setState(() {
@@ -523,6 +542,7 @@ class _LocationsState extends State<Locations> {
   }
 
   Widget buildLatLng() {
+    //LatLng latlng = LatLng(17.28604322412573, 104.10683017843137);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -545,7 +565,7 @@ class _LocationsState extends State<Locations> {
             ),
           ),
           height: 250,
-          width: 550,
+          //width: 550,
           child: latlng == null
               ? CircularProgressIndicator()
               : GoogleMap(

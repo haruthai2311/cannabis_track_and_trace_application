@@ -62,82 +62,86 @@ class _TrackingScreenState extends State<TrackingScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return PlantTracking(UserID: widget.UserID);
-                }));
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                padding: EdgeInsets.zero,
-              ),
-              child: Ink(
-                decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        Colors.pink,
-                        Color.fromARGB(255, 243, 197, 211),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return PlantTracking(UserID: widget.UserID);
+                  }));
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  padding: EdgeInsets.zero,
+                ),
+                child: Ink(
+                  decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [
+                          Colors.pink,
+                          Color.fromARGB(255, 243, 197, 211),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Container(
+                    //width: 175,
+                    padding: const EdgeInsets.fromLTRB(20, 40, 20, 40),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.menu_book_rounded,
+                          size: 120,
+                        ),
+                        Text(
+                          'Plant Tracking',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
-                    borderRadius: BorderRadius.circular(20)),
-                child: Container(
-                  //width: 175,
-                  padding: const EdgeInsets.fromLTRB(30, 40, 20, 40),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.menu_book_rounded,
-                        size: 120,
-                      ),
-                      Text(
-                        'Plant Tracking',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
                   ),
                 ),
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ListCultivations(UserID: widget.UserID);
-                }));
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                padding: EdgeInsets.zero,
-              ),
-              child: Ink(
-                decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        Colors.orange,
-                        Color.fromARGB(255, 248, 193, 110),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ListCultivations(UserID: widget.UserID);
+                  }));
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  padding: EdgeInsets.zero,
+                ),
+                child: Ink(
+                  decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [
+                          Colors.orange,
+                          Color.fromARGB(255, 248, 193, 110),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Container(
+                    //width: 175,
+                    padding: const EdgeInsets.fromLTRB(20, 40, 20, 40),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.mobile_friendly,
+                          size: 120,
+                        ),
+                        Text(
+                          'Cultivation',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
-                    borderRadius: BorderRadius.circular(20)),
-                child: Container(
-                  //width: 175,
-                  padding: const EdgeInsets.fromLTRB(20, 40, 30, 40),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.mobile_friendly,
-                        size: 120,
-                      ),
-                      Text(
-                        'Cultivation',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
                   ),
                 ),
               ),
@@ -150,79 +154,86 @@ class _TrackingScreenState extends State<TrackingScreen> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ListHarveste(UserID: widget.UserID);
-                }));
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                padding: EdgeInsets.zero,
-              ),
-              child: Ink(
-                decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Colors.blue, Color.fromARGB(255, 142, 199, 247)],
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ListHarveste(UserID: widget.UserID);
+                  }));
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  padding: EdgeInsets.zero,
+                ),
+                child: Ink(
+                  decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [
+                          Colors.blue,
+                          Color.fromARGB(255, 142, 199, 247)
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Container(
+                    //width: 175,
+                    padding: const EdgeInsets.fromLTRB(20, 40, 20, 40),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.article,
+                          size: 120,
+                        ),
+                        Text(
+                          'Harvests',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
-                    borderRadius: BorderRadius.circular(20)),
-                child: Container(
-                  //width: 175,
-                  padding: const EdgeInsets.fromLTRB(30, 40, 20, 40),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.article,
-                        size: 120,
-                      ),
-                      Text(
-                        'Harvests',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
                   ),
                 ),
               ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) {
-                  return ListTransfers(UserID: widget.UserID);
-                }));
-              },
-              style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20)),
-                padding: EdgeInsets.zero,
-              ),
-              child: Ink(
-                decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        Colors.green,
-                        Color.fromARGB(255, 80, 235, 162),
+            Expanded(
+              child: ElevatedButton(
+                onPressed: () {
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return ListTransfers(UserID: widget.UserID);
+                  }));
+                },
+                style: ElevatedButton.styleFrom(
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20)),
+                  padding: EdgeInsets.zero,
+                ),
+                child: Ink(
+                  decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [
+                          Colors.green,
+                          Color.fromARGB(255, 80, 235, 162),
+                        ],
+                      ),
+                      borderRadius: BorderRadius.circular(20)),
+                  child: Container(
+                    //width: 175,
+                    padding: const EdgeInsets.fromLTRB(20, 40, 20, 40),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(
+                          Icons.single_bed_sharp,
+                          size: 120,
+                        ),
+                        Text(
+                          'Transfer',
+                          style: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
                       ],
                     ),
-                    borderRadius: BorderRadius.circular(20)),
-                child: Container(
-                  //width: 175,
-                  padding: const EdgeInsets.fromLTRB(20, 40, 30, 40),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: const [
-                      Icon(
-                        Icons.single_bed_sharp,
-                        size: 120,
-                      ),
-                      Text(
-                        'Transfer',
-                        style: TextStyle(
-                            fontSize: 18, fontWeight: FontWeight.bold),
-                      ),
-                    ],
                   ),
                 ),
               ),

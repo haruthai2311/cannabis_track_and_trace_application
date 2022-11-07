@@ -57,7 +57,6 @@ dependencies:
   expandable: ^5.0.1
   curved_labeled_navigation_bar: ^2.0.2
   location: ^4.4.0
-  dependencies:
   flutter_profile_picture: ^2.0.0
   
 flutter_icons:

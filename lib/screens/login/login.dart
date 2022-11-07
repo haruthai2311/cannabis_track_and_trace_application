@@ -46,9 +46,15 @@ class _LoginScreenState extends State<LoginScreen> {
         });
         var UserID = msg['user']["UserID"].toString();
         // Navigate to Home Screen
-        Navigator.of(context).push(MaterialPageRoute(
-          builder: (context) => BottomNavScreen(UserID: UserID),
-        ));
+        Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (context) => BottomNavScreen(UserID: UserID)),
+          (Route<dynamic> route) => false,
+        );
+        // Navigator.of(context).push(MaterialPageRoute(
+        //   builder: (context) => BottomNavScreen(UserID: UserID),
+        // ));
       } else {
         setState(() {
           //hide progress indicator

@@ -140,9 +140,9 @@ class _AddHarvestsState extends State<AddHarvests> {
               color: Colors.white,
             ),
             onPressed: () {
-              if (_formKey.currentState!.validate()) {
-                addHarvests();
-              }
+              //if (_formKey.currentState!.validate()) {
+              addHarvests();
+              //}
             },
           )
         ],
