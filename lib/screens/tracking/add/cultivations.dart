@@ -40,8 +40,8 @@ class _AddCultivationsState extends State<AddCultivations> {
     _ctlPlantLive.clear();
     _ctlPlantDead.clear();
     _ctlPlantRemake.clear();
-    dropdownGH = 'N/A';
-    dropdownStrain = 'N/A';
+    dropdownGH = null;
+    dropdownStrain = null;
   }
 
   Future addCultivations() async {
@@ -139,10 +139,10 @@ class _AddCultivationsState extends State<AddCultivations> {
     //return _allGreenhouses;
   }
 
-  String dropdownStrain = 'N/A';
+  String? dropdownStrain;
   //var itemStrain = ['N/A', 'สายพันธุ์หางกระรอก', 'สายพันธุ์หางเสือ'];
 
-  String dropdownGH = 'N/A';
+  String? dropdownGH;
   //var itemGH = ['N/A', 'โรงเรือน 1', 'โรงเรือน 2'];
 
   @override
@@ -201,15 +201,13 @@ class _AddCultivationsState extends State<AddCultivations> {
                 // }
                 var result1 = snapshot.data[0];
                 var result2 = snapshot.data[1];
-                var nameGH = ['N/A'];
+                var nameGH = <String>[];
                 for (var i = 0; i < result1.length; i++) {
                   nameGH.add(result1[i].name);
                 }
                 print(nameGH);
 
-                var nameStrains = [
-                  'N/A',
-                ];
+                var nameStrains = <String>[];
                 for (var i = 0; i < result2.length; i++) {
                   nameStrains.add(result2[i].name);
                 }
@@ -289,6 +287,7 @@ class _AddCultivationsState extends State<AddCultivations> {
                                       fontSize: 20,
                                       fontWeight: FontWeight.normal,
                                     ),
+                                    hint: Text("กรุณาเลือกโรงปลูก"),
                                     value: dropdownGH,
                                     icon: const Icon(Icons.keyboard_arrow_down),
                                     items: nameGH.map((String items) {
@@ -344,6 +343,7 @@ class _AddCultivationsState extends State<AddCultivations> {
                                       fontSize: 20,
                                       fontWeight: FontWeight.normal,
                                     ),
+                                    hint: Text("กรุณาเลือกสายพันธุ์"),
                                     value: dropdownStrain,
                                     icon: const Icon(Icons.keyboard_arrow_down),
                                     items: nameStrains.map((String items) {

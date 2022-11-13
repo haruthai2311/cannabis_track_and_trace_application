@@ -32,8 +32,8 @@ class _AddHarvestsState extends State<AddHarvests> {
     _ctlWeight.clear();
     _ctlLotNo.clear();
     _ctlHavestRemake.clear();
-    dropdownGH = 'N/A';
-    dropdowntype = 'N/A';
+    dropdownGH = null;
+    dropdowntype = null;
   }
 
   Future addHarvests() async {
@@ -121,11 +121,11 @@ class _AddHarvestsState extends State<AddHarvests> {
     return _allGreenhouses;
   }
 
-  String dropdowntype = 'N/A';
+  String? dropdowntype;
   String selectDropdown = '00';
-  var itemtype = ['N/A', 'ใบ', 'ดอก', 'ก้าน'];
+  var itemtype = ['ใบ', 'ดอก', 'ก้าน'];
 
-  String dropdownGH = 'N/A';
+  String? dropdownGH;
 
   @override
   Widget build(BuildContext context) {
@@ -185,7 +185,7 @@ class _AddHarvestsState extends State<AddHarvests> {
               // }
               var result = snapshot.data;
 
-              var nameGH = ['N/A'];
+              var nameGH = <String>[];
               for (var i = 0; i < result.length; i++) {
                 //print(result[i].newCase);
                 nameGH.add(result[i].name.toString());
@@ -270,6 +270,7 @@ class _AddHarvestsState extends State<AddHarvests> {
                                     fontSize: 20,
                                     fontWeight: FontWeight.normal,
                                   ),
+                                  hint: Text("กรุณาเลือกโรงปลูก"),
                                   value: dropdownGH,
                                   icon: const Icon(Icons.keyboard_arrow_down),
                                   items: nameGH.map((String items) {
@@ -416,6 +417,7 @@ class _AddHarvestsState extends State<AddHarvests> {
                 fontSize: 20,
                 fontWeight: FontWeight.normal,
               ),
+              hint: Text("กรุณาเลือก"),
               value: dropdowntype,
               icon: const Icon(Icons.keyboard_arrow_down),
               items: itemtype.map((String items) {

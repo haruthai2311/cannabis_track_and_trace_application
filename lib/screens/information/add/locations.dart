@@ -217,7 +217,7 @@ class _LocationsState extends State<Locations> {
 
   String? dropdownIsA;
   String selectDropdownIsA = '';
-  var itemIsA = ['N/A', 'ON', 'OFF'];
+  var itemIsA = ['ON', 'OFF'];
   //var provinces = ['N/A', 'ON', 'OFF'];
   String? selectProvinces;
   String? selectDistricts;
@@ -623,7 +623,7 @@ class _LocationsState extends State<Locations> {
                 color: Colors.black,
                 fontSize: 18,
               ),
-              hint: Text("N/A"),
+              hint: Text("กรุณาเลือก"),
               value: dropdownIsA,
               icon: const Icon(Icons.keyboard_arrow_down),
               items: itemIsA.map((String items) {

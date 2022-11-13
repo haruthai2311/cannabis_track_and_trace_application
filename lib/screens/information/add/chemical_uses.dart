@@ -34,8 +34,8 @@ class _ChemicalUsesState extends State<ChemicalUses> {
     _ctlUnit.clear();
     _ctlUseRemark.clear();
     _ctlRemake.clear();
-    dropdownGH = 'N/A';
-    dropdownIV = 'N/A';
+    dropdownGH = null;
+    dropdownIV = null;
     date = DateTime.now();
   }
 
@@ -167,13 +167,13 @@ class _ChemicalUsesState extends State<ChemicalUses> {
                 var result1 = snapshot.data[0];
                 var result2 = snapshot.data[1];
 
-                var nameGH = ['N/A'];
+                var nameGH = <String>[];
                 for (var i = 0; i < result1.length; i++) {
                   nameGH.add(result1[i].name);
                 }
                 print(nameGH);
 
-                var nameIV = ['N/A'];
+                var nameIV = <String>[];
                 for (var i = 0; i < result2.length; i++) {
                   //print(result[i].newCase);
                   nameIV.add(result2[i].name);
@@ -257,7 +257,7 @@ class _ChemicalUsesState extends State<ChemicalUses> {
                                       color: Colors.black,
                                       fontSize: 18,
                                     ),
-                                    hint: Text("N/A"),
+                                    hint: Text("กรุณาเลือกโรงปลูก"),
                                     value: dropdownGH,
                                     icon: const Icon(Icons.keyboard_arrow_down),
                                     items: nameGH.map((String items) {
@@ -312,7 +312,7 @@ class _ChemicalUsesState extends State<ChemicalUses> {
                                       color: Colors.black,
                                       fontSize: 18,
                                     ),
-                                    hint: Text("N/A"),
+                                    hint: Text("กรุณาเลือกวัสดุ"),
                                     value: dropdownIV,
                                     icon: const Icon(Icons.keyboard_arrow_down),
                                     items: nameIV.map((String items) {

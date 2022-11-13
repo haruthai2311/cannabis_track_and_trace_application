@@ -12,15 +12,18 @@ import '../../../api/allgreenhouses.dart';
 import '../../../api/getPots.dart';
 import '../../../widget/dialog.dart';
 
-class PlantTracking extends StatefulWidget {
+class PlantTrackingByScan extends StatefulWidget {
   final String UserID;
-  const PlantTracking({Key? key, required this.UserID}) : super(key: key);
+  final String PotID;
+  const PlantTrackingByScan(
+      {Key? key, required this.UserID, required this.PotID})
+      : super(key: key);
 
   @override
-  State<PlantTracking> createState() => _PlantTrackingState();
+  State<PlantTrackingByScan> createState() => _PlantTrackingByScanState();
 }
 
-class _PlantTrackingState extends State<PlantTracking> {
+class _PlantTrackingByScanState extends State<PlantTrackingByScan> {
   final dialog = MyDialog();
   DateTime date = DateTime.now();
   DateTime TrashLogTime = DateTime.now();
@@ -45,6 +48,7 @@ class _PlantTrackingState extends State<PlantTracking> {
   final _ctlWeight = TextEditingController();
   final _ctlTrashRemark = TextEditingController();
   final _ctlRemarkTrash_log = TextEditingController();
+  final _ctlPotID = TextEditingController();
 
   void Clear() {
     dropdownPotID = 'N/A';
@@ -90,7 +94,7 @@ class _PlantTrackingState extends State<PlantTracking> {
       var response = await http.post(Uri.parse(url), body: {
         "nameGreenHouse": dropdownGH.toString(),
         "CheckDate": date.toString(),
-        "PotID": dropdownPotID.toString(),
+        "PotID": _ctlPotID.text,
         "PlantStatus": selectdropdownStatus.toString(),
         "SoilMoisture": selectdropdownSoi.toString(),
         "SoilRemark": _ctlSoilRemark.text,
@@ -165,6 +169,7 @@ class _PlantTrackingState extends State<PlantTracking> {
   @override
   void initState() {
     super.initState();
+    print(widget.PotID);
   }
 
   String NameGHParameters = '';
@@ -276,7 +281,7 @@ class _PlantTrackingState extends State<PlantTracking> {
                 //print(casenewsort);
               }
               print(itemPotID);
-
+              _ctlPotID.text = widget.PotID;
               return SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -373,62 +378,9 @@ class _PlantTrackingState extends State<PlantTracking> {
                         // const SizedBox(height: 20),
                         buildCheckDate(),
                         const SizedBox(height: 20),
-                        //หมายเลขกระถาง
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "หมายเลขกระถาง :",
-                              style: const TextStyle(
-                                color: colorDetails3,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Container(
-                              padding:
-                                  const EdgeInsets.only(left: 15, right: 15),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(16),
-                                border: Border.all(
-                                  color: Color.fromARGB(255, 238, 238, 240),
-                                  width: 2,
-                                ),
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton(
-                                  dropdownColor: Colors.white,
-                                  iconSize: 30,
-                                  isExpanded: true,
-                                  style: const TextStyle(
-                                    color: colorDetails2,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                  hint: Text("กรุณาเลือกหมายเลขกระถาง"),
-                                  value: dropdownPotID,
-                                  icon: const Icon(Icons.keyboard_arrow_down),
-                                  items: itemPotID.map((String items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: Text(items),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? newValue) {
-                                    setState(
-                                      () {
-                                        dropdownPotID = newValue!;
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        MyForm()
+                            .buildformLog("หมายเลขกระถาง : ", _ctlPotID, true),
+
                         const SizedBox(height: 20),
                         buildPlantStatus(),
                         const SizedBox(height: 20),
@@ -894,7 +846,7 @@ class _PlantTrackingState extends State<PlantTracking> {
                 fontSize: 20,
                 fontWeight: FontWeight.normal,
               ),
-              hint: Text("กรุณาเลือก"),
+              hint: Text('กรุณาเลือก'),
               value: dropdownSoi,
               icon: const Icon(Icons.keyboard_arrow_down),
               items: itemSoi.map((String items) {

@@ -38,8 +38,8 @@ class _AddTransfersState extends State<AddTransfers> {
     _ctlLicenseNo.clear();
     _ctlLicensePlate.clear();
     _ctlTrackRemake.clear();
-    dropdowntype = 'N/A';
-    dropdownHvtID = 'N/A';
+    dropdowntype = null;
+    dropdownHvtID = null;
   }
 
   Future addTransfers() async {
@@ -130,11 +130,11 @@ class _AddTransfersState extends State<AddTransfers> {
     return _Harvests;
   }
 
-  String dropdowntype = 'N/A';
+  String? dropdowntype;
   String selectDropdown = '00';
-  var itemtype = ['N/A', 'ใบ', 'ดอก', 'ก้าน'];
+  var itemtype = ['ใบ', 'ดอก', 'ก้าน'];
 
-  String dropdownHvtID = 'N/A';
+  String? dropdownHvtID;
 
   @override
   Widget build(BuildContext context) {
@@ -171,7 +171,7 @@ class _AddTransfersState extends State<AddTransfers> {
           builder: (BuildContext context, AsyncSnapshot<dynamic> snapshot) {
             if (snapshot.connectionState == ConnectionState.done) {
               var result = snapshot.data;
-              var itemHvtID = ['N/A'];
+              var itemHvtID = <String>[];
               for (var i = 0; i < result.length; i++) {
                 itemHvtID.add(result[i].harvestId.toString());
               }
@@ -250,6 +250,7 @@ class _AddTransfersState extends State<AddTransfers> {
                                     fontSize: 20,
                                     fontWeight: FontWeight.normal,
                                   ),
+                                  hint: Text("กรุณาเลือกหมายเลขการเก็บเกี่ยว"),
                                   value: dropdownHvtID,
                                   icon: const Icon(Icons.keyboard_arrow_down),
                                   items: itemHvtID.map((String items) {
@@ -262,16 +263,11 @@ class _AddTransfersState extends State<AddTransfers> {
                                     setState(
                                       () {
                                         dropdownHvtID = newValue!;
-                                        if (itemHvtID.indexOf(dropdownHvtID) ==
-                                            0) {
-                                          _ctlHarvestNo.text = "";
-                                        } else {
-                                          _ctlHarvestNo.text = result[itemHvtID
-                                                      .indexOf(dropdownHvtID) -
-                                                  1]
-                                              .harvestNo
-                                              .toString();
-                                        }
+
+                                        _ctlHarvestNo.text = result[itemHvtID
+                                                .indexOf(dropdownHvtID!)]
+                                            .harvestNo
+                                            .toString();
 
                                         //print(itemHvtID.indexOf(dropdownHvtID));
                                         //print(result[itemHvtID.indexOf(dropdownHvtID) - 1].harvestNo.toString());
@@ -460,6 +456,7 @@ class _AddTransfersState extends State<AddTransfers> {
                 fontSize: 20,
                 fontWeight: FontWeight.normal,
               ),
+              hint: Text("กรุณาเลือก"),
               value: dropdowntype,
               icon: const Icon(Icons.keyboard_arrow_down),
               items: itemtype.map((String items) {

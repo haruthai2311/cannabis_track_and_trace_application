@@ -5,74 +5,87 @@
 import 'package:meta/meta.dart';
 import 'dart:convert';
 
-List<Plantracking> plantrackingFromJson(String str) => List<Plantracking>.from(json.decode(str).map((x) => Plantracking.fromJson(x)));
+List<Plantracking> plantrackingFromJson(String str) => List<Plantracking>.from(
+    json.decode(str).map((x) => Plantracking.fromJson(x)));
 
-String plantrackingToJson(List<Plantracking> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String plantrackingToJson(List<Plantracking> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Plantracking {
-    Plantracking({
-        required this.plantTrackingId,
-        required this.checkDate,
-        required this.plantStatus,
-        required this.soilMoisture,
-        required this.soilRemark,
-        required this.remark,
-        required this.imageId,
-        required this.fileName,
-        required this.diseaseLogId,
-        required this.disease,
-        required this.fixDisease,
-        required this.insectLogId,
-        required this.insect,
-        required this.fixInsect,
-        required this.trashLogId,
-        required this.weight,
-        required this.logTime,
-        required this.trashRemark,
-        required this.potId,
-        required this.potsName,
-        required this.greenHouseId,
-        required this.ghName,
-        required this.cultivationId,
-        required this.no,
-        required this.barcode,
-        required this.isTestPot,
-    });
+  Plantracking({
+    required this.plantTrackingId,
+    required this.checkDate,
+    required this.plantStatus,
+    required this.soilMoisture,
+    required this.soilRemark,
+    required this.remarkPlant,
+    required this.potId,
+    required this.potsName,
+    required this.greenHouseId,
+    required this.cultivationId,
+    required this.barcode,
+    required this.isTestPot,
+    required this.remarkPot,
+    required this.imageId,
+    required this.fileName,
+    required this.diseaseLogId,
+    required this.disease,
+    required this.fixDisease,
+    required this.insectLogId,
+    required this.insect,
+    required this.fixInsect,
+    required this.trashLogId,
+    required this.weight,
+    required this.logTime,
+    required this.trashRemark,
+    required this.remark,
+    required this.ghName,
+    required this.no,
+  });
 
-    int plantTrackingId;
-    DateTime checkDate;
-    int plantStatus;
-    int soilMoisture;
-    String soilRemark;
-    String remark;
-    int imageId;
-    String fileName;
-    int diseaseLogId;
-    String disease;
-    String fixDisease;
-    int insectLogId;
-    String insect;
-    String fixInsect;
-    int trashLogId;
-    double weight;
-    DateTime logTime;
-    String trashRemark;
-    int potId;
-    String potsName;
-    int greenHouseId;
-    String ghName;
-    int cultivationId;
-    int no;
-    String barcode;
-    String isTestPot;
+  int plantTrackingId;
+  DateTime checkDate;
+  int plantStatus;
+  int soilMoisture;
+  dynamic soilRemark;
+  dynamic remarkPlant;
+  int potId;
+  String potsName;
+  int greenHouseId;
+  int cultivationId;
+  String barcode;
+  String isTestPot;
+  dynamic remarkPot;
+  int imageId;
+  String fileName;
+  dynamic diseaseLogId;
+  dynamic disease;
+  dynamic fixDisease;
+  dynamic insectLogId;
+  dynamic insect;
+  dynamic fixInsect;
+  dynamic trashLogId;
+  dynamic weight;
+  dynamic logTime;
+  dynamic trashRemark;
+  dynamic remark;
+  String ghName;
+  int no;
 
-    factory Plantracking.fromJson(Map<String, dynamic> json) => Plantracking(
+  factory Plantracking.fromJson(Map<String, dynamic> json) => Plantracking(
         plantTrackingId: json["PlantTrackingID"],
         checkDate: DateTime.parse(json["CheckDate"]),
         plantStatus: json["PlantStatus"],
         soilMoisture: json["SoilMoisture"],
         soilRemark: json["SoilRemark"],
-        remark: json["Remark"],
+        remarkPlant: json["RemarkPlant"],
+        potId: json["PotID"],
+        potsName: json["potsName"],
+        greenHouseId: json["GreenHouseID"],
+        cultivationId: json["CultivationID"],
+        barcode: json["Barcode"],
+        isTestPot: json["IsTestPot"],
+        remarkPot: json["RemarkPot"],
         imageId: json["ImageID"],
         fileName: json["FileName"],
         diseaseLogId: json["DiseaseLogID"],
@@ -82,45 +95,42 @@ class Plantracking {
         insect: json["Insect"],
         fixInsect: json["FixInsect"],
         trashLogId: json["TrashLogID"],
-        weight: json["Weight"].toDouble(),
-        logTime: DateTime.parse(json["LogTime"]),
+        weight: json["Weight"],
+        logTime: json["LogTime"] ,
         trashRemark: json["TrashRemark"],
-        potId: json["PotID"],
-        potsName: json["potsName"],
-        greenHouseId: json["GreenHouseID"],
+        remark: json["Remark"],
         ghName: json["GHName"],
-        cultivationId: json["CultivationID"],
         no: json["No"],
-        barcode: json["Barcode"],
-        isTestPot: json["IsTestPot"],
-    );
+      );
 
-    Map<String, dynamic> toJson() => {
+  Map<String, dynamic> toJson() => {
         "PlantTrackingID": plantTrackingId,
         "CheckDate": checkDate.toIso8601String(),
         "PlantStatus": plantStatus,
         "SoilMoisture": soilMoisture,
         "SoilRemark": soilRemark,
-        "Remark": remark,
-        "ImageID": imageId,
-        "FileName": fileName,
-        "DiseaseLogID": diseaseLogId,
-        "Disease": disease,
-        "FixDisease": fixDisease,
-        "InsectLogID": insectLogId,
-        "Insect": insect,
-        "FixInsect": fixInsect,
-        "TrashLogID": trashLogId,
-        "Weight": weight,
-        "LogTime": logTime.toIso8601String(),
-        "TrashRemark": trashRemark,
+        "RemarkPlant": remarkPlant,
         "PotID": potId,
         "potsName": potsName,
         "GreenHouseID": greenHouseId,
-        "GHName": ghName,
         "CultivationID": cultivationId,
-        "No": no,
         "Barcode": barcode,
         "IsTestPot": isTestPot,
-    };
+        "RemarkPot": remarkPot,
+        "ImageID": imageId,
+        "FileName": fileName,
+        "DiseaseLogID": diseaseLogId == null ? null : diseaseLogId,
+        "Disease": disease == null ? null : disease,
+        "FixDisease": fixDisease == null ? null : fixDisease,
+        "InsectLogID": insectLogId == null ? null : insectLogId,
+        "Insect": insect == null ? null : insect,
+        "FixInsect": fixInsect == null ? null : fixInsect,
+        "TrashLogID": trashLogId == null ? null : trashLogId,
+        "Weight": weight == null ? null : weight,
+        "LogTime": logTime == null ? null : logTime.toIso8601String(),
+        "TrashRemark": trashRemark == null ? null : trashRemark,
+        "Remark": remark == null ? null : remark,
+        "GHName": ghName,
+        "No": no,
+      };
 }

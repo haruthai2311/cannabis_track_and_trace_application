@@ -283,89 +283,118 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                                 SizedBox(height: 5),
                                 FormDetail().buildText("** หมายเหตุ :  ",
                                     result[0].soilRemark.toString()),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 8, right: 8),
-                                  child: Divider(
-                                    height: 24,
-                                    thickness: 2,
-                                    color: Color(0xFFF1F4F8),
-                                  ),
-                                ),
-                                FormDetail().buildText(
-                                    "โรคที่พบ :  ", result[0].disease),
-                                SizedBox(height: 5),
-                                FormDetail().buildText(
-                                    "วิธีแก้ไข :  ", result[0].fixDisease),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 8, right: 8),
-                                  child: Divider(
-                                    height: 24,
-                                    thickness: 2,
-                                    color: Color(0xFFF1F4F8),
-                                  ),
-                                ),
-                                FormDetail().buildText(
-                                    "แมลงที่พบ :  ", result[0].insect),
-                                SizedBox(height: 5),
-                                FormDetail().buildText(
-                                    "วิธีแก้ไข :  ", result[0].fixInsect),
-                                Padding(
-                                  padding:
-                                      const EdgeInsets.only(left: 8, right: 8),
-                                  child: Divider(
-                                    height: 24,
-                                    thickness: 2,
-                                    color: Color(0xFFF1F4F8),
-                                  ),
-                                ),
-                                FormDetail().buildText("เก็บซาก :  ",
-                                    result[0].weight.toString() + ' Kg'),
-                                SizedBox(height: 5),
-                                Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        Text(
-                                          "วันที่เก็บซาก : ",
-                                          style: TextStyle(
-                                            color: colorDetails3,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w600,
+                                result[0].disease == null
+                                    ? Container()
+                                    : Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8, right: 8),
+                                            child: Divider(
+                                              height: 24,
+                                              thickness: 2,
+                                              color: Color(0xFFF1F4F8),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(height: 5),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          f
-                                                  .format(result[0].logTime)
-                                                  .toString() +
-                                              ' น.',
-                                          style: TextStyle(
-                                            color: colorDetails2,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.normal,
+                                          FormDetail().buildText("โรคที่พบ :  ",
+                                              result[0].disease),
+                                          SizedBox(height: 5),
+                                          FormDetail().buildText(
+                                              "วิธีแก้ไข :  ",
+                                              result[0].fixDisease),
+                                        ],
+                                      ),
+                                result[0].insect == null
+                                    ? Container()
+                                    : Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8, right: 8),
+                                            child: Divider(
+                                              height: 24,
+                                              thickness: 2,
+                                              color: Color(0xFFF1F4F8),
+                                            ),
                                           ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(height: 5),
-                                FormDetail().buildText("เหตุผลที่เก็บซาก :  ",
-                                    result[0].trashRemark),
-                                Divider(
-                                  height: 24,
-                                  thickness: 2,
-                                  color: Color(0xFFF1F4F8),
-                                ),
-                                SizedBox(height: 10),
-                                FormDetail().buildText("*** หมายเหตุ :  ",
-                                    result[0].remark.toString()),
+                                          FormDetail().buildText(
+                                              "แมลงที่พบ :  ",
+                                              result[0].insect),
+                                          SizedBox(height: 5),
+                                          FormDetail().buildText(
+                                              "วิธีแก้ไข :  ",
+                                              result[0].fixInsect),
+                                        ],
+                                      ),
+                                result[0].weight == null
+                                    ? Container()
+                                    : Column(
+                                        children: [
+                                          Padding(
+                                            padding: const EdgeInsets.only(
+                                                left: 8, right: 8),
+                                            child: Divider(
+                                              height: 24,
+                                              thickness: 2,
+                                              color: Color(0xFFF1F4F8),
+                                            ),
+                                          ),
+                                          FormDetail().buildText(
+                                              "เก็บซาก :  ",
+                                              result[0].weight.toString() +
+                                                  ' Kg'),
+                                          SizedBox(height: 5),
+                                          Column(
+                                            children: [
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    "วันที่เก็บซาก : ",
+                                                    style: TextStyle(
+                                                      color: colorDetails3,
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.w600,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              SizedBox(height: 5),
+                                              Row(
+                                                children: [
+                                                  Text(
+                                                    f
+                                                            .format(DateTime
+                                                                .parse(result[0]
+                                                                    .logTime))
+                                                            .toString() +
+                                                        ' น.',
+                                                    style: TextStyle(
+                                                      color: colorDetails2,
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                          SizedBox(height: 5),
+                                          FormDetail().buildText(
+                                              "เหตุผลที่เก็บซาก :  ",
+                                              result[0].trashRemark.toString()),
+                                          Divider(
+                                            height: 24,
+                                            thickness: 2,
+                                            color: Color(0xFFF1F4F8),
+                                          ),
+                                          SizedBox(height: 10),
+                                          FormDetail().buildText(
+                                              "*** หมายเหตุ :  ",
+                                              result[0].remarkPlant.toString()),
+                                        ],
+                                      ),
                               ],
                             ),
                           ),

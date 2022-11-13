@@ -520,129 +520,125 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Expanded(
-            child: Container(
-              // width: 170,
-              // height: 80,
-              decoration: BoxDecoration(
-                boxShadow: const [
-                  BoxShadow(
-                    blurRadius: 4,
-                    color: Color(0x33000000),
-                    offset: Offset(2, 4),
-                    spreadRadius: 2,
-                  )
-                ],
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.white,
-                border: Border.all(
-                  color: const Color(0xFFCFD4DB),
-                  width: 1,
-                ),
+          Container(
+            width: 170,
+            height: 80,
+            decoration: BoxDecoration(
+              boxShadow: const [
+                BoxShadow(
+                  blurRadius: 4,
+                  color: Color(0x33000000),
+                  offset: Offset(2, 4),
+                  spreadRadius: 2,
+                )
+              ],
+              borderRadius: BorderRadius.circular(15),
+              color: Colors.white,
+              border: Border.all(
+                color: const Color(0xFFCFD4DB),
+                width: 1,
               ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 166, 245, 168),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.favorite,
-                        color: Colors.green,
-                        size: 30,
-                      ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 166, 245, 168),
+                      shape: BoxShape.circle,
                     ),
-                    Column(
-                      children: [
-                        Row(
-                          children: [
-                            Text(
-                              plantLive,
-                              style: const TextStyle(
-                                  fontSize: 20,
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ],
-                        ),
-                        const Text(
-                          'ต้นปกติ',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Color.fromARGB(255, 14, 117, 17),
+                    child: const Icon(
+                      Icons.favorite,
+                      color: Colors.green,
+                      size: 30,
+                    ),
+                  ),
+                  Column(
+                    children: [
+                      Row(
+                        children: [
+                          Text(
+                            plantLive,
+                            style: const TextStyle(
+                                fontSize: 20,
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold),
                           ),
+                        ],
+                      ),
+                      const Text(
+                        'ต้นปกติ',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 14, 117, 17),
                         ),
-                      ],
-                    ),
-                  ],
-                ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
-          Expanded(
-            child: Container(
-              // width: 170,
-              // height: 80,
-              decoration: BoxDecoration(
-                boxShadow: const [
-                  BoxShadow(
-                    blurRadius: 4,
-                    color: Color(0x33000000),
-                    offset: Offset(2, 4),
-                    spreadRadius: 2,
-                  )
-                ],
-                borderRadius: BorderRadius.circular(15),
-                color: Colors.white,
-                border: Border.all(
-                  color: const Color(0xFFCFD4DB),
-                  width: 1,
-                ),
+          Container(
+            width: 170,
+            height: 80,
+            decoration: BoxDecoration(
+              boxShadow: const [
+                BoxShadow(
+                  blurRadius: 4,
+                  color: Color(0x33000000),
+                  offset: Offset(2, 4),
+                  spreadRadius: 2,
+                )
+              ],
+              borderRadius: BorderRadius.circular(15),
+              color: Colors.white,
+              border: Border.all(
+                color: const Color(0xFFCFD4DB),
+                width: 1,
               ),
-              child: Padding(
-                padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      height: 50,
-                      width: 50,
-                      decoration: const BoxDecoration(
-                        color: Color.fromARGB(255, 209, 207, 207),
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.favorite,
-                        color: Color.fromARGB(255, 230, 28, 13),
-                        size: 30,
-                      ),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Container(
+                    height: 50,
+                    width: 50,
+                    decoration: const BoxDecoration(
+                      color: Color.fromARGB(255, 209, 207, 207),
+                      shape: BoxShape.circle,
                     ),
-                    Column(
-                      children: [
-                        Text(
-                          plantDead,
-                          style: const TextStyle(
-                              fontSize: 20,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Text(
-                          'ต้นตาย',
-                          style: TextStyle(
-                            fontSize: 18,
-                            color: Color.fromARGB(255, 230, 28, 13),
-                          ),
-                        ),
-                      ],
+                    child: const Icon(
+                      Icons.favorite,
+                      color: Color.fromARGB(255, 230, 28, 13),
+                      size: 30,
                     ),
-                  ],
-                ),
+                  ),
+                  Column(
+                    children: [
+                      Text(
+                        plantDead,
+                        style: const TextStyle(
+                            fontSize: 20,
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold),
+                      ),
+                      Text(
+                        'ต้นตาย',
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Color.fromARGB(255, 230, 28, 13),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ),
           ),
@@ -815,16 +811,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 15),
-                    child: Text(
-                      CDisease + ' กระถาง',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Text(
+                    CDisease + ' กระถาง',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -896,16 +890,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.only(right: 15),
-                    child: Text(
-                      CInsect + ' กระถาง',
-                      style: const TextStyle(
-                        fontSize: 18,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                      ),
+                Padding(
+                  padding: const EdgeInsets.only(right: 15),
+                  child: Text(
+                    CInsect + ' กระถาง',
+                    style: const TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),

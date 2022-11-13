@@ -23,7 +23,7 @@ class _InventorysState extends State<Inventorys> {
   void Clear() {
     _ctlName.clear();
     _ctlCommercialName.clear();
-    dropdownIsA = "N/A";
+    dropdownIsA = null;
   }
 
   Future addInventorys() async {
@@ -101,7 +101,7 @@ class _InventorysState extends State<Inventorys> {
 
   String? dropdownIsA;
   String selectDropdownIsA = '';
-  var itemIsA = ['N/A', 'ON', 'OFF'];
+  var itemIsA = ['ON', 'OFF'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -220,7 +220,7 @@ class _InventorysState extends State<Inventorys> {
                 color: Colors.black,
                 fontSize: 18,
               ),
-              hint: Text("N/A"),
+              hint: Text("กรุณาเลือก"),
               value: dropdownIsA,
               icon: const Icon(Icons.keyboard_arrow_down),
               items: itemIsA.map((String items) {

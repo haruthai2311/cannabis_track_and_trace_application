@@ -118,7 +118,7 @@ class _GreenHousesState extends State<GreenHouses> {
 
   String? dropdownIsA;
   String selectDropdownIsA = '';
-  var itemIsA = ['N/A', 'ON', 'OFF'];
+  var itemIsA = ['ON', 'OFF'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -251,7 +251,7 @@ class _GreenHousesState extends State<GreenHouses> {
                 color: Colors.black,
                 fontSize: 18,
               ),
-              hint: const Text("เลือกสถานที่"),
+              hint: const Text("กรุณาเลือกสถานที่"),
               value: dropdownLocations,
               icon: const Icon(Icons.keyboard_arrow_down),
               items:
@@ -309,7 +309,7 @@ class _GreenHousesState extends State<GreenHouses> {
                 color: Colors.black,
                 fontSize: 18,
               ),
-              hint: const Text('N/A'),
+              hint: Text("กรุณาเลือก"),
               value: dropdownIsA,
               icon: const Icon(Icons.keyboard_arrow_down),
               items: itemIsA.map((String items) {

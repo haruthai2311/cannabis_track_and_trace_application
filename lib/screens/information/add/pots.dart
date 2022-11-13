@@ -32,9 +32,9 @@ class _PotsState extends State<Pots> {
     _ctlName.clear();
     _ctlBarcode.clear();
     _ctlRemake.clear();
-    dropdownGH = 'N/A';
-    dropdownCul = 'N/A';
-    dropdownIsTest = 'N/A';
+    dropdownGH = null;
+    dropdownCul = null;
+    dropdownIsTest = null;
   }
 
   Future addPots() async {
@@ -174,15 +174,13 @@ class _PotsState extends State<Pots> {
                 }
                 var result1 = snapshot.data[0];
                 var result2 = snapshot.data[1];
-                var nameGH = ['N/A'];
+                var nameGH = <String>[];
                 for (var i = 0; i < result1.length; i++) {
                   nameGH.add(result1[i].name);
                 }
                 print(nameGH);
 
-                var itemCul = [
-                  'N/A',
-                ];
+                var itemCul = <String>[];
                 for (var i = 0; i < result2.length; i++) {
                   itemCul.add(result2[i].cultivationId.toString());
                 }
@@ -260,7 +258,7 @@ class _PotsState extends State<Pots> {
                                     color: Colors.black,
                                     fontSize: 18,
                                   ),
-                                  hint: Text("N/A"),
+                                  hint: Text("กรุณาเลือกโรงปลูก"),
                                   value: dropdownGH,
                                   icon: const Icon(Icons.keyboard_arrow_down),
                                   items: nameGH.map((String items) {
@@ -318,7 +316,7 @@ class _PotsState extends State<Pots> {
                                     color: Colors.black,
                                     fontSize: 18,
                                   ),
-                                  hint: Text("N/A"),
+                                  hint: Text("กรุณาเลือกหมายเลขการปลูก"),
                                   value: dropdownCul,
                                   icon: const Icon(Icons.keyboard_arrow_down),
                                   items: itemCul.map((String items) {
@@ -392,7 +390,7 @@ class _PotsState extends State<Pots> {
                 color: Colors.black,
                 fontSize: 18,
               ),
-              hint: Text("N/A"),
+              hint: Text("กรุณาเลือก"),
               value: dropdownIsTest,
               icon: const Icon(Icons.keyboard_arrow_down),
               items: itemIsTest.map((String items) {

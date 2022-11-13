@@ -106,7 +106,7 @@ class _StrainsState extends State<Strains> {
 
   String? dropdownIsA;
   String selectDropdownIsA = '';
-  var itemIsA = ['N/A', 'ON', 'OFF'];
+  var itemIsA = ['ON', 'OFF'];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -224,7 +224,7 @@ class _StrainsState extends State<Strains> {
                 color: Colors.black,
                 fontSize: 18,
               ),
-              hint: Text("N/A"),
+              hint: Text("กรุณาเลือก"),
               value: dropdownIsA,
               icon: const Icon(Icons.keyboard_arrow_down),
               items: itemIsA.map((String items) {

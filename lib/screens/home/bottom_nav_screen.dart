@@ -122,22 +122,22 @@ class _BottomNavScreenState extends State<BottomNavScreen> {
       await FlutterBarcodeScanner.scanBarcode(
               "#FFBF00", "Cancel", true, ScanMode.BARCODE)
           .then((String code) {
-        if (code != "-1") {
-          Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => ListPlantTrackingPage(
-                      code: code, UserID: widget.UserID)));
-        } else {
-          //Navigator.pop(context);
-        }
-        // Navigator.push(
-        //     context,
-        //     MaterialPageRoute(
-        //         builder: (context) => ListPlantTrackingPage(
-        //               code: '222222',
-        //               UserID: widget.UserID,
-        //             )));
+        // if (code != "-1") {
+        //   Navigator.push(
+        //       context,
+        //       MaterialPageRoute(
+        //           builder: (context) => ListPlantTrackingPage(
+        //               code: code, UserID: widget.UserID)));
+        // } else {
+        //   //Navigator.pop(context);
+        // }
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => ListPlantTrackingPage(
+                      code: '8850000111115',
+                      UserID: widget.UserID,
+                    )));
       });
 
       if (!mounted) {
