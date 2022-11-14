@@ -39,6 +39,7 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
   }
 
   late String PotID;
+  late String GHName;
 
   final f = DateFormat('dd/MM/yyyy');
   @override
@@ -130,7 +131,8 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
               }
 
               var result = snapshot.data;
-              PotID = result[0].potId.toString();
+              PotID = result[0].barcode.toString();
+              GHName = result[0].ghName.toString();
               //print(result);
               return Column(
                 children: <Widget>[
@@ -262,7 +264,7 @@ class _ListPlantTrackingPageState extends State<ListPlantTrackingPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () {
           Navigator.push(context, MaterialPageRoute(builder: (context) {
-            return PlantTrackingByScan(UserID: widget.UserID, PotID: PotID);
+            return PlantTrackingByScan(UserID: widget.UserID, PotID: PotID, GHName: GHName,);
           })).then((value) => setState(() {}));
         },
         backgroundColor: colorTabbar,

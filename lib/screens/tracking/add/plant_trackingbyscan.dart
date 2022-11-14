@@ -15,8 +15,12 @@ import '../../../widget/dialog.dart';
 class PlantTrackingByScan extends StatefulWidget {
   final String UserID;
   final String PotID;
+  final String GHName;
   const PlantTrackingByScan(
-      {Key? key, required this.UserID, required this.PotID})
+      {Key? key,
+      required this.UserID,
+      required this.PotID,
+      required this.GHName})
       : super(key: key);
 
   @override
@@ -49,6 +53,7 @@ class _PlantTrackingByScanState extends State<PlantTrackingByScan> {
   final _ctlTrashRemark = TextEditingController();
   final _ctlRemarkTrash_log = TextEditingController();
   final _ctlPotID = TextEditingController();
+  final _ctlGHName = TextEditingController();
 
   void Clear() {
     dropdownPotID = 'N/A';
@@ -65,8 +70,9 @@ class _PlantTrackingByScanState extends State<PlantTrackingByScan> {
     _ctlWeight.clear();
     _ctlTrashRemark.clear();
     _ctlRemarkTrash_log.clear();
+    _ctlGHName.clear();
     file = null;
-    dropdownGH = null;
+    // dropdownGH = null;
     dropdownStatus = null;
     dropdownSoi = null;
   }
@@ -92,9 +98,9 @@ class _PlantTrackingByScanState extends State<PlantTrackingByScan> {
       });
 
       var response = await http.post(Uri.parse(url), body: {
-        "nameGreenHouse": dropdownGH.toString(),
+        "nameGreenHouse": _ctlGHName.text,
         "CheckDate": date.toString(),
-        "PotID": _ctlPotID.text,
+        "PotBarcode": _ctlPotID.text,
         "PlantStatus": selectdropdownStatus.toString(),
         "SoilMoisture": selectdropdownSoi.toString(),
         "SoilRemark": _ctlSoilRemark.text,
@@ -282,6 +288,7 @@ class _PlantTrackingByScanState extends State<PlantTrackingByScan> {
               }
               print(itemPotID);
               _ctlPotID.text = widget.PotID;
+              _ctlGHName.text = widget.GHName;
               return SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
@@ -315,71 +322,72 @@ class _PlantTrackingByScanState extends State<PlantTrackingByScan> {
                         buildImages(),
                         const SizedBox(height: 20),
                         //โรงปลูก
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            const Text(
-                              "โรงปลูก :",
-                              style: const TextStyle(
-                                color: colorDetails3,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const SizedBox(height: 10),
-                            Container(
-                              padding:
-                                  const EdgeInsets.only(left: 15, right: 15),
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.white,
-                                borderRadius: BorderRadius.circular(16),
-                                border: Border.all(
-                                  color: Color.fromARGB(255, 238, 238, 240),
-                                  width: 2,
-                                ),
-                              ),
-                              child: DropdownButtonHideUnderline(
-                                child: DropdownButton(
-                                  dropdownColor: Colors.white,
-                                  iconSize: 30,
-                                  isExpanded: true,
-                                  style: const TextStyle(
-                                    color: colorDetails2,
-                                    fontSize: 20,
-                                    fontWeight: FontWeight.normal,
-                                  ),
-                                  hint: Text("กรุณาเลือกโรงปลูก"),
-                                  value: dropdownGH,
-                                  icon: const Icon(Icons.keyboard_arrow_down),
-                                  items: itemGH.map((String items) {
-                                    return DropdownMenuItem(
-                                      value: items,
-                                      child: Text(items),
-                                    );
-                                  }).toList(),
-                                  onChanged: (String? newValue) {
-                                    setState(
-                                      () {
-                                        dropdownGH = newValue!;
-                                        NameGHParameters =
-                                            "?NameGH=" + dropdownGH!;
-                                        dropdownPotID = null;
-                                      },
-                                    );
-                                  },
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Column(
+                        //   crossAxisAlignment: CrossAxisAlignment.start,
+                        //   children: [
+                        //     const Text(
+                        //       "โรงปลูก :",
+                        //       style: const TextStyle(
+                        //         color: colorDetails3,
+                        //         fontSize: 20,
+                        //         fontWeight: FontWeight.w600,
+                        //       ),
+                        //     ),
+                        //     const SizedBox(height: 10),
+                        //     Container(
+                        //       padding:
+                        //           const EdgeInsets.only(left: 15, right: 15),
+                        //       width: double.infinity,
+                        //       decoration: BoxDecoration(
+                        //         color: Colors.white,
+                        //         borderRadius: BorderRadius.circular(16),
+                        //         border: Border.all(
+                        //           color: Color.fromARGB(255, 238, 238, 240),
+                        //           width: 2,
+                        //         ),
+                        //       ),
+                        //       child: DropdownButtonHideUnderline(
+                        //         child: DropdownButton(
+                        //           dropdownColor: Colors.white,
+                        //           iconSize: 30,
+                        //           isExpanded: true,
+                        //           style: const TextStyle(
+                        //             color: colorDetails2,
+                        //             fontSize: 20,
+                        //             fontWeight: FontWeight.normal,
+                        //           ),
+                        //           hint: Text("กรุณาเลือกโรงปลูก"),
+                        //           value: dropdownGH,
+                        //           icon: const Icon(Icons.keyboard_arrow_down),
+                        //           items: itemGH.map((String items) {
+                        //             return DropdownMenuItem(
+                        //               value: items,
+                        //               child: Text(items),
+                        //             );
+                        //           }).toList(),
+                        //           onChanged: (String? newValue) {
+                        //             setState(
+                        //               () {
+                        //                 dropdownGH = newValue!;
+                        //                 NameGHParameters =
+                        //                     "?NameGH=" + dropdownGH!;
+                        //                 dropdownPotID = null;
+                        //               },
+                        //             );
+                        //           },
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
                         const SizedBox(height: 20),
-                        // buildPlantNo(),
-                        // const SizedBox(height: 20),
+
+                        MyForm().buildformLog("โรงปลูก : ", _ctlGHName, true),
+                        const SizedBox(height: 20),
                         buildCheckDate(),
                         const SizedBox(height: 20),
-                        MyForm()
-                            .buildformLog("หมายเลขกระถาง : ", _ctlPotID, true),
+                        MyForm().buildformLog(
+                            "หมายเลขกระถาง (บาร์โค้ด) : ", _ctlPotID, true),
 
                         const SizedBox(height: 20),
                         buildPlantStatus(),
