@@ -227,7 +227,8 @@ class _ListPotsState extends State<ListPots> {
                                         color: Colors.white,
                                       ),
                                       child: ListTile(
-                                        title: Text("บาร์โค้ด : " + p.barcode),
+                                        title: Text(
+                                            "หมายเลขกระถาง : " + p.name),
                                         subtitle: Text(
                                             'รอบปลูกที่ ${p.cultivationId} โรงปลูก ${p.ghName}'),
                                         trailing:
