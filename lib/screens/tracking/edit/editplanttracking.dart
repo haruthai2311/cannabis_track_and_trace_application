@@ -27,6 +27,9 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
   late List<Plantracking> _listplanttracking;
   final dialog = MyDialog();
   File? file; //เก็บภาพจากการถ่ายและจากแกลเลอรี่
+  bool _displayDiseaseTextField = false;
+  bool _displayTrashTextField = false;
+  bool _displayInsectTextField = false;
 
   final _ctlRemark = TextEditingController();
   final _ctlSoilRemark = TextEditingController();
@@ -156,15 +159,40 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
               }
 
               _ctlSoilRemark.text = result[0].soilRemark;
-              _ctlDisease.text = result[0].disease;
-              _ctlFixDisease.text = result[0].fixDisease;
-              _ctlInsect.text = result[0].insect;
-              _ctlFixInsect.text = result[0].fixInsect;
-              _ctlWeight.text = result[0].weight.toString() + ' Kg';
-              _ctlTrashRemark.text = result[0].trashRemark;
-              _ctlRemark.text = result[0].remark;
-              _ctlTrashDate.text =
-                  f.format(result[0].logTime).toString() + ' น.';
+              result[0].disease != null
+                  ? _ctlDisease.text = result[0].disease
+                  : null;
+              result[0].fixDisease != null
+                  ? _ctlFixDisease.text = result[0].fixDisease
+                  : null;
+              //_ctlFixDisease.text = result[0].fixDisease;
+              result[0].insect != null
+                  ? _ctlInsect.text = result[0].insect
+                  : null;
+              // _ctlInsect.text = result[0].insect;
+              result[0].fixInsect != null
+                  ? _ctlFixInsect.text = result[0].fixInsect
+                  : null;
+              //_ctlFixInsect.text = result[0].fixInsect;
+              result[0].weight != null
+                  ? _ctlWeight.text = result[0].weight.toString() + ' Kg'
+                  : null;
+              // _ctlWeight.text = result[0].weight.toString() + ' Kg';
+              result[0].trashRemark != null
+                  ? _ctlTrashRemark.text = result[0].trashRemark
+                  : null;
+              // _ctlTrashRemark.text = result[0].trashRemark;
+              result[0].remark != null
+                  ? _ctlRemark.text = result[0].remark
+                  : null;
+              // _ctlRemark.text = result[0].remark;
+              result[0].logTime != null
+                  ? _ctlTrashDate.text =
+                      f.format(DateTime.parse(result[0].logTime)).toString() +
+                          ' น.'
+                  : null;
+              // _ctlTrashDate.text =
+              //     f.format(DateTime.parse(result[0].logTime)).toString() +' น.';
               _ctlCheckDate.text =
                   f.format(result[0].checkDate).toString() + ' น.';
               _ctlPotsname.text = result[0].potsName.toString();
@@ -497,38 +525,222 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
                             ),
                             const SizedBox(height: 15),
                             MyForm().buildform("**หมายเหตุ : ", _ctlSoilRemark),
-                            const SizedBox(height: 30),
-                            MyForm().buildformSection('การสำรวจโรค',
-                                Icons.coronavirus, Colors.purple),
                             const SizedBox(height: 20),
-                            MyForm().buildform("โรคที่พบ : ", _ctlDisease),
-                            const SizedBox(height: 15),
-                            MyForm().buildform("วิธีแก้ไข : ", _ctlFixDisease),
-                            const SizedBox(height: 30),
-                            MyForm().buildformSection(
-                              'การสำรวจแมลง',
-                              Icons.emoji_nature,
-                              Color.fromARGB(255, 2, 88, 158),
+                            result[0].disease == null
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const SizedBox(width: 32.0),
+                                      MyForm().buildformSection('การสำรวจโรค',
+                                          Icons.coronavirus, Colors.purple),
+                                      // Icon(
+                                      //   Icons.add,
+                                      //   size: 32.0,
+                                      // ),
+
+                                      IconButton(
+                                        onPressed: () async {
+                                          if (_displayDiseaseTextField ==
+                                              false) {
+                                            setState(() {
+                                              _displayDiseaseTextField = true;
+                                            });
+                                          } else {
+                                            setState(() {
+                                              _displayDiseaseTextField = false;
+                                            });
+                                          }
+                                        },
+
+                                        //icon: Image.asset("images/iconpicture.png"),
+                                        icon: _displayDiseaseTextField == false
+                                            ? Image.asset("images/plus.png")
+                                            : Image.asset(
+                                                "images/delete-button.png"),
+                                        //color: Colors.green,
+                                        iconSize: 32,
+                                      ),
+                                    ],
+                                  )
+                                : Column(
+                                    children: [
+                                      MyForm().buildformSection('การสำรวจโรค',
+                                          Icons.coronavirus, Colors.purple),
+                                      const SizedBox(height: 20),
+                                      MyForm().buildform(
+                                          "โรคที่พบ : ", _ctlDisease),
+                                      const SizedBox(height: 15),
+                                      MyForm().buildform(
+                                          "วิธีแก้ไข : ", _ctlFixDisease),
+                                    ],
+                                  ),
+
+                            Visibility(
+                              visible: _displayDiseaseTextField,
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 20),
+                                  MyForm()
+                                      .buildform("โรคที่พบ : ", _ctlDisease),
+                                  const SizedBox(height: 20),
+                                  MyForm().buildform(
+                                      "การแก้ไขที่ทำไปแล้ว : ", _ctlFixDisease),
+                                ],
+                              ),
                             ),
+
                             const SizedBox(height: 20),
-                            MyForm().buildform("แมลงที่พบ : ", _ctlInsect),
-                            const SizedBox(height: 15),
-                            MyForm().buildform("วิธีแก้ไข : ", _ctlFixInsect),
-                            const SizedBox(height: 30),
-                            MyForm().buildformSection(
-                                'การเก็บซาก',
-                                Icons.auto_delete,
-                                Color.fromARGB(255, 1, 126, 12)),
+                            result[0].insect == null
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const SizedBox(width: 32.0),
+                                      MyForm().buildformSection(
+                                        'การสำรวจแมลง',
+                                        Icons.emoji_nature,
+                                        Color.fromARGB(255, 2, 88, 158),
+                                      ),
+                                      // Icon(
+                                      //   Icons.add,
+                                      //   size: 32.0,
+                                      // ),
+
+                                      IconButton(
+                                        onPressed: () async {
+                                          if (_displayInsectTextField ==
+                                              false) {
+                                            setState(() {
+                                              _displayInsectTextField = true;
+                                            });
+                                          } else {
+                                            setState(() {
+                                              _displayInsectTextField = false;
+                                            });
+                                          }
+                                        },
+
+                                        //icon: Image.asset("images/iconpicture.png"),
+                                        icon: _displayInsectTextField == false
+                                            ? Image.asset("images/plus.png")
+                                            : Image.asset(
+                                                "images/delete-button.png"),
+                                        //color: Colors.green,
+                                        iconSize: 32,
+                                      ),
+                                    ],
+                                  )
+                                : Column(
+                                    children: [
+                                      MyForm().buildformSection(
+                                        'การสำรวจแมลง',
+                                        Icons.emoji_nature,
+                                        Color.fromARGB(255, 2, 88, 158),
+                                      ),
+                                      const SizedBox(height: 20),
+                                      MyForm().buildform(
+                                          "แมลงที่พบ : ", _ctlInsect),
+                                      const SizedBox(height: 15),
+                                      MyForm().buildform(
+                                          "วิธีแก้ไข : ", _ctlFixInsect),
+                                    ],
+                                  ),
+                            Visibility(
+                              visible: _displayInsectTextField,
+                              child: Column(
+                                children: [
+                                  const SizedBox(height: 20),
+                                  MyForm()
+                                      .buildform("แมลงที่พบ : ", _ctlInsect),
+                                  const SizedBox(height: 20),
+                                  MyForm().buildform(
+                                      "การแก้ไขที่ทำไปแล้ว : ", _ctlFixInsect),
+                                ],
+                              ),
+                            ),
+
                             const SizedBox(height: 20),
-                            MyForm().buildformLog(
-                                "วันที่เก็บซาก : ", _ctlTrashDate, true),
-                            const SizedBox(height: 15),
-                            MyForm().buildform("เก็บซาก : ", _ctlWeight),
-                            const SizedBox(height: 15),
-                            MyForm().buildform(
-                                "**เหตุผลที่เก็บซาก : ", _ctlTrashRemark),
-                            const SizedBox(height: 30),
-                            MyForm().buildformRemake("หมายเหตุ : ", _ctlRemark),
+                            result[0].weight == null
+                                ? Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const SizedBox(width: 32.0),
+                                      MyForm().buildformSection(
+                                          'การเก็บซาก',
+                                          Icons.auto_delete,
+                                          Color.fromARGB(255, 1, 126, 12)),
+
+                                      // Icon(
+                                      //   Icons.add,
+                                      //   size: 32.0,
+                                      // ),
+
+                                      IconButton(
+                                        onPressed: () async {
+                                          if (_displayTrashTextField == false) {
+                                            setState(() {
+                                              _displayTrashTextField = true;
+                                            });
+                                          } else {
+                                            setState(() {
+                                              _displayTrashTextField = false;
+                                            });
+                                          }
+                                        },
+
+                                        //icon: Image.asset("images/iconpicture.png"),
+                                        icon: _displayTrashTextField == false
+                                            ? Image.asset("images/plus.png")
+                                            : Image.asset(
+                                                "images/delete-button.png"),
+                                        //color: Colors.green,
+                                        iconSize: 32,
+                                      ),
+                                    ],
+                                  )
+                                : Column(
+                                    children: [
+                                      MyForm().buildformSection(
+                                          'การเก็บซาก',
+                                          Icons.auto_delete,
+                                          Color.fromARGB(255, 1, 126, 12)),
+                                      const SizedBox(height: 20),
+                                      MyForm().buildformLog("วันที่เก็บซาก : ",
+                                          _ctlTrashDate, true),
+                                      const SizedBox(height: 15),
+                                      MyForm()
+                                          .buildform("เก็บซาก : ", _ctlWeight),
+                                      const SizedBox(height: 15),
+                                      MyForm().buildform(
+                                          "**เหตุผลที่เก็บซาก : ",
+                                          _ctlTrashRemark),
+                                      const SizedBox(height: 30),
+                                      MyForm().buildformRemake(
+                                          "หมายเหตุ : ", _ctlRemark),
+                                    ],
+                                  ),
+
+                            Visibility(
+                              visible: _displayTrashTextField,
+                              child: Column(
+                                children: [
+                                  MyForm().buildformNum(
+                                      "น้ำหนัก (kg) : ", _ctlWeight),
+                                  const SizedBox(height: 20),
+                                  //buildTrashLogTime(),
+                                  const SizedBox(height: 20),
+                                  MyForm().buildform(
+                                      "เหตุผลที่เก็บซาก : ", _ctlTrashRemark),
+                                  const SizedBox(height: 20),
+                                  MyForm().buildform(
+                                      "** หมายเหตุ : ", _ctlTrashRemark),
+                                  const SizedBox(height: 30),
+                                ],
+                              ),
+                            ),
+
                             const SizedBox(height: 20),
                           ],
                         ),
