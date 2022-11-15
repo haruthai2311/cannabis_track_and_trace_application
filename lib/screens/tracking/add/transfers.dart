@@ -204,7 +204,7 @@ class _AddTransfersState extends State<AddTransfers> {
                           style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color: Colors.blue),
+                              color: Colors.green),
                         ),
                         const SizedBox(height: 20),
                         Padding(
@@ -774,7 +774,7 @@ class _AddTransfersState extends State<AddTransfers> {
             decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
-                hintText: '**หมายเหตุ**',
+                hintText: '* หมายเหตุ',
                 hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),

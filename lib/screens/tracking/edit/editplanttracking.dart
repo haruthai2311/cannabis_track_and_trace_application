@@ -66,7 +66,7 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
 
   String? selectdropdownStatus;
   String? dropdownStatus;
-  var itemStatus = ['N/A', 'ปกติ', 'ไม่สมบูรณ์ ', 'ตัดทิ้ง'];
+  var itemStatus = [ 'ปกติ', 'ไม่สมบูรณ์ ', 'ตัดทิ้ง'];
 
   String? selectdropdownSoi;
   String? dropdownSoi;
@@ -524,7 +524,7 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
                               ],
                             ),
                             const SizedBox(height: 15),
-                            MyForm().buildform("**หมายเหตุ : ", _ctlSoilRemark),
+                            MyForm().buildform("*หมายเหตุ : ", _ctlSoilRemark),
                             const SizedBox(height: 20),
                             result[0].disease == null
                                 ? Row(
@@ -735,7 +735,7 @@ class _EditPlantTrackingState extends State<EditPlantTracking> {
                                       "เหตุผลที่เก็บซาก : ", _ctlTrashRemark),
                                   const SizedBox(height: 20),
                                   MyForm().buildform(
-                                      "** หมายเหตุ : ", _ctlTrashRemark),
+                                      "* หมายเหตุ : ", _ctlTrashRemark),
                                   const SizedBox(height: 30),
                                 ],
                               ),

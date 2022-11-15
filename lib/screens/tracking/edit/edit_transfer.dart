@@ -56,7 +56,7 @@ class _EditTransferState extends State<EditTransfer> {
 
   String? dropdowntype;
   String? selectDropdown;
-  var itemtype = ['N/A', 'ใบ', 'ดอก', 'ก้าน'];
+  var itemtype = ['ใบ', 'ดอก', 'ก้าน'];
 
   String? dropdownHvtID;
 

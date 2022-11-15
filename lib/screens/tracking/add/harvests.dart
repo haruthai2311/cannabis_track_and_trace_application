@@ -224,7 +224,7 @@ class _AddHarvestsState extends State<AddHarvests> {
                           style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              color: Colors.green),
+                              color: Colors.blue),
                         ),
                         const SizedBox(height: 20),
                         Padding(
@@ -553,7 +553,7 @@ class _AddHarvestsState extends State<AddHarvests> {
             decoration: const InputDecoration(
                 border: InputBorder.none,
                 contentPadding: EdgeInsets.only(left: 15),
-                hintText: '**หมายเหตุ**',
+                hintText: '* หมายเหตุ',
                 hintStyle: TextStyle(color: Colors.black38, fontSize: 18)),
           ),
         ),

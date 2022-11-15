@@ -280,7 +280,7 @@ class _PlantTrackingByScanState extends State<PlantTrackingByScan> {
                 //print(casenewsort);
               }
               print(itemGH);
-              var itemPotID = ['N/A'];
+              var itemPotID = <String>[];
               for (var i = 0; i < result2.length; i++) {
                 //print(result[i].newCase);
                 itemPotID.add(result2[i].potId.toString());
@@ -397,7 +397,7 @@ class _PlantTrackingByScanState extends State<PlantTrackingByScan> {
                         const SizedBox(height: 20),
                         buildSoiMoisture(),
                         const SizedBox(height: 20),
-                        MyForm().buildform("** หมายเหตุ : ", _ctlSoilRemark),
+                        MyForm().buildform("* หมายเหตุ : ", _ctlSoilRemark),
 
                         const SizedBox(height: 20),
 

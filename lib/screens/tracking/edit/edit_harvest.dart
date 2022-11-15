@@ -48,7 +48,7 @@ class _EditHarvestState extends State<EditHarvest> {
 
   String? dropdowntype;
   String? selectDropdown;
-  var itemtype = ['N/A', 'ใบ', 'ดอก', 'ก้าน'];
+  var itemtype = [ 'ใบ', 'ดอก', 'ก้าน'];
   String? dropdownGH;
   @override
   void initState() {
@@ -110,7 +110,7 @@ class _EditHarvestState extends State<EditHarvest> {
                 TypeHarvest = "N/A";
               }
 
-              var nameGH = ['N/A'];
+              var nameGH = <String>[];
               for (var i = 0; i < ghname.length; i++) {
                 //print(result[i].newCase);
                 nameGH.add(ghname[i].name);

@@ -281,7 +281,7 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                                   ],
                                 ),
                                 SizedBox(height: 5),
-                                FormDetail().buildText("** หมายเหตุ :  ",
+                                FormDetail().buildText("* หมายเหตุ :  ",
                                     result[0].soilRemark.toString()),
                                 result[0].disease == null
                                     ? Container()
@@ -391,7 +391,7 @@ class _DetailsPlantTrackingPageState extends State<DetailsPlantTrackingPage> {
                                           ),
                                           SizedBox(height: 10),
                                           FormDetail().buildText(
-                                              "*** หมายเหตุ :  ",
+                                              "** หมายเหตุ :  ",
                                               result[0].remarkPlant.toString()),
                                         ],
                                       ),
