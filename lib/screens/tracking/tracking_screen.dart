@@ -84,7 +84,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                     ),
                     borderRadius: BorderRadius.circular(20)),
                 child: Container(
-                  //width: 175,
+                  width: 175,
                   padding: const EdgeInsets.fromLTRB(20, 40, 20, 40),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -124,7 +124,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                     ),
                     borderRadius: BorderRadius.circular(20)),
                 child: Container(
-                  //width: 175,
+                  width: 175,
                   padding: const EdgeInsets.fromLTRB(20, 40, 20, 40),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -169,7 +169,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                     ),
                     borderRadius: BorderRadius.circular(20)),
                 child: Container(
-                  //width: 175,
+                  width: 175,
                   padding: const EdgeInsets.fromLTRB(20, 40, 20, 40),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -209,7 +209,7 @@ class _TrackingScreenState extends State<TrackingScreen> {
                     ),
                     borderRadius: BorderRadius.circular(20)),
                 child: Container(
-                  //width: 175,
+                  width: 175,
                   padding: const EdgeInsets.fromLTRB(20, 40, 20, 40),
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.center,

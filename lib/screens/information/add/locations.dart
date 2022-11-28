@@ -542,7 +542,7 @@ class _LocationsState extends State<Locations> {
   }
 
   Widget buildLatLng() {
-    //LatLng latlng = LatLng(17.28604322412573, 104.10683017843137);
+    LatLng latlng = LatLng(17.28604322412573, 104.10683017843137);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -570,7 +570,7 @@ class _LocationsState extends State<Locations> {
               ? CircularProgressIndicator()
               : GoogleMap(
                   initialCameraPosition: CameraPosition(
-                    target: latlng!,
+                    target: latlng,
                     zoom: 16,
                   ),
                   onMapCreated: (controller) {},
@@ -581,7 +581,7 @@ class _LocationsState extends State<Locations> {
                       infoWindow: InfoWindow(
                           title: 'You Location',
                           snippet:
-                              'Lat = ${latlng!.latitude},Lng = ${latlng!.longitude}'),
+                              'Lat = ${latlng.latitude},Lng = ${latlng.longitude}'),
                     )
                   },
                 ),
